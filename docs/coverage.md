@@ -1,19 +1,33 @@
-# Coverage is not publication volume
+# Research coverage is not a CI dashboard
 
-The homepage coverage panel and `/data/coverage.json` consume an aggregate intake report independently from `/data/intelligence.json`. Existing Signal content and registration dates are unchanged. Do not replace publication data with a collector/CI snapshot.
+The homepage coverage panel and `/data/coverage.json` expose a deliberately small research-transparency surface. They answer a reader-facing question: what configured sources were in scope, how much review was recorded, how many primary/affected-party sources supported the published work, and how many Signals were published.
 
-The first manual publishing cycle has no complete per-item decision ledger. Its public coverage status is `not_recorded`, with null review counts and a visible explanation. The initial collector recorded 99 HN stories, a 60-item HN brief, and 30 feed observations. Those facts do not establish that all 60/30 were read or triaged. Never backfill the missing decisions with zeros or invented totals. `tests/fixtures/live-coverage.json` is an actual aggregate-only ENGINE CI report, not the displayed publication's coverage; its zero review count is intentional.
+Detailed intake decisions, `watch/research/defer` queues, materialization state, reviewer notes, retry history and timing stay in the private `grepsignal-engine`. Hiding those fields only in the UI is not enough; they do not belong in the public coverage JSON or public test fixtures either.
 
-New reviewed cycle reports are produced by the private engine's `intake-report` command. Copy only that approved aggregate JSON into `src/data/coverage.json` after editorial review; no private ledger or engine state belongs here. There is no new automatic cross-repository transport or Scheduler task in this change.
+The first manual publishing cycle has no complete per-item review ledger. Its public status remains `not_recorded`. The HN source is described as a Top 60 discovery intake and Simon as 30 observed feed items, but `reviewed_count` remains null. Never backfill missing historical review as zero or 60/60.
 
-Counters: observed metadata; eligible window; selected triage denominator; triaged explicit decisions; source_read reviewer attestation; materialized fetched evidence documents. The six dispositions are mutually exclusive at the latest decision version, while materialization is a separate dimension. Complete means complete FOR THE SELECTED WINDOW, not every observed item or every article. Sources remain independent, not Simon-first with HN used for confirmation.
+The current publication consulted 8 primary/affected-party sources and published 1 material Signal. Those are publication-level facts, not a coverage score.
 
-`coverage-contract.mjs` rejects unknown fields, invalid timestamps, inconsistent counts, nulls in audited counters, false completion and unsupported end-to-end durations. JSON Schema specifies the public shape; cross-field arithmetic is checked by the validator. Build runs Node tests and both data validators before Astro.
+## Public contract
 
-## Recorded timing
+`coverage.json` schema v2 contains only:
 
-The first publication's Pages workflow was created at 2026-09-14T05:40:55Z; the Deploy to GitHub Pages step completed at 05:41:36Z. The 41-second pipeline interval includes queue/build/deploy, and excludes source research and editorial work. The build job itself ran 05:40:57–05:41:24 (27 s); the deployment step 05:41:30–05:41:36 (6 s). These intervals are nested, not additive.
+- cycle ID and coverage status;
+- per-source name, human-readable scope, intake count and reviewed count;
+- primary/affected-party source count;
+- published Signal count;
+- a short scope note.
 
-Evidence: https://github.com/cinic0101/grepsignal/actions/runs/34810509961
+Coverage status:
 
-Full-cycle duration is not measured. Do not substitute build time for it. Engine stage timers support collection, triage, research, validation, human_wait and deployment, including retries. Overlapping intervals are never summed to invent an end-to-end duration. A future receipt contract should connect the cycle start to an actually verified public deployment.
+- `not_recorded`: review completion was not recorded; all `reviewed_count` fields are null.
+- `partial`: at least one review count is recorded, but the configured intake is not fully reviewed.
+- `reviewed`: every configured intake item has a recorded review decision.
+
+Even `reviewed` means complete only for the configured intake window. It is never a claim of complete coverage of the AI ecosystem.
+
+## Private timing
+
+Collection timing, ChatGPT semantic wall time, human review wait, synthesis-to-publish latency and end-to-end deployment latency are operational metrics and remain private in `grepsignal-engine`. The public site does not expose them.
+
+The engine's public projection command should be the future handoff boundary. Cross-repository copying and Scheduler publication are still separate workflow concerns and must preserve editorial approval.

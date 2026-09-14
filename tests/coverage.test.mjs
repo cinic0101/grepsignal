@@ -2,25 +2,35 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { validateCoverage } from '../scripts/coverage-contract.mjs';
-const historical=JSON.parse(readFileSync(new URL('./fixtures/historical-coverage.json',import.meta.url),'utf8'));
-const live=JSON.parse(readFileSync(new URL('./fixtures/live-coverage.json',import.meta.url),'utf8'));
-test('historical counts stay unknown, not zero',()=>assert.equal(validateCoverage(historical).totals.triaged,null));
-test('actual engine aggregate output is compatible',()=>assert.equal(validateCoverage(live).totals.triaged,0));
+
+const current=JSON.parse(readFileSync(new URL('../src/data/coverage.json',import.meta.url),'utf8'));
+
+test('current public coverage validates',()=>assert.equal(validateCoverage(current).schema_version,2));
+test('historical review completion stays unknown, not zero',()=>assert.equal(validateCoverage(current).sources[0].reviewed_count,null));
 for (const [name,change] of [
- ['private field',d=>{d.sources[0].reason='private reasoning';}],
- ['inconsistent totals',d=>{d.totals.selected++;}],
- ['negative counter',d=>{d.sources[0].observed=-1;}],
- ['false full coverage',d=>{d.coverage_status='complete_for_selected_window';}],
- ['wrong disposition sum',d=>{d.sources[0].dispositions.research++;}],
- ['read exceeds triage',d=>{d.sources[0].source_read=1;}],
- ['null in audited cycle',d=>{d.sources[0].triaged=null;}],
- ['duplicate sources',d=>{d.sources.push(d.sources[0]);}],
- ['negative time',d=>{d.timings[0].seconds=-1;}],
- ['end-to-end without receipt',d=>{d.end_to_end_seconds=99;}],
+ ['private timing field',d=>{d.timings=[];}],
+ ['private disposition field',d=>{d.sources[0].dispositions={no_signal:1};}],
+ ['private materialization field',d=>{d.sources[0].materialized=1;}],
+ ['negative intake',d=>{d.sources[0].intake_count=-1;}],
+ ['review exceeds intake',d=>{d.coverage_status='partial';d.sources[0].reviewed_count=61;}],
+ ['false reviewed status',d=>{d.coverage_status='reviewed';d.sources[0].reviewed_count=60;d.sources[1].reviewed_count=29;}],
+ ['backfilled historical zero',d=>{d.sources[0].reviewed_count=0;}],
+ ['duplicate sources',d=>{d.sources.push(structuredClone(d.sources[0]));}],
  ['invalid timestamp',d=>{d.generated_at='today';}],
  ['HTML in labels',d=>{d.sources[0].name='<img src=x>'; }],
-]) test(name,()=>{const d=structuredClone(live);change(d);assert.throws(()=>validateCoverage(d));});
-test('old review cannot be silently backfilled',()=>{const d=structuredClone(historical);d.sources[0].triaged=60;assert.throws(()=>validateCoverage(d));});
-test('a real zero-input window can be complete',()=>{const d=structuredClone(live);for(const s of d.sources){for(const k of Object.keys(d.totals))s[k]=0;for(const k of Object.keys(s.dispositions))s.dispositions[k]=0;}for(const k of Object.keys(d.totals))d.totals[k]=0;d.coverage_status='complete_for_selected_window';assert.equal(validateCoverage(d).totals.selected,0);});
+]) test(name,()=>{const d=structuredClone(current);change(d);assert.throws(()=>validateCoverage(d));});
 
-test('current published coverage validates independently of fixtures',()=>validateCoverage(JSON.parse(readFileSync(new URL('../src/data/coverage.json',import.meta.url),'utf8'))));
+test('partial accepts recorded but incomplete review',()=>{
+  const d=structuredClone(current);
+  d.coverage_status='partial';
+  d.sources[0].reviewed_count=12;
+  d.sources[1].reviewed_count=3;
+  assert.equal(validateCoverage(d).coverage_status,'partial');
+});
+
+test('reviewed requires every configured intake item reviewed',()=>{
+  const d=structuredClone(current);
+  d.coverage_status='reviewed';
+  for (const source of d.sources) source.reviewed_count=source.intake_count;
+  assert.equal(validateCoverage(d).coverage_status,'reviewed');
+});
