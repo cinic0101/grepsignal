@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "publication_status": "preview_sample",
+  "canonical_language": "en",
+  "generated_at": "2026-09-14T05:30:00Z",
+  "notice": "Illustrative preview data for design and deployment testing. These are not published GrepSignal findings.",
+  "stats": {
+    "material_signals": 3,
+    "active_threads": 4,
+    "open_predictions": 1
+  },
+  "signals": [
+    {
+      "id": "sample-agent-native-web",
+      "sample": true,
+      "type": "platform_shift",
+      "status": "strengthening",
+      "title": "The web is becoming agent-native",
+      "summary": "WebMCP, browser agents, and machine-operable interfaces are converging. The important change is not another protocol; it is that websites are beginning to expose actions for agents rather than only pixels for humans.",
+      "why_it_matters": "Agent traffic may become a distribution channel of its own.",
+      "second_order_effect": "SEO → agent discoverability → agent distribution",
+      "watch_next": "Major SaaS vendors exposing stable machine-operable actions.",
+      "source_count": 4,
+      "independent_source_count": 3,
+      "first_observed": "2026-03"
+    },
+    {
+      "id": "sample-coding-agent-autonomy",
+      "sample": true,
+      "type": "capability_delta",
+      "status": "strengthening",
+      "title": "Coding agents are shifting from interaction to delegation",
+      "summary": "Tooling is increasingly optimized for longer autonomous work, persistent context, and fewer human checkpoints. The unit of work is drifting from ‘answer this’ toward ‘own this task until review.’",
+      "why_it_matters": "Workflow design may matter more than single-turn benchmark gains.",
+      "second_order_effect": "longer autonomy → fewer handoffs → new review bottlenecks",
+      "watch_next": "Reliability over multi-hour tasks and recovery after failures.",
+      "source_count": 5,
+      "independent_source_count": 4,
+      "first_observed": "2026-01"
+    },
+    {
+      "id": "sample-local-ai-economics",
+      "sample": true,
+      "type": "cost_intelligence",
+      "status": "stable",
+      "title": "Local inference economics keep improving — but not uniformly",
+      "summary": "Better quantization and stronger mid-size models can reduce local serving cost while frontier-model capability also becomes cheaper. The build-vs-buy boundary keeps moving.",
+      "why_it_matters": "Hardware purchases age faster as the intelligence-per-dollar curve moves.",
+      "second_order_effect": "cheaper inference → more viable workloads → thinner product moats",
+      "watch_next": "Quality-per-dollar on real agent and BI workloads, not only benchmarks.",
+      "source_count": 6,
+      "independent_source_count": 4,
+      "first_observed": "2025-11"
+    }
+  ],
+  "threads": [
+    {"id": "sample-thread-agent-web", "sample": true, "title": "Agent-native Web", "status": "strengthening", "signal_count": 7, "summary": "Machine-operable interfaces are becoming a web platform concern."},
+    {"id": "sample-thread-coding-agent", "sample": true, "title": "Coding Agent Autonomy", "status": "strengthening", "signal_count": 12, "summary": "The interaction model is shifting toward delegated, persistent work."},
+    {"id": "sample-thread-local-ai", "sample": true, "title": "Local AI Economics", "status": "stable", "signal_count": 9, "summary": "Serving economics are improving while frontier prices also fall."},
+    {"id": "sample-thread-context", "sample": true, "title": "Context Infrastructure", "status": "emerging", "signal_count": 5, "summary": "Memory, skills, and context systems are becoming first-class agent infrastructure."}
+  ],
+  "predictions": [
+    {
+      "id": "sample-prediction-agent-interface",
+      "sample": true,
+      "status": "open",
+      "claim": "Major SaaS products will expose agent-native interfaces by Sep 2027.",
+      "probability": 0.72,
+      "previous_probability": 0.65,
+      "deadline": "2027-09-30",
+      "update_reason": "Illustrative copy showing how probability revisions will appear in the public ledger."
+    }
+  ]
+}

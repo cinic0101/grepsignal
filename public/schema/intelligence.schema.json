@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cinic0101.github.io/grepsignal/schema/intelligence.schema.json",
+  "title": "GrepSignal public intelligence envelope",
+  "type": "object",
+  "required": ["schema_version", "publication_status", "canonical_language", "signals", "threads", "predictions"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "publication_status": {"enum": ["preview_sample", "published"]},
+    "canonical_language": {"const": "en"},
+    "generated_at": {"type": "string"},
+    "notice": {"type": "string"},
+    "signals": {"type": "array", "items": {"type": "object", "required": ["id", "type", "title", "summary"]}},
+    "threads": {"type": "array", "items": {"type": "object", "required": ["id", "title", "status"]}},
+    "predictions": {"type": "array", "items": {"type": "object", "required": ["id", "claim", "status"]}}
+  },
+  "additionalProperties": true
+}
