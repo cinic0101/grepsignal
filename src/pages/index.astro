@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import intelligence from '../data/intelligence.json';
 
 const base = import.meta.env.BASE_URL;
+const isPublished = intelligence.publication_status === 'published';
 const typeLabels: Record<string, string> = {
   platform_shift: 'PLATFORM SHIFT',
   capability_delta: 'CAPABILITY DELTA',
@@ -16,14 +17,32 @@ const statusMark: Record<string, string> = {
   stable: '→',
   weakening: '↓',
 };
+const roleLabels: Record<string, string> = {
+  primary_incident_report: 'Incident report',
+  primary_followup: 'Follow-up',
+  primary_product_security: 'Product security',
+  primary_incident_assessment: 'Incident assessment',
+  primary_product_docs: 'Product docs',
+  primary_product_release: 'Release notes',
+  primary_historical_baseline: 'Historical baseline',
+  affected_party: 'Affected party',
+};
 const updated = new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
 }).format(new Date(intelligence.generated_at));
+const formatMonth = (value: string) => {
+  const [year, month] = value.split('-').map(Number);
+  return new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', timeZone: 'UTC' })
+    .format(new Date(Date.UTC(year, month - 1, 1)));
+};
+const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
+  year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
+}).format(new Date(`${value}T00:00:00Z`));
 ---
 <BaseLayout>
-  <section class="preview-notice" role="note">
+  <section class={`preview-notice ${isPublished ? 'live-notice' : ''}`} role="note">
     <div class="wrap">
-      <strong>PREVIEW DATA</strong>
+      <strong>{isPublished ? 'LIVE INTELLIGENCE' : 'PREVIEW DATA'}</strong>
       <span>{intelligence.notice}</span>
     </div>
   </section>
@@ -38,8 +57,8 @@ const updated = new Intl.DateTimeFormat('en', {
           pushed into second-order effects, and tested through falsifiable predictions.
         </p>
       </div>
-      <div class="hero-meta" aria-label="Preview statistics">
-        <div class="meta-row"><span>Preview date</span><strong>{updated}</strong></div>
+      <div class="hero-meta" aria-label="Publication statistics">
+        <div class="meta-row"><span>{isPublished ? 'Published' : 'Preview date'}</span><strong>{updated}</strong></div>
         <div class="meta-row"><span>Material signals</span><strong>{intelligence.stats.material_signals}</strong></div>
         <div class="meta-row"><span>Active threads</span><strong>{intelligence.stats.active_threads}</strong></div>
         <div class="meta-row"><span>Open predictions</span><strong>{intelligence.stats.open_predictions}</strong></div>
@@ -55,7 +74,7 @@ const updated = new Intl.DateTimeFormat('en', {
           <span class="section-kicker">INTELLIGENCE</span>
           <h2>Today’s signals</h2>
         </div>
-        <small>Only material changes should be published.</small>
+        <small>Only material changes are published.</small>
       </div>
 
       <div class="signal-list">
@@ -74,8 +93,35 @@ const updated = new Intl.DateTimeFormat('en', {
               <h3>{signal.title}</h3>
               <p class="summary">{signal.summary}</p>
               <div class="source-line">
-                {signal.source_count} sources · {signal.independent_source_count} independent · first observed {signal.first_observed}
+                {signal.source_count} linked sources · {signal.source_organization_count} source organizations · registered {formatDate(signal.registered_at)} · evidence since {formatMonth(signal.evidence_since)}
               </div>
+
+              <details class="evidence-details">
+                <summary>Evidence &amp; review notes</summary>
+                <div class="evidence-content">
+                  <div>
+                    <span class="label">Linked evidence</span>
+                    <ol class="source-list">
+                      {signal.sources.map((source) => (
+                        <li>
+                          <a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a>
+                          <span>{source.publisher} · {roleLabels[source.role] ?? source.role.replaceAll('_', ' ')}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                  <div class="review-grid">
+                    <div>
+                      <span class="label">What could falsify this</span>
+                      <ul>{signal.falsifiers.map((item) => <li>{item}</li>)}</ul>
+                    </div>
+                    <div>
+                      <span class="label">Limitations</span>
+                      <ul>{signal.limitations.map((item) => <li>{item}</li>)}</ul>
+                    </div>
+                  </div>
+                </div>
+              </details>
             </div>
             <aside class="signal-aside">
               <div><span class="label">Why it matters</span>{signal.why_it_matters}</div>
@@ -96,14 +142,17 @@ const updated = new Intl.DateTimeFormat('en', {
           </div>
           <span class="beta">{intelligence.threads.length} ACTIVE</span>
         </div>
-        {intelligence.threads.map((thread) => (
+        {intelligence.threads.length === 0 ? (
+          <div class="empty-card">No active thread yet.</div>
+        ) : intelligence.threads.map((thread) => (
           <article class="thread">
             <div>
               <h3>{thread.title}</h3>
               <p>{thread.summary}</p>
+              {thread.thesis && <p class="thread-thesis"><strong>Thesis:</strong> {thread.thesis}</p>}
             </div>
             <div class="thread-stat">
-              {statusMark[thread.status] ?? '·'} {thread.status}<br />{thread.signal_count} signals
+              {statusMark[thread.status] ?? '·'} {thread.status}<br />{thread.signal_count} signal{thread.signal_count === 1 ? '' : 's'}
             </div>
           </article>
         ))}
@@ -115,21 +164,23 @@ const updated = new Intl.DateTimeFormat('en', {
             <span class="section-kicker">ACCOUNTABILITY</span>
             <h2>Prediction ledger</h2>
           </div>
-          <span class="beta">PREVIEW</span>
+          <span class="beta">{intelligence.predictions.length} OPEN</span>
         </div>
-        {intelligence.predictions.map((prediction) => (
+        {intelligence.predictions.length === 0 ? (
+          <div class="empty-card">
+            <strong>No formal prediction in this cycle.</strong>
+            <p>GrepSignal does not force a forecast when the resolution criteria are not mature enough.</p>
+          </div>
+        ) : intelligence.predictions.map((prediction) => (
           <article class="prediction">
             <span class="label">Open · deadline {prediction.deadline}</span>
             <h3>{prediction.claim}</h3>
             <div class="probability-row">
-              <span class="delta">
-                {Math.round(prediction.previous_probability * 100)}% → {Math.round(prediction.probability * 100)}%
-              </span>
+              <span class="delta">{Math.round(prediction.probability * 100)}%</span>
               <div class="bar" aria-label={`Probability ${Math.round(prediction.probability * 100)} percent`}>
                 <span style={`width:${Math.round(prediction.probability * 100)}%`}></span>
               </div>
             </div>
-            <p class="muted">{prediction.update_reason}</p>
           </article>
         ))}
         <div class="verification-note">
@@ -143,7 +194,7 @@ const updated = new Intl.DateTimeFormat('en', {
       <div>
         <span class="section-kicker">MACHINE-READABLE</span>
         <code>
-          &gt; grep signal --topic coding-agents --since 7d<br />
+          &gt; grep signal --since 7d<br />
           source: structured public intelligence
         </code>
       </div>
@@ -162,3 +213,31 @@ const updated = new Intl.DateTimeFormat('en', {
     </div>
   </footer>
 </BaseLayout>
+
+<style>
+  .live-notice strong { color: var(--accent); }
+  .evidence-details {
+    margin-top: 18px;
+    border-top: 1px dashed var(--line);
+    padding-top: 14px;
+  }
+  .evidence-details summary {
+    cursor: pointer;
+    color: var(--accent);
+    font: 750 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .04em;
+  }
+  .evidence-content { padding: 18px 0 4px; display: grid; gap: 22px; }
+  .source-list { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 10px; }
+  .source-list li { padding-left: 4px; }
+  .source-list a { font-weight: 650; text-underline-offset: 3px; }
+  .source-list span { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; }
+  .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .review-grid ul { margin: 8px 0 0; padding-left: 20px; color: #3d3b36; font-size: 13px; }
+  .review-grid li + li { margin-top: 8px; }
+  .thread-thesis { margin-top: 10px !important; color: #3d3b36 !important; }
+  .empty-card { border-top: 1px solid var(--line); padding: 22px 0 8px; color: var(--muted); }
+  .empty-card strong { color: var(--ink); font-family: Georgia, 'Times New Roman', serif; font-size: 20px; font-weight: 600; }
+  .empty-card p { margin: 7px 0 0; font-size: 13px; }
+  @media (max-width: 620px) { .review-grid { grid-template-columns: 1fr; } }
+</style>
