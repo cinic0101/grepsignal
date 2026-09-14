@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CoveragePanel from '../components/CoveragePanel.astro';
 import intelligence from '../data/intelligence.json';
 
 const base = import.meta.env.BASE_URL;
@@ -72,14 +73,14 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
       <div class="section-head">
         <div>
           <span class="section-kicker">INTELLIGENCE</span>
-          <h2>Today’s signals</h2>
+          <h2>Latest signals</h2>
         </div>
         <small>Only material changes are published.</small>
       </div>
 
       <div class="signal-list">
         {intelligence.signals.length === 0 ? (
-          <div class="empty-state">No material signal today.</div>
+          <div class="empty-state">No published signal in this dataset.</div>
         ) : intelligence.signals.map((signal, index) => (
           <article class="signal" id={signal.id}>
             <div class="index">{String(index + 1).padStart(2, '0')}</div>
@@ -132,6 +133,8 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
         ))}
       </div>
     </section>
+
+    <CoveragePanel />
 
     <section class="grid-sections">
       <div class="card" id="threads">
@@ -200,7 +203,9 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
       </div>
       <div class="agent-links">
         <a href={`${base}data/intelligence.json`}>JSON</a>
+        <a href={`${base}data/coverage.json`}>COVERAGE</a>
         <a href={`${base}schema/intelligence.schema.json`}>SCHEMA</a>
+        <a href={`${base}schema/coverage.schema.json`}>COVERAGE SCHEMA</a>
         <a href="https://github.com/cinic0101/grepsignal">GITHUB</a>
       </div>
     </section>

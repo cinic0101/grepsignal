@@ -1,0 +1,81 @@
+---
+import coverage from '../data/coverage.json';
+import intelligence from '../data/intelligence.json';
+const base = import.meta.env.BASE_URL;
+const unknown = coverage.coverage_status === 'not_recorded';
+const count = (value: number | null) => value === null ? '—' : value.toLocaleString('en');
+const duration = (value: number | null) => value === null ? 'Not measured' : `${value.toFixed(1)} s`;
+const labels: Record<string,string> = {not_recorded:'NOT RECORDED',partial:'PARTIAL',complete_for_selected_window:'SELECTED WINDOW REVIEWED'};
+const stageLabels: Record<string,string> = {collection:'Collection',triage:'Metadata triage',research:'Source research',validation:'Validation',human_wait:'Waiting for review',deployment:'Pages pipeline'};
+---
+<section class="coverage-section" id="coverage" aria-labelledby="coverage-heading">
+  <div class="section-head">
+    <div><span class="section-kicker">PROCESS TRANSPARENCY</span><h2 id="coverage-heading">What did we actually review?</h2></div>
+    <span class="beta">{labels[coverage.coverage_status]}</span>
+  </div>
+  <div class="coverage-intro">
+    <p>{unknown ? 'The first publication has a real Signal, but no complete item-by-item intake audit. We will not reconstruct missing decisions as completed reviews.' : 'This report distinguishes collection from editorial review. Complete means the selected intake window was triaged, not that every article was read.'}</p>
+    <div class="coverage-output"><strong>{intelligence.signals.length}</strong><span>published signal{intelligence.signals.length === 1 ? '' : 's'}<br />not a coverage score</span></div>
+  </div>
+  <div class="coverage-scroll" role="region" aria-label="Source intake coverage" tabindex="0">
+    <table>
+      <caption>Intake cycle: {coverage.cycle_id}. A dash means not recorded, never zero.</caption>
+      <thead><tr><th scope="col">Source</th><th scope="col">Observed</th><th scope="col">Selected</th><th scope="col">Triaged</th><th scope="col">Source read</th><th scope="col">Pending</th></tr></thead>
+      <tbody>{coverage.sources.map(row => <tr>
+        <th scope="row">{row.name}</th><td>{count(row.observed)}</td><td>{count(row.selected)}</td><td>{count(row.triaged)}</td><td>{count(row.source_read)}</td><td>{count(row.pending)}</td>
+      </tr>)}</tbody>
+    </table>
+  </div>
+  <details class="coverage-detail">
+    <summary>Scope, dispositions &amp; measured time</summary>
+    <div class="coverage-detail-grid">
+      <div>
+        <span class="label">Source windows</span>
+        {coverage.sources.map(row => <div class="coverage-source-note">
+          <strong>{row.name}</strong><p>{row.scope}</p>
+          <p>Materialized: {count(row.materialized)} · Not selected: {count(row.not_selected)}</p>
+          <p>Captured: {row.observed_at ? new Date(row.observed_at).toISOString() : 'Not recorded'}</p>
+          {unknown ? <p>Disposition history: not recorded.</p> : <p>{Object.entries(row.dispositions).map(([key,value]) => `${key.replaceAll('_',' ')}: ${count(value)}`).join(' · ')}</p>}
+        </div>)}
+      </div>
+      <div>
+        <span class="label">Measured stages</span>
+        {['collection','triage','research','validation','human_wait','deployment'].map(stage => {
+          const attempts = coverage.timings.filter(t => t.stage === stage);
+          return <div class="coverage-timing"><span>{stageLabels[stage]}</span><strong>{attempts.length ? attempts.map(t => `${duration(t.seconds)} (${t.status}, attempt ${t.attempt})`).join('; ') : 'Not measured'}</strong></div>;
+        })}
+        <div class="coverage-timing coverage-total"><span>Full publishing cycle</span><strong>{duration(coverage.end_to_end_seconds)}</strong></div>
+        <p class="coverage-footnote">Stage spans may overlap; do not add them together. Research time and human review are not inferred from a successful build.</p>
+      </div>
+    </div>
+    <p class="coverage-footnote">{coverage.note}</p>
+  </details>
+  <div class="coverage-bottom"><span>Observed ≠ triaged ≠ read ≠ published.</span><a href={`${base}data/coverage.json`}>Coverage JSON ↗</a></div>
+</section>
+<style>
+  .coverage-section { margin-top:48px; padding:28px 0; border-top:1px solid var(--ink); border-bottom:1px solid var(--line); }
+  .coverage-intro { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:40px; align-items:center; margin-bottom:24px; }
+  .coverage-intro p { max-width:760px; margin:0; font-size:15px; color:#3d3b36; }
+  .coverage-output { display:flex; align-items:center; gap:13px; }
+  .coverage-output strong { font:500 44px Georgia,serif; color:var(--accent); }
+  .coverage-output span { font-size:11px; color:var(--muted); }
+  .coverage-scroll { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  caption { text-align:left; padding-bottom:12px; font-size:11px; color:var(--muted); }
+  th,td { padding:12px 10px; text-align:right; border-bottom:1px solid var(--line); white-space:nowrap; }
+  th:first-child { text-align:left; padding-left:0; }
+  thead th { color:var(--muted); font-size:11px; font-weight:600; }
+  td { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+  .coverage-detail { margin-top:20px; }
+  summary { cursor:pointer; font-size:12px; font-weight:650; color:var(--accent); }
+  .coverage-detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:36px; padding-top:24px; }
+  .coverage-source-note { margin:14px 0 22px; font-size:13px; }
+  .coverage-source-note p { margin:6px 0; font-size:12px; color:var(--muted); overflow-wrap:anywhere; }
+  .coverage-timing { display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); font-size:12px; }
+  .coverage-timing strong { font-weight:500; text-align:right; color:var(--muted); }
+  .coverage-total { margin-top:8px; }
+  .coverage-footnote { font-size:12px; color:var(--muted); line-height:1.65; }
+  .coverage-bottom { display:flex; justify-content:space-between; gap:20px; margin-top:20px; color:var(--muted); font-size:11px; }
+  .coverage-bottom a { text-underline-offset:3px; }
+  @media(max-width:700px) { .coverage-intro,.coverage-detail-grid {grid-template-columns:1fr;gap:18px} .coverage-output strong {font-size:32px} .coverage-bottom {flex-wrap:wrap} }
+</style>
