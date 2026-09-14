@@ -5,13 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/validate-data.mjs && astro build",
+    "test": "node --test tests/*.test.mjs",
+    "build": "npm test && node scripts/validate-data.mjs && node scripts/validate-coverage.mjs && astro build",
     "preview": "astro preview"
   },
-  "dependencies": {
-    "astro": "7.3.2"
-  },
-  "engines": {
-    "node": ">=24"
-  }
+  "dependencies": { "astro": "7.3.2" },
+  "engines": { "node": ">=24" }
 }
