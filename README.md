@@ -4,7 +4,7 @@
 
 Public, static presentation and machine-readable output for GrepSignal intelligence.
 
-This repository is intentionally separate from the private `grepsignal-engine`. It should contain only publication-safe material: approved GrepSignal analysis, source links/metadata, public schemas and the static site. Raw scraped content, private prompts, engine heuristics, temporary images and secrets do not belong here.
+This repository is intentionally separate from the private `grepsignal-engine`. It contains only publication-safe material: approved GrepSignal analysis, source links/metadata, public schemas and the static site. Raw scraped content, private prompts, engine heuristics, temporary images and secrets do not belong here.
 
 ## v0.1 beta
 
@@ -12,7 +12,7 @@ This repository is intentionally separate from the private `grepsignal-engine`. 
 - Research-journal × light-terminal visual style.
 - No third-party article images.
 - JSON is a first-class public output; HTML is a presentation layer.
-- Current records are explicitly marked `preview_sample` and are illustrative, not published findings.
+- Published records expose evidence links, falsifiers and limitations; discovery channels such as Hacker News are not counted as factual evidence.
 - GitHub Pages is the initial dogfood target. Cloudflare Pages/domain comes only after the content and publishing flow have been observed for several days.
 
 ## Local development
@@ -27,16 +27,16 @@ Local development uses `/` as the base path. GitHub Actions builds with `/grepsi
 
 ## GitHub Pages beta
 
-After merging the site PR, an admin must set **Settings → Pages → Build and deployment → Source → GitHub Actions**. The deploy workflow builds `dist/` and publishes it through GitHub Pages.
-
-Expected project URL:
+The beta is published at:
 
 `https://cinic0101.github.io/grepsignal/`
 
-Do not treat a successful build as a live Pages deployment until the Pages source is enabled and the deployed URL is checked.
+The deploy workflow builds `dist/` and publishes it through GitHub Pages.
 
 ## Public data boundary
 
-`scripts/validate-data.mjs` blocks obvious private/raw fields and requires sample records to be explicitly marked while the site is in preview mode. It is a publication guard, not a substitute for the private engine's editorial/IP review.
+`scripts/validate-data.mjs` blocks obvious private/raw fields. For `publication_status: published`, it also requires linked evidence, matching source counts, source-organization counts, falsifiers, limitations, registration date, evidence-history date, and credential-free HTTPS source URLs.
+
+That validator is a publication guard, not a substitute for the private engine's editorial/IP review.
 
 No repository-wide license is selected yet because code and original intelligence content may use different licenses later.
