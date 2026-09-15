@@ -15,6 +15,12 @@ This repository is intentionally separate from the private `grepsignal-engine`. 
 - Published records expose evidence links, falsifiers and limitations; discovery channels such as Hacker News are not counted as factual evidence.
 - GitHub Pages is the initial dogfood target. Cloudflare Pages/domain comes only after the content and publishing flow have been observed for several days.
 
+## Discoverability
+
+> **Never create content because a keyword exists. Make genuine signals maximally discoverable.**
+
+SEO/AEO is a publication concern, not an editorial input. GrepSignal may improve stable URLs, semantic HTML, canonical metadata, structured data, sitemaps and machine-readable outputs for intelligence that has already passed editorial review. Search demand must not create a signal, lower its publication threshold or justify keyword-targeted filler pages.
+
 ## Local development
 
 ```sh
