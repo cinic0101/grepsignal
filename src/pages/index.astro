@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CoveragePanel from '../components/CoveragePanel.astro';
 import intelligence from '../data/intelligence.json';
+import coverage from '../data/coverage.json';
 
 const base = import.meta.env.BASE_URL;
 const isPublished = intelligence.publication_status === 'published';
@@ -21,6 +22,9 @@ const statusMark: Record<string, string> = {
 const updated = new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
 }).format(new Date(intelligence.generated_at));
+const lastReviewed = new Intl.DateTimeFormat('en', {
+  year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
+}).format(new Date(coverage.generated_at));
 const formatMonth = (value: string) => {
   const [year, month] = value.split('-').map(Number);
   return new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', timeZone: 'UTC' })
@@ -50,6 +54,7 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
       </div>
       <div class="hero-meta" aria-label="Publication statistics">
         <div class="meta-row"><span>{isPublished ? 'Published' : 'Preview date'}</span><strong>{updated}</strong></div>
+        <div class="meta-row"><span>Last reviewed</span><strong>{lastReviewed}</strong></div>
         <div class="meta-row"><span>Material signals</span><strong>{intelligence.stats.material_signals}</strong></div>
         <div class="meta-row"><span>Active threads</span><strong>{intelligence.stats.active_threads}</strong></div>
         <div class="meta-row"><span>Open predictions</span><strong>{intelligence.stats.open_predictions}</strong></div>
