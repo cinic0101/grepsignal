@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const endpoints = [
+  {
+    label: 'INTELLIGENCE',
+    href: `${base}data/intelligence.json`,
+    path: '/data/intelligence.json',
+    description: 'Canonical published signals, active threads, predictions, evidence links, falsifiers, and limitations.',
+  },
+  {
+    label: 'COVERAGE',
+    href: `${base}data/coverage.json`,
+    path: '/data/coverage.json',
+    description: 'What GrepSignal reviewed in the current cycle, including publication and no-publish outcomes.',
+  },
+  {
+    label: 'INTELLIGENCE SCHEMA',
+    href: `${base}schema/intelligence.schema.json`,
+    path: '/schema/intelligence.schema.json',
+    description: 'JSON Schema for the canonical intelligence payload.',
+  },
+  {
+    label: 'COVERAGE SCHEMA',
+    href: `${base}schema/coverage.schema.json`,
+    path: '/schema/coverage.schema.json',
+    description: 'JSON Schema for the coverage payload.',
+  },
+];
+---
+<BaseLayout
+  title="For agents — GrepSignal"
+  description="Machine-readable GrepSignal intelligence, schemas, evidence conventions, and guidance for AI agents."
+>
+  <main>
+    <section class="agent-hero">
+      <div class="wrap agent-hero-grid">
+        <div>
+          <div class="eyebrow">&gt; grep --machine-readable</div>
+          <h1>For agents.</h1>
+          <p>
+            GrepSignal is static-first and JSON-first. Use the structured public artifacts as the canonical interface;
+            treat HTML as a human presentation layer.
+          </p>
+        </div>
+        <div class="terminal-card" aria-label="Recommended agent entry point">
+          <span class="terminal-label">START HERE</span>
+          <code>GET {base}data/intelligence.json</code>
+          <a href={`${base}data/intelligence.json`}>Open canonical intelligence →</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap agent-content">
+      <section aria-labelledby="endpoints-title">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">DISCOVERY</span>
+            <h2 id="endpoints-title">Public machine-readable artifacts</h2>
+          </div>
+          <small>No auth. No runtime API. Static public snapshots.</small>
+        </div>
+
+        <div class="endpoint-list">
+          {endpoints.map((endpoint) => (
+            <a class="endpoint-row" href={endpoint.href}>
+              <div>
+                <span class="endpoint-label">{endpoint.label}</span>
+                <code>{endpoint.path}</code>
+              </div>
+              <p>{endpoint.description}</p>
+              <span class="endpoint-arrow" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="guide-grid" aria-label="Agent consumption guidance">
+        <article class="guide-card">
+          <span class="section-kicker">CONSUME</span>
+          <h2>Recommended flow</h2>
+          <ol>
+            <li><strong>Fetch JSON first.</strong> Start with <code>/data/intelligence.json</code>.</li>
+            <li><strong>Check the contract.</strong> Read <code>schema_version</code> and validate against the public schema when strict parsing matters.</li>
+            <li><strong>Use stable IDs.</strong> Signal and thread IDs are the durable references; do not identify records by title alone.</li>
+            <li><strong>Follow evidence.</strong> Use each signal's source links to inspect primary or affected-party evidence when a claim matters to your task.</li>
+            <li><strong>Carry uncertainty forward.</strong> Preserve falsifiers, limitations, status, and prediction resolution instead of flattening them into a definitive claim.</li>
+          </ol>
+        </article>
+
+        <article class="guide-card">
+          <span class="section-kicker">BOUNDARIES</span>
+          <h2>Interpretation rules</h2>
+          <ul>
+            <li>Published signals are curated material changes, not a complete news feed.</li>
+            <li>Absence from the dataset does not imply an event did not happen or is unimportant.</li>
+            <li>Coverage records describe what was reviewed; they are useful for distinguishing “not reviewed” from “reviewed, not published.”</li>
+            <li>Discovery channels may prioritize research, but factual claims should be traced to the linked evidence.</li>
+            <li>Do not treat probability as certainty. Predictions remain accountable to their deadline and resolution state.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="contract-section" aria-labelledby="contract-title">
+        <div>
+          <span class="section-kicker">CONTRACT</span>
+          <h2 id="contract-title">What a signal carries</h2>
+          <p>
+            The canonical record is designed to preserve both the synthesis and the conditions under which that synthesis could be wrong.
+          </p>
+        </div>
+        <div class="contract-fields">
+          <code>id</code>
+          <code>type</code>
+          <code>status</code>
+          <code>summary</code>
+          <code>why_it_matters</code>
+          <code>second_order_effect</code>
+          <code>watch_next</code>
+          <code>falsifiers[]</code>
+          <code>limitations[]</code>
+          <code>sources[]</code>
+        </div>
+      </section>
+
+      <section class="agent-policy" aria-labelledby="policy-title">
+        <div>
+          <span class="section-kicker">USAGE</span>
+          <h2 id="policy-title">Link to evidence. Don’t mirror it.</h2>
+        </div>
+        <div>
+          <p>
+            GrepSignal publishes original synthesis and source metadata, not mirrored article bodies. Agents should keep that boundary:
+            cite or follow the original evidence URL when deeper source detail is required instead of reconstructing third-party content from GrepSignal.
+          </p>
+          <p>
+            The canonical language is English. Consumers may translate for their own users, but should keep the public IDs and source URLs unchanged.
+          </p>
+        </div>
+      </section>
+
+      <section class="agent-footer-card">
+        <div>
+          <span class="section-kicker">SOURCE</span>
+          <h2>Inspect the publication layer</h2>
+          <p>The public repository contains the site, schemas, validation, and approved publication-safe data.</p>
+        </div>
+        <a class="github-link" href="https://github.com/cinic0101/grepsignal">View GrepSignal on GitHub →</a>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap footerline">
+      <span>GrepSignal — structured intelligence for humans and agents.</span>
+      <span>Link to evidence. Don’t mirror it.</span>
+    </div>
+  </footer>
+</BaseLayout>
+
+<style>
+  .agent-hero { padding: 78px 0 58px; border-bottom: 1px solid var(--line); }
+  .agent-hero-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr); gap: 64px; align-items: end; }
+  .agent-hero h1 { font-size: clamp(58px, 8vw, 96px); }
+  .agent-hero p { max-width: 760px; margin: 0; font-size: 20px; color: #383733; }
+  .terminal-card { border: 1px solid var(--ink); border-radius: var(--radius); background: var(--panel); padding: 22px; display: grid; gap: 14px; }
+  .terminal-label { font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; color: var(--accent); }
+  .terminal-card code { overflow-wrap: anywhere; font: 650 13px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .terminal-card a, .github-link { color: var(--accent); font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace; text-decoration: none; }
+  .terminal-card a:hover, .terminal-card a:focus-visible, .github-link:hover, .github-link:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+  .agent-content { padding-top: 54px; padding-bottom: 90px; }
+  .endpoint-list { border-top: 1px solid var(--ink); }
+  .endpoint-row { display: grid; grid-template-columns: minmax(220px, .8fr) minmax(0, 1.6fr) auto; gap: 30px; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--line); text-decoration: none; }
+  .endpoint-row:hover .endpoint-arrow, .endpoint-row:focus-visible .endpoint-arrow { transform: translateX(4px); }
+  .endpoint-label { display: block; margin-bottom: 6px; color: var(--accent); font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .07em; }
+  .endpoint-row code { font: 650 13px ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .endpoint-row p { margin: 0; color: var(--muted); font-size: 14px; }
+  .endpoint-arrow { color: var(--accent); font-size: 22px; transition: transform .15s ease; }
+  .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 56px; }
+  .guide-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; }
+  .guide-card h2, .contract-section h2, .agent-policy h2, .agent-footer-card h2 { margin: 5px 0 16px; font: 600 31px/1.08 Georgia, 'Times New Roman', serif; letter-spacing: -.025em; }
+  .guide-card ol, .guide-card ul { margin: 0; padding-left: 21px; color: #3d3b36; }
+  .guide-card li + li { margin-top: 13px; }
+  .guide-card code { font-size: .88em; }
+  .contract-section, .agent-policy { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--ink); display: grid; grid-template-columns: minmax(230px, .8fr) minmax(0, 1.4fr); gap: 50px; }
+  .contract-section p, .agent-policy p, .agent-footer-card p { color: var(--muted); margin: 0; }
+  .agent-policy p + p { margin-top: 16px; }
+  .contract-fields { display: flex; gap: 9px; flex-wrap: wrap; align-content: flex-start; }
+  .contract-fields code { border: 1px solid var(--line); border-radius: 7px; padding: 7px 9px; background: var(--panel); font: 650 11px ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .agent-footer-card { margin-top: 56px; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: end; }
+  .agent-footer-card h2 { margin-bottom: 8px; }
+  @media (max-width: 900px) {
+    .agent-hero-grid, .guide-grid, .contract-section, .agent-policy { grid-template-columns: 1fr; }
+    .endpoint-row { grid-template-columns: 1fr auto; gap: 12px 20px; }
+    .endpoint-row p { grid-column: 1; }
+    .endpoint-arrow { grid-column: 2; grid-row: 1 / span 2; }
+  }
+  @media (max-width: 620px) {
+    .agent-hero { padding: 58px 0 42px; }
+    .agent-hero p { font-size: 18px; }
+    .agent-content { padding-top: 38px; }
+    .agent-footer-card { grid-template-columns: 1fr; }
+    .endpoint-row { grid-template-columns: 1fr auto; }
+  }
+</style>
