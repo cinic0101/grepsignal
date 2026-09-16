@@ -21,7 +21,10 @@ export const GET: APIRoute = ({ site }) => {
   ];
 
   if (intelligence.publication_status === 'published') {
-    entries.unshift({ loc: absoluteUrl(), lastmod: generatedDate });
+    entries.unshift(
+      { loc: absoluteUrl(), lastmod: generatedDate },
+      { loc: absoluteUrl('signals/'), lastmod: generatedDate },
+    );
     entries.push(...intelligence.signals.map((signal) => ({
       loc: absoluteUrl(`signals/${signal.id}/`),
       lastmod: signal.registered_at,
