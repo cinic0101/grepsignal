@@ -6,6 +6,12 @@ Public, static presentation and machine-readable output for GrepSignal intellige
 
 This repository is intentionally separate from the private `grepsignal-engine`. It contains only publication-safe material: approved GrepSignal analysis, source links/metadata, public schemas and the static site. Raw scraped content, private prompts, engine heuristics, temporary images and secrets do not belong here.
 
+## How GrepSignal works
+
+![How GrepSignal works](public/how-grepsignal-works.svg)
+
+GrepSignal uses LLM-assisted semantic review and evidence gathering to interpret candidates and collect context. Publication is constrained by an evidence-backed signal gate: candidates can be marked `out of scope`, `no signal` or `watch` instead of being published.
+
 ## v0.1 beta
 
 - Astro static site, English canonical content.
