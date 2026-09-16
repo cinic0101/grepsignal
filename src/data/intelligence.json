@@ -2,14 +2,45 @@
   "schema_version": 1,
   "publication_status": "published",
   "canonical_language": "en",
-  "generated_at": "2026-09-14T09:41:22.911125Z",
+  "generated_at": "2026-09-16T06:48:44Z",
   "notice": "Formally reviewed GrepSignal intelligence. Discovery channels are used to prioritize research, not as factual evidence. Evidence links point to primary or affected-party sources, and no third-party images are republished.",
   "stats": {
-    "material_signals": 2,
+    "material_signals": 3,
     "active_threads": 2,
     "open_predictions": 0
   },
   "signals": [
+    {
+      "id": "sig-purpose-separated-crawling-2026-09-16",
+      "type": "platform_shift",
+      "status": "emerging",
+      "title": "Machine-access policy is moving from bot identity to declared purpose",
+      "summary": "Cloudflare has introduced an edge-level policy model that treats search indexing, model training, and user-directed agents as different uses instead of one crawler identity. The important shift is governance architecture: a site can preserve ordinary discovery while expressing a separate training preference, and infrastructure can mediate that preference against crawler behavior.",
+      "why_it_matters": "This moves AI data-use control closer to a reusable web infrastructure primitive. If other intermediaries and crawler operators adopt compatible semantics, publishers may no longer need to choose between search visibility and blanket bot blocking, while AI operators face stronger pressure to make crawler purpose observable and enforceable.",
+      "second_order_effect": "Publisher controls may consolidate around purpose-based machine-access policy rather than lists of individual crawlers.",
+      "watch_next": "Track cross-provider adoption and operator compliance before treating the model as a settled standard.",
+      "source_count": 1,
+      "source_organization_count": 1,
+      "evidence_since": "2026-09",
+      "registered_at": "2026-09-16",
+      "falsifiers": [
+        "Large mixed-use crawler operators stop honoring separate training preferences or tie them to search-ranking penalties.",
+        "Independent measurements show that the control cannot preserve ordinary search access while reliably excluding training use."
+      ],
+      "limitations": [
+        "Evidence currently comes from one infrastructure provider's launch and operator commitments, not independent longitudinal measurement.",
+        "The announcement separates training from search more clearly than it resolves downstream AI-summary and agent use."
+      ],
+      "sources": [
+        {
+          "publisher": "Cloudflare",
+          "title": "Have it both ways: stay discoverable in search while disallowing AI training",
+          "url": "https://blog.cloudflare.com/accountable-mixed-use-ai-crawlers/",
+          "role": "primary_platform_announcement",
+          "published_at": null
+        }
+      ]
+    },
     {
       "id": "sig-research-automation-bottlenecks-2026-09-14",
       "type": "second_order_effect",
