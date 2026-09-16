@@ -51,4 +51,8 @@ The deploy workflow builds `dist/` and publishes it through GitHub Pages.
 
 That validator is a publication guard, not a substitute for the private engine's editorial/IP review.
 
-No repository-wide license is selected yet because code and original intelligence content may use different licenses later.
+## License
+
+The software source code, scripts, configuration, and site implementation in this repository are licensed under the [Apache License 2.0](LICENSE).
+
+Published GrepSignal intelligence, editorial analysis, and machine-readable signal records are **not** licensed under Apache-2.0 unless explicitly stated otherwise. Third-party source material remains subject to the rights of its respective owners.
