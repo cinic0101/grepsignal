@@ -10,6 +10,7 @@ This repository is public. Treat every committed byte as publishable.
 - Preserve stable public IDs and prediction history. Never silently rewrite an already registered prediction.
 - Preview/sample data must remain visibly marked and must never be mixed with `publication_status: published`.
 - Avoid fake precision such as Signal scores unless a documented method exists.
+- Discoverability is downstream of editorial judgment: **Never create content because a keyword exists. Make genuine signals maximally discoverable.** SEO/AEO metadata, semantic markup, feeds and indexes may expose approved intelligence, but must never create or promote intelligence solely to target search demand.
 - Keep the site static-first. Do not add a backend, database, auth, ad stack, MCP/WebMCP server or analytics dependency without an explicit product decision.
 - GitHub Pages beta must remain deployable under `/grepsignal/`; production hosting must also work at `/` via configuration.
 

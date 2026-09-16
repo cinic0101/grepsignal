@@ -49,8 +49,36 @@ const formatMonth = (value: string) => {
 const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
 }).format(new Date(`${value}T00:00:00Z`));
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: signal.title,
+  description: signal.summary,
+  identifier: signal.id,
+  datePublished: signal.registered_at,
+  inLanguage: intelligence.canonical_language,
+  articleSection: typeLabels[signal.type] ?? signal.type,
+  mainEntityOfPage: canonicalUrl,
+  author: {
+    '@type': 'Organization',
+    name: 'GrepSignal',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'GrepSignal',
+  },
+  citation: signal.sources.map((source) => source.url),
+};
 ---
-<BaseLayout title={`${signal.title} — GrepSignal`} description={signal.summary}>
+<BaseLayout
+  title={`${signal.title} — GrepSignal`}
+  description={signal.summary}
+  robots={isPublished ? 'index,follow' : 'noindex,nofollow'}
+  ogType="article"
+  publishedAt={signal.registered_at}
+  jsonLd={articleJsonLd}
+>
   <section class={`preview-notice ${isPublished ? 'live-notice' : ''}`} role="note">
     <div class="wrap">
       <strong>{isPublished ? 'LIVE INTELLIGENCE' : 'PREVIEW DATA'}</strong>
