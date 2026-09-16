@@ -8,7 +8,7 @@ This repository is intentionally separate from the private `grepsignal-engine`. 
 
 ## How GrepSignal works
 
-![How GrepSignal works](public/how-grepsignal-works.svg)
+![How GrepSignal works](public/how-grepsignal-works.webp)
 
 GrepSignal uses LLM-assisted semantic review and evidence gathering to interpret candidates and collect context. Publication is constrained by an evidence-backed signal gate: candidates can be marked `out of scope`, `no signal` or `watch` instead of being published.
 
