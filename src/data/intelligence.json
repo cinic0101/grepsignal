@@ -2,14 +2,47 @@
   "schema_version": 1,
   "publication_status": "published",
   "canonical_language": "en",
-  "generated_at": "2026-09-16T06:48:44Z",
+  "generated_at": "2026-09-16T07:15:08Z",
   "notice": "Formally reviewed GrepSignal intelligence. Discovery channels are used to prioritize research, not as factual evidence. Evidence links point to primary or affected-party sources, and no third-party images are republished.",
   "stats": {
-    "material_signals": 3,
+    "material_signals": 4,
     "active_threads": 2,
     "open_predictions": 0
   },
   "signals": [
+    {
+      "id": "sig-decision-specialized-runtime-2026-09-16",
+      "type": "capability_delta",
+      "status": "emerging",
+      "title": "Decision-specialized models are separating inference from text generation",
+      "summary": "TypeSafe's System One model Jev exposes a different runtime contract from general-purpose language models: software supplies unstructured or structured program state and receives predefined typed decisions with probabilities and confidence rather than free-form generated text. The material change is the interface and sampling model, not TypeSafe's vendor-reported benchmark multipliers.",
+      "why_it_matters": "If independent evaluation shows this pattern is reliable beyond TypeSafe's launch examples, AI application stacks may split open-ended reasoning and generation from high-frequency bounded decisions such as routing, classification, scoring, gating, extraction and verification. That would make the choice of model runtime part of application architecture rather than treating every semantic operation as a text-generation call.",
+      "second_order_effect": "AI runtimes may bifurcate: generative models handle open-ended reasoning and synthesis, while decision-specialized models handle bounded, high-frequency control decisions with typed probabilistic outputs.",
+      "watch_next": "Track independent latency, calibration and task-quality evaluations, real production adoption, and whether other model providers expose comparable decision-native runtimes.",
+      "source_count": 1,
+      "source_organization_count": 1,
+      "evidence_since": "2026-09",
+      "registered_at": "2026-09-16",
+      "falsifiers": [
+        "Independent evaluations show that decision-specialized models do not provide a meaningful reliability, latency or cost advantage once task quality and calibration are controlled.",
+        "General-purpose models with structured outputs reach comparable latency, consistency and economics for bounded software decisions, removing the need for a distinct runtime class.",
+        "The approach remains confined to narrow demonstrations and fails to gain repeat production use across materially different decision workloads."
+      ],
+      "limitations": [
+        "Current evidence is TypeSafe's own launch announcement and product interface; independent benchmark or production evidence is not yet available.",
+        "TypeSafe's quantitative speed, cost and workflow-evaluation claims are excluded from this Signal because the benchmark visuals were unavailable for review and the measurements are vendor-produced.",
+        "Typed outputs can prevent schema or type-shape failures, but they do not guarantee that the semantic decision itself is correct or well calibrated."
+      ],
+      "sources": [
+        {
+          "publisher": "TypeSafe AI",
+          "title": "Introducing System One Models & Jev",
+          "url": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+          "role": "primary_model_announcement",
+          "published_at": "2026-09-15"
+        }
+      ]
+    },
     {
       "id": "sig-purpose-separated-crawling-2026-09-16",
       "type": "platform_shift",
