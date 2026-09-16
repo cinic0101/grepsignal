@@ -33,6 +33,9 @@ const formatMonth = (value: string) => {
 const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
 }).format(new Date(`${value}T00:00:00Z`));
+const homepageSignals = [...intelligence.signals]
+  .sort((a, b) => b.registered_at.localeCompare(a.registered_at))
+  .slice(0, 6);
 ---
 <BaseLayout>
   <section class={`preview-notice ${isPublished ? 'live-notice' : ''}`} role="note">
@@ -74,9 +77,9 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
       </div>
 
       <div class="signal-list">
-        {intelligence.signals.length === 0 ? (
+        {homepageSignals.length === 0 ? (
           <div class="empty-state">No published signal in this dataset.</div>
-        ) : intelligence.signals.map((signal, index) => (
+        ) : homepageSignals.map((signal, index) => (
           <article class="signal" id={signal.id}>
             <div class="index">{String(index + 1).padStart(2, '0')}</div>
             <div>
@@ -105,6 +108,12 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
           </article>
         ))}
       </div>
+
+      {intelligence.signals.length > 0 && (
+        <div class="signal-archive-cta">
+          <a href={`${base}signals/`}>View all signals <span aria-hidden="true">→</span></a>
+        </div>
+      )}
     </section>
 
     <CoveragePanel />
@@ -208,6 +217,21 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
     text-decoration: none;
   }
   .signal-link:hover, .signal-link:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+  .signal-archive-cta { display: flex; justify-content: flex-end; padding-top: 20px; }
+  .signal-archive-cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    padding: 9px 12px;
+    color: var(--accent);
+    font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .04em;
+    text-decoration: none;
+  }
+  .signal-archive-cta a:hover, .signal-archive-cta a:focus-visible { border-color: var(--ink); }
   .thread-thesis { margin-top: 10px !important; color: #3d3b36 !important; }
   .empty-card { border-top: 1px solid var(--line); padding: 22px 0 8px; color: var(--muted); }
   .empty-card strong { color: var(--ink); font-family: Georgia, 'Times New Roman', serif; font-size: 20px; font-weight: 600; }
