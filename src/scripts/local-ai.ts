@@ -87,12 +87,20 @@ function loadWebLLM() {
   return webLLMPromise;
 }
 
+function canonicalizeVisibleLabels(text: string) {
+  return text.replace(
+    /(^|\n)([ \t]*(?:#{1,6}[ \t]*)?(?:[*_`]{0,2})?)WHY[ _-]*(?:IT|THIS)[ _-]*(?:COULD[ _-]*)?MATTERS?(?:[*_`]{0,2})?[ \t]*:/gi,
+    '$1$2WHY_IT_COULD_MATTER:',
+  );
+}
+
 function visibleFromRaw(raw: string) {
   let visible = raw.replace(/<think>[\s\S]*?<\/think>/gi, '');
   const openThink = visible.toLowerCase().lastIndexOf('<think>');
   const thinking = openThink >= 0;
   if (thinking) visible = visible.slice(0, openThink);
   visible = visible.replace(/<\/?think>/gi, '').trimStart();
+  visible = canonicalizeVisibleLabels(visible);
   return { visible, thinking };
 }
 
@@ -198,7 +206,7 @@ const manager: LocalAIManager = {
               '/no_think',
               `TITLE: ${signal.title}`,
               `SUMMARY: ${signal.summary}`,
-              `WHY_IT_MATTERS: ${signal.why_it_matters}`,
+              `PUBLISHED_WHY_IT_MATTERS: ${signal.why_it_matters}`,
               `SECOND_ORDER_EFFECT: ${signal.second_order_effect}`,
               `WATCH_NEXT: ${signal.watch_next}`,
               `LIMITATIONS: ${signal.limitations.join(' | ')}`,
