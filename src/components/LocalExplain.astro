@@ -56,10 +56,21 @@ const payload = JSON.stringify(signal).replace(/</g, '\\u003c');
 </section>
 
 <script>
+  type LocalAIState = {
+    enabled: boolean;
+    phase: string;
+    modelId?: string | null;
+  };
   type Manager = {
-    getState: () => { enabled: boolean; phase: string };
+    getState: () => LocalAIState;
     explain: (payload: unknown) => Promise<string>;
   };
+  type ParsedFields = {
+    whatChanged: string;
+    whyMatter: string;
+    example: string;
+  };
+  type ParsedKey = keyof ParsedFields;
 
   const getManager = async (): Promise<Manager> => {
     const current = (window as any).__grepsignalLocalAI as Manager | undefined;
@@ -71,12 +82,59 @@ const payload = JSON.stringify(signal).replace(/</g, '\\u003c');
     });
   };
 
-  const extractField = (text: string, label: string, next?: string) => {
-    const start = text.indexOf(`${label}:`);
-    if (start < 0) return '';
-    const valueStart = start + label.length + 1;
-    const end = next ? text.indexOf(`${next}:`, valueStart) : -1;
-    return text.slice(valueStart, end >= 0 ? end : undefined).trim();
+  const normalizeLabel = (value: string) => value
+    .trim()
+    .replace(/^#{1,6}\s*/, '')
+    .replace(/[\*_`>]/g, '')
+    .replace(/[\s_-]+/g, '')
+    .toUpperCase();
+
+  const labelMap: Record<string, ParsedKey> = {
+    WHATCHANGED: 'whatChanged',
+    WHYITCOULDMATTER: 'whyMatter',
+    EXAMPLE: 'example',
+  };
+
+  const cleanValue = (value: string) => value
+    .trim()
+    .replace(/^\*+\s*/, '')
+    .replace(/\s*\*+$/, '')
+    .trim();
+
+  const parseFields = (text: string): ParsedFields => {
+    const fields: ParsedFields = { whatChanged: '', whyMatter: '', example: '' };
+    let active: ParsedKey | null = null;
+
+    const append = (key: ParsedKey, value: string) => {
+      const cleaned = cleanValue(value);
+      if (!cleaned) return;
+      fields[key] = fields[key] ? `${fields[key]} ${cleaned}` : cleaned;
+    };
+
+    for (const rawLine of text.split(/\r?\n/)) {
+      const line = rawLine.trim();
+      if (!line) continue;
+
+      const colon = line.indexOf(':');
+      if (colon >= 0) {
+        const labeled = labelMap[normalizeLabel(line.slice(0, colon))];
+        if (labeled) {
+          active = labeled;
+          append(labeled, line.slice(colon + 1));
+          continue;
+        }
+      }
+
+      const standalone = labelMap[normalizeLabel(line)];
+      if (standalone) {
+        active = standalone;
+        continue;
+      }
+
+      if (active) append(active, line);
+    }
+
+    return fields;
   };
 
   document.querySelectorAll<HTMLElement>('[data-local-explain]').forEach((root) => {
@@ -109,19 +167,30 @@ const payload = JSON.stringify(signal).replace(/</g, '\\u003c');
         const manager = await getManager();
         const payload = JSON.parse(payloadNode.textContent || '{}');
         const text = await manager.explain(payload);
-        const whatChanged = extractField(text, 'WHAT_CHANGED', 'WHY_IT_COULD_MATTER');
-        const whyMatter = extractField(text, 'WHY_IT_COULD_MATTER', 'EXAMPLE');
-        const simpleExample = extractField(text, 'EXAMPLE');
-        if (!whatChanged || !whyMatter) {
+        const parsed = parseFields(text);
+        console.info('[GrepSignal Local AI] completion', {
+          modelId: manager.getState().modelId ?? null,
+          raw: text,
+          parsed,
+        });
+        if (!parsed.whatChanged || !parsed.whyMatter) {
+          console.warn('[GrepSignal Local AI] format guard rejected completion', {
+            missing: [
+              !parsed.whatChanged ? 'whatChanged' : null,
+              !parsed.whyMatter ? 'whyMatter' : null,
+            ].filter(Boolean),
+            raw: text,
+          });
           throw new Error('Local explanation did not pass the format guard. Please use the published signal.');
         }
-        changed.textContent = whatChanged;
-        matter.textContent = whyMatter;
-        const hasExample = simpleExample && simpleExample.toUpperCase() !== 'NONE';
+        changed.textContent = parsed.whatChanged;
+        matter.textContent = parsed.whyMatter;
+        const hasExample = parsed.example && parsed.example.toUpperCase() !== 'NONE';
         exampleCard.hidden = !hasExample;
-        example.textContent = hasExample ? simpleExample : '';
+        example.textContent = hasExample ? parsed.example : '';
         output.hidden = false;
       } catch (cause) {
+        console.error('[GrepSignal Local AI] explanation failed', cause);
         error.textContent = cause instanceof Error ? cause.message : 'Local explanation failed.';
         error.hidden = false;
       } finally {
