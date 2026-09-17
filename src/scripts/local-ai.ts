@@ -17,12 +17,9 @@ type ExplainSignal = {
   title: string;
   summary: string;
   why_it_matters: string;
-  second_order_effect: string;
-  watch_next: string;
-  limitations: string[];
 };
 
-type ExplainTask = 'what_changed' | 'why_it_matters' | 'example';
+type ExplainTask = 'what_changed' | 'why_it_matters';
 
 type CompletionResponse = {
   choices: Array<{ message?: { content?: string | null } }>;
@@ -107,73 +104,10 @@ function isCompletionStream(value: CompletionResult): value is CompletionStream 
   return typeof (value as CompletionStream)?.[Symbol.asyncIterator] === 'function';
 }
 
-function normalizeWords(value: string) {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, ' ')
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
-}
-
-function ngramReuseRatio(candidate: string, source: string, size = 4) {
-  const candidateWords = normalizeWords(candidate);
-  const sourceWords = normalizeWords(source);
-  if (candidateWords.length < size || sourceWords.length < size) return 0;
-
-  const sourceNgrams = new Set<string>();
-  for (let index = 0; index <= sourceWords.length - size; index += 1) {
-    sourceNgrams.add(sourceWords.slice(index, index + size).join(' '));
-  }
-
-  let reused = 0;
-  let total = 0;
-  for (let index = 0; index <= candidateWords.length - size; index += 1) {
-    total += 1;
-    if (sourceNgrams.has(candidateWords.slice(index, index + size).join(' '))) reused += 1;
-  }
-  return total ? reused / total : 0;
-}
-
-function assessExample(value: string, signal: ExplainSignal) {
-  const text = value.trim();
-  if (!text || text.toUpperCase() === 'NONE') return { usable: false, reason: 'none' };
-  if (/\b(should|must|need(?:s)? to|important to|recommend(?:s|ed|ing|ation)?|ought to)\b/i.test(text)) {
-    return { usable: false, reason: 'advice-like' };
-  }
-  if (!/\b(for example|imagine|suppose|hypothetical|consider (?:a|an|the)?\s*(?:scenario|case|situation))\b/i.test(text)) {
-    return { usable: false, reason: 'not-clearly-hypothetical' };
-  }
-
-  const wordCount = normalizeWords(text).length;
-  if (wordCount < 10) return { usable: false, reason: 'too-short' };
-  if (wordCount > 70) return { usable: false, reason: 'too-long' };
-
-  const published = [signal.summary, signal.why_it_matters, signal.second_order_effect].join(' ');
-  const reuseRatio = ngramReuseRatio(text, published);
-  if (reuseRatio >= 0.45) {
-    return { usable: false, reason: 'too-close-to-published-text', reuseRatio };
-  }
-
-  return { usable: true, reason: 'ok', reuseRatio };
-}
-
-function finalizeTaskOutput(task: ExplainTask, signal: ExplainSignal, value: string) {
-  if (task !== 'example') return value;
-  const assessment = assessExample(value, signal);
-  if (assessment.usable) return value;
-  console.warn('[GrepSignal Local AI] example quality gate omitted output', {
-    reason: assessment.reason,
-    reuseRatio: assessment.reuseRatio ?? null,
-    visible: value,
-  });
-  return 'NONE';
-}
-
 function taskDetail(task: ExplainTask) {
-  if (task === 'what_changed') return 'Simplifying what changed locally…';
-  if (task === 'why_it_matters') return 'Explaining why it could matter locally…';
-  return 'Building a hypothetical example locally…';
+  return task === 'what_changed'
+    ? 'Simplifying what changed locally…'
+    : 'Explaining why it could matter locally…';
 }
 
 function taskInstruction(task: ExplainTask) {
@@ -183,61 +117,39 @@ function taskInstruction(task: ExplainTask) {
       'Simplify wording, not meaning. Explain only what changed.',
       'Preserve the direction of every comparison or causal statement: more versus less, increase versus decrease, scarce versus abundant, narrower versus broader, cause versus effect, and before versus after.',
       'Do not blur or invert directional claims. If the source says something becomes less scarce, more common, slower, faster, narrower, or broader, keep that same direction.',
-      'Preserve source attribution, scope, population, and evidence boundaries. Do not generalize one company, provider, evaluation, or setting into an industry-wide or ordinary-production claim.',
+      'Preserve source attribution, scope, population, and evidence boundaries. Do not generalize one company, provider, evaluation, incident class, or setting into an industry-wide or ordinary-production claim.',
+      'Do not invent a trend, adoption claim, deployment pattern, causal background, or motivation that is not explicitly stated in the published summary.',
       'Do not add implications, recommendations, or new facts.',
       'Return only the rewritten prose. No label, heading, bullet, preamble, or quote marks.',
     ].join('\n');
   }
 
-  if (task === 'why_it_matters') {
-    return [
-      'Rewrite the published why-it-matters text in one or two short plain-English sentences.',
-      'Simplify wording, not the thesis. Preserve the causal chain and the direction of every relationship.',
-      'Preserve every uncertainty qualifier such as if, may, could, or might.',
-      'Keep the specific mechanisms, bottlenecks, constraints, or architectural consequences named in the source instead of replacing them with generic wording such as “this may affect how things are managed”.',
-      'Preserve scope and evidence boundaries. Do not broaden a claim from one organization, provider, evaluation, or setting to a wider population.',
-      'Do not strengthen the claim and do not add recommendations or new facts.',
-      'Return only the rewritten prose. No label, heading, bullet, preamble, or quote marks.',
-    ].join('\n');
-  }
-
   return [
-    'Write one short, concrete hypothetical scenario that makes the supplied signal easier to picture.',
-    'Create a small situation with a generic actor or system and one concrete action, choice, or outcome. Do not merely restate or paraphrase the signal thesis.',
-    'The scenario must use only concepts already present in the supplied signal and must not introduce an external fact.',
-    'Do not copy a full sentence or long phrase from the supplied text.',
-    'Do not give advice or recommendations. Do not use phrases such as should, must, need to, important to, or recommend.',
-    'Make it clearly hypothetical by using wording such as “For example, imagine…” or “Suppose…”.',
-    'Keep it under 50 words.',
-    'If a faithful concrete scenario is not possible, return exactly NONE.',
-    'Return only the scenario or NONE. No label, heading, bullet, preamble, or quote marks.',
+    'Rewrite the published why-it-matters text in one or two short plain-English sentences.',
+    'Simplify wording, not the thesis. Preserve the causal chain and the direction of every relationship.',
+    'Preserve every uncertainty qualifier such as if, may, could, or might.',
+    'Keep the specific mechanisms, bottlenecks, constraints, or architectural consequences named in the source instead of replacing them with generic wording such as “this may affect how things are managed”.',
+    'Preserve scope and evidence boundaries. Do not broaden a claim from one organization, provider, evaluation, incident class, or setting to a wider population.',
+    'Do not invent a trend, adoption claim, deployment pattern, causal background, or motivation that is not explicitly stated in the published why-it-matters text.',
+    'Do not strengthen the claim and do not add recommendations or new facts.',
+    'Return only the rewritten prose. No label, heading, bullet, preamble, or quote marks.',
   ].join('\n');
 }
 
 function taskInput(task: ExplainTask, signal: ExplainSignal) {
   if (task === 'what_changed') {
     return [
-      `/no_think`,
+      '/no_think',
       `TITLE: ${signal.title}`,
       `PUBLISHED_SUMMARY: ${signal.summary}`,
     ].join('\n');
   }
 
-  if (task === 'why_it_matters') {
-    return [
-      `/no_think`,
-      `TITLE: ${signal.title}`,
-      `PUBLISHED_SUMMARY_FOR_CONTEXT: ${signal.summary}`,
-      `PUBLISHED_WHY_IT_MATTERS: ${signal.why_it_matters}`,
-    ].join('\n');
-  }
-
   return [
-    `/no_think`,
+    '/no_think',
     `TITLE: ${signal.title}`,
-    `PUBLISHED_SUMMARY: ${signal.summary}`,
+    `PUBLISHED_SUMMARY_FOR_CONTEXT: ${signal.summary}`,
     `PUBLISHED_WHY_IT_MATTERS: ${signal.why_it_matters}`,
-    `SECOND_ORDER_EFFECT: ${signal.second_order_effect}`,
   ].join('\n');
 }
 
@@ -335,9 +247,9 @@ const manager: LocalAIManager = {
             content: taskInput(task, signal),
           },
         ],
-        temperature: task === 'example' ? 0.6 : 0.3,
+        temperature: 0.3,
         top_p: 0.8,
-        max_tokens: task === 'example' ? 80 : 140,
+        max_tokens: 140,
         stream: true,
         extra_body: {
           enable_thinking: false,
@@ -347,9 +259,8 @@ const manager: LocalAIManager = {
       if (!isCompletionStream(response)) {
         const raw = response.choices[0]?.message?.content?.trim() ?? '';
         const derived = visibleFromRaw(raw);
-        const visible = finalizeTaskOutput(task, signal, derived.visible);
-        onUpdate?.({ task, raw, visible, thinking: derived.thinking, done: true });
-        return visible;
+        onUpdate?.({ task, raw, visible: derived.visible, thinking: derived.thinking, done: true });
+        return derived.visible;
       }
 
       let raw = '';
@@ -364,9 +275,8 @@ const manager: LocalAIManager = {
       }
 
       const final = visibleFromRaw(raw);
-      const finalVisible = finalizeTaskOutput(task, signal, final.visible);
-      onUpdate?.({ task, raw, visible: finalVisible, thinking: final.thinking, done: true });
-      return finalVisible;
+      onUpdate?.({ task, raw, visible: final.visible, thinking: final.thinking, done: true });
+      return final.visible;
     } finally {
       setState({ phase: 'ready', detail: 'Local AI is ready.' });
     }
