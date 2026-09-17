@@ -1,0 +1,10 @@
+{
+  "thread-research-automation-bottlenecks": {
+    "supporting": ["sig-research-automation-bottlenecks-2026-09-14"],
+    "contradicting": []
+  },
+  "thread-agent-runtime-containment": {
+    "supporting": ["sig-agent-security-runtime-boundary-2026-09-14"],
+    "contradicting": []
+  }
+}

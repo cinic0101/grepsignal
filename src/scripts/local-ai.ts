@@ -1,0 +1,230 @@
+import {
+  CreateWebWorkerMLCEngine,
+  prebuiltAppConfig,
+  type MLCEngineInterface,
+} from '@mlc-ai/web-llm';
+
+const STORAGE_KEY = 'grepsignal.local-ai.enabled.v1';
+const MODEL_CANDIDATES = [
+  'Qwen3-0.6B-q4f16_1-MLC',
+  'Llama-3.2-1B-Instruct-q4f16_1-MLC',
+];
+
+type Phase = 'idle' | 'loading' | 'ready' | 'running' | 'unsupported' | 'error';
+type State = {
+  enabled: boolean;
+  phase: Phase;
+  progress: number;
+  detail: string;
+  modelId: string | null;
+};
+
+type ExplainSignal = {
+  title: string;
+  summary: string;
+  why_it_matters: string;
+  second_order_effect: string;
+  watch_next: string;
+  limitations: string[];
+};
+
+type LocalAIManager = {
+  getState: () => State;
+  enable: () => Promise<void>;
+  disable: () => void;
+  ensureReady: () => Promise<void>;
+  explain: (signal: ExplainSignal) => Promise<string>;
+};
+
+declare global {
+  interface Window {
+    __grepsignalLocalAI?: LocalAIManager;
+  }
+}
+
+let state: State = {
+  enabled: false,
+  phase: 'idle',
+  progress: 0,
+  detail: 'Local AI is off.',
+  modelId: null,
+};
+let engine: MLCEngineInterface | null = null;
+let enginePromise: Promise<MLCEngineInterface> | null = null;
+let worker: Worker | null = null;
+
+const snapshot = () => ({ ...state });
+const emit = () => {
+  window.dispatchEvent(new CustomEvent('grepsignal:local-ai-state', { detail: snapshot() }));
+  renderControls();
+};
+const setState = (next: Partial<State>) => {
+  state = { ...state, ...next };
+  emit();
+};
+
+function selectModel() {
+  const available = new Set(prebuiltAppConfig.model_list.map((item) => item.model_id));
+  for (const candidate of MODEL_CANDIDATES) {
+    if (available.has(candidate)) return candidate;
+  }
+  const fallback = prebuiltAppConfig.model_list.find((item) =>
+    item.model_id.includes('Llama-3.2-1B-Instruct-q4f16_1-MLC')
+  );
+  if (!fallback) throw new Error('No supported lightweight local model is available.');
+  return fallback.model_id;
+}
+
+async function loadEngine() {
+  if (engine) return engine;
+  if (enginePromise) return enginePromise;
+  if (!('gpu' in navigator)) {
+    setState({ phase: 'unsupported', detail: 'WebGPU is unavailable in this browser.' });
+    throw new Error('WebGPU unavailable');
+  }
+
+  const modelId = selectModel();
+  setState({ enabled: true, phase: 'loading', progress: 0, detail: 'Preparing local model…', modelId });
+  worker = new Worker(new URL('../workers/local-ai.worker.ts', import.meta.url), { type: 'module' });
+  enginePromise = CreateWebWorkerMLCEngine(worker, modelId, {
+    initProgressCallback: (report) => {
+      const raw = typeof report.progress === 'number' ? report.progress : 0;
+      setState({
+        phase: 'loading',
+        progress: Math.max(0, Math.min(100, Math.round(raw * 100))),
+        detail: report.text || 'Downloading local model…',
+      });
+    },
+  }).then((loaded) => {
+    engine = loaded;
+    setState({ phase: 'ready', progress: 100, detail: 'Local AI is ready.' });
+    return loaded;
+  }).catch((error) => {
+    enginePromise = null;
+    worker?.terminate();
+    worker = null;
+    setState({ phase: 'error', detail: error instanceof Error ? error.message : 'Local model failed to load.' });
+    throw error;
+  });
+
+  try {
+    await navigator.storage?.persist?.();
+  } catch {
+    // Best-effort cache persistence only.
+  }
+  return enginePromise;
+}
+
+const manager: LocalAIManager = {
+  getState: snapshot,
+  async enable() {
+    localStorage.setItem(STORAGE_KEY, '1');
+    setState({ enabled: true });
+    await loadEngine();
+  },
+  disable() {
+    localStorage.removeItem(STORAGE_KEY);
+    worker?.terminate();
+    worker = null;
+    engine = null;
+    enginePromise = null;
+    state = { enabled: false, phase: 'idle', progress: 0, detail: 'Local AI is off.', modelId: null };
+    emit();
+  },
+  async ensureReady() {
+    if (!state.enabled) throw new Error('Local AI has not been enabled.');
+    await loadEngine();
+  },
+  async explain(signal) {
+    const active = await loadEngine();
+    setState({ phase: 'running', detail: 'Explaining this signal locally…' });
+    try {
+      const response = await active.chat.completions.create({
+        messages: [
+          {
+            role: 'system',
+            content: [
+              'You are GrepSignal Local Explain, a constrained reading aid.',
+              'Rewrite only the supplied approved intelligence in clear English.',
+              'Do not add external facts, recommendations, forecasts, names, numbers, or background knowledge.',
+              'Preserve uncertainty and scope. Never turn “may”, “if”, or “could” into certainty.',
+              'The example must be explicitly hypothetical and derived only from concepts already present in the signal.',
+              'If a faithful example is not possible, output NONE for EXAMPLE.',
+              'Return exactly three labeled fields and no preamble:',
+              'WHAT_CHANGED: <1-2 short sentences>',
+              'WHY_IT_COULD_MATTER: <1-2 short sentences>',
+              'EXAMPLE: <1 short hypothetical example or NONE>',
+            ].join('\n'),
+          },
+          {
+            role: 'user',
+            content: [
+              `TITLE: ${signal.title}`,
+              `SUMMARY: ${signal.summary}`,
+              `WHY_IT_MATTERS: ${signal.why_it_matters}`,
+              `SECOND_ORDER_EFFECT: ${signal.second_order_effect}`,
+              `WATCH_NEXT: ${signal.watch_next}`,
+              `LIMITATIONS: ${signal.limitations.join(' | ')}`,
+            ].join('\n'),
+          },
+        ],
+        temperature: 0.2,
+        max_tokens: 220,
+        enable_thinking: false,
+      });
+      return response.choices[0]?.message?.content?.trim() ?? '';
+    } finally {
+      setState({ phase: 'ready', detail: 'Local AI is ready.' });
+    }
+  },
+};
+
+window.__grepsignalLocalAI = manager;
+window.dispatchEvent(new CustomEvent('grepsignal:local-ai-manager-ready'));
+
+function renderControls() {
+  const current = snapshot();
+  document.querySelectorAll<HTMLButtonElement>('[data-local-ai-enable]').forEach((button) => {
+    button.disabled = current.phase === 'loading' || current.phase === 'running' || current.phase === 'ready';
+    button.textContent = current.phase === 'ready'
+      ? 'Local AI ready'
+      : current.phase === 'loading'
+        ? `Preparing Local AI · ${current.progress}%`
+        : current.phase === 'unsupported'
+          ? 'Local AI unavailable'
+          : current.phase === 'error'
+            ? 'Retry Local AI'
+            : 'Enable Local AI';
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-local-ai-status]').forEach((panel) => {
+    panel.hidden = !current.enabled && current.phase === 'idle';
+    const label = panel.querySelector<HTMLElement>('[data-local-ai-status-label]');
+    const detail = panel.querySelector<HTMLElement>('[data-local-ai-status-detail]');
+    const progress = panel.querySelector<HTMLProgressElement>('[data-local-ai-progress]');
+    if (label) label.textContent = current.phase === 'ready' ? 'Local AI ready' : current.phase === 'running' ? 'Local AI working' : 'Local AI';
+    if (detail) detail.textContent = current.detail;
+    if (progress) {
+      progress.hidden = current.phase !== 'loading';
+      progress.value = current.progress;
+    }
+  });
+}
+
+document.addEventListener('click', (event) => {
+  const target = event.target;
+  if (!(target instanceof Element)) return;
+  const enable = target.closest<HTMLButtonElement>('[data-local-ai-enable]');
+  if (enable) {
+    manager.enable().catch(() => undefined);
+    return;
+  }
+  const disable = target.closest<HTMLButtonElement>('[data-local-ai-disable]');
+  if (disable) manager.disable();
+});
+
+renderControls();
+if (localStorage.getItem(STORAGE_KEY) === '1') {
+  setState({ enabled: true });
+  loadEngine().catch(() => undefined);
+}

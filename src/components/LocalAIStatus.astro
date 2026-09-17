@@ -1,0 +1,39 @@
+<aside class="local-ai-status" data-local-ai-status hidden aria-live="polite">
+  <div class="status-copy">
+    <strong data-local-ai-status-label>Local AI</strong>
+    <span data-local-ai-status-detail>Preparing local model…</span>
+    <progress data-local-ai-progress max="100" value="0" hidden></progress>
+  </div>
+  <button type="button" data-local-ai-disable>Turn off</button>
+</aside>
+
+<script>
+  import '../scripts/local-ai';
+</script>
+
+<style>
+  .local-ai-status {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 50;
+    width: min(360px, calc(100vw - 36px));
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 14px 15px;
+    border: 1px solid var(--ink);
+    border-radius: 12px;
+    background: rgba(249, 247, 241, .97);
+    box-shadow: 0 12px 36px rgba(35, 33, 28, .12);
+  }
+  .local-ai-status[hidden] { display: none; }
+  .status-copy { min-width: 0; flex: 1; }
+  .status-copy strong { display: block; margin-bottom: 4px; font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .05em; text-transform: uppercase; }
+  .status-copy span { display: block; color: var(--muted); font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
+  progress { display: block; width: 100%; height: 6px; margin-top: 9px; accent-color: var(--accent); }
+  progress[hidden] { display: none; }
+  button { flex: 0 0 auto; border: 0; background: transparent; color: var(--muted); padding: 1px 0; font: 750 10px ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; cursor: pointer; }
+  button:hover, button:focus-visible { color: var(--ink); }
+</style>

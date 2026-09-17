@@ -6,9 +6,12 @@
   "scripts": {
     "dev": "astro dev",
     "test": "node --test tests/*.test.mjs",
-    "build": "npm test && node scripts/validate-data.mjs && node scripts/validate-coverage.mjs && astro build",
+    "build": "npm test && node scripts/validate-data.mjs && node scripts/validate-coverage.mjs && node scripts/validate-thread-links.mjs && astro build",
     "preview": "astro preview"
   },
-  "dependencies": { "astro": "7.3.2" },
+  "dependencies": {
+    "@mlc-ai/web-llm": "0.2.85",
+    "astro": "7.3.2"
+  },
   "engines": { "node": ">=24" }
 }

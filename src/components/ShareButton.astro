@@ -1,0 +1,56 @@
+---
+interface Props {
+  title: string;
+  url: string;
+}
+
+const { title, url } = Astro.props;
+---
+<button class="share-button" type="button" data-share-title={title} data-share-url={url}>
+  Share
+</button>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.share-button').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const title = button.dataset.shareTitle ?? document.title;
+      const url = button.dataset.shareUrl ?? window.location.href;
+      const original = button.textContent ?? 'Share';
+      try {
+        if (navigator.share) {
+          await navigator.share({ title, url });
+          return;
+        }
+        await navigator.clipboard.writeText(url);
+        button.textContent = 'Link copied';
+        window.setTimeout(() => { button.textContent = original; }, 1800);
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') return;
+        try {
+          await navigator.clipboard.writeText(url);
+          button.textContent = 'Link copied';
+          window.setTimeout(() => { button.textContent = original; }, 1800);
+        } catch {
+          button.textContent = 'Copy failed';
+          window.setTimeout(() => { button.textContent = original; }, 1800);
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  .share-button {
+    appearance: none;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink);
+    padding: 9px 13px;
+    font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .share-button:hover, .share-button:focus-visible { border-color: var(--ink); }
+</style>

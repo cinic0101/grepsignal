@@ -1,0 +1,164 @@
+---
+interface SignalLike {
+  title: string;
+  summary: string;
+  why_it_matters: string;
+  second_order_effect: string;
+  watch_next: string;
+  limitations: string[];
+}
+interface Props {
+  signal: SignalLike;
+}
+
+const { signal } = Astro.props;
+const payload = JSON.stringify(signal).replace(/</g, '\\u003c');
+---
+<section class="local-explain" data-local-explain>
+  <div class="explain-head">
+    <div>
+      <span class="section-kicker">LOCAL AI · EXPERIMENTAL</span>
+      <h2>Explain this signal simply</h2>
+      <p>A small model rewrites only this approved signal on your device. It cannot change GrepSignal's published analysis.</p>
+    </div>
+    <div class="actions">
+      <button type="button" class="secondary" data-local-ai-enable>Enable Local AI</button>
+      <button type="button" class="primary" data-local-explain-run hidden>Explain simply</button>
+    </div>
+  </div>
+
+  <div class="privacy-note">WebGPU required · one-time model download · inference stays in your browser · original evidence and limitations remain authoritative</div>
+
+  <div class="explain-output" data-local-explain-output hidden aria-live="polite">
+    <div class="generated-grid">
+      <article>
+        <span>What changed?</span>
+        <p data-local-explain-changed></p>
+      </article>
+      <article>
+        <span>Why could it matter?</span>
+        <p data-local-explain-matter></p>
+      </article>
+      <article data-local-explain-example-card>
+        <span>Simple example</span>
+        <p data-local-explain-example></p>
+      </article>
+    </div>
+    <div class="keep-in-mind">
+      <span class="section-kicker">KEEP IN MIND · FROM THE PUBLISHED SIGNAL</span>
+      <ul>{signal.limitations.map((item) => <li>{item}</li>)}</ul>
+    </div>
+    <p class="generated-note">The explanation above is locally generated and may be imperfect. Use the published signal and linked evidence for the authoritative record.</p>
+  </div>
+
+  <p class="explain-error" data-local-explain-error hidden></p>
+  <script is:inline type="application/json" data-local-explain-payload set:html={payload}></script>
+</section>
+
+<script>
+  type Manager = {
+    getState: () => { enabled: boolean; phase: string };
+    explain: (payload: unknown) => Promise<string>;
+  };
+
+  const getManager = async (): Promise<Manager> => {
+    const current = (window as any).__grepsignalLocalAI as Manager | undefined;
+    if (current) return current;
+    return await new Promise((resolve) => {
+      window.addEventListener('grepsignal:local-ai-manager-ready', () => {
+        resolve((window as any).__grepsignalLocalAI as Manager);
+      }, { once: true });
+    });
+  };
+
+  const extractField = (text: string, label: string, next?: string) => {
+    const start = text.indexOf(`${label}:`);
+    if (start < 0) return '';
+    const valueStart = start + label.length + 1;
+    const end = next ? text.indexOf(`${next}:`, valueStart) : -1;
+    return text.slice(valueStart, end >= 0 ? end : undefined).trim();
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-local-explain]').forEach((root) => {
+    const run = root.querySelector<HTMLButtonElement>('[data-local-explain-run]');
+    const output = root.querySelector<HTMLElement>('[data-local-explain-output]');
+    const error = root.querySelector<HTMLElement>('[data-local-explain-error]');
+    const payloadNode = root.querySelector<HTMLScriptElement>('[data-local-explain-payload]');
+    const changed = root.querySelector<HTMLElement>('[data-local-explain-changed]');
+    const matter = root.querySelector<HTMLElement>('[data-local-explain-matter]');
+    const example = root.querySelector<HTMLElement>('[data-local-explain-example]');
+    const exampleCard = root.querySelector<HTMLElement>('[data-local-explain-example-card]');
+    if (!run || !output || !error || !payloadNode || !changed || !matter || !example || !exampleCard) return;
+
+    const renderState = (state: { phase: string }) => {
+      run.hidden = state.phase !== 'ready';
+      run.disabled = state.phase !== 'ready';
+    };
+
+    getManager().then((manager) => renderState(manager.getState()));
+    window.addEventListener('grepsignal:local-ai-state', (event) => {
+      renderState((event as CustomEvent).detail);
+    });
+
+    run.addEventListener('click', async () => {
+      run.disabled = true;
+      run.textContent = 'Explaining locally…';
+      error.hidden = true;
+      output.hidden = true;
+      try {
+        const manager = await getManager();
+        const payload = JSON.parse(payloadNode.textContent || '{}');
+        const text = await manager.explain(payload);
+        const whatChanged = extractField(text, 'WHAT_CHANGED', 'WHY_IT_COULD_MATTER');
+        const whyMatter = extractField(text, 'WHY_IT_COULD_MATTER', 'EXAMPLE');
+        const simpleExample = extractField(text, 'EXAMPLE');
+        if (!whatChanged || !whyMatter) {
+          throw new Error('Local explanation did not pass the format guard. Please use the published signal.');
+        }
+        changed.textContent = whatChanged;
+        matter.textContent = whyMatter;
+        const hasExample = simpleExample && simpleExample.toUpperCase() !== 'NONE';
+        exampleCard.hidden = !hasExample;
+        example.textContent = hasExample ? simpleExample : '';
+        output.hidden = false;
+      } catch (cause) {
+        error.textContent = cause instanceof Error ? cause.message : 'Local explanation failed.';
+        error.hidden = false;
+      } finally {
+        run.textContent = 'Explain simply';
+        const manager = (window as any).__grepsignalLocalAI as Manager | undefined;
+        run.disabled = manager?.getState().phase !== 'ready';
+      }
+    });
+  });
+</script>
+
+<style>
+  .local-explain { margin: 0 0 42px; padding: 24px; border: 1px solid var(--ink); border-radius: var(--radius); background: #f4f1e9; }
+  .explain-head { display: flex; justify-content: space-between; gap: 28px; align-items: flex-start; }
+  .explain-head h2 { margin: 5px 0 10px; font-family: Georgia, 'Times New Roman', serif; font-size: 29px; line-height: 1.12; }
+  .explain-head p { max-width: 650px; margin: 0; color: #3c3a35; line-height: 1.55; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  button { border-radius: 999px; padding: 10px 14px; font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .05em; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
+  button.primary { border: 1px solid var(--accent); background: var(--accent); color: white; }
+  button.secondary { border: 1px solid var(--ink); background: transparent; color: var(--ink); }
+  button:disabled { cursor: default; opacity: .62; }
+  button[hidden] { display: none; }
+  .privacy-note { margin-top: 16px; padding-top: 13px; border-top: 1px solid var(--line); color: var(--muted); font: 650 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; letter-spacing: .03em; }
+  .explain-output { margin-top: 24px; }
+  .generated-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .generated-grid article { border: 1px solid var(--line); background: rgba(255,255,255,.55); border-radius: 8px; padding: 16px; }
+  .generated-grid span { color: var(--muted); font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; letter-spacing: .05em; }
+  .generated-grid p { margin: 8px 0 0; color: #34332f; line-height: 1.55; }
+  .generated-grid article[hidden] { display: none; }
+  .keep-in-mind { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .keep-in-mind ul { margin: 10px 0 0; padding-left: 20px; color: #3d3b36; font-size: 14px; }
+  .keep-in-mind li + li { margin-top: 8px; }
+  .generated-note, .explain-error { margin: 16px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+  .explain-error { color: #8b2b24; }
+  @media (max-width: 760px) {
+    .explain-head { flex-direction: column; }
+    .actions { justify-content: flex-start; }
+    .generated-grid { grid-template-columns: 1fr; }
+  }
+</style>
