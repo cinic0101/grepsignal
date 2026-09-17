@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import LocalAIStatus from '../components/LocalAIStatus.astro';
 
 interface Props {
   title?: string;
@@ -56,12 +57,13 @@ const structuredData = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') 
         </a>
         <nav aria-label="Primary navigation">
           <a href={`${base}signals/`}>Signals</a>
-          <a href={`${base}#threads`}>Threads</a>
+          <a href={`${base}threads/`}>Threads</a>
           <a href={`${base}#predictions`}>Predictions</a>
           <a href={`${base}agents/`}>For agents</a>
         </nav>
       </div>
     </header>
     <slot />
+    <LocalAIStatus />
   </body>
 </html>
