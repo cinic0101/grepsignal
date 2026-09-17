@@ -1,9 +1,3 @@
-import {
-  CreateWebWorkerMLCEngine,
-  prebuiltAppConfig,
-  type MLCEngineInterface,
-} from '@mlc-ai/web-llm';
-
 const STORAGE_KEY = 'grepsignal.local-ai.enabled.v1';
 const MODEL_CANDIDATES = [
   'Qwen3-0.6B-q4f16_1-MLC',
@@ -28,6 +22,18 @@ type ExplainSignal = {
   limitations: string[];
 };
 
+type CompletionResponse = {
+  choices: Array<{ message?: { content?: string | null } }>;
+};
+
+type LocalEngine = {
+  chat: {
+    completions: {
+      create: (request: Record<string, unknown>) => Promise<CompletionResponse>;
+    };
+  };
+};
+
 type LocalAIManager = {
   getState: () => State;
   enable: () => Promise<void>;
@@ -49,9 +55,10 @@ let state: State = {
   detail: 'Local AI is off.',
   modelId: null,
 };
-let engine: MLCEngineInterface | null = null;
-let enginePromise: Promise<MLCEngineInterface> | null = null;
+let engine: LocalEngine | null = null;
+let enginePromise: Promise<LocalEngine> | null = null;
 let worker: Worker | null = null;
+let webLLMPromise: Promise<typeof import('@mlc-ai/web-llm')> | null = null;
 
 const snapshot = () => ({ ...state });
 const emit = () => {
@@ -63,16 +70,9 @@ const setState = (next: Partial<State>) => {
   emit();
 };
 
-function selectModel() {
-  const available = new Set(prebuiltAppConfig.model_list.map((item) => item.model_id));
-  for (const candidate of MODEL_CANDIDATES) {
-    if (available.has(candidate)) return candidate;
-  }
-  const fallback = prebuiltAppConfig.model_list.find((item) =>
-    item.model_id.includes('Llama-3.2-1B-Instruct-q4f16_1-MLC')
-  );
-  if (!fallback) throw new Error('No supported lightweight local model is available.');
-  return fallback.model_id;
+function loadWebLLM() {
+  webLLMPromise ??= import('@mlc-ai/web-llm');
+  return webLLMPromise;
 }
 
 async function loadEngine() {
@@ -83,23 +83,32 @@ async function loadEngine() {
     throw new Error('WebGPU unavailable');
   }
 
-  const modelId = selectModel();
-  setState({ enabled: true, phase: 'loading', progress: 0, detail: 'Preparing local model…', modelId });
-  worker = new Worker(new URL('../workers/local-ai.worker.ts', import.meta.url), { type: 'module' });
-  enginePromise = CreateWebWorkerMLCEngine(worker, modelId, {
-    initProgressCallback: (report) => {
-      const raw = typeof report.progress === 'number' ? report.progress : 0;
-      setState({
-        phase: 'loading',
-        progress: Math.max(0, Math.min(100, Math.round(raw * 100))),
-        detail: report.text || 'Downloading local model…',
-      });
-    },
-  }).then((loaded) => {
-    engine = loaded;
+  setState({ enabled: true, phase: 'loading', progress: 0, detail: 'Loading Local AI runtime…' });
+  enginePromise = (async () => {
+    const { CreateWebWorkerMLCEngine, prebuiltAppConfig } = await loadWebLLM();
+    const available = new Set(prebuiltAppConfig.model_list.map((item) => item.model_id));
+    const modelId = MODEL_CANDIDATES.find((candidate) => available.has(candidate))
+      ?? prebuiltAppConfig.model_list.find((item) =>
+        item.model_id.includes('Llama-3.2-1B-Instruct-q4f16_1-MLC')
+      )?.model_id;
+    if (!modelId) throw new Error('No supported lightweight local model is available.');
+
+    setState({ progress: 0, detail: 'Preparing local model…', modelId });
+    worker = new Worker(new URL('../workers/local-ai.worker.ts', import.meta.url), { type: 'module' });
+    const loaded = await CreateWebWorkerMLCEngine(worker, modelId, {
+      initProgressCallback: (report) => {
+        const raw = typeof report.progress === 'number' ? report.progress : 0;
+        setState({
+          phase: 'loading',
+          progress: Math.max(0, Math.min(100, Math.round(raw * 100))),
+          detail: report.text || 'Downloading local model…',
+        });
+      },
+    });
+    engine = loaded as LocalEngine;
     setState({ phase: 'ready', progress: 100, detail: 'Local AI is ready.' });
-    return loaded;
-  }).catch((error) => {
+    return engine;
+  })().catch((error) => {
     enginePromise = null;
     worker?.terminate();
     worker = null;
