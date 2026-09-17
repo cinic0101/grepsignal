@@ -94,11 +94,28 @@ function canonicalizeVisibleLabels(text: string) {
   );
 }
 
+function findAnswerStart(text: string) {
+  const match = /(^|\n)[ \t]*(?:#{1,6}[ \t]*)?(?:[*_`]{0,2})?(?:WHAT[ _-]*CHANGED|WHY[ _-]*(?:IT|THIS)[ _-]*(?:COULD[ _-]*)?MATTERS?|EXAMPLE)(?:[*_`]{0,2})?[ \t]*:/i.exec(text);
+  if (!match || match.index == null) return -1;
+  return match.index + (match[0].startsWith('\n') ? 1 : 0);
+}
+
 function visibleFromRaw(raw: string) {
   let visible = raw.replace(/<think>[\s\S]*?<\/think>/gi, '');
   const openThink = visible.toLowerCase().lastIndexOf('<think>');
-  const thinking = openThink >= 0;
-  if (thinking) visible = visible.slice(0, openThink);
+  let thinking = openThink >= 0;
+
+  if (thinking) {
+    const afterOpen = visible.slice(openThink + '<think>'.length);
+    const answerStart = findAnswerStart(afterOpen);
+    if (answerStart >= 0) {
+      visible = `${visible.slice(0, openThink)}${afterOpen.slice(answerStart)}`;
+      thinking = false;
+    } else {
+      visible = visible.slice(0, openThink);
+    }
+  }
+
   visible = visible.replace(/<\/?think>/gi, '').trimStart();
   visible = canonicalizeVisibleLabels(visible);
   return { visible, thinking };
@@ -213,10 +230,13 @@ const manager: LocalAIManager = {
             ].join('\n'),
           },
         ],
-        temperature: 0.2,
+        temperature: 0.7,
+        top_p: 0.8,
         max_tokens: 320,
-        enable_thinking: false,
         stream: true,
+        extra_body: {
+          enable_thinking: false,
+        },
       });
 
       if (!isCompletionStream(response)) {
