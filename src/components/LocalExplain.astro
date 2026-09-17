@@ -112,8 +112,11 @@ const payload = JSON.stringify(signal).replace(/</g, '\\u003c');
         const whatChanged = extractField(text, 'WHAT_CHANGED', 'WHY_IT_COULD_MATTER');
         const whyMatter = extractField(text, 'WHY_IT_COULD_MATTER', 'EXAMPLE');
         const simpleExample = extractField(text, 'EXAMPLE');
-        changed.textContent = whatChanged || text || 'No explanation returned.';
-        matter.textContent = whyMatter || 'See the published Why it matters section below.';
+        if (!whatChanged || !whyMatter) {
+          throw new Error('Local explanation did not pass the format guard. Please use the published signal.');
+        }
+        changed.textContent = whatChanged;
+        matter.textContent = whyMatter;
         const hasExample = simpleExample && simpleExample.toUpperCase() !== 'NONE';
         exampleCard.hidden = !hasExample;
         example.textContent = hasExample ? simpleExample : '';
