@@ -22,6 +22,8 @@ type ExplainSignal = {
   limitations: string[];
 };
 
+type ExplainTask = 'what_changed' | 'why_it_matters' | 'example';
+
 type CompletionResponse = {
   choices: Array<{ message?: { content?: string | null } }>;
 };
@@ -40,6 +42,7 @@ type LocalEngine = {
 };
 
 type ExplainStreamUpdate = {
+  task: ExplainTask;
   raw: string;
   visible: string;
   thinking: boolean;
@@ -51,7 +54,11 @@ type LocalAIManager = {
   enable: () => Promise<void>;
   disable: () => void;
   ensureReady: () => Promise<void>;
-  explain: (signal: ExplainSignal, onUpdate?: (update: ExplainStreamUpdate) => void) => Promise<string>;
+  generate: (
+    task: ExplainTask,
+    signal: ExplainSignal,
+    onUpdate?: (update: ExplainStreamUpdate) => void,
+  ) => Promise<string>;
 };
 
 declare global {
@@ -87,42 +94,79 @@ function loadWebLLM() {
   return webLLMPromise;
 }
 
-function canonicalizeVisibleLabels(text: string) {
-  return text.replace(
-    /(^|\n)([ \t]*(?:#{1,6}[ \t]*)?(?:[*_`]{0,2})?)WHY[ _-]*(?:IT|THIS)[ _-]*(?:COULD[ _-]*)?MATTERS?(?:[*_`]{0,2})?[ \t]*:/gi,
-    '$1$2WHY_IT_COULD_MATTER:',
-  );
-}
-
-function findAnswerStart(text: string) {
-  const match = /(^|\n)[ \t]*(?:#{1,6}[ \t]*)?(?:[*_`]{0,2})?(?:WHAT[ _-]*CHANGED|WHY[ _-]*(?:IT|THIS)[ _-]*(?:COULD[ _-]*)?MATTERS?|EXAMPLE)(?:[*_`]{0,2})?[ \t]*:/i.exec(text);
-  if (!match || match.index == null) return -1;
-  return match.index + (match[0].startsWith('\n') ? 1 : 0);
-}
-
 function visibleFromRaw(raw: string) {
   let visible = raw.replace(/<think>[\s\S]*?<\/think>/gi, '');
   const openThink = visible.toLowerCase().lastIndexOf('<think>');
-  let thinking = openThink >= 0;
-
-  if (thinking) {
-    const afterOpen = visible.slice(openThink + '<think>'.length);
-    const answerStart = findAnswerStart(afterOpen);
-    if (answerStart >= 0) {
-      visible = `${visible.slice(0, openThink)}${afterOpen.slice(answerStart)}`;
-      thinking = false;
-    } else {
-      visible = visible.slice(0, openThink);
-    }
-  }
-
-  visible = visible.replace(/<\/?think>/gi, '').trimStart();
-  visible = canonicalizeVisibleLabels(visible);
+  const thinking = openThink >= 0;
+  if (thinking) visible = visible.slice(0, openThink);
+  visible = visible.replace(/<\/?think>/gi, '').trim();
   return { visible, thinking };
 }
 
 function isCompletionStream(value: CompletionResult): value is CompletionStream {
   return typeof (value as CompletionStream)?.[Symbol.asyncIterator] === 'function';
+}
+
+function taskDetail(task: ExplainTask) {
+  if (task === 'what_changed') return 'Simplifying what changed locally…';
+  if (task === 'why_it_matters') return 'Explaining why it could matter locally…';
+  return 'Building a hypothetical example locally…';
+}
+
+function taskInstruction(task: ExplainTask) {
+  if (task === 'what_changed') {
+    return [
+      'Rewrite the published summary in one or two short plain-English sentences.',
+      'Explain only what changed. Do not add implications, recommendations, or new facts.',
+      'Keep source attribution and uncertainty when they are present.',
+      'Return only the rewritten prose. No label, heading, bullet, preamble, or quote marks.',
+    ].join('\n');
+  }
+
+  if (task === 'why_it_matters') {
+    return [
+      'Rewrite the published why-it-matters text in one or two short plain-English sentences.',
+      'Preserve every uncertainty qualifier such as if, may, could, or might.',
+      'Do not strengthen the claim and do not add recommendations or new facts.',
+      'Return only the rewritten prose. No label, heading, bullet, preamble, or quote marks.',
+    ].join('\n');
+  }
+
+  return [
+    'Write one short, concrete hypothetical scenario that illustrates the supplied signal.',
+    'The scenario must use only concepts already present in the supplied signal.',
+    'Do not give advice or recommendations. Do not use phrases such as should, must, need to, important to, or recommend.',
+    'Make it clearly hypothetical, for example by starting with “For example, imagine…” or “Suppose…”.',
+    'If a faithful concrete scenario is not possible, return exactly NONE.',
+    'Return only the scenario or NONE. No label, heading, bullet, preamble, or quote marks.',
+  ].join('\n');
+}
+
+function taskInput(task: ExplainTask, signal: ExplainSignal) {
+  if (task === 'what_changed') {
+    return [
+      `/no_think`,
+      `TITLE: ${signal.title}`,
+      `PUBLISHED_SUMMARY: ${signal.summary}`,
+    ].join('\n');
+  }
+
+  if (task === 'why_it_matters') {
+    return [
+      `/no_think`,
+      `TITLE: ${signal.title}`,
+      `PUBLISHED_SUMMARY_FOR_CONTEXT: ${signal.summary}`,
+      `PUBLISHED_WHY_IT_MATTERS: ${signal.why_it_matters}`,
+    ].join('\n');
+  }
+
+  return [
+    `/no_think`,
+    `TITLE: ${signal.title}`,
+    `PUBLISHED_SUMMARY: ${signal.summary}`,
+    `PUBLISHED_WHY_IT_MATTERS: ${signal.why_it_matters}`,
+    `SECOND_ORDER_EFFECT: ${signal.second_order_effect}`,
+  ].join('\n');
 }
 
 async function loadEngine() {
@@ -195,9 +239,10 @@ const manager: LocalAIManager = {
     if (!state.enabled) throw new Error('Local AI has not been enabled.');
     await loadEngine();
   },
-  async explain(signal, onUpdate) {
+  async generate(task, signal, onUpdate) {
     const active = await loadEngine();
-    setState({ phase: 'running', detail: 'Reading the approved signal locally…' });
+    setState({ phase: 'running', detail: taskDetail(task) });
+
     try {
       const response = await active.chat.completions.create({
         messages: [
@@ -205,34 +250,21 @@ const manager: LocalAIManager = {
             role: 'system',
             content: [
               'You are GrepSignal Local Explain, a constrained reading aid.',
-              'Rewrite only the supplied approved intelligence in clear English.',
+              'Use only the supplied approved intelligence.',
               'Do not add external facts, recommendations, forecasts, names, numbers, or background knowledge.',
-              'Preserve uncertainty and scope. Never turn “may”, “if”, or “could” into certainty.',
+              'Preserve uncertainty and scope. Never turn “may”, “if”, “could”, or “might” into certainty.',
               'Do not output chain-of-thought, hidden reasoning, analysis, or a preamble.',
-              'The example must be explicitly hypothetical and derived only from concepts already present in the signal.',
-              'If a faithful example is not possible, output NONE for EXAMPLE.',
-              'Return exactly three labeled fields:',
-              'WHAT_CHANGED: <1-2 short sentences>',
-              'WHY_IT_COULD_MATTER: <1-2 short sentences>',
-              'EXAMPLE: <1 short hypothetical example or NONE>',
+              taskInstruction(task),
             ].join('\n'),
           },
           {
             role: 'user',
-            content: [
-              '/no_think',
-              `TITLE: ${signal.title}`,
-              `SUMMARY: ${signal.summary}`,
-              `PUBLISHED_WHY_IT_MATTERS: ${signal.why_it_matters}`,
-              `SECOND_ORDER_EFFECT: ${signal.second_order_effect}`,
-              `WATCH_NEXT: ${signal.watch_next}`,
-              `LIMITATIONS: ${signal.limitations.join(' | ')}`,
-            ].join('\n'),
+            content: taskInput(task, signal),
           },
         ],
-        temperature: 0.7,
+        temperature: task === 'example' ? 0.7 : 0.4,
         top_p: 0.8,
-        max_tokens: 320,
+        max_tokens: task === 'example' ? 120 : 160,
         stream: true,
         extra_body: {
           enable_thinking: false,
@@ -242,36 +274,24 @@ const manager: LocalAIManager = {
       if (!isCompletionStream(response)) {
         const raw = response.choices[0]?.message?.content?.trim() ?? '';
         const derived = visibleFromRaw(raw);
-        onUpdate?.({ raw, visible: derived.visible, thinking: derived.thinking, done: true });
-        return derived.visible.trim();
+        onUpdate?.({ task, raw, visible: derived.visible, thinking: derived.thinking, done: true });
+        return derived.visible;
       }
 
       let raw = '';
       let visible = '';
-      let lastMode: 'thinking' | 'drafting' | null = null;
       for await (const chunk of response) {
         const delta = chunk.choices[0]?.delta?.content ?? '';
         if (!delta) continue;
         raw += delta;
         const derived = visibleFromRaw(raw);
         visible = derived.visible;
-        const mode = derived.thinking || !visible ? 'thinking' : 'drafting';
-        if (mode !== lastMode) {
-          setState({
-            phase: 'running',
-            detail: mode === 'thinking'
-              ? 'Working through the signal locally…'
-              : 'Drafting the explanation locally…',
-          });
-          lastMode = mode;
-        }
-        onUpdate?.({ raw, visible, thinking: derived.thinking, done: false });
+        onUpdate?.({ task, raw, visible, thinking: derived.thinking, done: false });
       }
 
       const final = visibleFromRaw(raw);
-      setState({ phase: 'running', detail: 'Checking the explanation structure…' });
-      onUpdate?.({ raw, visible: final.visible, thinking: final.thinking, done: true });
-      return final.visible.trim();
+      onUpdate?.({ task, raw, visible: final.visible, thinking: final.thinking, done: true });
+      return final.visible;
     } finally {
       setState({ phase: 'ready', detail: 'Local AI is ready.' });
     }
