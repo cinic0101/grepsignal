@@ -25,13 +25,25 @@ type ExplainSignal = {
 type CompletionResponse = {
   choices: Array<{ message?: { content?: string | null } }>;
 };
+type CompletionChunk = {
+  choices: Array<{ delta?: { content?: string | null } }>;
+};
+type CompletionStream = AsyncIterable<CompletionChunk>;
+type CompletionResult = CompletionResponse | CompletionStream;
 
 type LocalEngine = {
   chat: {
     completions: {
-      create: (request: Record<string, unknown>) => Promise<CompletionResponse>;
+      create: (request: Record<string, unknown>) => Promise<CompletionResult>;
     };
   };
+};
+
+type ExplainStreamUpdate = {
+  raw: string;
+  visible: string;
+  thinking: boolean;
+  done: boolean;
 };
 
 type LocalAIManager = {
@@ -39,7 +51,7 @@ type LocalAIManager = {
   enable: () => Promise<void>;
   disable: () => void;
   ensureReady: () => Promise<void>;
-  explain: (signal: ExplainSignal) => Promise<string>;
+  explain: (signal: ExplainSignal, onUpdate?: (update: ExplainStreamUpdate) => void) => Promise<string>;
 };
 
 declare global {
@@ -75,6 +87,19 @@ function loadWebLLM() {
   return webLLMPromise;
 }
 
+function visibleFromRaw(raw: string) {
+  let visible = raw.replace(/<think>[\s\S]*?<\/think>/gi, '');
+  const openThink = visible.toLowerCase().lastIndexOf('<think>');
+  const thinking = openThink >= 0;
+  if (thinking) visible = visible.slice(0, openThink);
+  visible = visible.replace(/<\/?think>/gi, '').trimStart();
+  return { visible, thinking };
+}
+
+function isCompletionStream(value: CompletionResult): value is CompletionStream {
+  return typeof (value as CompletionStream)?.[Symbol.asyncIterator] === 'function';
+}
+
 async function loadEngine() {
   if (engine) return engine;
   if (enginePromise) return enginePromise;
@@ -93,6 +118,7 @@ async function loadEngine() {
       )?.model_id;
     if (!modelId) throw new Error('No supported lightweight local model is available.');
 
+    console.info('[GrepSignal Local AI] selected model', modelId);
     setState({ progress: 0, detail: 'Preparing local model…', modelId });
     worker = new Worker(new URL('../workers/local-ai.worker.ts', import.meta.url), { type: 'module' });
     const loaded = await CreateWebWorkerMLCEngine(worker, modelId, {
@@ -144,9 +170,9 @@ const manager: LocalAIManager = {
     if (!state.enabled) throw new Error('Local AI has not been enabled.');
     await loadEngine();
   },
-  async explain(signal) {
+  async explain(signal, onUpdate) {
     const active = await loadEngine();
-    setState({ phase: 'running', detail: 'Explaining this signal locally…' });
+    setState({ phase: 'running', detail: 'Reading the approved signal locally…' });
     try {
       const response = await active.chat.completions.create({
         messages: [
@@ -157,9 +183,10 @@ const manager: LocalAIManager = {
               'Rewrite only the supplied approved intelligence in clear English.',
               'Do not add external facts, recommendations, forecasts, names, numbers, or background knowledge.',
               'Preserve uncertainty and scope. Never turn “may”, “if”, or “could” into certainty.',
+              'Do not output chain-of-thought, hidden reasoning, analysis, or a preamble.',
               'The example must be explicitly hypothetical and derived only from concepts already present in the signal.',
               'If a faithful example is not possible, output NONE for EXAMPLE.',
-              'Return exactly three labeled fields and no preamble:',
+              'Return exactly three labeled fields:',
               'WHAT_CHANGED: <1-2 short sentences>',
               'WHY_IT_COULD_MATTER: <1-2 short sentences>',
               'EXAMPLE: <1 short hypothetical example or NONE>',
@@ -168,6 +195,7 @@ const manager: LocalAIManager = {
           {
             role: 'user',
             content: [
+              '/no_think',
               `TITLE: ${signal.title}`,
               `SUMMARY: ${signal.summary}`,
               `WHY_IT_MATTERS: ${signal.why_it_matters}`,
@@ -178,10 +206,44 @@ const manager: LocalAIManager = {
           },
         ],
         temperature: 0.2,
-        max_tokens: 220,
+        max_tokens: 320,
         enable_thinking: false,
+        stream: true,
       });
-      return response.choices[0]?.message?.content?.trim() ?? '';
+
+      if (!isCompletionStream(response)) {
+        const raw = response.choices[0]?.message?.content?.trim() ?? '';
+        const derived = visibleFromRaw(raw);
+        onUpdate?.({ raw, visible: derived.visible, thinking: derived.thinking, done: true });
+        return derived.visible.trim();
+      }
+
+      let raw = '';
+      let visible = '';
+      let lastMode: 'thinking' | 'drafting' | null = null;
+      for await (const chunk of response) {
+        const delta = chunk.choices[0]?.delta?.content ?? '';
+        if (!delta) continue;
+        raw += delta;
+        const derived = visibleFromRaw(raw);
+        visible = derived.visible;
+        const mode = derived.thinking || !visible ? 'thinking' : 'drafting';
+        if (mode !== lastMode) {
+          setState({
+            phase: 'running',
+            detail: mode === 'thinking'
+              ? 'Working through the signal locally…'
+              : 'Drafting the explanation locally…',
+          });
+          lastMode = mode;
+        }
+        onUpdate?.({ raw, visible, thinking: derived.thinking, done: false });
+      }
+
+      const final = visibleFromRaw(raw);
+      setState({ phase: 'running', detail: 'Checking the explanation structure…' });
+      onUpdate?.({ raw, visible: final.visible, thinking: final.thinking, done: true });
+      return final.visible.trim();
     } finally {
       setState({ phase: 'ready', detail: 'Local AI is ready.' });
     }
