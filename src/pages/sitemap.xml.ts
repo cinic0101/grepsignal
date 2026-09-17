@@ -24,10 +24,15 @@ export const GET: APIRoute = ({ site }) => {
     entries.unshift(
       { loc: absoluteUrl(), lastmod: generatedDate },
       { loc: absoluteUrl('signals/'), lastmod: generatedDate },
+      { loc: absoluteUrl('threads/'), lastmod: generatedDate },
     );
     entries.push(...intelligence.signals.map((signal) => ({
       loc: absoluteUrl(`signals/${signal.id}/`),
       lastmod: signal.registered_at,
+    })));
+    entries.push(...intelligence.threads.map((thread) => ({
+      loc: absoluteUrl(`threads/${thread.id}/`),
+      lastmod: thread.last_updated,
     })));
   }
 
