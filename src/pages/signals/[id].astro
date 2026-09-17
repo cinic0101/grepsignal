@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import LocalExplain from '../../components/LocalExplain.astro';
+import ShareButton from '../../components/ShareButton.astro';
 import intelligence from '../../data/intelligence.json';
 
 type Signal = typeof intelligence.signals[number];
@@ -90,11 +92,14 @@ const articleJsonLd = {
     <a class="back-link" href={`${base}#signals`}><span aria-hidden="true">←</span> All signals</a>
 
     <header class="detail-header">
-      <div class="tagrow">
-        <span class="tag">{typeLabels[signal.type] ?? signal.type.toUpperCase()}</span>
-        <span class={`status status-${signal.status}`}>
-          {statusMark[signal.status] ?? '·'} {signal.status.toUpperCase()}
-        </span>
+      <div class="header-actions">
+        <div class="tagrow">
+          <span class="tag">{typeLabels[signal.type] ?? signal.type.toUpperCase()}</span>
+          <span class={`status status-${signal.status}`}>
+            {statusMark[signal.status] ?? '·'} {signal.status.toUpperCase()}
+          </span>
+        </div>
+        <ShareButton title={`${signal.title} — GrepSignal`} url={canonicalUrl} />
       </div>
       <h1>{signal.title}</h1>
       <p class="lead">{signal.summary}</p>
@@ -121,6 +126,8 @@ const articleJsonLd = {
 
     <div class="detail-grid">
       <div class="detail-main">
+        <LocalExplain signal={signal} />
+
         <section class="detail-section">
           <span class="section-kicker">INTERPRETATION</span>
           <h2>Why it matters</h2>
@@ -218,6 +225,7 @@ const articleJsonLd = {
     padding: 56px 0 42px;
     border-bottom: 1px solid var(--ink);
   }
+  .header-actions { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
   .detail-header h1 {
     max-width: 960px;
     margin: 16px 0 20px;
@@ -279,6 +287,7 @@ const articleJsonLd = {
   @media (max-width: 620px) {
     .signal-detail { padding-top: 26px; padding-bottom: 64px; }
     .detail-header { padding-top: 40px; }
+    .header-actions { align-items: flex-start; }
     .detail-header h1 { font-size: 43px; }
     .lead { font-size: 18px; }
     .signal-meta { grid-template-columns: 1fr 1fr; }
