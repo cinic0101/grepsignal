@@ -199,7 +199,19 @@
       "thesis": "As coding agents automate more of frontier AI R&D, the binding constraints shift from code production toward human steering, experimental judgment, compute allocation, and safety infrastructure.",
       "evidence_since": "2026-09",
       "created_at": "2026-09-14",
-      "last_updated": "2026-09-14"
+      "last_updated": "2026-09-14",
+      "updates": [
+        {
+          "id": "threadrev-research-automation-bottlenecks-2026-09-14",
+          "date": "2026-09-14",
+          "assessment": "emerging",
+          "change": "Thread created from the first reviewed Signal: as coding agents absorb more research execution, the bottlenecks may shift from code production toward steering, experimental judgment, compute allocation, and safety infrastructure.",
+          "signal_ids": [
+            "sig-research-automation-bottlenecks-2026-09-14"
+          ],
+          "sources": []
+        }
+      ]
     },
     {
       "id": "thread-agent-runtime-containment",
@@ -210,7 +222,19 @@
       "thesis": "As agents become more autonomous, the durable security boundary moves outward from the model prompt to the runtime that governs what the agent can execute, access, and reach.",
       "evidence_since": "2025-10",
       "created_at": "2026-09-14",
-      "last_updated": "2026-09-14"
+      "last_updated": "2026-09-14",
+      "updates": [
+        {
+          "id": "threadrev-agent-runtime-containment-2026-09-14",
+          "date": "2026-09-14",
+          "assessment": "strengthening",
+          "change": "Thread created from the first reviewed Signal: agent security is shifting from repeated permission prompts toward enforced runtime boundaries for execution, network access, credentials, and policy.",
+          "signal_ids": [
+            "sig-agent-security-runtime-boundary-2026-09-14"
+          ],
+          "sources": []
+        }
+      ]
     }
   ],
   "predictions": []
