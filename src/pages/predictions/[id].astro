@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import intelligence from '../../data/intelligence';
+export function getStaticPaths() { return intelligence.predictions.map(prediction => ({params:{id:prediction.id},props:{prediction}})); }
+const {prediction}=Astro.props;
+const base=import.meta.env.BASE_URL;
+---
+<BaseLayout title={`${prediction.claim} — GrepSignal prediction`} description={prediction.claim}>
+<main class="wrap" style="padding-top:32px;padding-bottom:60px"><h1>{prediction.claim}</h1><p>{prediction.status} · {prediction.lifecycle}</p>
+<p><a href={`${base}threads/${prediction.thread_id}/`}>Related Thread</a> · <a href={`${base}#predictions`}>Ledger</a></p>
+<p>Original probability: {Math.round(prediction.initial_probability*100)}% · Deadline: {prediction.deadline}</p>
+<h2>Original criteria</h2><p>Success: {prediction.success_criterion}</p><p>Failure: {prediction.failure_criterion}</p><p>Insufficient evidence: {prediction.insufficient_evidence_policy}</p>
+<h2>Resolution history</h2>{prediction.resolutions.length ? prediction.resolutions.map(r => <article><h3>{r.outcome} · {r.recorded_at}</h3><p>{r.note}</p><p>Brier: {r.brier_score ?? 'unscored'}</p><ul>{r.evidence.map(s => <li><a href={s.url}>{s.publisher}: {s.title}</a></li>)}</ul></article>) : <p>No eligible resolution recorded.</p>}
+</main></BaseLayout>

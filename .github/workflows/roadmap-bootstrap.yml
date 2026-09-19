@@ -1,0 +1,51 @@
+name: Roadmap BC one-time public integration
+on:
+  push:
+    branches: ['stage/roadmap-bc-public']
+    paths: ['scripts/_apply_roadmap.py', '.github/workflows/roadmap-bootstrap.yml']
+permissions:
+  contents: write
+jobs:
+  integrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Apply bounded migration
+        run: |
+          python scripts/_apply_roadmap.py
+          rm scripts/_apply_roadmap.py
+      - name: Persist generated source on isolated staging branch
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          test "$BRANCH" = 'stage/roadmap-bc-public'
+          git config user.name 'grepsignal-build[bot]'
+          git config user.email 'grepsignal-build[bot]@users.noreply.github.com'
+          git add scripts src public tests docs package.json README.md
+          git commit -m 'feat: integrate v2 journal projection without altering legacy claims'
+          git push origin "HEAD:$BRANCH"
+      - run: npm install --no-audit --no-fund
+      - name: Validate and build project path
+        env:
+          PUBLIC_SITE_URL: https://cinic0101.github.io
+          PUBLIC_BASE_PATH: /grepsignal/
+          HISTORY_BASE_REF: cd004f2320f67ea5a4f2e89db6e4e51b32004969
+        run: |
+          npm run build
+          node scripts/check-built-accountability.mjs
+      - name: Build root path
+        env:
+          PUBLIC_SITE_URL: https://cinic0101.github.io
+          PUBLIC_BASE_PATH: /
+          HISTORY_BASE_REF: cd004f2320f67ea5a4f2e89db6e4e51b32004969
+        run: |
+          npm run build
+          node scripts/check-built-accountability.mjs

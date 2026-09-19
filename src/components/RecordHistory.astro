@@ -1,0 +1,28 @@
+---
+import intelligence, { changes } from '../data/intelligence';
+const base = import.meta.env.BASE_URL;
+const id = Astro.url.pathname.split('/').filter(Boolean).at(-1);
+const record = [...intelligence.signals, ...intelligence.threads, ...intelligence.predictions].find(r => r.id === id);
+const events = record ? changes.filter(e => e.record_id === record.id) : [];
+const targetUrl = (target) => `${base}${target.startsWith('thread-') ? 'threads' : target.startsWith('pred-') ? 'predictions' : 'signals'}/${target}/`;
+const builtAt = new Date().toISOString();
+const overdue = record?.lifecycle === 'active' && record.review_due_since && Date.parse(record.review_due_since) <= Date.parse(builtAt);
+---
+{record && <aside class="wrap record-history" aria-label="Record status and revision history">
+  {record.lifecycle !== 'active' && <p class="withdrawal" role="note"><strong>{record.lifecycle.toUpperCase()}.</strong> Retained for historical reference, not current guidance. {record.superseded_by && <a href={targetUrl(record.superseded_by)}>Read its replacement →</a>}</p>}
+  {record.status === 'falsified' && <p class="withdrawal"><strong>THESIS FALSIFIED.</strong> Read the revision and evidence before reusing the original judgment.</p>}
+  {record.review_required && <p class="review-warning"><strong>Re-review needed.</strong> Linked judgments changed or the last review was inconclusive. This is not an automatic reversal.</p>}
+  {overdue && <p class="review-warning"><strong>Review due / overdue.</strong> As of build {builtAt.slice(0,10)}. Unfinished work is not a fresh endorsement.</p>}
+  <details><summary>Record history · revision {record.version} · {events.length} post-migration events</summary>
+    <p>First observed: {record.first_observed_at ?? 'unknown'} · Verified first public: {record.first_public_at ?? 'unknown'}<br />Last reviewed: {record.last_reviewed_at ?? 'not recorded'} · Last changed: {record.last_changed_at ?? 'legacy snapshot'}<br />Next check: {record.next_review_at ?? 'not scheduled'}{record.last_review_outcome && ` · Last outcome: ${record.last_review_outcome}`}</p>
+    <p><a href={intelligence.accountability.baseline_ref}>Original legacy snapshot</a>. Earlier Thread history remains in the original record. Unknown timestamps and human review scope were not backfilled.</p>
+    {events.length === 0 ? <p>No new judgment change is recorded in this journal. Migration is not a review.</p> : <ol>{events.map(e => <li><a href={`${base}changes/#${e.id}`}>{e.recorded_at} · {e.kind}</a><p>{e.note}</p></li>)}</ol>}
+    {record.relations.length > 0 && <ul>{record.relations.map(r => <li>{r.relationship} <a href={targetUrl(r.target_id)}>{r.target_id}</a> at version {r.target_version}: {r.rationale}</li>)}</ul>}
+  </details>
+</aside>}
+<style>
+.record-history { padding-top:16px; padding-bottom:12px; font-size:13px; line-height:1.65; }
+summary { cursor:pointer; font-weight:600; }
+.withdrawal,.review-warning { border:2px solid var(--ink); padding:14px; font-size:16px; }
+details { border-bottom:1px solid var(--line); padding-bottom:12px; }
+</style>
