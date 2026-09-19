@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import intelligence from '../../data/intelligence.json';
+import intelligence from '../../data/intelligence';
 
 const base = import.meta.env.BASE_URL;
-const signals = [...intelligence.signals].sort((a, b) => b.registered_at.localeCompare(a.registered_at));
+const signals = [...intelligence.signals.filter(x => x.lifecycle === 'active')].sort((a, b) => b.registered_at.localeCompare(a.registered_at));
 const typeLabels: Record<string, string> = {
   platform_shift: 'Platform Shift',
   capability_delta: 'Capability Delta',
@@ -24,6 +24,7 @@ const statusMark: Record<string, string> = {
   emerging: '↑',
   stable: '→',
   weakening: '↓',
+  falsified: '×',
 };
 const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'

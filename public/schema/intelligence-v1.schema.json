@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cinic0101.github.io/grepsignal/schema/intelligence.schema.json",
+  "$id": "https://cinic0101.github.io/grepsignal/schema/intelligence-v1.schema.json",
   "title": "GrepSignal public intelligence envelope",
   "type": "object",
   "required": [
@@ -11,13 +11,11 @@
     "stats",
     "signals",
     "threads",
-    "predictions",
-    "content_license",
-    "accountability"
+    "predictions"
   ],
   "properties": {
     "schema_version": {
-      "const": 2
+      "const": 1
     },
     "publication_status": {
       "enum": [
@@ -77,19 +75,7 @@
           "registered_at",
           "falsifiers",
           "limitations",
-          "sources",
-          "version",
-          "lifecycle",
-          "superseded_by",
-          "first_observed_at",
-          "first_public_at",
-          "last_reviewed_at",
-          "last_changed_at",
-          "next_review_at",
-          "relations",
-          "revision_ids",
-          "review_required",
-          "history_origin"
+          "sources"
         ],
         "properties": {
           "id": {
@@ -109,8 +95,7 @@
               "emerging",
               "strengthening",
               "stable",
-              "weakening",
-              "falsified"
+              "weakening"
             ]
           },
           "title": {
@@ -193,83 +178,6 @@
               },
               "additionalProperties": false
             }
-          },
-          "version": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "lifecycle": {
-            "enum": [
-              "active",
-              "superseded",
-              "retracted"
-            ]
-          },
-          "superseded_by": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "review_required": {
-            "type": "boolean"
-          },
-          "history_origin": {
-            "enum": [
-              "legacy_snapshot",
-              "journal"
-            ]
-          },
-          "relations": {
-            "type": "array"
-          },
-          "revision_ids": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "first_observed_at": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "first_public_at": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "last_reviewed_at": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "last_changed_at": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "next_review_at": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "review_due_since": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
           }
         },
         "additionalProperties": true
@@ -285,19 +193,7 @@
           "status",
           "signal_count",
           "summary",
-          "updates",
-          "version",
-          "lifecycle",
-          "superseded_by",
-          "first_observed_at",
-          "first_public_at",
-          "last_reviewed_at",
-          "last_changed_at",
-          "next_review_at",
-          "relations",
-          "revision_ids",
-          "review_required",
-          "history_origin"
+          "updates"
         ],
         "properties": {
           "id": {
@@ -311,8 +207,7 @@
               "emerging",
               "strengthening",
               "stable",
-              "weakening",
-              "falsified"
+              "weakening"
             ]
           },
           "signal_count": {
@@ -360,8 +255,7 @@
                     "emerging",
                     "strengthening",
                     "stable",
-                    "weakening",
-                    "falsified"
+                    "weakening"
                   ]
                 },
                 "change": {
@@ -509,83 +403,6 @@
               }
             },
             "additionalProperties": false
-          },
-          "version": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "lifecycle": {
-            "enum": [
-              "active",
-              "superseded",
-              "retracted"
-            ]
-          },
-          "superseded_by": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "review_required": {
-            "type": "boolean"
-          },
-          "history_origin": {
-            "enum": [
-              "legacy_snapshot",
-              "journal"
-            ]
-          },
-          "relations": {
-            "type": "array"
-          },
-          "revision_ids": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "first_observed_at": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "first_public_at": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "last_reviewed_at": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "last_changed_at": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "next_review_at": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "review_due_since": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
           }
         },
         "additionalProperties": true
@@ -597,111 +414,11 @@
         "type": "object",
         "required": [
           "id",
-          "thread_id",
           "claim",
-          "status",
-          "created_at",
-          "deadline",
-          "success_criterion",
-          "failure_criterion",
-          "initial_probability",
-          "insufficient_evidence_policy",
-          "resolution_sources",
-          "first_public_at",
-          "lifecycle",
-          "version"
-        ],
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "thread_id": {
-            "type": "string"
-          },
-          "claim": {
-            "type": "string",
-            "minLength": 1
-          },
-          "status": {
-            "enum": [
-              "unregistered",
-              "open",
-              "resolved",
-              "unresolved"
-            ]
-          },
-          "lifecycle": {
-            "enum": [
-              "active",
-              "superseded",
-              "retracted"
-            ]
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "deadline": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "first_public_at": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "initial_probability": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 1
-          },
-          "insufficient_evidence_policy": {
-            "const": "unresolved"
-          },
-          "success_criterion": {
-            "type": "string",
-            "minLength": 1
-          },
-          "failure_criterion": {
-            "type": "string",
-            "minLength": 1
-          },
-          "resolution_sources": {
-            "type": "array",
-            "minItems": 1,
-            "items": {
-              "type": "string",
-              "format": "uri"
-            }
-          },
-          "version": {
-            "type": "integer",
-            "minimum": 0
-          }
-        },
-        "additionalProperties": true
+          "status"
+        ]
       }
-    },
-    "content_license": {
-      "type": "object",
-      "required": [
-        "identifier",
-        "url",
-        "scope"
-      ]
-    },
-    "accountability": {
-      "type": "object",
-      "required": [
-        "baseline_ref",
-        "initialized_at",
-        "latest_sequence",
-        "last_recorded_at"
-      ]
     }
   },
-  "additionalProperties": true,
-  "description": "Pinned legacy snapshot plus accepted events. Lifecycle/history and strict forecasts; inactive records remain in arrays but are excluded from active counters."
+  "additionalProperties": true
 }

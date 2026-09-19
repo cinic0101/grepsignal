@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import intelligence, { changes } from '../../data/intelligence';
+const base=import.meta.env.BASE_URL;
+const recordUrl=e => `${base}${e.record_type === 'prediction' ? 'predictions' : e.record_type === 'thread' ? 'threads' : 'signals'}/${e.record_id}/`;
+---
+<BaseLayout title="Judgment changes & reviews — GrepSignal" description="Accepted judgment revisions, review outcomes, corrections and forecast resolutions.">
+<main class="wrap changes"><div class="eyebrow">&gt; show --changes</div><h1>What changed?</h1>
+<p>Accepted judgment changes and review records—not another daily news feed. Recorded time is distinct from verified first-publication time.</p>
+<p><a href={`${base}data/changes.json`}>JSON change feed</a> · <a href={`${base}atom.xml`}>Subscribe with Atom</a> · <a href={`${base}editorial/`}>Editorial policy</a></p>
+{changes.length === 0 ? <section><h2>The journal is ready; no changes invented.</h2><p>Existing records remain as a <a href={intelligence.accountability.baseline_ref}>legacy snapshot</a>. Earlier Thread revisions remain visible on their pages. Initialization is not a new Signal, completed review, first publication or successful forecast.</p></section> : [...changes].reverse().map(e => <article id={e.id}>
+<div class="eyebrow">#{e.sequence} · {e.kind} · revision {e.version}</div><h2><a href={recordUrl(e)}>{e.record_id}</a></h2><p>{e.note}</p>
+<p>Recorded {e.recorded_at} · Proposed by {e.proposed_by} · Accepted by {e.acceptance.actor} ({e.acceptance.scope}) · <a href={e.acceptance.reference}>acceptance reference</a></p>
+{e.evidence.length > 0 && <ul>{e.evidence.map(s => <li><a href={s.url}>{s.title}</a> — {s.publisher}; {s.role}</li>)}</ul>}
+<details><summary>Exact changed fields / review receipt</summary><pre>{JSON.stringify(e.payload,null,2)}</pre></details>
+</article>)}
+</main></BaseLayout>
+<style>.changes {padding-top:54px;padding-bottom:70px;max-width:1000px;} h1 {font-size:clamp(42px,6vw,72px);} article,section {border-top:1px solid var(--line);margin-top:30px;padding-top:24px;} p {line-height:1.7;} pre {overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;} summary {cursor:pointer;}</style>

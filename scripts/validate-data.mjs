@@ -1,7 +1,5 @@
-import { readFile } from 'node:fs/promises';
-
-const path = new URL('../src/data/intelligence.json', import.meta.url);
-const data = JSON.parse(await readFile(path, 'utf8'));
+import { load } from './accountability.mjs';
+const { data } = load();
 
 const fail = (message) => {
   console.error(`public-data validation failed: ${message}`);
@@ -9,15 +7,15 @@ const fail = (message) => {
 };
 const nonEmpty = (value) => typeof value === 'string' && value.trim().length > 0;
 
-if (data.schema_version !== 1) fail('schema_version must be 1');
+if (data.schema_version !== 2) fail('schema_version must be 2');
 if (!['preview_sample', 'published'].includes(data.publication_status)) fail('invalid publication_status');
 if (data.canonical_language !== 'en') fail('canonical_language must be en');
 if (!Array.isArray(data.signals) || !Array.isArray(data.threads) || !Array.isArray(data.predictions)) {
   fail('signals, threads and predictions must be arrays');
 }
-if (!data.stats || data.stats.material_signals !== data.signals.length ||
-    data.stats.active_threads !== data.threads.length ||
-    data.stats.open_predictions !== data.predictions.length) {
+if (!data.stats || data.stats.material_signals !== data.signals.filter(x => x.lifecycle === 'active').length ||
+    data.stats.active_threads !== data.threads.filter(x => x.lifecycle === 'active').length ||
+    data.stats.open_predictions !== data.predictions.filter(x => ['open','unresolved'].includes(x.status) && x.lifecycle === 'active').length) {
   fail('stats must exactly match published arrays');
 }
 
@@ -102,7 +100,7 @@ if (data.publication_status === 'published') {
       }
       if (updateIds.has(update.id)) fail(`published thread ${thread.id} repeats revision ${update.id}`);
       updateIds.add(update.id);
-      if (!['emerging', 'strengthening', 'stable', 'weakening'].includes(update.assessment)) {
+      if (!['emerging', 'strengthening', 'stable', 'weakening', 'falsified'].includes(update.assessment)) {
         fail(`published thread ${thread.id} has invalid revision assessment`);
       }
       if (!Array.isArray(update.signal_ids) || !Array.isArray(update.sources)) {
@@ -126,7 +124,7 @@ if (data.publication_status === 'published') {
           fail(`thread revision source URL must be credential-free HTTPS in ${update.id}`);
         }
       }
-      if (!latest || update.date > latest.date) latest = update;
+      if (!latest || update.date >= latest.date) latest = update;
     }
     if (latest.date !== thread.last_updated) {
       fail(`published thread ${thread.id} last_updated must match its latest revision`);

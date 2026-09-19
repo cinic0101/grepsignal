@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "baseline_blob_sha": "cf74e8a47acfe2f3236fbdf1330757f263080da6",
+  "baseline_links_blob_sha": "92ac40c0e36a26512794bf4baf4ea5f307ad1569",
+  "baseline_ref": "https://github.com/cinic0101/grepsignal/blob/fd1cceb64329fd94ecc50c3c18f60573979437e9/src/data/intelligence.json",
+  "initialized_at": "2026-09-19T13:00:00Z",
+  "initial_thread_review_due_at": "2026-09-26T03:30:00Z",
+  "events": []
+}

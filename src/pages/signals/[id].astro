@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LocalExplain from '../../components/LocalExplain.astro';
 import ShareButton from '../../components/ShareButton.astro';
-import intelligence from '../../data/intelligence.json';
+import intelligence from '../../data/intelligence';
 
 type Signal = typeof intelligence.signals[number];
 interface Props {
@@ -31,6 +31,7 @@ const statusMark: Record<string, string> = {
   emerging: '↑',
   stable: '→',
   weakening: '↓',
+  falsified: '×',
 };
 const roleLabels: Record<string, string> = {
   primary_incident_report: 'Incident report',
@@ -58,7 +59,8 @@ const articleJsonLd = {
   headline: signal.title,
   description: signal.summary,
   identifier: signal.id,
-  datePublished: signal.registered_at,
+  ...(signal.first_public_at ? { datePublished: signal.first_public_at } : {}),
+  ...(signal.last_changed_at ? { dateModified: signal.last_changed_at } : {}),
   inLanguage: intelligence.canonical_language,
   articleSection: typeLabels[signal.type] ?? signal.type,
   mainEntityOfPage: canonicalUrl,
@@ -78,7 +80,7 @@ const articleJsonLd = {
   description={signal.summary}
   robots={isPublished ? 'index,follow' : 'noindex,nofollow'}
   ogType="article"
-  publishedAt={signal.registered_at}
+  publishedAt={signal.first_public_at ?? undefined}
   jsonLd={articleJsonLd}
 >
   <section class={`preview-notice ${isPublished ? 'live-notice' : ''}`} role="note">
@@ -126,7 +128,7 @@ const articleJsonLd = {
 
     <div class="detail-grid">
       <div class="detail-main">
-        <LocalExplain signal={signal} />
+        {signal.lifecycle === 'active' && signal.status !== 'falsified' && !signal.review_required && <LocalExplain signal={signal} />}
 
         <section class="detail-section">
           <span class="section-kicker">INTERPRETATION</span>
