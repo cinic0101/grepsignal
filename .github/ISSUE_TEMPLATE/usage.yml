@@ -1,0 +1,54 @@
+name: Usage or integration feedback
+description: Tell us what you actually used and where the workflow helped or failed.
+title: "[Usage] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        English, 繁體中文 and 简体中文 are welcome. Share an actual task, not private data.
+        A page view, crawler request or star is not treated as verified use. Public examples are optional.
+  - type: textarea
+    id: task
+    attributes:
+      label: What were you trying to do?
+      description: For example check what changed, inspect evidence, or find whether a prior judgment was corrected.
+    validations:
+      required: true
+  - type: dropdown
+    id: interface
+    attributes:
+      label: Interface used
+      multiple: true
+      options:
+        - Website / HTML
+        - Canonical JSON
+        - Change feed / Atom
+        - Local Explain
+        - Software / attempted self-hosting
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Actual result or obstacle
+      description: What worked, failed, or required manual clarification? Include stable record IDs or schema versions when relevant.
+    validations:
+      required: true
+  - type: input
+    id: example
+    attributes:
+      label: Optional public example
+      description: A citation or integration URL is helpful but not required. Do not include private links or access tokens.
+    validations:
+      required: false
+  - type: dropdown
+    id: recurrence
+    attributes:
+      label: Frequency so far
+      options:
+        - First attempt
+        - Used more than once
+        - Recurring workflow
+    validations:
+      required: false

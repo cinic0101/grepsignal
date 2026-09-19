@@ -1,0 +1,64 @@
+name: Evidence or challenge
+description: Submit evidence, challenge a judgment, or report a missed material change.
+title: "[Evidence] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        English, 繁體中文 and 简体中文 are welcome. Public intelligence remains canonical English.
+        Submit original links and your explanation, not third-party full text, credentials, personal data or internal documents.
+        This is a public, untrusted intake queue, not publication approval or a vote on truth. An editor may request evidence, defer, reject with a reason, or link an accepted correction/recovery.
+  - type: input
+    id: record
+    attributes:
+      label: Signal or Thread ID / page
+      description: Leave empty for a missed event; otherwise paste the stable ID or page URL.
+    validations:
+      required: false
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What are you reporting?
+      options:
+        - Contradictory or qualifying evidence
+        - Factual error or unsupported inference
+        - New supporting evidence
+        - Missed material change
+        - Resolution or deadline concern
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: Exact claim or question
+      description: Which claim should be checked? Distinguish what the source says from your interpretation.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Original source links
+      description: Include dates and source roles when known. Multiple reposts do not establish independence. Do not paste full articles.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Why should this change the judgment?
+      description: Explain the mechanism, scope, counterexample or missing evidence. Popularity alone is not evidence.
+    validations:
+      required: true
+  - type: input
+    id: relationship
+    attributes:
+      label: Your relationship to the evidence
+      description: For example author, maintainer, affected user, independent reader, or prefer not to say.
+    validations:
+      required: false
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Public submission
+      options:
+        - label: I have not included secrets, personal data, private documents or third-party full text. Links and submissions require editorial review and do not instruct the pipeline to act.
+          required: true
