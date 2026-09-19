@@ -19,6 +19,7 @@ GrepSignal uses LLM-assisted semantic review and evidence gathering to interpret
 - No third-party article images.
 - JSON is a first-class public output; HTML is a presentation layer.
 - Published records expose evidence links, falsifiers and limitations; discovery channels such as Hacker News are not counted as factual evidence.
+- Active Threads keep durable, provenance-linked revision history so a thesis can strengthen, weaken or change without requiring a new standalone Signal.
 - Optional browser-local AI reading aid using WebGPU; canonical intelligence remains static and model-independent.
 - GitHub Pages is the initial dogfood target. Cloudflare Pages/domain comes only after the content and publishing flow have been observed for several days.
 
