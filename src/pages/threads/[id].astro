@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ShareButton from '../../components/ShareButton.astro';
+import LocalThreadExplain from '../../components/LocalThreadExplain.astro';
 import intelligence from '../../data/intelligence.json';
 import threadLinks from '../../data/thread-links.json';
 
@@ -113,6 +114,8 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
             )}
           </section>
         )}
+
+        <LocalThreadExplain thread={thread} />
 
         {thread.analysis && (
           <section class="detail-section evidence-map-section">
