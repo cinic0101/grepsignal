@@ -54,7 +54,7 @@ function forecast(p) {
 }
 export function validateEvent(e) {
   exact(e,['id','record_type','record_id','expected_version','kind','recorded_at','proposed_by','acceptance','note','evidence','payload'],'event');
-  assert(ID.test(e.id) && ID.test(e.record_id) && TYPES[e.record_type],'invalid event identity');
+  assert(typeof e.id === 'string' && typeof e.record_id === 'string' && ID.test(e.id) && ID.test(e.record_id) && Object.hasOwn(TYPES,e.record_type),'invalid event identity');
   assert(KINDS.includes(e.kind) && Number.isInteger(e.expected_version) && e.expected_version >= 0,'invalid kind/version');
   timestamp(e.recorded_at);assert(text(e.proposed_by) && text(e.note),'proposal attribution/note required');
   exact(e.acceptance,['actor','scope','reference','accepted_at'],'acceptance');
@@ -188,6 +188,7 @@ export function replay(baseline,journal,baselineLinks=null) {
   }
   for (const s of data.signals) {
     assert(ASSESSMENTS.includes(s.status),'invalid Signal assessment');evidence(s.sources);
+    assert(['capability_delta','cost_intelligence','ecosystem_momentum','platform_shift','second_order_effect'].includes(s.type),'invalid Signal type');
     assert(s.sources.length > 0 && s.source_count === s.sources.length && s.source_organization_count === new Set(s.sources.map(x => x.publisher)).size,'source counts inconsistent');
     for (const key of ['id','type','title','summary','why_it_matters','second_order_effect','watch_next','registered_at','evidence_since']) assert(text(s[key]),`missing Signal ${key}`);
     for (const key of ['limitations','falsifiers']) assert(Array.isArray(s[key]) && s[key].length > 0 && s[key].every(text),`missing ${key}`);

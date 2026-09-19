@@ -3,6 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const base = import.meta.env.BASE_URL;
 const endpoints = [
+  { label: 'CHANGES', href: `${base}data/changes.json`, path: '/data/changes.json', description: 'Complete post-migration stream. Filter by sequence, not source publication date.' },
+  { label: 'HISTORY', href: `${base}data/history.json`, path: '/data/history.json', description: 'Accepted events and immutable legacy snapshot reference.' },
+  { label: 'ATOM', href: `${base}atom.xml`, path: '/atom.xml', description: 'Sitewide judgment revisions, corrections and reviews.' },
+  { label: 'HISTORY SCHEMA', href: `${base}schema/history.schema.json`, path: '/schema/history.schema.json', description: 'Versioned event envelope; lifecycle invariants also enforced during build.' },
   {
     label: 'INTELLIGENCE',
     href: `${base}data/intelligence.json`,
@@ -79,7 +83,7 @@ const endpoints = [
       <section class="guide-grid" aria-label="Agent consumption guidance">
         <article class="guide-card">
           <span class="section-kicker">CONSUME</span>
-          <h2>Recommended flow</h2>
+          <h2>Recommended flow</h2><p>Intelligence now uses schema v2. Arrays retain withdrawn/replaced records: inspect lifecycle and assessment before recommending them. Version 0 is a legacy snapshot, not complete earlier event history. Save the latest sequence and process each larger sequence; timestamps are not safe cursors. First-publication times remain null until explicitly verified. See Changes and Editorial policy for corrections and reuse.</p>
           <ol>
             <li><strong>Fetch JSON first.</strong> Start with <code>/data/intelligence.json</code>.</li>
             <li><strong>Check the contract.</strong> Read <code>schema_version</code> and validate against the public schema when strict parsing matters.</li>

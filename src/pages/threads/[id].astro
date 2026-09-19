@@ -2,8 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ShareButton from '../../components/ShareButton.astro';
 import LocalThreadExplain from '../../components/LocalThreadExplain.astro';
-import intelligence from '../../data/intelligence.json';
-import threadLinks from '../../data/thread-links.json';
+import intelligence from '../../data/intelligence';
+import threadLinks from '../../data/thread-links';
 
 type Thread = typeof intelligence.threads[number];
 type Signal = typeof intelligence.signals[number];

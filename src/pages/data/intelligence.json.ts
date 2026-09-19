@@ -1,4 +1,4 @@
-import intelligence from '../../data/intelligence.json';
+import intelligence from '../../data/intelligence';
 
 export const prerender = true;
 

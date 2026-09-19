@@ -73,3 +73,9 @@ Software source, scripts, schemas, configuration and site implementation remain 
 Authorized original published GrepSignal intelligence and editorial analysis are under [CC BY 4.0](LICENSE-CONTENT.md). Credit GrepSignal, link the record and license, and indicate modifications under the license terms. This covers the original records distributed with that notice; it does not invent a historical license-effective date.
 
 Third-party source material is excluded and remains subject to its owners' rights. Private drafts, raw caches, credentials and operational data are neither published nor covered by the content grant. See the content notice for the complete boundary.
+
+## Accountability journal (schema v2)
+
+`src/data/intelligence.json` and `thread-links.json` are pinned legacy baselines, **not the current head**. Append accepted events to `src/data/history.json`; `src/data/intelligence.ts` derives pages and the current `/data/intelligence.json`. Never edit baselines to publish a finding. See `docs/accountability.md`.
+
+Changes: `/changes/`, `/data/changes.json`, `/data/history.json`, `/atom.xml`. Migration adds no fake review, correction or forecast. Earlier Thread history stays intact. Unknown first-publication times remain unknown.

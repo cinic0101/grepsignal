@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import intelligence from '../../data/intelligence.json';
-import threadLinks from '../../data/thread-links.json';
+import intelligence from '../../data/intelligence';
+import threadLinks from '../../data/thread-links';
 
 const base = import.meta.env.BASE_URL;
 const statusMark: Record<string, string> = {
@@ -9,6 +9,7 @@ const statusMark: Record<string, string> = {
   emerging: '↑',
   stable: '→',
   weakening: '↓',
+  falsified: '×',
 };
 const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
