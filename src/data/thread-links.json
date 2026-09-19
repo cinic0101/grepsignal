@@ -1,10 +1,20 @@
 {
   "thread-research-automation-bottlenecks": {
-    "supporting": ["sig-research-automation-bottlenecks-2026-09-14"],
+    "supporting": [
+      "sig-research-automation-bottlenecks-2026-09-14"
+    ],
     "contradicting": []
   },
   "thread-agent-runtime-containment": {
-    "supporting": ["sig-agent-security-runtime-boundary-2026-09-14"],
+    "supporting": [
+      "sig-agent-security-runtime-boundary-2026-09-14"
+    ],
+    "contradicting": []
+  },
+  "thread-agent-configuration-portability": {
+    "supporting": [
+      "sig-agent-config-portability-2026-09-19"
+    ],
     "contradicting": []
   }
 }
