@@ -18,38 +18,46 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
-      - name: Preserve source date precision and new-record review horizon
+      - name: Complete lifecycle consumption guards
         run: |
           python - <<'PY'
           from pathlib import Path
-          p=Path('scripts/accountability.mjs')
-          s=p.read_text()
-          old="    assert(x.published_at == null || /^\\d{4}-\\d{2}-\\d{2}$/.test(x.published_at),'source date precision');"
-          new="""    if (x.published_at != null) {
-                assert(typeof x.published_at === 'string' && /^\\d{4}-\\d{2}(?:-\\d{2})?$/.test(x.published_at),'source date precision');
-                // Validate the known portion without filling missing precision in the record.
-                timestamp(`${x.published_at.length === 7 ? x.published_at+'-01' : x.published_at}T00:00:00Z`);
-              }"""
-          assert s.count(old)==1
-          s=s.replace(old,new)
-          old="        links[r.id]=structuredClone(p.signal_relations);delete r.signal_relations;"
-          new=old+"\n        r.next_review_at=new Date(timestamp(e.recorded_at)+7*24*60*60*1000).toISOString();r.review_due_since=r.next_review_at;"
-          assert s.count(old)==1
-          s=s.replace(old,new)
-          p.write_text(s)
-          p=Path('tests/accountability.test.mjs')
-          p.write_text(p.read_text()+"""
-          test('month-only legacy source dates preserve precision, invalid months fail',()=>{
-            const b=structuredClone(baseline);b.signals[0].sources[0].published_at='2026-09';
-            assert.equal(replay(b,journal([])).data.signals[0].sources[0].published_at,'2026-09');
-            b.signals[0].sources[0].published_at='2026-13';assert.throws(()=>replay(b,journal([])));
+          import re
+          def change(path,old,new):
+              p=Path(path);s=p.read_text();assert s.count(old)==1,(path,old);p.write_text(s.replace(old,new))
+          change('src/pages/threads/index.astro','[...intelligence.threads]','[...intelligence.threads.filter(x => x.lifecycle === \'active\')]')
+          change('src/pages/signals/[id].astro','  datePublished: signal.registered_at,',"  ...(signal.first_public_at ? { datePublished: signal.first_public_at } : {}),\n  ...(signal.last_changed_at ? { dateModified: signal.last_changed_at } : {}),")
+          change('src/pages/signals/[id].astro','  publishedAt={signal.registered_at}','  publishedAt={signal.first_public_at ?? undefined}')
+          change('src/pages/signals/[id].astro','        <LocalExplain signal={signal} />',"        {signal.lifecycle === 'active' && signal.status !== 'falsified' && !signal.review_required && <LocalExplain signal={signal} />}")
+          change('src/pages/threads/[id].astro','([...thread.updates] as ThreadRevision[])','([...thread.updates].reverse() as ThreadRevision[])')
+          p=Path('src/pages/threads/[id].astro');s=p.read_text();s,count=re.subn(r'<LocalThreadExplain\b[^>]*?/>',lambda m:"{thread.lifecycle === 'active' && thread.status !== 'falsified' && !thread.review_required && "+m.group(0)+"}",s,flags=re.S);assert count==1;p.write_text(s)
+          for path in ['src/pages/signals/[id].astro','src/pages/threads/[id].astro']:
+              change(path,"  weakening: '↓',","  weakening: '↓',\n  falsified: '×',")
+          change('src/components/RecordHistory.astro',"target.startsWith('thread-') ? 'threads' : target.startsWith('pred-') ? 'predictions' : 'signals'", "intelligence.threads.some(r => r.id === target) ? 'threads' : intelligence.predictions.some(r => r.id === target) ? 'predictions' : 'signals'")
+          p=Path('tests/public-consumption.test.mjs');p.write_text('''import test from 'node:test';
+          import assert from 'node:assert/strict';
+          import {readFileSync} from 'node:fs';
+          const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
+          test('active Thread listing excludes withdrawn/replaced records',()=>{
+            assert.ok(read('src/pages/threads/index.astro').includes("intelligence.threads.filter(x => x.lifecycle === 'active')"));
           });
-          test('new Thread review horizon is relative to its registration, not migration',()=>{
-            const t={...structuredClone(thread),id:'thread-later',signal_relations:{supporting:['sig-example'],contradicting:[]}};
-            const e=event({id:'evt-later',kind:'register',record_type:'thread',record_id:t.id,recorded_at:'2026-10-20T00:00:00Z',payload:t});
-            assert.equal(run([e]).data.threads[1].next_review_at,'2026-10-27T00:00:00.000Z');
+          test('public metadata never substitutes registration for verified publication',()=>{
+            const s=read('src/pages/signals/[id].astro');
+            assert.ok(s.includes('datePublished: signal.first_public_at'));
+            assert.ok(!s.includes('datePublished: signal.registered_at'));
+            assert.ok(!s.includes('publishedAt={signal.registered_at}'));
           });
-          """)
+          test('withdrawn or invalidated context cannot silently use Local Explain',()=>{
+            for (const [path,record] of [['signals','signal'],['threads','thread']]) {
+              const s=read(`src/pages/${path}/[id].astro`);
+              assert.ok(s.includes(`${record}.lifecycle === 'active' && ${record}.status !== 'falsified' && !${record}.review_required`));
+            }
+          });
+          test('same-day Thread events prefer the latest appended revision',()=>{
+            assert.ok(read('src/pages/threads/[id].astro').includes('[...thread.updates].reverse()'));
+          });
+          ''')
+          p=Path('docs/accountability.md');p.write_text(p.read_text()+'''\nConsumer safeguards: active listings exclude retracted/superseded records, but stable detail URLs remain. Optional Local Explain is suppressed for withdrawn/falsified/re-review-required context. Search metadata emits datePublished only with an actual first_public_at receipt. Same-day Thread revisions prefer append order rather than silently choosing the oldest revision.\n''')
           PY
       - name: Persist repair on isolated staging branch
         env:
@@ -58,8 +66,8 @@ jobs:
           test "$BRANCH" = 'stage/roadmap-bc-public'
           git config user.name 'grepsignal-build[bot]'
           git config user.email 'grepsignal-build[bot]@users.noreply.github.com'
-          git add scripts tests
-          git commit -m 'fix(history): retain source precision and schedule new Threads from registration'
+          git add src tests docs
+          git commit -m 'fix: respect lifecycle and publication provenance in all consumer views'
           git push origin "HEAD:$BRANCH"
       - run: npm install --no-audit --no-fund
       - name: Validate and build project path
@@ -78,3 +86,34 @@ jobs:
         run: |
           npm run build
           node scripts/check-built-accountability.mjs
+      - name: Synthetic lifecycle smoke on built pages only
+        env:
+          PUBLIC_SITE_URL: https://cinic0101.github.io
+          PUBLIC_BASE_PATH: /grepsignal/
+          HISTORY_BASE_REF: cd004f2320f67ea5a4f2e89db6e4e51b32004969
+        run: |
+          node --input-type=module <<'JS'
+          import {readFileSync,writeFileSync} from 'node:fs';
+          import {execFileSync} from 'node:child_process';
+          import assert from 'node:assert/strict';
+          const path='src/data/history.json',raw=readFileSync(path,'utf8');
+          const base=JSON.parse(readFileSync('src/data/intelligence.json','utf8'));
+          const thread=base.threads[0],signal=base.signals.find(x=>x.id===thread.updates[0].signal_ids[0]);
+          const journal=JSON.parse(raw);
+          const acceptance={actor:'Synthetic test fixture',scope:'publication',reference:'https://example.org/synthetic-test-only',accepted_at:'2026-09-20T00:00:00Z'};
+          journal.events.push({id:'fixture-retract',kind:'retract',record_type:'signal',record_id:signal.id,expected_version:0,recorded_at:'2026-09-20T00:00:00Z',proposed_by:'Synthetic fixture',acceptance,note:'Synthetic fixture only, never committed or deployed.',evidence:[],payload:{}});
+          try {
+            writeFileSync(path,JSON.stringify(journal));
+            execFileSync('npm',['run','build'],{stdio:'inherit'});
+            const detail=readFileSync(`dist/signals/${signal.id}/index.html`,'utf8');
+            const dependent=readFileSync(`dist/threads/${thread.id}/index.html`,'utf8');
+            const data=JSON.parse(readFileSync('dist/data/intelligence.json','utf8'));
+            const changes=JSON.parse(readFileSync('dist/data/changes.json','utf8'));
+            assert.ok(detail.includes('RETRACTED.'));
+            assert.ok(dependent.includes('Re-review needed.'));
+            assert.equal(data.signals.find(x=>x.id===signal.id).lifecycle,'retracted');
+            assert.equal(changes.events.at(-1).id,'fixture-retract');
+            assert.ok(readFileSync('dist/atom.xml','utf8').includes('fixture-retract'));
+            console.log('Synthetic accepted retraction -> dependent notice -> JSON -> Atom passed; no deployment.');
+          } finally {writeFileSync(path,raw);}
+          JS
