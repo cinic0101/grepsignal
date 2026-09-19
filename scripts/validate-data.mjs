@@ -134,6 +134,39 @@ if (data.publication_status === 'published') {
     if (latest.assessment !== thread.status) {
       fail(`published thread ${thread.id} status must match its latest revision assessment`);
     }
+    if (thread.analysis !== undefined) {
+      if (!thread.analysis || !Array.isArray(thread.analysis.evidence_map) ||
+          !Array.isArray(thread.analysis.boundaries) || !thread.analysis.view_tests) {
+        fail(`published thread ${thread.id} has invalid analysis shape`);
+      }
+      if (thread.analysis.evidence_map.length === 0 ||
+          thread.analysis.boundaries.length === 0 ||
+          !Array.isArray(thread.analysis.view_tests.strengthen) ||
+          !Array.isArray(thread.analysis.view_tests.weaken) ||
+          thread.analysis.view_tests.strengthen.length === 0 ||
+          thread.analysis.view_tests.weaken.length === 0) {
+        fail(`published thread ${thread.id} analysis sections must be non-empty`);
+      }
+      const dimensionIds = new Set();
+      for (const dimension of thread.analysis.evidence_map) {
+        if (![dimension.id, dimension.title, dimension.summary].every(nonEmpty)) {
+          fail(`published thread ${thread.id} has incomplete evidence dimension`);
+        }
+        if (dimensionIds.has(dimension.id)) {
+          fail(`published thread ${thread.id} repeats evidence dimension ${dimension.id}`);
+        }
+        dimensionIds.add(dimension.id);
+        if (!Array.isArray(dimension.signal_ids) || dimension.signal_ids.length === 0 ||
+            dimension.signal_ids.some((id) => !publishedSignalIds.has(id))) {
+          fail(`published thread ${thread.id} evidence dimension must reference published signals`);
+        }
+      }
+      if (!thread.analysis.boundaries.every(nonEmpty) ||
+          !thread.analysis.view_tests.strengthen.every(nonEmpty) ||
+          !thread.analysis.view_tests.weaken.every(nonEmpty)) {
+        fail(`published thread ${thread.id} analysis prose must be non-empty`);
+      }
+    }
   }
 }
 
