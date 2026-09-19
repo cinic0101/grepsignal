@@ -2,14 +2,55 @@
   "schema_version": 1,
   "publication_status": "published",
   "canonical_language": "en",
-  "generated_at": "2026-09-19T08:55:00Z",
+  "generated_at": "2026-09-19T10:28:00Z",
   "notice": "Formally reviewed GrepSignal intelligence. Discovery channels are used to prioritize research, not as factual evidence. Evidence links point to primary or affected-party sources, and no third-party images are republished.",
   "stats": {
-    "material_signals": 5,
-    "active_threads": 3,
+    "material_signals": 6,
+    "active_threads": 5,
     "open_predictions": 0
   },
   "signals": [
+    {
+      "id": "sig-offensive-cyber-economics-2026-09-19",
+      "type": "second_order_effect",
+      "status": "strengthening",
+      "title": "AI is compressing the labor economics of offensive cyber operations",
+      "summary": "Anthropic reports multiple unrelated cyber operations in which individual or small groups used AI for reconnaissance, exploitation, tool development, intrusion workflows and data processing at a scale that previously required teams of skilled operators. The material change is economic rather than a new attack technique: offensive-security labor and specialist knowledge are becoming less binding constraints as agentic workflows run faster, in parallel and with lower per-campaign operating cost.",
+      "why_it_matters": "Defenders can no longer infer attacker resources reliably from campaign sophistication. If AI keeps reducing the labor and skill required per intrusion, more actors can sustain multi-victim operations, previously marginal targets become economically viable, and defensive capacity has to absorb higher attack volume without assuming a proportional increase in attacker headcount.",
+      "second_order_effect": "lower offensive-security labor and skill requirements → more actors can run sophisticated campaigns → higher attack volume and broader target selection → campaign sophistication becomes a weaker proxy for attacker resources",
+      "watch_next": "Track independent incident reports that quantify operator-hours, campaign scale and model contribution; whether autonomous offensive frameworks spread beyond specialist groups; and whether defenders observe sustained increases in attack volume, exploit-development speed or lower-skill operators achieving previously specialist outcomes.",
+      "source_count": 2,
+      "source_organization_count": 2,
+      "evidence_since": "2025-11",
+      "registered_at": "2026-09-19",
+      "falsifiers": [
+        "Independent incident data shows AI-assisted cyber operations do not materially reduce skilled-human labor, time-to-exploit or campaigns-per-operator once human review and failed attempts are counted.",
+        "Agentic offensive workflows remain confined to a small set of specialist or state-backed teams and do not diffuse to lower-resourced operators.",
+        "Defensive adaptation raises the cost of AI-assisted attacks enough that previously marginal targets do not become more viable and campaign volume does not increase."
+      ],
+      "limitations": [
+        "Anthropic's report is provider-produced threat intelligence from activity on its own service and intentionally highlights notable cases rather than a representative sample of all cyber operations.",
+        "Humans remained involved in important decisions across the reported cases; this Signal is about changing unit economics and workflow leverage, not fully autonomous cyberwarfare.",
+        "Discourse independently confirms the HEIF remote-code-execution vulnerability and credits Hacktron as the reporter, but its advisory does not independently verify the model's contribution to exploit development.",
+        "The evidence supports a reduction in labor and skill constraints more strongly than it supports any claim that AI has created fundamentally new attack techniques."
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "title": "Detecting and countering misuse of AI: September 2026",
+          "url": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+          "role": "primary_threat_intelligence",
+          "published_at": "2026-09-10"
+        },
+        {
+          "publisher": "Discourse",
+          "title": "RCE via malformed HEIF file",
+          "url": "https://github.com/discourse/discourse/security/advisories/GHSA-vhm9-85gw-x335",
+          "role": "affected_party_security_advisory",
+          "published_at": "2026-07-28"
+        }
+      ]
+    },
     {
       "id": "sig-agent-config-portability-2026-09-19",
       "type": "ecosystem_momentum",
@@ -259,6 +300,159 @@
     }
   ],
   "threads": [
+    {
+      "id": "thread-decision-native-runtimes",
+      "title": "Decision-Native AI Runtimes",
+      "status": "emerging",
+      "signal_count": 1,
+      "summary": "Typed probabilistic decisions without a free-form decoding loop are emerging as a distinct runtime pattern for bounded semantic work.",
+      "thesis": "Some high-frequency semantic operations may separate from general text generation into decision-native runtimes that accept state plus predefined choices and return typed probabilities directly; the open question is whether this becomes a durable model/runtime class or simply an interface pattern implemented on general-purpose models.",
+      "evidence_since": "2026-09",
+      "created_at": "2026-09-19",
+      "last_updated": "2026-09-19",
+      "updates": [
+        {
+          "id": "threadrev-decision-native-runtimes-2026-09-19",
+          "date": "2026-09-19",
+          "assessment": "emerging",
+          "change": "Historical recovery shows the Jev Signal now has a broader ecosystem pattern worth tracking: independent open projects reproduce the typed option-scoring interface without a decoding loop, while explicitly stopping short of claiming Jev-equivalent quality or economics.",
+          "signal_ids": [
+            "sig-decision-specialized-runtime-2026-09-16"
+          ],
+          "sources": [
+            {
+              "publisher": "OpenJev / SemIf",
+              "title": "Phase 1 results",
+              "url": "https://github.com/TheoLeeCJ/openjev/blob/master/docs/RESULTS.md",
+              "role": "independent_reproduction",
+              "published_at": null
+            },
+            {
+              "publisher": "OpenJev",
+              "title": "Jev-compatible System One decision server",
+              "url": "https://github.com/razorback16/openjev",
+              "role": "independent_implementation",
+              "published_at": null
+            }
+          ],
+          "pattern_scope": "cross_actor",
+          "event_independence": "independent_events",
+          "mechanism_coherence": "strong"
+        }
+      ],
+      "analysis": {
+        "evidence_map": [
+          {
+            "id": "decision-contract",
+            "title": "Decision contract",
+            "summary": "The original Jev Signal separates bounded typed decisions from free-form generated text as a runtime interface for software.",
+            "signal_ids": [
+              "sig-decision-specialized-runtime-2026-09-16"
+            ]
+          },
+          {
+            "id": "open-reproduction",
+            "title": "Open reproduction pressure",
+            "summary": "Independent projects can reproduce direct option scoring and Jev-like wire interfaces on open models, suggesting the interface pattern is broader than one proprietary service.",
+            "signal_ids": [
+              "sig-decision-specialized-runtime-2026-09-16"
+            ]
+          },
+          {
+            "id": "class-or-interface",
+            "title": "Model class or interface?",
+            "summary": "Open reproductions also create a counter-hypothesis: decision-native behavior may become an interface implemented on general-purpose models rather than requiring a permanently separate model class.",
+            "signal_ids": [
+              "sig-decision-specialized-runtime-2026-09-16"
+            ]
+          }
+        ],
+        "boundaries": [
+          "Independent open projects reproduce the interface pattern, not TypeSafe's undisclosed Jev model or training method.",
+          "Current reproductions do not establish the full latency, calibration, task-quality or cost claims published for Jev.",
+          "The ecosystem is still young; a few implementations do not yet establish broad production adoption."
+        ],
+        "view_tests": {
+          "strengthen": [
+            "Independent applications adopt decision-native runtimes for routing, scoring, gating or verification and report durable latency, calibration or cost advantages.",
+            "More providers expose compatible typed-probability decision interfaces rather than requiring text generation plus parsing."
+          ],
+          "weaken": [
+            "General-purpose models with structured outputs or direct scoring provide comparable reliability and economics without a distinct runtime category.",
+            "Open reproductions fail to close quality or calibration gaps and downstream adoption remains limited to experiments."
+          ]
+        }
+      }
+    },
+    {
+      "id": "thread-offensive-cyber-economics",
+      "title": "Offensive Cyber Economics",
+      "status": "strengthening",
+      "signal_count": 1,
+      "summary": "AI is reducing the skilled labor, time and orchestration cost required to sustain sophisticated offensive cyber operations.",
+      "thesis": "As models and agentic cyber frameworks absorb more reconnaissance, exploit research, tool development and data-processing work, attacker capability depends less on scarce specialist labor, shifting the economics toward more parallel campaigns, broader targeting and lower-resource operators.",
+      "evidence_since": "2025-11",
+      "created_at": "2026-09-19",
+      "last_updated": "2026-09-19",
+      "updates": [
+        {
+          "id": "threadrev-offensive-cyber-economics-2026-09-19",
+          "date": "2026-09-19",
+          "assessment": "strengthening",
+          "change": "Retrospective review separates a broader economic pattern from today's Hacktron catalyst: across multiple unrelated operations, AI is reducing the skilled labor and operating cost needed for offensive cyber work without requiring fundamentally new attack techniques.",
+          "signal_ids": [
+            "sig-offensive-cyber-economics-2026-09-19"
+          ],
+          "sources": [],
+          "pattern_scope": "cross_actor",
+          "event_independence": "independent_events",
+          "mechanism_coherence": "strong"
+        }
+      ],
+      "analysis": {
+        "evidence_map": [
+          {
+            "id": "labor-compression",
+            "title": "Labor compression",
+            "summary": "Anthropic reports individual or small operators sustaining work that previously required teams of skilled specialists across reconnaissance, exploitation, tooling and data processing.",
+            "signal_ids": [
+              "sig-offensive-cyber-economics-2026-09-19"
+            ]
+          },
+          {
+            "id": "agentic-orchestration",
+            "title": "Agentic orchestration",
+            "summary": "Observed operations increasingly use multi-agent or automated workflows to execute several stages of the attack lifecycle in parallel rather than using a model only as a conversational assistant.",
+            "signal_ids": [
+              "sig-offensive-cyber-economics-2026-09-19"
+            ]
+          },
+          {
+            "id": "economics-not-novelty",
+            "title": "Economics, not novelty",
+            "summary": "The techniques are often familiar; the durable change is that labor, skill and campaign cost become less binding, altering which actors and targets are economically viable.",
+            "signal_ids": [
+              "sig-offensive-cyber-economics-2026-09-19"
+            ]
+          }
+        ],
+        "boundaries": [
+          "The reviewed evidence does not imply that most cyber operations are already autonomous or AI-led.",
+          "Humans still make important targeting, monetization and result-review decisions in the reported cases.",
+          "The Hacktron/Discourse affected-party record confirms a real vulnerability and reporter identity but does not independently measure the model's contribution to exploit development."
+        ],
+        "view_tests": {
+          "strengthen": [
+            "Independent incidents show fewer operator-hours or lower-skill teams sustaining sophisticated multi-victim campaigns with agentic cyber workflows.",
+            "Public offensive-agent frameworks diffuse to materially broader classes of attackers and increase campaigns per operator."
+          ],
+          "weaken": [
+            "Human review and failed attempts erase most claimed labor savings once complete campaign cost is measured.",
+            "Defensive adaptation keeps AI-assisted exploit development confined to specialist teams without a sustained increase in viable targets or campaign scale."
+          ]
+        }
+      }
+    },
     {
       "id": "thread-agent-configuration-portability",
       "title": "Agent Configuration Portability",
