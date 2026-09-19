@@ -16,5 +16,17 @@
       "sig-agent-config-portability-2026-09-19"
     ],
     "contradicting": []
+  },
+  "thread-offensive-cyber-economics": {
+    "supporting": [
+      "sig-offensive-cyber-economics-2026-09-19"
+    ],
+    "contradicting": []
+  },
+  "thread-decision-native-runtimes": {
+    "supporting": [
+      "sig-decision-specialized-runtime-2026-09-16"
+    ],
+    "contradicting": []
   }
 }
