@@ -1,5 +1,6 @@
 ---
 import coverage from '../data/coverage.json';
+import intelligence from '../data/intelligence.json';
 
 const base = import.meta.env.BASE_URL;
 const statusLabels: Record<string, string> = {
@@ -12,11 +13,21 @@ const reviewed = (value: number | null, total: number) =>
 const lastReviewed = new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
 }).format(new Date(coverage.generated_at));
+const cycleDateMatch = coverage.cycle_id.match(/cycle-(\d{4}-\d{2}-\d{2})/);
+const reviewDate = cycleDateMatch?.[1] ?? new Date(coverage.generated_at).toISOString().slice(0, 10);
+const reviewDateLabel = new Intl.DateTimeFormat('en', {
+  year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
+}).format(new Date(`${reviewDate}T00:00:00Z`));
+const signalsRegistered = intelligence.signals.filter(signal => signal.registered_at === reviewDate).length;
+const threadChangesRegistered = intelligence.threads.reduce(
+  (count, thread) => count + thread.updates.filter(update => update.date === reviewDate).length,
+  0,
+);
 ---
 <section class="coverage-section" id="coverage" aria-labelledby="coverage-heading">
   <div class="section-head">
     <div>
-      <span class="section-kicker">RESEARCH COVERAGE</span>
+      <span class="section-kicker">SCHEDULED REVIEW COVERAGE</span>
       <h2 id="coverage-heading">Coverage</h2>
     </div>
     <div class="coverage-meta">
@@ -28,8 +39,8 @@ const lastReviewed = new Intl.DateTimeFormat('en', {
   <div class="coverage-layout">
     <div>
       <p class="coverage-intro">
-        GrepSignal screens configured discovery sources, then follows promising items to original and
-        primary evidence. Coverage describes this intake — not complete coverage of the AI ecosystem.
+        GrepSignal screens configured discovery sources, then follows promising items to original
+        evidence. Coverage describes this frozen scheduled intake — not complete coverage of the AI ecosystem.
       </p>
       <div class="source-grid">
         {coverage.sources.map(source => (
@@ -42,16 +53,37 @@ const lastReviewed = new Intl.DateTimeFormat('en', {
       </div>
     </div>
 
-    <aside class="coverage-results" aria-label="Research output">
+    <aside class="coverage-results" aria-label="Scheduled research follow-up">
+      <span class="results-kicker">RESEARCH FOLLOW-UP</span>
       <div>
-        <strong>{coverage.primary_sources_consulted}</strong>
-        <span>primary / affected-party<br />sources consulted</span>
+        <strong>{coverage.research_targets_reviewed}</strong>
+        <span>research targets<br />reviewed</span>
       </div>
       <div>
-        <strong>{coverage.published_signals}</strong>
-        <span>new material signal{coverage.published_signals === 1 ? '' : 's'}<br />this review</span>
+        <strong>{coverage.exact_sources_materialized}</strong>
+        <span>exact sources<br />materialized</span>
       </div>
     </aside>
+  </div>
+
+  <div class="intelligence-output" aria-label="Intelligence registered for this review date">
+    <div>
+      <span class="section-kicker">INTELLIGENCE OUTPUT · {reviewDateLabel.toUpperCase()}</span>
+      <p>
+        Registered intelligence includes later Editorial Recovery on the same date, not only the
+        original scheduled cycle.
+      </p>
+    </div>
+    <div class="output-metrics">
+      <div>
+        <strong>{signalsRegistered}</strong>
+        <span>signal{signalsRegistered === 1 ? '' : 's'} registered</span>
+      </div>
+      <div>
+        <strong>{threadChangesRegistered}</strong>
+        <span>thread change{threadChangesRegistered === 1 ? '' : 's'} registered</span>
+      </div>
+    </div>
   </div>
 
   <div class="coverage-bottom">
@@ -119,20 +151,49 @@ const lastReviewed = new Intl.DateTimeFormat('en', {
     padding-left: 28px;
     border-left: 1px solid var(--line);
   }
-  .coverage-results > div {
+  .results-kicker {
+    color: var(--muted);
+    font: 800 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .06em;
+  }
+  .coverage-results > div,
+  .output-metrics > div {
     display: flex;
     align-items: center;
     gap: 13px;
   }
-  .coverage-results strong {
+  .coverage-results strong,
+  .output-metrics strong {
     min-width: 52px;
     font: 500 42px/1 Georgia, serif;
     color: var(--accent);
   }
-  .coverage-results span {
+  .coverage-results span,
+  .output-metrics span {
     color: var(--muted);
     font-size: 11px;
   }
+  .intelligence-output {
+    display: flex;
+    justify-content: space-between;
+    gap: 28px;
+    align-items: end;
+    margin-top: 24px;
+    padding: 20px 0 4px;
+    border-top: 1px solid var(--line);
+  }
+  .intelligence-output p {
+    max-width: 650px;
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .output-metrics {
+    display: flex;
+    gap: 28px;
+  }
+  .output-metrics strong { font-size: 34px; }
   .coverage-bottom {
     display: flex;
     justify-content: space-between;
@@ -147,6 +208,8 @@ const lastReviewed = new Intl.DateTimeFormat('en', {
     .coverage-layout, .source-grid { grid-template-columns: 1fr; }
     .coverage-meta { align-items: flex-start; }
     .coverage-results { padding: 20px 0 0; border-left: 0; border-top: 1px solid var(--line); }
+    .intelligence-output { align-items: flex-start; flex-direction: column; }
+    .output-metrics { width: 100%; flex-wrap: wrap; }
     .coverage-bottom { flex-wrap: wrap; }
   }
 </style>
