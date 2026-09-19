@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import LocalAIStatus from '../components/LocalAIStatus.astro';
+import RecordHistory from '../components/RecordHistory.astro';
 
 interface Props {
   title?: string;
@@ -36,6 +37,7 @@ const challengeUrl = `https://github.com/cinic0101/grepsignal/issues/new?${new U
     <meta name="color-scheme" content="light" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" type="application/json" title="GrepSignal intelligence JSON" href={intelligenceJsonUrl} />
+    <link rel="alternate" type="application/atom+xml" title="GrepSignal changes" href={`${base}atom.xml`} />
     <meta property="og:site_name" content="GrepSignal" />
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
@@ -61,10 +63,12 @@ const challengeUrl = `https://github.com/cinic0101/grepsignal/issues/new?${new U
           <a href={`${base}threads/`}>Threads</a>
           <a href={`${base}#predictions`}>Predictions</a>
           <a href={`${base}agents/`}>For agents</a>
+          <a href={`${base}changes/`}>Changes</a>
           <a href={`${base}editorial/`}>Editorial policy</a>
         </nav>
       </div>
     </header>
+    <RecordHistory />
     <slot />
     <aside class="wrap feedback-links" aria-label="Evidence and usage feedback">
       <a href={challengeUrl}>Submit evidence / challenge</a>

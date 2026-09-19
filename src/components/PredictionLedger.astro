@@ -1,0 +1,16 @@
+---
+import intelligence from '../data/intelligence';
+const base = import.meta.env.BASE_URL;
+---
+<div class="card" id="predictions">
+  <div class="cardtop"><div><span class="section-kicker">ACCOUNTABILITY</span><h2>Prediction ledger</h2></div><span class="beta">{intelligence.stats.open_predictions} OPEN / UNRESOLVED</span></div>
+  {intelligence.predictions.length === 0 ? <div class="empty-card"><strong>No formal prediction yet.</strong><p>Forecasts are not manufactured to fill the ledger. Fixtures and private drafts do not count.</p></div> : intelligence.predictions.map(p => <article class="prediction" id={p.id}>
+    <span class="label">{p.lifecycle} · {p.status} · deadline {p.deadline}</span><h3><a href={`${base}predictions/${p.id}/`}>{p.claim}</a></h3>
+    <p>Initial probability: {Math.round(p.initial_probability*100)}% · Public registration: {p.first_public_at ?? 'not yet verified; not in scored track record'}</p>
+    <details><summary>Original criteria and resolution history</summary><p>Success: {p.success_criterion}</p><p>Failure: {p.failure_criterion}</p><p>Insufficient evidence: {p.insufficient_evidence_policy}</p>
+      <ul>{p.resolution_sources.map(url => <li><a href={url}>Resolution source</a></li>)}</ul>
+      {p.resolutions?.map(r => <p><a href={`${base}changes/#${r.id}`}>{r.recorded_at}: {r.outcome}</a> · Brier {r.brier_score === null ? 'unscored' : r.brier_score.toFixed(4)}<br />{r.note}</p>)}
+    </details>
+  </article>)}
+  <p class="muted">Preserve misses and unresolved outcomes; never score only successes. A few outcomes do not establish calibration.</p>
+</div>

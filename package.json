@@ -6,12 +6,16 @@
   "scripts": {
     "dev": "astro dev",
     "test": "node --test tests/*.test.mjs",
-    "build": "npm test && node scripts/validate-data.mjs && node scripts/validate-coverage.mjs && node scripts/validate-thread-links.mjs && astro build",
-    "preview": "astro preview"
+    "build": "node scripts/check-history.mjs && npm test && node scripts/validate-data.mjs && node scripts/validate-coverage.mjs && node scripts/validate-thread-links.mjs && astro build",
+    "preview": "astro preview",
+    "history:check": "node scripts/check-history.mjs",
+    "history:append": "node scripts/append-history.mjs"
   },
   "dependencies": {
     "@mlc-ai/web-llm": "0.2.85",
     "astro": "7.3.2"
   },
-  "engines": { "node": ">=24" }
+  "engines": {
+    "node": ">=24"
+  }
 }

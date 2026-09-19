@@ -1,9 +1,5 @@
-import { readFile } from 'node:fs/promises';
-
-const intelligencePath = new URL('../src/data/intelligence.json', import.meta.url);
-const linksPath = new URL('../src/data/thread-links.json', import.meta.url);
-const intelligence = JSON.parse(await readFile(intelligencePath, 'utf8'));
-const links = JSON.parse(await readFile(linksPath, 'utf8'));
+import { load } from './accountability.mjs';
+const { data: intelligence, links } = load();
 
 const fail = (message) => {
   console.error(`thread-link validation failed: ${message}`);

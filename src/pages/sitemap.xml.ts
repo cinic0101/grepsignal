@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import intelligence from '../data/intelligence.json';
+import intelligence from '../data/intelligence';
 
 export const prerender = true;
 
@@ -18,6 +18,8 @@ export const GET: APIRoute = ({ site }) => {
 
   const entries: Array<{ loc: string; lastmod?: string }> = [
     { loc: absoluteUrl('agents/') },
+    { loc: absoluteUrl('editorial/') },
+    { loc: absoluteUrl('changes/') },
   ];
 
   if (intelligence.publication_status === 'published') {
@@ -28,13 +30,15 @@ export const GET: APIRoute = ({ site }) => {
     );
     entries.push(...intelligence.signals.map((signal) => ({
       loc: absoluteUrl(`signals/${signal.id}/`),
-      lastmod: signal.registered_at,
+      lastmod: signal.last_changed_at?.slice(0,10) ?? signal.registered_at,
     })));
     entries.push(...intelligence.threads.map((thread) => ({
       loc: absoluteUrl(`threads/${thread.id}/`),
       lastmod: thread.last_updated,
     })));
   }
+
+  entries.push(...intelligence.predictions.map(p => ({ loc: absoluteUrl(`predictions/${p.id}/`), lastmod: p.last_changed_at?.slice(0,10) ?? p.created_at.slice(0,10) })));
 
   const urls = entries.map(({ loc, lastmod }) => [
     '  <url>',

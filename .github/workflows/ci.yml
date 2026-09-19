@@ -1,19 +1,21 @@
 name: Site checks
-
 on:
   pull_request:
   push:
     branches: [main]
-
 permissions:
   contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
+    strategy:
+      matrix:
+        base_path: ['/', '/grepsignal/']
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v7
         with:
           node-version: '24'
@@ -22,4 +24,8 @@ jobs:
       - run: npm run build
         env:
           PUBLIC_SITE_URL: https://cinic0101.github.io
-          PUBLIC_BASE_PATH: /grepsignal/
+          PUBLIC_BASE_PATH: ${{ matrix.base_path }}
+          HISTORY_BASE_REF: ${{ github.event.pull_request.base.sha || github.event.before }}
+      - run: node scripts/check-built-accountability.mjs
+        env:
+          PUBLIC_BASE_PATH: ${{ matrix.base_path }}
