@@ -50,6 +50,7 @@ const ids = allRecords.map((item) => item.id);
 if (new Set(ids).size !== ids.length) fail('public IDs must be unique across records');
 
 if (data.publication_status === 'published') {
+  const publishedSignalIds = new Set(data.signals.map((signal) => signal.id));
   for (const signal of data.signals) {
     for (const key of ['id', 'type', 'status', 'title', 'summary', 'why_it_matters',
       'second_order_effect', 'watch_next', 'registered_at', 'evidence_since']) {
@@ -85,6 +86,55 @@ if (data.publication_status === 'published') {
       fail(`published signal ${signal.id} needs limitations`);
     }
   }
+
+  for (const thread of data.threads) {
+    for (const key of ['id', 'title', 'status', 'summary', 'created_at', 'last_updated', 'evidence_since']) {
+      if (!nonEmpty(thread[key])) fail(`published thread ${thread.id ?? '<unknown>'} missing ${key}`);
+    }
+    if (!Array.isArray(thread.updates) || thread.updates.length === 0) {
+      fail(`published thread ${thread.id} needs durable revision history`);
+    }
+    const updateIds = new Set();
+    let latest = null;
+    for (const update of thread.updates) {
+      if (![update.id, update.date, update.assessment, update.change].every(nonEmpty)) {
+        fail(`published thread ${thread.id} has incomplete revision metadata`);
+      }
+      if (updateIds.has(update.id)) fail(`published thread ${thread.id} repeats revision ${update.id}`);
+      updateIds.add(update.id);
+      if (!['emerging', 'strengthening', 'stable', 'weakening'].includes(update.assessment)) {
+        fail(`published thread ${thread.id} has invalid revision assessment`);
+      }
+      if (!Array.isArray(update.signal_ids) || !Array.isArray(update.sources)) {
+        fail(`published thread ${thread.id} revision ${update.id} needs signal_ids and sources arrays`);
+      }
+      if (update.signal_ids.length === 0 && update.sources.length === 0) {
+        fail(`published thread ${thread.id} revision ${update.id} needs provenance`);
+      }
+      if (update.signal_ids.some((id) => !publishedSignalIds.has(id))) {
+        fail(`published thread ${thread.id} revision ${update.id} references an unknown signal`);
+      }
+      for (const source of update.sources) {
+        if (![source.publisher, source.title, source.role, source.url].every(nonEmpty)) {
+          fail(`published thread ${thread.id} revision ${update.id} has incomplete source metadata`);
+        }
+        let url;
+        try { url = new URL(source.url); } catch {
+          fail(`invalid source URL in thread revision ${update.id}`);
+        }
+        if (url.protocol !== 'https:' || url.username || url.password) {
+          fail(`thread revision source URL must be credential-free HTTPS in ${update.id}`);
+        }
+      }
+      if (!latest || update.date > latest.date) latest = update;
+    }
+    if (latest.date !== thread.last_updated) {
+      fail(`published thread ${thread.id} last_updated must match its latest revision`);
+    }
+    if (latest.assessment !== thread.status) {
+      fail(`published thread ${thread.id} status must match its latest revision assessment`);
+    }
+  }
 }
 
-console.log(`public-data validation passed (${data.publication_status}, ${data.signals.length} signals)`);
+console.log(`public-data validation passed (${data.publication_status}, ${data.signals.length} signals, ${data.threads.length} threads)`);
