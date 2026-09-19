@@ -4,7 +4,7 @@ const base = import.meta.env.BASE_URL;
 const id = Astro.url.pathname.split('/').filter(Boolean).at(-1);
 const record = [...intelligence.signals, ...intelligence.threads, ...intelligence.predictions].find(r => r.id === id);
 const events = record ? changes.filter(e => e.record_id === record.id) : [];
-const targetUrl = (target) => `${base}${target.startsWith('thread-') ? 'threads' : target.startsWith('pred-') ? 'predictions' : 'signals'}/${target}/`;
+const targetUrl = (target) => `${base}${intelligence.threads.some(r => r.id === target) ? 'threads' : intelligence.predictions.some(r => r.id === target) ? 'predictions' : 'signals'}/${target}/`;
 const builtAt = new Date().toISOString();
 const overdue = record?.lifecycle === 'active' && record.review_due_since && Date.parse(record.review_due_since) <= Date.parse(builtAt);
 ---

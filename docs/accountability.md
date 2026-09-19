@@ -41,3 +41,5 @@ Private Runner review receipts remain proposals. An editor adopts a public revie
 This two-repository handoff is explicit, not an atomic transaction. A partial second step must be reconciled before reporting completion. No private note, raw article body or image is exported by the journal command.
 
 Exceptional privacy/security/rights removal requires a reviewed safe explanation. The normal append-only command deliberately does not provide a silent history-rewrite option.
+
+Consumer safeguards: active listings exclude retracted/superseded records, but stable detail URLs remain. Optional Local Explain is suppressed for withdrawn/falsified/re-review-required context. Search metadata emits datePublished only with an actual first_public_at receipt. Same-day Thread revisions prefer append order rather than silently choosing the oldest revision.

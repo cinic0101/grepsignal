@@ -14,7 +14,7 @@ const statusMark: Record<string, string> = {
 const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
 }).format(new Date(`${value}T00:00:00Z`));
-const threads = [...intelligence.threads].sort((a, b) => b.last_updated.localeCompare(a.last_updated));
+const threads = [...intelligence.threads.filter(x => x.lifecycle === 'active')].sort((a, b) => b.last_updated.localeCompare(a.last_updated));
 ---
 <BaseLayout
   title="Active threads — GrepSignal"
