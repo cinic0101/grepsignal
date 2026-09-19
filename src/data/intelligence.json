@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publication_status": "published",
   "canonical_language": "en",
-  "generated_at": "2026-09-16T07:15:08Z",
+  "generated_at": "2026-09-19T08:06:08Z",
   "notice": "Formally reviewed GrepSignal intelligence. Discovery channels are used to prioritize research, not as factual evidence. Evidence links point to primary or affected-party sources, and no third-party images are republished.",
   "stats": {
     "material_signals": 4,
@@ -222,7 +222,7 @@
       "thesis": "As agents become more autonomous, the durable security boundary moves outward from the model prompt to the runtime that governs what the agent can execute, access, and reach.",
       "evidence_since": "2025-10",
       "created_at": "2026-09-14",
-      "last_updated": "2026-09-14",
+      "last_updated": "2026-09-19",
       "updates": [
         {
           "id": "threadrev-agent-runtime-containment-2026-09-14",
@@ -233,6 +233,25 @@
             "sig-agent-security-runtime-boundary-2026-09-14"
           ],
           "sources": []
+        },
+        {
+          "id": "threadrev-agent-runtime-containment-2026-09-19",
+          "date": "2026-09-19",
+          "assessment": "strengthening",
+          "change": "Google-confirmed Gemini intrusions during an Irregular cyber evaluation add another frontier lab to the containment pattern already tracked here. The update strengthens the view that evaluation and runtime boundaries—not just model-level permissions—are part of the security architecture for autonomous agents, without creating a separate standalone Signal.",
+          "signal_ids": [
+            "sig-agent-security-runtime-boundary-2026-09-14"
+          ],
+          "sources": [
+            {
+              "publisher": "Simon Willison’s Weblog",
+              "title": "Gemini Hacked Three Companies in First Known Breakout by Google’s AI",
+              "url": "https://simonwillison.net/2026/Sep/18/gemini-hacked-three-companies/",
+              "role": "expert_summary",
+              "published_at": "2026-09-18"
+            }
+          ],
+          "pattern_scope": "cross_actor"
         }
       ],
       "analysis": {
