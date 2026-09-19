@@ -2,7 +2,7 @@ name: Roadmap BC one-time public integration
 on:
   push:
     branches: ['stage/roadmap-bc-public']
-    paths: ['scripts/_apply_roadmap.py', '.github/workflows/roadmap-bootstrap.yml']
+    paths: ['.github/workflows/roadmap-bootstrap.yml']
 permissions:
   contents: write
 jobs:
@@ -18,19 +18,48 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
-      - name: Apply bounded migration
+      - name: Preserve source date precision and new-record review horizon
         run: |
-          python scripts/_apply_roadmap.py
-          rm scripts/_apply_roadmap.py
-      - name: Persist generated source on isolated staging branch
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('scripts/accountability.mjs')
+          s=p.read_text()
+          old="    assert(x.published_at == null || /^\\d{4}-\\d{2}-\\d{2}$/.test(x.published_at),'source date precision');"
+          new="""    if (x.published_at != null) {
+                assert(typeof x.published_at === 'string' && /^\\d{4}-\\d{2}(?:-\\d{2})?$/.test(x.published_at),'source date precision');
+                // Validate the known portion without filling missing precision in the record.
+                timestamp(`${x.published_at.length === 7 ? x.published_at+'-01' : x.published_at}T00:00:00Z`);
+              }"""
+          assert s.count(old)==1
+          s=s.replace(old,new)
+          old="        links[r.id]=structuredClone(p.signal_relations);delete r.signal_relations;"
+          new=old+"\n        r.next_review_at=new Date(timestamp(e.recorded_at)+7*24*60*60*1000).toISOString();r.review_due_since=r.next_review_at;"
+          assert s.count(old)==1
+          s=s.replace(old,new)
+          p.write_text(s)
+          p=Path('tests/accountability.test.mjs')
+          p.write_text(p.read_text()+"""
+          test('month-only legacy source dates preserve precision, invalid months fail',()=>{
+            const b=structuredClone(baseline);b.signals[0].sources[0].published_at='2026-09';
+            assert.equal(replay(b,journal([])).data.signals[0].sources[0].published_at,'2026-09');
+            b.signals[0].sources[0].published_at='2026-13';assert.throws(()=>replay(b,journal([])));
+          });
+          test('new Thread review horizon is relative to its registration, not migration',()=>{
+            const t={...structuredClone(thread),id:'thread-later',signal_relations:{supporting:['sig-example'],contradicting:[]}};
+            const e=event({id:'evt-later',kind:'register',record_type:'thread',record_id:t.id,recorded_at:'2026-10-20T00:00:00Z',payload:t});
+            assert.equal(run([e]).data.threads[1].next_review_at,'2026-10-27T00:00:00.000Z');
+          });
+          """)
+          PY
+      - name: Persist repair on isolated staging branch
         env:
           BRANCH: ${{ github.ref_name }}
         run: |
           test "$BRANCH" = 'stage/roadmap-bc-public'
           git config user.name 'grepsignal-build[bot]'
           git config user.email 'grepsignal-build[bot]@users.noreply.github.com'
-          git add scripts src public tests docs package.json README.md
-          git commit -m 'feat: integrate v2 journal projection without altering legacy claims'
+          git add scripts tests
+          git commit -m 'fix(history): retain source precision and schedule new Threads from registration'
           git push origin "HEAD:$BRANCH"
       - run: npm install --no-audit --no-fund
       - name: Validate and build project path
