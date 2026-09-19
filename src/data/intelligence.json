@@ -2,14 +2,83 @@
   "schema_version": 1,
   "publication_status": "published",
   "canonical_language": "en",
-  "generated_at": "2026-09-19T08:06:08Z",
+  "generated_at": "2026-09-19T08:55:00Z",
   "notice": "Formally reviewed GrepSignal intelligence. Discovery channels are used to prioritize research, not as factual evidence. Evidence links point to primary or affected-party sources, and no third-party images are republished.",
   "stats": {
-    "material_signals": 4,
-    "active_threads": 2,
+    "material_signals": 5,
+    "active_threads": 3,
     "open_predictions": 0
   },
   "signals": [
+    {
+      "id": "sig-agent-config-portability-2026-09-19",
+      "type": "ecosystem_momentum",
+      "status": "strengthening",
+      "title": "AGENTS.md is becoming the portability layer for coding-agent instructions",
+      "summary": "A repository-level instruction convention that emerged in 2025 is now supported across Codex, GitHub Copilot, Cursor and Claude Code 2.1.277. The material change is portability: teams can increasingly keep standing repository instructions in one shared AGENTS.md instead of maintaining a separate vendor-specific instruction file for every coding agent, even though each runtime still differs in discovery, precedence and fallback behavior.",
+      "why_it_matters": "Repository instructions encode build commands, tests, architectural constraints and working agreements that strongly shape agent behavior. Making that layer portable reduces duplicated configuration and instruction drift, lowers the cost of switching or combining coding agents, and moves some repository-level control away from vendor-specific harness conventions.",
+      "second_order_effect": "portable repository instructions → less vendor-specific configuration duplication → easier multi-agent and agent-substitution workflows → competition shifts toward runtime quality, tools and policy rather than proprietary project-instruction filenames",
+      "watch_next": "Track whether more major coding agents enable AGENTS.md by default, whether nested discovery and precedence semantics converge, and whether vendor-specific files such as CLAUDE.md increasingly act as optional overrides rather than required primary configuration.",
+      "source_count": 6,
+      "source_organization_count": 6,
+      "evidence_since": "2025-08",
+      "registered_at": "2026-09-19",
+      "falsifiers": [
+        "Major coding agents keep AGENTS.md only as a shallow compatibility fallback while reliable workflows continue to require separate vendor-specific instruction files.",
+        "Discovery and precedence semantics diverge enough that one shared AGENTS.md routinely produces materially different or unsafe behavior across agent runtimes.",
+        "Cross-vendor support or repository adoption reverses, leaving AGENTS.md a niche convention rather than a durable portability layer."
+      ],
+      "limitations": [
+        "AGENTS.md is an open Markdown convention, not a normative protocol with one required discovery or precedence algorithm; portability is therefore partial rather than semantic equivalence.",
+        "Claude Code 2.1.277 uses AGENTS.md as project instructions when no CLAUDE.md is present by default, and Anthropic notes that the feature was not yet available on Bedrock, Vertex or Foundry in that release.",
+        "GitHub Copilot and Cursor retain their own richer instruction/rule systems, so AGENTS.md support does not mean vendor-specific configuration layers are disappearing.",
+        "The current 60k+ open-source-project adoption figure is reported by the AGENTS.md project itself and is not an independent census."
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "title": "Claude Code changelog — 2.1.277",
+          "url": "https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md",
+          "role": "primary_product_release",
+          "published_at": "2026-09-18"
+        },
+        {
+          "publisher": "OpenAI",
+          "title": "Using AGENTS.md for custom instructions",
+          "url": "https://developers.openai.com/zh-Hant/docs/agent-configuration/agents-md",
+          "role": "primary_product_docs",
+          "published_at": null
+        },
+        {
+          "publisher": "GitHub",
+          "title": "Support for different types of custom instructions",
+          "url": "https://docs.github.com/en/copilot/reference/custom-instructions-support",
+          "role": "primary_product_docs",
+          "published_at": null
+        },
+        {
+          "publisher": "Cursor",
+          "title": "Rules — AGENTS.md",
+          "url": "https://cursor.com/docs/rules",
+          "role": "primary_product_docs",
+          "published_at": null
+        },
+        {
+          "publisher": "AGENTS.md",
+          "title": "AGENTS.md — a simple, open format for guiding coding agents",
+          "url": "https://agents.md/",
+          "role": "primary_open_format",
+          "published_at": null
+        },
+        {
+          "publisher": "InfoQ",
+          "title": "AGENTS.md Emerges as Open Standard for AI Coding Agents",
+          "url": "https://www.infoq.com/news/2025/08/agents-md/",
+          "role": "independent_historical_context",
+          "published_at": "2025-08-27"
+        }
+      ]
+    },
     {
       "id": "sig-decision-specialized-runtime-2026-09-16",
       "type": "capability_delta",
@@ -190,6 +259,76 @@
     }
   ],
   "threads": [
+    {
+      "id": "thread-agent-configuration-portability",
+      "title": "Agent Configuration Portability",
+      "status": "strengthening",
+      "signal_count": 1,
+      "summary": "Coding-agent repository instructions are becoming portable across competing runtimes instead of being tied entirely to vendor-specific project files.",
+      "thesis": "As coding agents converge on shared repository instruction conventions such as AGENTS.md, the repository itself becomes a more portable control plane for agent behavior, reducing configuration coupling to any one coding-agent runtime even while vendor-specific loading semantics and richer rule systems remain.",
+      "evidence_since": "2025-08",
+      "created_at": "2026-09-19",
+      "last_updated": "2026-09-19",
+      "updates": [
+        {
+          "id": "threadrev-agent-configuration-portability-2026-09-19",
+          "date": "2026-09-19",
+          "assessment": "strengthening",
+          "change": "Claude Code 2.1.277 joins an AGENTS.md convention already used across other coding-agent platforms. Historical backfill shows the important change is not one compatibility feature but growing portability of repository-level agent instructions across competing runtimes.",
+          "signal_ids": [
+            "sig-agent-config-portability-2026-09-19"
+          ],
+          "sources": [],
+          "pattern_scope": "cross_actor",
+          "event_independence": "independent_events",
+          "mechanism_coherence": "strong"
+        }
+      ],
+      "analysis": {
+        "evidence_map": [
+          {
+            "id": "cross-vendor-support",
+            "title": "Cross-vendor support",
+            "summary": "Codex, GitHub Copilot, Cursor and Claude Code now all consume AGENTS.md in supported workflows, reducing the need to duplicate standing repository instructions for each agent.",
+            "signal_ids": [
+              "sig-agent-config-portability-2026-09-19"
+            ]
+          },
+          {
+            "id": "repository-adoption",
+            "title": "Repository adoption",
+            "summary": "The open-format project reports AGENTS.md in more than 60,000 open-source repositories, indicating the convention extends beyond a single vendor integration.",
+            "signal_ids": [
+              "sig-agent-config-portability-2026-09-19"
+            ]
+          },
+          {
+            "id": "portability-not-equivalence",
+            "title": "Portability, not equivalence",
+            "summary": "Each agent still differs in where it discovers instructions, how precedence works and which vendor-specific rule systems remain available.",
+            "signal_ids": [
+              "sig-agent-config-portability-2026-09-19"
+            ]
+          }
+        ],
+        "boundaries": [
+          "AGENTS.md support does not mean coding agents implement one identical instruction-loading standard.",
+          "Vendor-specific files and richer rule systems such as CLAUDE.md, .github instructions and .cursor/rules still matter.",
+          "The 60k+ repository count is reported by the AGENTS.md project and should be treated as a project-maintainer adoption claim rather than an independent census."
+        ],
+        "view_tests": {
+          "strengthen": [
+            "More major coding agents enable AGENTS.md by default and converge on nested discovery and precedence behavior.",
+            "Teams increasingly use one AGENTS.md as the canonical repository instruction source while vendor-specific files become optional overrides."
+          ],
+          "weaken": [
+            "Reliable multi-agent workflows continue to require separate vendor-specific instruction files despite nominal AGENTS.md support.",
+            "Loader semantics diverge enough that shared instructions routinely produce incompatible behavior across agents.",
+            "Major vendors remove or de-emphasize AGENTS.md support."
+          ]
+        }
+      }
+    },
     {
       "id": "thread-research-automation-bottlenecks",
       "title": "Research Automation Bottlenecks",
