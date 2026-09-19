@@ -19,7 +19,18 @@ type ExplainSignal = {
   why_it_matters: string;
 };
 
-type ExplainTask = 'what_changed' | 'why_it_matters';
+type ExplainThread = {
+  title: string;
+  summary: string;
+  thesis: string;
+  latest_change: string;
+  latest_assessment: string;
+  boundaries: string[];
+  evidence_map: Array<{ title: string; summary: string }>;
+};
+
+type ExplainInput = ExplainSignal | ExplainThread;
+type ExplainTask = 'what_changed' | 'why_it_matters' | 'thread_explain' | 'thread_latest_change';
 
 type CompletionResponse = {
   choices: Array<{ message?: { content?: string | null } }>;
@@ -53,7 +64,7 @@ type LocalAIManager = {
   ensureReady: () => Promise<void>;
   generate: (
     task: ExplainTask,
-    signal: ExplainSignal,
+    input: ExplainInput,
     onUpdate?: (update: ExplainStreamUpdate) => void,
   ) => Promise<string>;
 };
@@ -105,9 +116,10 @@ function isCompletionStream(value: CompletionResult): value is CompletionStream 
 }
 
 function taskDetail(task: ExplainTask) {
-  return task === 'what_changed'
-    ? 'Simplifying what changed locally…'
-    : 'Explaining why it could matter locally…';
+  if (task === 'what_changed') return 'Simplifying what changed locally…';
+  if (task === 'why_it_matters') return 'Explaining why it could matter locally…';
+  if (task === 'thread_explain') return 'Explaining the current Thread locally…';
+  return 'Explaining the latest Thread change locally…';
 }
 
 function taskInstruction(task: ExplainTask) {
@@ -124,20 +136,44 @@ function taskInstruction(task: ExplainTask) {
     ].join('\n');
   }
 
+  if (task === 'why_it_matters') {
+    return [
+      'Rewrite the published why-it-matters text in one or two short plain-English sentences.',
+      'Simplify wording, not the thesis. Preserve the causal chain and the direction of every relationship.',
+      'Preserve every uncertainty qualifier such as if, may, could, or might.',
+      'Keep the specific mechanisms, bottlenecks, constraints, or architectural consequences named in the source instead of replacing them with generic wording such as “this may affect how things are managed”.',
+      'Preserve scope and evidence boundaries. Do not broaden a claim from one organization, provider, evaluation, incident class, or setting to a wider population.',
+      'Do not invent a trend, adoption claim, deployment pattern, causal background, or motivation that is not explicitly stated in the published why-it-matters text.',
+      'Do not strengthen the claim and do not add recommendations or new facts.',
+      'Return only the rewritten prose. No label, heading, bullet, preamble, or quote marks.',
+    ].join('\n');
+  }
+
+  if (task === 'thread_explain') {
+    return [
+      'Explain the published Thread thesis in two or three short plain-English sentences.',
+      'Use the current thesis, summary, and evidence-map descriptions only.',
+      'Describe this as an ongoing tracked interpretation, not a settled universal fact.',
+      'Preserve scope, uncertainty, and the difference between incidents, mechanisms, and platform responses.',
+      'Do not add external facts, recommendations, forecasts, or evidence.',
+      'Do not claim that repeated coverage is independent evidence unless the supplied text says so.',
+      'Return only the explanation. No label, heading, bullets, preamble, or quote marks.',
+    ].join('\n');
+  }
+
   return [
-    'Rewrite the published why-it-matters text in one or two short plain-English sentences.',
-    'Simplify wording, not the thesis. Preserve the causal chain and the direction of every relationship.',
-    'Preserve every uncertainty qualifier such as if, may, could, or might.',
-    'Keep the specific mechanisms, bottlenecks, constraints, or architectural consequences named in the source instead of replacing them with generic wording such as “this may affect how things are managed”.',
-    'Preserve scope and evidence boundaries. Do not broaden a claim from one organization, provider, evaluation, incident class, or setting to a wider population.',
-    'Do not invent a trend, adoption claim, deployment pattern, causal background, or motivation that is not explicitly stated in the published why-it-matters text.',
-    'Do not strengthen the claim and do not add recommendations or new facts.',
-    'Return only the rewritten prose. No label, heading, bullet, preamble, or quote marks.',
+    'Explain the latest published Thread change in one or two short plain-English sentences.',
+    'State how the published view changed and preserve the supplied assessment direction.',
+    'Use only the latest change note and current thesis for context.',
+    'Do not invent causes, actors, event relationships, or evidence not present in the supplied text.',
+    'Do not turn a Thread update into a new Signal, recommendation, or forecast.',
+    'Return only the explanation. No label, heading, bullets, preamble, or quote marks.',
   ].join('\n');
 }
 
-function taskInput(task: ExplainTask, signal: ExplainSignal) {
+function taskInput(task: ExplainTask, input: ExplainInput) {
   if (task === 'what_changed') {
+    const signal = input as ExplainSignal;
     return [
       '/no_think',
       `TITLE: ${signal.title}`,
@@ -145,11 +181,34 @@ function taskInput(task: ExplainTask, signal: ExplainSignal) {
     ].join('\n');
   }
 
+  if (task === 'why_it_matters') {
+    const signal = input as ExplainSignal;
+    return [
+      '/no_think',
+      `TITLE: ${signal.title}`,
+      `PUBLISHED_SUMMARY_FOR_CONTEXT: ${signal.summary}`,
+      `PUBLISHED_WHY_IT_MATTERS: ${signal.why_it_matters}`,
+    ].join('\n');
+  }
+
+  const thread = input as ExplainThread;
+  if (task === 'thread_explain') {
+    return [
+      '/no_think',
+      `THREAD: ${thread.title}`,
+      `PUBLISHED_SUMMARY: ${thread.summary}`,
+      `CURRENT_THESIS: ${thread.thesis}`,
+      `EVIDENCE_MAP: ${thread.evidence_map.map((item) => `${item.title}: ${item.summary}`).join(' | ')}`,
+      `PUBLISHED_BOUNDARIES: ${thread.boundaries.join(' | ')}`,
+    ].join('\n');
+  }
+
   return [
     '/no_think',
-    `TITLE: ${signal.title}`,
-    `PUBLISHED_SUMMARY_FOR_CONTEXT: ${signal.summary}`,
-    `PUBLISHED_WHY_IT_MATTERS: ${signal.why_it_matters}`,
+    `THREAD: ${thread.title}`,
+    `CURRENT_THESIS: ${thread.thesis}`,
+    `LATEST_ASSESSMENT: ${thread.latest_assessment}`,
+    `LATEST_PUBLISHED_CHANGE: ${thread.latest_change}`,
   ].join('\n');
 }
 
@@ -223,7 +282,7 @@ const manager: LocalAIManager = {
     if (!state.enabled) throw new Error('Local AI has not been enabled.');
     await loadEngine();
   },
-  async generate(task, signal, onUpdate) {
+  async generate(task, input, onUpdate) {
     const active = await loadEngine();
     setState({ phase: 'running', detail: taskDetail(task) });
 
@@ -244,12 +303,12 @@ const manager: LocalAIManager = {
           },
           {
             role: 'user',
-            content: taskInput(task, signal),
+            content: taskInput(task, input),
           },
         ],
         temperature: 0.3,
         top_p: 0.8,
-        max_tokens: 140,
+        max_tokens: task.startsWith('thread_') ? 180 : 140,
         stream: true,
         extra_body: {
           enable_thinking: false,
