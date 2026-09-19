@@ -73,3 +73,14 @@ test('new known observation time is retained without backdating registration',()
   assert.equal(run([e]).data.signals[1].first_observed_at,s.first_observed_at);
   s.first_observed_at='2027-01-01T00:00:00Z';assert.throws(()=>run([e]));
 });
+
+test('month-only legacy source dates preserve precision, invalid months fail',()=>{
+  const b=structuredClone(baseline);b.signals[0].sources[0].published_at='2026-09';
+  assert.equal(replay(b,journal([])).data.signals[0].sources[0].published_at,'2026-09');
+  b.signals[0].sources[0].published_at='2026-13';assert.throws(()=>replay(b,journal([])));
+});
+test('new Thread review horizon is relative to its registration, not migration',()=>{
+  const t={...structuredClone(thread),id:'thread-later',signal_relations:{supporting:['sig-example'],contradicting:[]}};
+  const e=event({id:'evt-later',kind:'register',record_type:'thread',record_id:t.id,recorded_at:'2026-10-20T00:00:00Z',payload:t});
+  assert.equal(run([e]).data.threads[1].next_review_at,'2026-10-27T00:00:00.000Z');
+});

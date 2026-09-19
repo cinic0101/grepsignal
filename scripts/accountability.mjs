@@ -40,7 +40,11 @@ function evidence(xs) {
   for (const x of xs) {
     exact(x,['url','publisher','title','role','published_at'],'evidence');
     assert([x.url,x.publisher,x.title,x.role].every(text),'incomplete evidence');safeUrl(x.url);
-    assert(x.published_at == null || /^\d{4}-\d{2}-\d{2}$/.test(x.published_at),'source date precision');
+    if (x.published_at != null) {
+      assert(typeof x.published_at === 'string' && /^\d{4}-\d{2}(?:-\d{2})?$/.test(x.published_at),'source date precision');
+      // Validate the known portion without filling missing precision in the record.
+      timestamp(`${x.published_at.length === 7 ? x.published_at+'-01' : x.published_at}T00:00:00Z`);
+    }
   }
 }
 function forecast(p) {
@@ -105,6 +109,7 @@ export function replay(baseline,journal,baselineLinks=null) {
         exact(p.signal_relations,['supporting','contradicting'],'initial Thread relations');
         assert(Array.isArray(p.signal_relations.supporting) && Array.isArray(p.signal_relations.contradicting),'explicit initial Thread relations required');
         links[r.id]=structuredClone(p.signal_relations);delete r.signal_relations;
+        r.next_review_at=new Date(timestamp(e.recorded_at)+7*24*60*60*1000).toISOString();r.review_due_since=r.next_review_at;
       }
       if (p.first_observed_at != null) assert(timestamp(p.first_observed_at) <= timestamp(e.recorded_at),'observation cannot be in the future');
       r.first_observed_at=p.first_observed_at ?? null;r.last_changed_at=e.recorded_at;
