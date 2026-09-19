@@ -132,9 +132,12 @@ const homepageSignals = [...intelligence.signals]
         ) : intelligence.threads.map((thread) => (
           <article class="thread">
             <div>
-              <h3>{thread.title}</h3>
+              <h3><a class="thread-title-link" href={`${base}threads/${thread.id}/`}>{thread.title}</a></h3>
               <p>{thread.summary}</p>
               {thread.thesis && <p class="thread-thesis"><strong>Thesis:</strong> {thread.thesis}</p>}
+              <a class="thread-link" href={`${base}threads/${thread.id}/`}>
+                Open thread <span aria-hidden="true">→</span>
+              </a>
             </div>
             <div class="thread-stat">
               {statusMark[thread.status] ?? '·'} {thread.status}<br />{thread.signal_count} signal{thread.signal_count === 1 ? '' : 's'}
@@ -232,7 +235,21 @@ const homepageSignals = [...intelligence.signals]
     text-decoration: none;
   }
   .signal-archive-cta a:hover, .signal-archive-cta a:focus-visible { border-color: var(--ink); }
+  .thread-title-link { color: inherit; text-decoration: none; }
+  .thread-title-link:hover, .thread-title-link:focus-visible { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
   .thread-thesis { margin-top: 10px !important; color: #3d3b36 !important; }
+  .thread-link {
+    display: inline-flex;
+    gap: 7px;
+    align-items: center;
+    margin-top: 12px;
+    color: var(--accent);
+    font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .04em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .thread-link:hover, .thread-link:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
   .empty-card { border-top: 1px solid var(--line); padding: 22px 0 8px; color: var(--muted); }
   .empty-card strong { color: var(--ink); font-family: Georgia, 'Times New Roman', serif; font-size: 20px; font-weight: 600; }
   .empty-card p { margin: 7px 0 0; font-size: 13px; }
