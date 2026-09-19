@@ -6,6 +6,11 @@ import threadLinks from '../../data/thread-links.json';
 
 type Thread = typeof intelligence.threads[number];
 type Signal = typeof intelligence.signals[number];
+type ThreadRevision = Thread['updates'][number] & {
+  pattern_scope?: 'cross_actor' | 'same_actor' | 'mixed' | 'unclear';
+  event_independence?: 'independent_events' | 'same_event_repeated' | 'mixed' | 'unclear';
+  mechanism_coherence?: 'strong' | 'partial' | 'weak' | 'unclear';
+};
 interface Props {
   thread: Thread;
   supporting: Signal[];
@@ -25,7 +30,7 @@ export function getStaticPaths() {
 const { thread, supporting, contradicting } = Astro.props as Props;
 const base = import.meta.env.BASE_URL;
 const signalById = new Map(intelligence.signals.map((signal) => [signal.id, signal]));
-const updates = [...thread.updates].sort((a, b) => b.date.localeCompare(a.date));
+const updates = ([...thread.updates] as ThreadRevision[]).sort((a, b) => b.date.localeCompare(a.date));
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
 const statusMark: Record<string, string> = {
   strengthening: '↑',
