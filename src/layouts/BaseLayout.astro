@@ -13,7 +13,7 @@ interface Props {
 
 const {
   title = 'GrepSignal — grep the noise, find the signal.',
-  description = 'Structured AI-era intelligence: signals, second-order effects, predictions, and verification.',
+  description = 'Agent infrastructure intelligence: evidence worth remembering and judgments that need to change.',
   robots = 'index,follow',
   ogType = 'website',
   publishedAt,
@@ -23,6 +23,7 @@ const base = import.meta.env.BASE_URL;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
 const intelligenceJsonUrl = new URL(`${base}data/intelligence.json`, Astro.site ?? Astro.url.origin).toString();
 const structuredData = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : null;
+const challengeUrl = `https://github.com/cinic0101/grepsignal/issues/new?${new URLSearchParams({template: 'evidence.yml', record: canonicalUrl})}`;
 ---
 <!doctype html>
 <html lang="en">
@@ -60,10 +61,21 @@ const structuredData = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') 
           <a href={`${base}threads/`}>Threads</a>
           <a href={`${base}#predictions`}>Predictions</a>
           <a href={`${base}agents/`}>For agents</a>
+          <a href={`${base}editorial/`}>Editorial policy</a>
         </nav>
       </div>
     </header>
     <slot />
+    <aside class="wrap feedback-links" aria-label="Evidence and usage feedback">
+      <a href={challengeUrl}>Submit evidence / challenge</a>
+      <span aria-hidden="true"> · </span>
+      <a href="https://github.com/cinic0101/grepsignal/issues/new?template=usage.yml">Report actual usage</a>
+      <span aria-hidden="true"> · </span>
+      <a href={`${base}editorial/`}>Corrections &amp; reuse</a>
+    </aside>
     <LocalAIStatus />
   </body>
 </html>
+<style>
+  .feedback-links { padding-top: 18px; padding-bottom: 24px; font-size: 13px; line-height: 1.8; }
+</style>
