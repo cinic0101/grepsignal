@@ -5,5 +5,98 @@
   "baseline_ref": "https://github.com/cinic0101/grepsignal/blob/fd1cceb64329fd94ecc50c3c18f60573979437e9/src/data/intelligence.json",
   "initialized_at": "2026-09-19T13:00:00Z",
   "initial_thread_review_due_at": "2026-09-26T03:30:00Z",
-  "events": []
+  "events": [
+    {
+      "id": "evt-sig-embedded-frontier-evaluation-2026-09-20",
+      "record_type": "signal",
+      "record_id": "sig-embedded-frontier-evaluation-2026-09-20",
+      "expected_version": 0,
+      "kind": "register",
+      "recorded_at": "2026-09-20T08:02:00Z",
+      "proposed_by": "ChatGPT retrospective review",
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/54",
+        "accepted_at": "2026-09-20T07:10:31Z"
+      },
+      "note": "Register the approved Sep 20 embedded frontier evaluation Signal with the novelty narrowed to institutionalized independent evaluator access during model development.",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/news/accenture-embedded-evaluation",
+          "publisher": "Anthropic",
+          "title": "Partnering with Accenture on embedded evaluation",
+          "role": "primary_partnership_announcement",
+          "published_at": null
+        }
+      ],
+      "payload": {
+        "id": "sig-embedded-frontier-evaluation-2026-09-20",
+        "type": "platform_shift",
+        "status": "emerging",
+        "title": "Independent frontier evaluation is becoming an embedded operating function",
+        "summary": "Anthropic and Accenture are piloting an evaluation model in which an external evaluator works inside frontier-model development with access comparable to employees, covering model evaluation, red-teaming, alignment assessments, safeguard testing, and internal development context. The material shift is not the invention of third-party evaluation, but the attempt to institutionalize evaluator access earlier and deeper in the model lifecycle as an ongoing operating function.",
+        "why_it_matters": "If the model spreads, frontier-model assurance moves beyond periodic finished-model testing toward continuous visibility into training, development decisions, safeguards, and incidents. That makes evaluator access, reporting rights, funding, and independence part of the AI assurance architecture rather than a one-off testing arrangement.",
+        "second_order_effect": "Frontier-model governance may gain a distinct embedded assurance layer: independent evaluators participate inside development workflows, while buyers, regulators, and labs increasingly compare who funds them, what they can inspect, and what they are allowed to report.",
+        "watch_next": "Track the actual access and reporting terms of the Anthropic-Accenture arrangement, whether independent reports are published, and whether other frontier labs adopt comparable embedded evaluator models.",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "evidence_since": "2026-09",
+        "registered_at": "2026-09-20",
+        "falsifiers": [
+          "The arrangement remains a one-off partnership with no meaningful evaluator access during model development and no adoption by other frontier labs.",
+          "Embedded evaluation produces no materially different assurance or accountability mechanisms from conventional external testing."
+        ],
+        "limitations": [
+          "Current evidence is Anthropic's own partnership announcement, not an independent assessment of how the arrangement performs in practice.",
+          "Anthropic says common standards for evaluator access and reporting do not yet exist, and the current evaluator work is funded directly by the lab.",
+          "Deep external evaluation existed before this announcement; the claimed delta is institutionalizing embedded evaluation as an operating function, not that evaluators had never previously received internal or pre-deployment access."
+        ],
+        "sources": [
+          {
+            "publisher": "Anthropic",
+            "title": "Partnering with Accenture on embedded evaluation",
+            "url": "https://www.anthropic.com/news/accenture-embedded-evaluation",
+            "role": "primary_partnership_announcement",
+            "published_at": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "evt-thread-decision-native-runtimes-2026-09-20",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 0,
+      "kind": "revise",
+      "recorded_at": "2026-09-20T08:02:01Z",
+      "proposed_by": "ChatGPT retrospective review",
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/54",
+        "accepted_at": "2026-09-20T07:10:31Z"
+      },
+      "note": "Two additional open implementations now reproduce and specialize the decision-native runtime pattern tracked here. Laya provides another bounded typed-decision implementation, while CUA-S1 applies the pattern to computer-use forms. This strengthens the case for a reusable architectural pattern without creating a second standalone Signal; production adoption and independently verified latency, cost, and reliability advantages remain open questions.",
+      "evidence": [
+        {
+          "url": "https://laya.convaiinnovations.com/",
+          "publisher": "ConvAI Innovations",
+          "title": "Laya — 33ms Multilingual System 1 Decision Engine",
+          "role": "open_implementation",
+          "published_at": null
+        },
+        {
+          "url": "https://github.com/trycua/cua",
+          "publisher": "CUA",
+          "title": "GitHub - trycua/cua: Scale computer-use 2.0 with open-source drivers, cross-OS fleets, and benchmarks for training, evaluation, and data generation.",
+          "role": "open_implementation",
+          "published_at": null
+        }
+      ],
+      "payload": {
+        "status": "strengthening"
+      }
+    }
+  ]
 }
