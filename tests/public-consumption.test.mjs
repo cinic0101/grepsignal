@@ -30,3 +30,25 @@ test('homepage search snippet uses the product definition and excludes operation
   assert.ok(home.includes('<p>{homepageDescription}</p>'));
   assert.ok(coverage.includes('data-nosnippet'));
 });
+
+
+test('agent discovery advertises llms and record-specific JSON',()=>{
+  const layout=read('src/layouts/BaseLayout.astro');
+  assert.ok(layout.includes('rel="describedby"'));
+  assert.ok(layout.includes('jsonAlternateHref'));
+  const llms=read('public/llms.txt');
+  assert.ok(llms.includes('/grepsignal/data/signals/{signal_id}.json'));
+  assert.ok(llms.includes('/grepsignal/data/threads/{thread_id}.json'));
+  assert.ok(read('src/pages/data/signals/[id].json.ts').includes("record_type: 'signal'"));
+  assert.ok(read('src/pages/data/threads/[id].json.ts').includes("record_type: 'thread'"));
+  assert.ok(read('src/pages/data/predictions/[id].json.ts').includes("record_type: 'prediction'"));
+});
+
+test('detail pages point agents at the matching record resource',()=>{
+  const signal=read('src/pages/signals/[id].astro');
+  const thread=read('src/pages/threads/[id].astro');
+  const prediction=read('src/pages/predictions/[id].astro');
+  assert.ok(signal.includes('data/signals/${signal.id}.json'));
+  assert.ok(thread.includes('data/threads/${thread.id}.json'));
+  assert.ok(prediction.includes('data/predictions/${prediction.id}.json'));
+});
