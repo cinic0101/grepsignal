@@ -13,12 +13,17 @@ const typeLabels: Record<string, string> = {
 };
 const typeOptions = [
   ['all', 'All'],
-  ['capability_delta', 'Capability Delta'],
-  ['platform_shift', 'Platform Shift'],
-  ['second_order_effect', 'Second-order Effect'],
-  ['cost_intelligence', 'Cost / Intelligence'],
-  ['ecosystem_momentum', 'Ecosystem Momentum'],
-] as const;
+  ...Object.entries(typeLabels).filter(([value]) => signals.some((signal) => signal.type === value)),
+];
+const statusLabels: Record<string, string> = {
+  emerging: 'Emerging',
+  strengthening: 'Strengthening',
+  stable: 'Stable',
+  weakening: 'Weakening',
+  falsified: 'Falsified',
+};
+const statusOptions = Object.entries(statusLabels)
+  .filter(([value]) => signals.some((signal) => signal.status === value));
 const statusMark: Record<string, string> = {
   strengthening: '↑',
   emerging: '↑',
@@ -79,10 +84,7 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
           <span class="filter-label">Status</span>
           <select data-status-filter>
             <option value="all">All statuses</option>
-            <option value="emerging">Emerging</option>
-            <option value="strengthening">Strengthening</option>
-            <option value="stable">Stable</option>
-            <option value="weakening">Weakening</option>
+            {statusOptions.map(([value, label]) => <option value={value}>{label}</option>)}
           </select>
         </label>
         <label>
@@ -170,8 +172,8 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
     const nextButton = root.querySelector('[data-page-next]');
     const pageStatus = root.querySelector('[data-page-status]');
 
-    const validTypes = new Set(['all', 'capability_delta', 'platform_shift', 'second_order_effect', 'cost_intelligence', 'ecosystem_momentum']);
-    const validStatuses = new Set(['all', 'emerging', 'strengthening', 'stable', 'weakening']);
+    const validTypes = new Set(['all', ...typeButtons.map((button) => button.dataset.typeFilter || '').filter(Boolean)]);
+    const validStatuses = new Set(Array.from(statusSelect.options).map((option) => option.value));
     const validTimes = new Set(['90d', 'all']);
 
     const state = {
@@ -236,8 +238,10 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
     const hydrateFromUrl = () => {
       const params = new URLSearchParams(location.search);
       state.q = params.get('q') || '';
-      state.type = validTypes.has(params.get('type')) ? params.get('type') : 'all';
-      state.status = validStatuses.has(params.get('status')) ? params.get('status') : 'all';
+      const requestedType = params.get('type');
+      const requestedStatus = params.get('status');
+      state.type = requestedType && validTypes.has(requestedType) ? requestedType : 'all';
+      state.status = requestedStatus && validStatuses.has(requestedStatus) ? requestedStatus : 'all';
       state.time = validTimes.has(params.get('time')) ? params.get('time') : '90d';
       const requestedPage = Number.parseInt(params.get('page') || '1', 10);
       state.page = Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1;
