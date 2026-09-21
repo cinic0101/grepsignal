@@ -9,15 +9,12 @@ const statusLabels: Record<string, string> = {
   reviewed: 'REVIEWED',
 };
 const reviewed = (value: number | null, total: number) =>
-  value === null ? 'Review completion not recorded' : `${value.toLocaleString('en')} / ${total.toLocaleString('en')} reviewed`;
+  value === null ? 'completion not recorded' : `${value.toLocaleString('en')} / ${total.toLocaleString('en')} reviewed`;
 const lastReviewed = new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
 }).format(new Date(coverage.generated_at));
 const cycleDateMatch = coverage.cycle_id.match(/cycle-(\d{4}-\d{2}-\d{2})/);
 const reviewDate = cycleDateMatch?.[1] ?? new Date(coverage.generated_at).toISOString().slice(0, 10);
-const reviewDateLabel = new Intl.DateTimeFormat('en', {
-  year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
-}).format(new Date(`${reviewDate}T00:00:00Z`));
 const signalsRegistered = intelligence.signals.filter(signal => signal.registered_at === reviewDate).length;
 const threadChangesRegistered = intelligence.threads.reduce(
   (count, thread) => count + thread.updates.filter(update => update.date === reviewDate).length,
@@ -25,191 +22,127 @@ const threadChangesRegistered = intelligence.threads.reduce(
 );
 ---
 <section class="coverage-section" id="coverage" aria-labelledby="coverage-heading" data-nosnippet>
-  <div class="section-head">
+  <div class="coverage-head">
     <div>
-      <span class="section-kicker">SCHEDULED REVIEW COVERAGE</span>
-      <h2 id="coverage-heading">Coverage</h2>
+      <span class="section-kicker">REVIEW COVERAGE · {lastReviewed.toUpperCase()}</span>
+      <h2 id="coverage-heading">What did we actually review?</h2>
     </div>
-    <div class="coverage-meta">
-      <span class="beta">{statusLabels[coverage.coverage_status]}</span>
-      <span class="review-date">Last reviewed {lastReviewed} UTC</span>
-    </div>
+    <span class="beta">{statusLabels[coverage.coverage_status]}</span>
   </div>
 
-  <div class="coverage-layout">
-    <div>
-      <p class="coverage-intro">
-        GrepSignal screens configured discovery sources, then follows promising items to original
-        evidence. Coverage describes this frozen scheduled intake — not complete coverage of the AI ecosystem.
-      </p>
-      <div class="source-grid">
-        {coverage.sources.map(source => (
-          <article class="source-card">
-            <span class="label">{source.name}</span>
-            <strong>{source.scope}</strong>
-            <span>{reviewed(source.reviewed_count, source.intake_count)}</span>
-          </article>
-        ))}
-      </div>
-    </div>
-
-    <aside class="coverage-results" aria-label="Scheduled research follow-up">
-      <span class="results-kicker">RESEARCH FOLLOW-UP</span>
-      <div>
-        <strong>{coverage.research_targets_reviewed}</strong>
-        <span>research targets<br />reviewed</span>
-      </div>
-      <div>
-        <strong>{coverage.exact_sources_materialized}</strong>
-        <span>exact sources<br />materialized</span>
-      </div>
-    </aside>
+  <div class="coverage-sources" aria-label="Scheduled source coverage">
+    {coverage.sources.map(source => (
+      <article>
+        <span>{source.name}</span>
+        <strong>{reviewed(source.reviewed_count, source.intake_count)}</strong>
+        <small>{source.scope}</small>
+      </article>
+    ))}
   </div>
 
-  <div class="intelligence-output" aria-label="Intelligence registered for this review date">
-    <div>
-      <span class="section-kicker">INTELLIGENCE OUTPUT · {reviewDateLabel.toUpperCase()}</span>
-      <p>
-        Registered intelligence includes later Editorial Recovery on the same date, not only the
-        original scheduled cycle.
-      </p>
-    </div>
-    <div class="output-metrics">
-      <div>
-        <strong>{signalsRegistered}</strong>
-        <span>signal{signalsRegistered === 1 ? '' : 's'} registered</span>
-      </div>
-      <div>
-        <strong>{threadChangesRegistered}</strong>
-        <span>thread change{threadChangesRegistered === 1 ? '' : 's'} registered</span>
-      </div>
-    </div>
+  <div class="coverage-metrics" aria-label="Review and publication outcomes">
+    <div><strong>{coverage.research_targets_reviewed}</strong><span>research targets reviewed</span></div>
+    <div><strong>{coverage.exact_sources_materialized}</strong><span>exact sources materialized</span></div>
+    <div><strong>{signalsRegistered}</strong><span>signals registered that date</span></div>
+    <div><strong>{threadChangesRegistered}</strong><span>thread changes registered</span></div>
   </div>
 
   <div class="coverage-bottom">
-    <span>{coverage.note}</span>
+    <span>Frozen scheduled intake, not complete coverage of the AI ecosystem. {coverage.note}</span>
     <a href={`${base}data/coverage.json`}>Coverage JSON ↗</a>
   </div>
 </section>
 
 <style>
   .coverage-section {
-    margin-top: 48px;
-    padding: 28px 0;
+    margin-top: 52px;
+    padding: 26px 0 4px;
     border-top: 1px solid var(--ink);
-    border-bottom: 1px solid var(--line);
   }
-  .coverage-meta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 7px;
-  }
-  .review-date {
-    color: var(--muted);
-    font-size: 11px;
-    white-space: nowrap;
-  }
-  .coverage-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 46px;
-    align-items: start;
-  }
-  .coverage-intro {
-    max-width: 760px;
-    margin: 0 0 20px;
-    font-size: 15px;
-    color: #3d3b36;
-  }
-  .source-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-  .source-card {
-    min-height: 116px;
-    padding: 16px;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-  }
-  .source-card strong {
-    display: block;
-    margin: 7px 0 8px;
-    font: 600 18px/1.25 Georgia, 'Times New Roman', serif;
-  }
-  .source-card > span:last-child {
-    display: block;
-    color: var(--muted);
-    font-size: 12px;
-  }
-  .coverage-results {
-    min-width: 250px;
-    display: grid;
-    gap: 18px;
-    padding-left: 28px;
-    border-left: 1px solid var(--line);
-  }
-  .results-kicker {
-    color: var(--muted);
-    font: 800 9px ui-monospace, SFMono-Regular, Menlo, monospace;
-    letter-spacing: .06em;
-  }
-  .coverage-results > div,
-  .output-metrics > div {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-  }
-  .coverage-results strong,
-  .output-metrics strong {
-    min-width: 52px;
-    font: 500 42px/1 Georgia, serif;
-    color: var(--accent);
-  }
-  .coverage-results span,
-  .output-metrics span {
-    color: var(--muted);
-    font-size: 11px;
-  }
-  .intelligence-output {
+  .coverage-head {
     display: flex;
     justify-content: space-between;
-    gap: 28px;
+    gap: 24px;
     align-items: end;
-    margin-top: 24px;
-    padding: 20px 0 4px;
+    margin-bottom: 18px;
+  }
+  .coverage-head h2 {
+    margin: 4px 0 0;
+    font: 600 30px/1.08 Georgia, 'Times New Roman', serif;
+    letter-spacing: -.025em;
+  }
+  .coverage-sources {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
     border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
   }
-  .intelligence-output p {
-    max-width: 650px;
-    margin: 7px 0 0;
+  .coverage-sources article {
+    min-width: 0;
+    padding: 16px 18px 16px 0;
+  }
+  .coverage-sources article + article {
+    padding-left: 18px;
+    border-left: 1px solid var(--line);
+  }
+  .coverage-sources span {
+    display: block;
+    color: var(--accent);
+    font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+  .coverage-sources strong {
+    display: block;
+    margin-top: 6px;
+    font-size: 14px;
+  }
+  .coverage-sources small {
+    display: block;
+    margin-top: 5px;
     color: var(--muted);
-    font-size: 12px;
-    line-height: 1.5;
+    font-size: 11px;
+    line-height: 1.45;
   }
-  .output-metrics {
-    display: flex;
-    gap: 28px;
+  .coverage-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
   }
-  .output-metrics strong { font-size: 34px; }
+  .coverage-metrics div { display: flex; align-items: center; gap: 11px; }
+  .coverage-metrics strong {
+    flex: 0 0 auto;
+    font: 500 30px/1 Georgia, serif;
+    color: var(--accent);
+  }
+  .coverage-metrics span { color: var(--muted); font-size: 11px; line-height: 1.35; }
   .coverage-bottom {
     display: flex;
     justify-content: space-between;
     gap: 24px;
-    margin-top: 22px;
+    padding-top: 14px;
     color: var(--muted);
     font-size: 11px;
+    line-height: 1.5;
   }
-  .coverage-bottom span { max-width: 780px; }
+  .coverage-bottom span { max-width: 830px; }
   .coverage-bottom a { white-space: nowrap; text-underline-offset: 3px; }
+
   @media (max-width: 760px) {
-    .coverage-layout, .source-grid { grid-template-columns: 1fr; }
-    .coverage-meta { align-items: flex-start; }
-    .coverage-results { padding: 20px 0 0; border-left: 0; border-top: 1px solid var(--line); }
-    .intelligence-output { align-items: flex-start; flex-direction: column; }
-    .output-metrics { width: 100%; flex-wrap: wrap; }
+    .coverage-head { align-items: flex-start; flex-direction: column; gap: 10px; }
+    .coverage-sources { grid-template-columns: 1fr 1fr; }
+    .coverage-sources article + article { border-left: 0; }
+    .coverage-sources article:nth-child(even) { padding-left: 16px; border-left: 1px solid var(--line); }
+    .coverage-metrics { grid-template-columns: 1fr 1fr; }
     .coverage-bottom { flex-wrap: wrap; }
+  }
+  @media (max-width: 520px) {
+    .coverage-sources { grid-template-columns: 1fr; }
+    .coverage-sources article,
+    .coverage-sources article:nth-child(even) { padding-left: 0; border-left: 0; }
+    .coverage-sources article + article { border-top: 1px solid var(--line); }
+    .coverage-metrics { grid-template-columns: 1fr; gap: 12px; }
   }
 </style>
