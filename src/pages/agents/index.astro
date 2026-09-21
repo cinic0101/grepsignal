@@ -3,16 +3,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const base = import.meta.env.BASE_URL;
 const endpoints = [
-  { label: 'CHANGES', href: `${base}data/changes.json`, path: '/data/changes.json', description: 'Complete post-migration stream. Filter by sequence, not source publication date.' },
-  { label: 'HISTORY', href: `${base}data/history.json`, path: '/data/history.json', description: 'Accepted events and immutable legacy snapshot reference.' },
-  { label: 'ATOM', href: `${base}atom.xml`, path: '/atom.xml', description: 'Sitewide judgment revisions, corrections and reviews.' },
-  { label: 'HISTORY SCHEMA', href: `${base}schema/history.schema.json`, path: '/schema/history.schema.json', description: 'Versioned event envelope; lifecycle invariants also enforced during build.' },
   {
     label: 'INTELLIGENCE',
     href: `${base}data/intelligence.json`,
     path: '/data/intelligence.json',
     description: 'Canonical published signals, active threads, predictions, evidence links, falsifiers, and limitations.',
   },
+  { label: 'CHANGES', href: `${base}data/changes.json`, path: '/data/changes.json', description: 'Complete post-migration stream. Filter by sequence, not source publication date.' },
+  { label: 'HISTORY', href: `${base}data/history.json`, path: '/data/history.json', description: 'Accepted events and immutable legacy snapshot reference.' },
+  { label: 'ATOM', href: `${base}atom.xml`, path: '/atom.xml', description: 'Sitewide judgment revisions, corrections and reviews.' },
   {
     label: 'COVERAGE',
     href: `${base}data/coverage.json`,
@@ -25,6 +24,7 @@ const endpoints = [
     path: '/schema/intelligence.schema.json',
     description: 'JSON Schema for the canonical intelligence payload.',
   },
+  { label: 'HISTORY SCHEMA', href: `${base}schema/history.schema.json`, path: '/schema/history.schema.json', description: 'Versioned event envelope; lifecycle invariants also enforced during build.' },
   {
     label: 'COVERAGE SCHEMA',
     href: `${base}schema/coverage.schema.json`,
