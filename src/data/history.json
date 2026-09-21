@@ -97,6 +97,41 @@
       "payload": {
         "status": "strengthening"
       }
+    },
+    {
+      "id": "evt-thread-research-automation-bottlenecks-2026-09-21",
+      "record_type": "thread",
+      "record_id": "thread-research-automation-bottlenecks",
+      "expected_version": 0,
+      "kind": "revise",
+      "recorded_at": "2026-09-21T04:39:56Z",
+      "proposed_by": "ChatGPT daily review Editorial Recovery",
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/60",
+        "accepted_at": "2026-09-21T04:39:34Z"
+      },
+      "note": "Anthropic now reports that Claude 'leads' 26% of its measured AI R&D work and collaborates or leads on more than 90%, while no measured subset is fully autonomous. Together with OpenAI's earlier internal measurements, this turns research automation from a single-lab observation into a cross-lab pattern: execution is increasingly automated while human supervision, experimental judgment, compute allocation, monitoring, and safety infrastructure remain binding constraints.",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
+          "publisher": "Anthropic",
+          "title": "Measurements for understanding the pace of AI development inside frontier labs",
+          "role": "primary_measurement_report",
+          "published_at": null
+        },
+        {
+          "url": "https://www.reuters.com/business/anthropic-says-claude-now-leads-quarter-work-building-its-next-ai-models-2026-09-17/",
+          "publisher": "Reuters",
+          "title": "Anthropic says Claude now leads a quarter of work building its next AI models",
+          "role": "independent_reporting",
+          "published_at": "2026-09-17"
+        }
+      ],
+      "payload": {
+        "status": "strengthening"
+      }
     }
   ]
 }
