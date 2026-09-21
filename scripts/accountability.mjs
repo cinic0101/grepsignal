@@ -80,6 +80,31 @@ function sha256(value) {
 function publicAcceptanceReceipt(e,sequence,resultingVersion) {
   return {actor_type:/editor/i.test(e.acceptance.actor)?'human_editor':'unspecified',display_name:e.acceptance.actor,scope:e.acceptance.scope,accepted_at:e.acceptance.accepted_at,event_id:e.id,event_sha256:sha256(e),sequence,record_type:e.record_type,record_id:e.record_id,resulting_version:resultingVersion,public_receipt_path:`../changes/#${e.id}`,source_reference:e.acceptance.reference,source_reference_visibility:/\/grepsignal-engine\//.test(e.acceptance.reference)?'private':'public_or_external'};
 }
+function snapshotProjection(type,r,links) {
+  const out=structuredClone(r);
+  if (type === 'signal') {
+    out.sources=normalizedEvidence(out.sources);
+    const rels=[];
+    for (const [thread_id,relation] of Object.entries(links)) {
+      if (relation.supporting.includes(r.id)) rels.push({thread_id,relationship:'supporting'});
+      if (relation.contradicting.includes(r.id)) rels.push({thread_id,relationship:'contradicting'});
+    }
+    out.thread_relations=rels;
+    out.thread_ids=[...new Set(rels.map(x => x.thread_id))];
+  } else if (type === 'thread') {
+    const relation=links[r.id] ?? {supporting:[],contradicting:[]};
+    out.signal_relations=structuredClone(relation);
+    out.signal_ids=[...relation.supporting,...relation.contradicting];
+    for (const update of out.updates ?? []) update.sources=normalizedEvidence(update.sources ?? []);
+  } else if (type === 'prediction') {
+    for (const resolution of out.resolutions ?? []) resolution.evidence=normalizedEvidence(resolution.evidence ?? []);
+  }
+  return out;
+}
+function citationLabel(type,r) {
+  const title=type === 'prediction' ? r.claim : r.title;
+  return `GrepSignal, "${title}", ${r.id} v${r.version}`;
+}
 function forecast(p) {
   for (const k of ['claim','success_criterion','failure_criterion']) assert(text(p[k]),`forecast missing ${k}`);
   assert(ID.test(p.thread_id),'forecast needs thread_id');
@@ -125,6 +150,27 @@ export function replay(baseline,journal,baselineLinks=null) {
     data[key]=(baseline[key] ?? []).map(r => bootstrap(r,type,journal));
     for (const r of data[key]) {assert(!records.has(r.id),'duplicate record ID');records.set(r.id,{type,r});}
   }
+  const versions=Object.fromEntries(Object.values(TYPES).map(key => [key,{}]));
+  const captureVersion=(type,r,sequence,eventId,recordedAt,origin,eventSha256=null) => {
+    const bucket=versions[TYPES[type]];
+    bucket[r.id] ??={};
+    assert(!Object.hasOwn(bucket[r.id],String(r.version)),`duplicate snapshot for ${r.id} v${r.version}`);
+    bucket[r.id][String(r.version)]={
+      schema_version:1,
+      record_type:type,
+      record_id:r.id,
+      record_version:r.version,
+      snapshot_sequence:sequence,
+      snapshot_event_id:eventId,
+      snapshot_recorded_at:recordedAt,
+      snapshot_origin:origin,
+      event_sha256:eventSha256,
+      immutable:true,
+      cite_as:citationLabel(type,r),
+      record:snapshotProjection(type,r,links),
+    };
+  };
+  for (const {type,r} of records.values()) captureVersion(type,r,0,null,journal.initialized_at,'legacy_snapshot',null);
   const seen=new Set();const changes=[];let priorTime=timestamp(journal.initialized_at);
   for (const raw of journal.events) {
     const e=validateEvent(raw);assert(!seen.has(e.id),'duplicate event ID');seen.add(e.id);
@@ -229,7 +275,9 @@ export function replay(baseline,journal,baselineLinks=null) {
     const sequence=changes.length+1;
     const change=structuredClone(e);change.evidence=normalizedEvidence(change.evidence);
     const proposal=e.proposal ? {...structuredClone(e.proposal),display_name:e.proposed_by} : proposalAttribution(e.proposed_by);
-    changes.push({...change,sequence,version:r.version,proposal,changed_fields:changedFields,acceptance_receipt:publicAcceptanceReceipt(e,sequence,r.version)});
+    const acceptanceReceipt=publicAcceptanceReceipt(e,sequence,r.version);
+    changes.push({...change,sequence,version:r.version,proposal,changed_fields:changedFields,acceptance_receipt:acceptanceReceipt});
+    captureVersion(e.record_type,r,sequence,e.id,e.recorded_at,'journal_event',acceptanceReceipt.event_sha256);
   }
   for (const s of data.signals) {
     assert(ASSESSMENTS.includes(s.status),'invalid Signal assessment');evidence(s.sources);
@@ -263,7 +311,7 @@ export function replay(baseline,journal,baselineLinks=null) {
   const lastMaterial=changes.filter(x => !['review','publication'].includes(x.kind)).at(-1);
   if (lastMaterial) data.generated_at=lastMaterial.recorded_at;
   data.accountability={baseline_ref:journal.baseline_ref,initialized_at:journal.initialized_at,latest_sequence:changes.length,last_recorded_at:changes.at(-1)?.recorded_at ?? null};
-  return {data,changes,links};
+  return {data,changes,links,versions};
 }
 export function load(root=pathToFileURL(`${process.cwd()}/`)) {
   const raw=readFileSync(new URL('src/data/intelligence.json',root),'utf8');

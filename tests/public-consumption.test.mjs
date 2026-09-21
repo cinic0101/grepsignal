@@ -173,3 +173,44 @@ test('public schemas document evidence lineage and structured proposal provenanc
   assert.ok(history.properties.events.items.properties.evidence.items.properties.lineage_id);
 });
 
+test('current record JSON advertises stable version citations',()=>{
+  for (const path of [
+    'src/pages/data/signals/[id].json.ts',
+    'src/pages/data/threads/[id].json.ts',
+    'src/pages/data/predictions/[id].json.ts',
+  ]) {
+    const page=read(path);
+    assert.ok(page.includes('cite_as:'));
+    assert.ok(page.includes('record_version_permalink:'));
+    assert.ok(page.includes('projection_sequence:'));
+    assert.ok(page.includes('record-version.schema.json'));
+  }
+});
+
+test('immutable record-version resources are static and long-cacheable',()=>{
+  for (const path of [
+    'src/pages/data/signals/[id]/versions/[version].json.ts',
+    'src/pages/data/threads/[id]/versions/[version].json.ts',
+    'src/pages/data/predictions/[id]/versions/[version].json.ts',
+  ]) {
+    const page=read(path);
+    assert.ok(page.includes('export const prerender = true'));
+    assert.ok(page.includes("max-age=31536000, immutable"));
+    assert.ok(page.includes('version_permalink:'));
+    assert.ok(page.includes('record-version.schema.json'));
+  }
+});
+
+test('record-version schema and agent docs explain frozen derived context',()=>{
+  const schema=JSON.parse(read('public/schema/record-version.schema.json'));
+  assert.equal(schema.properties.immutable.const,true);
+  assert.ok(schema.properties.snapshot_sequence);
+  assert.ok(schema.properties.event_sha256);
+  const llms=read('public/llms.txt');
+  assert.ok(llms.includes('/versions/{version}.json'));
+  assert.ok(llms.includes('Derived cross-record context is frozen'));
+  const agents=read('src/pages/agents/index.astro');
+  assert.ok(agents.includes('record_version_permalink'));
+  assert.ok(agents.includes('snapshot_sequence'));
+});
+

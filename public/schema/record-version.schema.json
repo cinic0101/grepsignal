@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cinic0101.github.io/grepsignal/schema/record-version.schema.json",
+  "title": "GrepSignal immutable record-version snapshot",
+  "description": "Immutable public projection captured when a GrepSignal record reached one record version. Derived cross-record context is frozen as of snapshot_sequence and may differ from the later current projection without changing this snapshot.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "record_type",
+    "record_id",
+    "record_version",
+    "snapshot_sequence",
+    "snapshot_event_id",
+    "snapshot_recorded_at",
+    "snapshot_origin",
+    "event_sha256",
+    "immutable",
+    "cite_as",
+    "record"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "record_type": {
+      "enum": [
+        "signal",
+        "thread",
+        "prediction"
+      ]
+    },
+    "record_id": {
+      "type": "string"
+    },
+    "record_version": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "snapshot_sequence": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Global public change sequence when this record version was captured. Legacy version 0 snapshots use sequence 0."
+    },
+    "snapshot_event_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Accepted public event that created this record version; null for the imported legacy snapshot."
+    },
+    "snapshot_recorded_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Journal/migration capture time for this immutable snapshot, not necessarily the event or source publication time."
+    },
+    "snapshot_origin": {
+      "enum": [
+        "legacy_snapshot",
+        "journal_event"
+      ]
+    },
+    "event_sha256": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Canonical SHA-256 of the accepted event when this version came from a journal event."
+    },
+    "immutable": {
+      "const": true
+    },
+    "cite_as": {
+      "type": "string",
+      "description": "Human-readable stable citation label for this record version."
+    },
+    "record": {
+      "type": "object",
+      "description": "The public record projection frozen at snapshot_sequence.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

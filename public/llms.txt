@@ -11,12 +11,18 @@ GrepSignal is not a comprehensive news feed. JSON is the canonical machine-reada
 - [Coverage](https://cinic0101.github.io/grepsignal/data/coverage.json): What the current review cycle examined, including no-publish outcomes.
 - [For agents](https://cinic0101.github.io/grepsignal/agents/): Consumption guidance and interpretation rules.
 - [Intelligence schema](https://cinic0101.github.io/grepsignal/schema/intelligence.schema.json): Field semantics and machine-readable contract.
+- [Record-version schema](https://cinic0101.github.io/grepsignal/schema/record-version.schema.json): Immutable citation snapshot envelope.
 
 ## Record resources
 
 - Signal JSON: `/grepsignal/data/signals/{signal_id}.json`
 - Thread JSON: `/grepsignal/data/threads/{thread_id}.json`
 - Prediction JSON: `/grepsignal/data/predictions/{prediction_id}.json`
+- Immutable Signal version: `/grepsignal/data/signals/{signal_id}/versions/{version}.json`
+- Immutable Thread version: `/grepsignal/data/threads/{thread_id}/versions/{version}.json`
+- Immutable Prediction version: `/grepsignal/data/predictions/{prediction_id}/versions/{version}.json`
+
+Current record JSON includes `cite_as`, `record_version_permalink`, and the latest public `projection_sequence`. Version resources are immutable snapshots captured when that record reached the requested version. Derived cross-record context is frozen at the snapshot sequence and may later differ from the mutable current projection. Version resources are served with long-lived immutable cache headers; use the current record URL when you need the latest projection.
 
 Signal records expose derived `thread_ids` and typed `thread_relations`. Thread records expose derived `signal_ids` and `signal_relations`. These are projections of the canonical Thread-link history, not separately curated facts.
 

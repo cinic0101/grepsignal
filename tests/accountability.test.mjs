@@ -153,3 +153,51 @@ test('source lineage is preserved and unknown lineage normalizes to null',()=>{
   assert.equal(replay(b,journal([])).data.signals[0].sources[0].lineage_id,'lineage-example-report');
   assert.equal(run([]).data.signals[0].sources[0].lineage_id,null);
 });
+
+
+test('immutable version snapshots preserve historical record state and citation metadata',()=>{
+  const {versions}=run([event()]);
+  const v0=versions.signals['sig-example']['0'];
+  const v1=versions.signals['sig-example']['1'];
+  assert.equal(v0.record.summary,'Narrow observation');
+  assert.equal(v0.snapshot_sequence,0);
+  assert.equal(v0.snapshot_event_id,null);
+  assert.equal(v0.snapshot_origin,'legacy_snapshot');
+  assert.equal(v0.event_sha256,null);
+  assert.equal(v0.cite_as,'GrepSignal, "Example", sig-example v0');
+  assert.equal(v1.record.summary,'Narrower observation');
+  assert.equal(v1.snapshot_sequence,1);
+  assert.equal(v1.snapshot_event_id,'evt-one');
+  assert.match(v1.event_sha256,/^[0-9a-f]{64}$/);
+  assert.equal(v1.immutable,true);
+});
+
+test('cross-record relation changes do not rewrite an earlier Signal version snapshot',()=>{
+  const challenge=event({
+    id:'evt-thread-challenge',
+    kind:'relate',
+    record_type:'thread',
+    record_id:'thread-example',
+    payload:{target_id:'sig-example',target_version:0,relationship:'challenges'},
+  });
+  const {data,versions}=run([challenge]);
+  assert.deepEqual(data.signals[0].thread_relations,[{thread_id:'thread-example',relationship:'contradicting'}]);
+  assert.deepEqual(versions.signals['sig-example']['0'].record.thread_relations,[{thread_id:'thread-example',relationship:'supporting'}]);
+  assert.deepEqual(versions.threads['thread-example']['1'].record.signal_relations,{supporting:[],contradicting:['sig-example']});
+  assert.equal(versions.threads['thread-example']['1'].snapshot_sequence,1);
+});
+
+test('review events create immutable record versions without fabricating a material change',()=>{
+  const review=event({
+    id:'evt-review-version',
+    kind:'review',
+    record_type:'thread',
+    record_id:'thread-example',
+    payload:{outcome:'unchanged',counterevidence_checked:['Checked exact fixture evidence'],next_review_at:'2026-09-27T00:00:00Z'},
+  });
+  const {versions}=run([review]);
+  const snapshot=versions.threads['thread-example']['1'];
+  assert.equal(snapshot.record.status,'emerging');
+  assert.equal(snapshot.record.last_review_outcome,'unchanged');
+  assert.equal(snapshot.snapshot_event_id,'evt-review-version');
+});
