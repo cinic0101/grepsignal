@@ -58,7 +58,7 @@ test('eligible outcome scores only after deadline',()=>{const {data}=run([regist
 test('deadline does not force decisive resolution',()=>{const {data}=run([register(),publication(),resolution('unresolved')]);assert.equal(data.predictions[0].brier_score,null);assert.equal(data.predictions[0].status,'unresolved');assert.equal(data.stats.open_predictions,1);});
 test('early resolution and substitute sources fail',()=>{const e=resolution();e.recorded_at='2026-09-22T00:00:00Z';assert.throws(()=>run([register(),publication(),e]));e.recorded_at='2026-10-02T00:00:00Z';e.evidence=[{...source,url:'https://example.org/other'}];assert.throws(()=>run([register(),publication(),e]));});
 test('corrected resolution preserves original outcome',()=>{const e=resolution('true');e.id='evt-correct';e.expected_version=3;e.recorded_at='2026-10-03T00:00:00Z';e.payload.supersedes_resolution='evt-resolve';const p=run([register(),publication(),resolution(),e]).data.predictions[0];assert.equal(p.resolutions.length,2);assert.equal(p.resolutions[0].outcome,'false');assert.ok(Math.abs(p.brier_score-.09)<1e-10);});
-test('sequence cursor preserves same-time events; empty Atom valid',()=>{const {changes}=run([event(),event({id:'evt-two',expected_version:1})]);assert.equal(changesSince(changes,1)[0].id,'evt-two');assert.throws(()=>changesSince(changes,-1));const xml=asAtom([],'https://example.org/grepsignal/',journal([]).initialized_at);assert.match(xml,/\/grepsignal\/atom.xml/);assert.doesNotMatch(xml,/<entry>/);});
+test('sequence cursor preserves same-time events; empty Atom valid',()=>{const {changes}=run([event(),event({id:'evt-two',expected_version:1,payload:{summary:'Second revision',status:'stable'}})]);assert.equal(changesSince(changes,1)[0].id,'evt-two');assert.throws(()=>changesSince(changes,-1));const xml=asAtom([],'https://example.org/grepsignal/',journal([]).initialized_at);assert.match(xml,/\/grepsignal\/atom.xml/);assert.doesNotMatch(xml,/<entry>/);});
 test('Atom escapes prose',()=>{const xml=asAtom(run([event({note:'A & B < C'})]).changes,'https://example.org/',journal([]).initialized_at);assert.match(xml,/A &amp; B &lt; C/);});
 test('credential URLs and bad dates fail',()=>{assert.throws(()=>safeUrl('https://example.org/?api_key=secret'));assert.throws(()=>safeUrl('https://user:pass@example.org/'));assert.throws(()=>timestamp('2026-02-30T00:00:00Z'));});
 test('new Thread uses explicit links, and an evidence challenge updates them',()=>{
@@ -115,4 +115,41 @@ test('source retrieval metadata stays explicit and unknown values normalize to n
   assert.equal(unknown.archive_url,null);
   b.signals[0].sources[0].retrieved_at='2026-09-19';
   assert.throws(()=>replay(b,journal([])));
+});
+
+
+test('revision change feed exposes deterministic before and after fields',()=>{
+  const {changes}=run([event()]);
+  assert.deepEqual(changes[0].changed_fields,{
+    summary:{before:'Narrow observation',after:'Narrower observation'},
+    status:{before:'emerging',after:'weakening'},
+  });
+});
+
+test('structured proposal provenance is preserved without inference',()=>{
+  const proposal={
+    actor_type:'model',
+    provider:'OpenAI',
+    model_id:'runtime-model-id',
+    model_version:null,
+    role:'retrospective_review',
+    run_id:'run-fixture',
+    cycle_id:'cycle-fixture',
+  };
+  const {changes}=run([event({proposal})]);
+  assert.equal(changes[0].proposal.model_id,'runtime-model-id');
+  assert.equal(changes[0].proposal.display_name,'Test agent');
+  assert.match(changes[0].acceptance_receipt.event_sha256,/^[0-9a-f]{64}$/);
+});
+
+test('invalid structured proposal fails closed',()=>{
+  const proposal={actor_type:'human',provider:null,model_id:'should-not-exist',model_version:null,role:'review',run_id:null,cycle_id:null};
+  assert.throws(()=>run([event({proposal})]));
+});
+
+test('source lineage is preserved and unknown lineage normalizes to null',()=>{
+  const b=structuredClone(baseline);
+  b.signals[0].sources[0].lineage_id='lineage-example-report';
+  assert.equal(replay(b,journal([])).data.signals[0].sources[0].lineage_id,'lineage-example-report');
+  assert.equal(run([]).data.signals[0].sources[0].lineage_id,null);
 });
