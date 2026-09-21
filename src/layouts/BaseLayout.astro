@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import LocalAIStatus from '../components/LocalAIStatus.astro';
+import SelectionExplain from '../components/SelectionExplain.astro';
 import RecordAlert from '../components/RecordAlert.astro';
 import intelligence from '../data/intelligence';
 
@@ -105,6 +106,7 @@ const showPredictions = intelligence.predictions.some((prediction) => prediction
       <span aria-hidden="true"> · </span>
       <a href={`${base}editorial/`}>Corrections &amp; reuse</a>
     </aside>
+    <SelectionExplain />
     <LocalAIStatus />
   </body>
 </html>
