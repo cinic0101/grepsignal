@@ -10,6 +10,7 @@ interface Props {
   ogType?: 'website' | 'article';
   publishedAt?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  jsonAlternateHref?: string;
 }
 
 const {
@@ -19,10 +20,12 @@ const {
   ogType = 'website',
   publishedAt,
   jsonLd,
+  jsonAlternateHref,
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
-const intelligenceJsonUrl = new URL(`${base}data/intelligence.json`, Astro.site ?? Astro.url.origin).toString();
+const intelligenceJsonUrl = new URL(jsonAlternateHref ?? `${base}data/intelligence.json`, Astro.site ?? Astro.url.origin).toString();
+const llmsUrl = new URL(`${base}llms.txt`, Astro.site ?? Astro.url.origin).toString();
 const structuredData = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : null;
 const challengeUrl = `https://github.com/cinic0101/grepsignal/issues/new?${new URLSearchParams({template: 'evidence.yml', record: canonicalUrl})}`;
 ---
@@ -36,7 +39,8 @@ const challengeUrl = `https://github.com/cinic0101/grepsignal/issues/new?${new U
     <meta name="robots" content={robots} />
     <meta name="color-scheme" content="light" />
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" type="application/json" title="GrepSignal intelligence JSON" href={intelligenceJsonUrl} />
+    <link rel="alternate" type="application/json" title="GrepSignal structured JSON" href={intelligenceJsonUrl} />
+    <link rel="describedby" type="text/plain" href={llmsUrl} />
     <link rel="alternate" type="application/atom+xml" title="GrepSignal changes" href={`${base}atom.xml`} />
     <meta property="og:site_name" content="GrepSignal" />
     <meta property="og:type" content={ogType} />

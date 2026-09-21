@@ -138,11 +138,13 @@
           },
           "evidence_since": {
             "type": "string",
-            "pattern": "^[0-9]{4}-[0-9]{2}$"
+            "pattern": "^[0-9]{4}-[0-9]{2}$",
+            "description": "Earliest evidence period represented by the Signal, at month precision. Do not treat this as an exact event timestamp."
           },
           "registered_at": {
             "type": "string",
-            "format": "date"
+            "format": "date",
+            "description": "Date GrepSignal registered this Signal. This is not necessarily the event date, first observation time, or first public publication time."
           },
           "falsifiers": {
             "type": "array",
@@ -189,6 +191,23 @@
                     "string",
                     "null"
                   ]
+                },
+                "retrieved_at": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time",
+                  "description": "Time GrepSignal actually retrieved or inspected this source when known. Null means the retrieval time was not recorded; it is never inferred from publication or journal timestamps."
+                },
+                "archive_url": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "uri",
+                  "pattern": "^https://",
+                  "description": "Optional lawful public archive or durable source URL. Null means no archive is published by GrepSignal."
                 }
               },
               "additionalProperties": false
@@ -196,7 +215,8 @@
           },
           "version": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "description": "Revision number in the public accountability journal. Version 0 denotes the imported legacy snapshot, not a claim of complete pre-migration history."
           },
           "lifecycle": {
             "enum": [
@@ -212,13 +232,15 @@
             ]
           },
           "review_required": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "True when linked changes or an inconclusive review require a fresh editorial review; it is not itself a reversal of the judgment."
           },
           "history_origin": {
             "enum": [
               "legacy_snapshot",
               "journal"
-            ]
+            ],
+            "description": "Whether the record originated in the imported legacy snapshot or was registered in the append-only public journal."
           },
           "relations": {
             "type": "array"
@@ -234,21 +256,24 @@
               "string",
               "null"
             ],
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Earliest observation time explicitly verified by GrepSignal; null means unknown, not that the event had not occurred."
           },
           "first_public_at": {
             "type": [
               "string",
               "null"
             ],
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Verified first-publication timestamp for this GrepSignal record; null means not verified."
           },
           "last_reviewed_at": {
             "type": [
               "string",
               "null"
             ],
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Most recent explicit review timestamp; null means no review is recorded in the public journal."
           },
           "last_changed_at": {
             "type": [
@@ -270,6 +295,36 @@
               "null"
             ],
             "format": "date-time"
+          },
+          "thread_ids": {
+            "type": "array",
+            "description": "Derived IDs of Threads that currently link this Signal. This projection is computed from canonical Thread relations.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "thread_relations": {
+            "type": "array",
+            "description": "Derived typed reverse links from this Signal to current Thread relations.",
+            "items": {
+              "type": "object",
+              "required": [
+                "thread_id",
+                "relationship"
+              ],
+              "properties": {
+                "thread_id": {
+                  "type": "string"
+                },
+                "relationship": {
+                  "enum": [
+                    "supporting",
+                    "contradicting"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
           }
         },
         "additionalProperties": true
@@ -326,7 +381,8 @@
             "type": "string"
           },
           "evidence_since": {
-            "type": "string"
+            "type": "string",
+            "description": "Earliest evidence period represented by this Thread; precision is source-dependent and should not be treated as the Thread creation time."
           },
           "created_at": {
             "type": "string"
@@ -403,6 +459,23 @@
                           "string",
                           "null"
                         ]
+                      },
+                      "retrieved_at": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "format": "date-time",
+                        "description": "Time GrepSignal actually retrieved or inspected this source when known; null means unknown."
+                      },
+                      "archive_url": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "format": "uri",
+                        "pattern": "^https://",
+                        "description": "Optional lawful public archive or durable source URL."
                       }
                     },
                     "additionalProperties": false
@@ -512,7 +585,8 @@
           },
           "version": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "description": "Revision number in the public accountability journal. Version 0 denotes the imported legacy snapshot, not complete pre-migration history."
           },
           "lifecycle": {
             "enum": [
@@ -528,13 +602,15 @@
             ]
           },
           "review_required": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "True when linked changes or an inconclusive review require a fresh editorial review."
           },
           "history_origin": {
             "enum": [
               "legacy_snapshot",
               "journal"
-            ]
+            ],
+            "description": "Whether the record originated in the imported legacy snapshot or was registered in the append-only public journal."
           },
           "relations": {
             "type": "array"
@@ -550,21 +626,24 @@
               "string",
               "null"
             ],
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Earliest observation time explicitly verified by GrepSignal; null means unknown."
           },
           "first_public_at": {
             "type": [
               "string",
               "null"
             ],
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Verified first-publication timestamp for this Thread record; null means not verified."
           },
           "last_reviewed_at": {
             "type": [
               "string",
               "null"
             ],
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Most recent explicit review timestamp; null means no review is recorded in the public journal."
           },
           "last_changed_at": {
             "type": [
@@ -586,6 +665,36 @@
               "null"
             ],
             "format": "date-time"
+          },
+          "signal_ids": {
+            "type": "array",
+            "description": "Derived IDs of all Signals currently linked to this Thread, across supporting and contradicting relations.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "signal_relations": {
+            "type": "object",
+            "description": "Derived current typed Signal membership for this Thread.",
+            "required": [
+              "supporting",
+              "contradicting"
+            ],
+            "properties": {
+              "supporting": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "contradicting": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
           }
         },
         "additionalProperties": true
@@ -703,5 +812,5 @@
     }
   },
   "additionalProperties": true,
-  "description": "Pinned legacy snapshot plus accepted events. Lifecycle/history and strict forecasts; inactive records remain in arrays but are excluded from active counters."
+  "description": "Current public intelligence projection derived from a pinned legacy snapshot plus accepted journal events. Derived Signal↔Thread links are included for agent retrieval. Registration, observation, source publication, retrieval, review, and public-publication times are distinct."
 }

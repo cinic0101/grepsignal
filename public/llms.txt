@@ -1,0 +1,36 @@
+# GrepSignal
+
+> Evidence-backed intelligence on material shifts across AI models, agents, tooling, and infrastructure, with a technical-builder bias.
+
+GrepSignal is not a comprehensive news feed. JSON is the canonical machine-readable interface; HTML is the human presentation layer.
+
+## Start here
+
+- [Canonical intelligence](https://cinic0101.github.io/grepsignal/data/intelligence.json): Full current snapshot of Signals, Threads, Predictions, evidence, falsifiers, limitations, lifecycle, and derived relationships.
+- [Changes](https://cinic0101.github.io/grepsignal/data/changes.json): Sequence-cursor change feed with normalized proposal and public acceptance receipt metadata.
+- [Coverage](https://cinic0101.github.io/grepsignal/data/coverage.json): What the current review cycle examined, including no-publish outcomes.
+- [For agents](https://cinic0101.github.io/grepsignal/agents/): Consumption guidance and interpretation rules.
+- [Intelligence schema](https://cinic0101.github.io/grepsignal/schema/intelligence.schema.json): Field semantics and machine-readable contract.
+
+## Record resources
+
+- Signal JSON: `/grepsignal/data/signals/{signal_id}.json`
+- Thread JSON: `/grepsignal/data/threads/{thread_id}.json`
+- Prediction JSON: `/grepsignal/data/predictions/{prediction_id}.json`
+
+Signal records expose derived `thread_ids` and typed `thread_relations`. Thread records expose derived `signal_ids` and `signal_relations`. These are projections of the canonical Thread-link history, not separately curated facts.
+
+## Interpretation
+
+- `registered_at` is when GrepSignal registered a record; it is not automatically the event date or publication date.
+- `first_observed_at`, `first_public_at`, `published_at`, `retrieved_at`, and journal `recorded_at` have distinct meanings. Null means unknown, not absent.
+- Version 0 denotes an imported legacy snapshot. It does not imply complete pre-migration event history.
+- Carry falsifiers, limitations, lifecycle, review requirements, and prediction resolution state forward when reusing a judgment.
+- Follow original evidence URLs when source detail matters. GrepSignal publishes synthesis and metadata, not mirrored third-party article bodies.
+
+## Human-readable
+
+- [Signals](https://cinic0101.github.io/grepsignal/signals/)
+- [Threads](https://cinic0101.github.io/grepsignal/threads/)
+- [Changes](https://cinic0101.github.io/grepsignal/changes/)
+- [Editorial policy](https://cinic0101.github.io/grepsignal/editorial/)

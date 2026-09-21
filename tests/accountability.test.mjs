@@ -84,3 +84,35 @@ test('new Thread review horizon is relative to its registration, not migration',
   const e=event({id:'evt-later',kind:'register',record_type:'thread',record_id:t.id,recorded_at:'2026-10-20T00:00:00Z',payload:t});
   assert.equal(run([e]).data.threads[1].next_review_at,'2026-10-27T00:00:00.000Z');
 });
+
+
+test('public projection exposes bidirectional Signal and Thread membership',()=>{
+  const {data}=run([]);
+  assert.deepEqual(data.threads[0].signal_ids,['sig-example']);
+  assert.deepEqual(data.threads[0].signal_relations,{supporting:['sig-example'],contradicting:[]});
+  assert.deepEqual(data.signals[0].thread_ids,['thread-example']);
+  assert.deepEqual(data.signals[0].thread_relations,[{thread_id:'thread-example',relationship:'supporting'}]);
+});
+
+test('change feed adds structured proposal and public acceptance receipt',()=>{
+  const {changes}=run([event()]);
+  assert.equal(changes[0].proposal.actor_type,'unspecified');
+  assert.equal(changes[0].proposal.model_id,null);
+  assert.equal(changes[0].acceptance_receipt.actor_type,'human_editor');
+  assert.equal(changes[0].acceptance_receipt.public_receipt_path,'../changes/#evt-one');
+  assert.equal(changes[0].acceptance_receipt.resulting_version,1);
+});
+
+test('source retrieval metadata stays explicit and unknown values normalize to null',()=>{
+  const b=structuredClone(baseline);
+  b.signals[0].sources[0].retrieved_at='2026-09-19T11:00:00Z';
+  b.signals[0].sources[0].archive_url='https://example.org/archive/report';
+  const projected=replay(b,journal([])).data.signals[0].sources[0];
+  assert.equal(projected.retrieved_at,'2026-09-19T11:00:00Z');
+  assert.equal(projected.archive_url,'https://example.org/archive/report');
+  const unknown=run([]).data.signals[0].sources[0];
+  assert.equal(unknown.retrieved_at,null);
+  assert.equal(unknown.archive_url,null);
+  b.signals[0].sources[0].retrieved_at='2026-09-19';
+  assert.throws(()=>replay(b,journal([])));
+});

@@ -14,7 +14,7 @@ const base = import.meta.env.BASE_URL;
 const relatedThread = intelligence.threads.find(thread => thread.id === prediction.thread_id);
 const probability = Math.round(prediction.initial_probability * 100);
 ---
-<BaseLayout title={`${prediction.claim} — GrepSignal prediction`} description={prediction.claim}>
+<BaseLayout title={`${prediction.claim} — GrepSignal prediction`} description={prediction.claim} jsonAlternateHref={`${base}data/predictions/${prediction.id}.json`}>
   <main class="wrap prediction-detail">
     <a class="back-link" href={`${base}#predictions`}><span aria-hidden="true">←</span> Prediction ledger</a>
 
@@ -130,7 +130,7 @@ const probability = Math.round(prediction.initial_probability * 100);
         </div>
         <div>
           <span>Machine-readable</span>
-          <a href={`${base}data/intelligence.json`}>Open JSON →</a>
+          <a href={`${base}data/predictions/${prediction.id}.json`}>Open JSON →</a>
         </div>
       </aside>
     </div>

@@ -25,6 +25,26 @@ for (const thread of intelligence.threads) {
   if (all.length !== thread.signal_count) {
     fail(`thread ${thread.id} signal_count ${thread.signal_count} does not match ${all.length} public relations`);
   }
+  if (JSON.stringify(thread.signal_ids) !== JSON.stringify(all)) {
+    fail(`thread ${thread.id} projected signal_ids diverge from canonical relations`);
+  }
+  if (JSON.stringify(thread.signal_relations) !== JSON.stringify(relation)) {
+    fail(`thread ${thread.id} projected signal_relations diverge from canonical relations`);
+  }
 }
 
-console.log(`thread-link validation passed (${intelligence.threads.length} threads)`);
+for (const signal of intelligence.signals) {
+  const expected = [];
+  for (const thread of intelligence.threads) {
+    if (thread.signal_relations.supporting.includes(signal.id)) expected.push({thread_id:thread.id,relationship:'supporting'});
+    if (thread.signal_relations.contradicting.includes(signal.id)) expected.push({thread_id:thread.id,relationship:'contradicting'});
+  }
+  if (JSON.stringify(signal.thread_relations) !== JSON.stringify(expected)) {
+    fail(`signal ${signal.id} projected thread_relations diverge from canonical relations`);
+  }
+  if (JSON.stringify(signal.thread_ids) !== JSON.stringify([...new Set(expected.map(x => x.thread_id))])) {
+    fail(`signal ${signal.id} projected thread_ids diverge from canonical relations`);
+  }
+}
+
+console.log(`thread-link validation passed (${intelligence.threads.length} threads, bidirectional projection verified)`);

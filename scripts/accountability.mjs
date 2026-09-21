@@ -38,14 +38,26 @@ function safe(value) {
 function evidence(xs) {
   assert(Array.isArray(xs),'evidence must be an array');
   for (const x of xs) {
-    exact(x,['url','publisher','title','role','published_at'],'evidence');
+    exact(x,['url','publisher','title','role','published_at','retrieved_at','archive_url'],'evidence');
     assert([x.url,x.publisher,x.title,x.role].every(text),'incomplete evidence');safeUrl(x.url);
     if (x.published_at != null) {
       assert(typeof x.published_at === 'string' && /^\d{4}-\d{2}(?:-\d{2})?$/.test(x.published_at),'source date precision');
       // Validate the known portion without filling missing precision in the record.
       timestamp(`${x.published_at.length === 7 ? x.published_at+'-01' : x.published_at}T00:00:00Z`);
     }
+    if (x.retrieved_at != null) timestamp(x.retrieved_at);
+    if (x.archive_url != null) safeUrl(x.archive_url);
   }
+}
+function normalizedEvidence(xs) {
+  return structuredClone(xs).map(x => ({...x,retrieved_at:x.retrieved_at ?? null,archive_url:x.archive_url ?? null}));
+}
+function proposalAttribution(value) {
+  const chatgpt=/\bchatgpt\b/i.test(value);
+  return {actor_type:chatgpt?'model':'unspecified',provider:chatgpt?'OpenAI':null,model_id:null,role:/daily review/i.test(value)?'daily_review':/retrospective/i.test(value)?'retrospective_review':'proposal',display_name:value};
+}
+function publicAcceptanceReceipt(e,sequence,resultingVersion) {
+  return {actor_type:/editor/i.test(e.acceptance.actor)?'human_editor':'unspecified',display_name:e.acceptance.actor,scope:e.acceptance.scope,accepted_at:e.acceptance.accepted_at,event_id:e.id,sequence,record_type:e.record_type,record_id:e.record_id,resulting_version:resultingVersion,public_receipt_path:`../changes/#${e.id}`,source_reference:e.acceptance.reference,source_reference_visibility:/\/grepsignal-engine\//.test(e.acceptance.reference)?'private':'public_or_external'};
 }
 function forecast(p) {
   for (const k of ['claim','success_criterion','failure_criterion']) assert(text(p[k]),`forecast missing ${k}`);
@@ -189,7 +201,9 @@ export function replay(baseline,journal,baselineLinks=null) {
       const linked=other.relations?.some(x => x.target_id === r.id) || other.updates?.some(x => x.signal_ids.includes(r.id)) || other.thread_id === r.id;
       if (other.id !== r.id && linked) other.review_required=true;
     }
-    changes.push({...structuredClone(e),sequence:changes.length+1,version:r.version});
+    const sequence=changes.length+1;
+    const change=structuredClone(e);change.evidence=normalizedEvidence(change.evidence);
+    changes.push({...change,sequence,version:r.version,proposal:proposalAttribution(e.proposed_by),acceptance_receipt:publicAcceptanceReceipt(e,sequence,r.version)});
   }
   for (const s of data.signals) {
     assert(ASSESSMENTS.includes(s.status),'invalid Signal assessment');evidence(s.sources);
@@ -209,8 +223,16 @@ export function replay(baseline,journal,baselineLinks=null) {
     const ids=[...relation.supporting,...relation.contradicting];
     assert(new Set(ids).size === ids.length && ids.every(id => records.get(id)?.type === 'signal'),'invalid/duplicate Thread relation');
     assert(ids.length === t.signal_count,'Thread signal_count mismatch');
+    t.signal_ids=[...ids];t.signal_relations=structuredClone(relation);
+    for (const update of t.updates) update.sources=normalizedEvidence(update.sources);
   }
-  for (const p of data.predictions) forecast(p);
+  const signalThreadRelations=new Map(data.signals.map(s => [s.id,[]]));
+  for (const t of data.threads) {
+    for (const id of t.signal_relations.supporting) signalThreadRelations.get(id)?.push({thread_id:t.id,relationship:'supporting'});
+    for (const id of t.signal_relations.contradicting) signalThreadRelations.get(id)?.push({thread_id:t.id,relationship:'contradicting'});
+  }
+  for (const s of data.signals) {s.sources=normalizedEvidence(s.sources);s.thread_relations=signalThreadRelations.get(s.id) ?? [];s.thread_ids=[...new Set(s.thread_relations.map(x => x.thread_id))];}
+  for (const p of data.predictions) {forecast(p);for (const resolution of p.resolutions ?? []) resolution.evidence=normalizedEvidence(resolution.evidence);}
   data.stats={material_signals:data.signals.filter(x => x.lifecycle === 'active').length,active_threads:data.threads.filter(x => x.lifecycle === 'active').length,open_predictions:data.predictions.filter(x => ['open','unresolved'].includes(x.status) && x.lifecycle === 'active').length};
   const lastMaterial=changes.filter(x => !['review','publication'].includes(x.kind)).at(-1);
   if (lastMaterial) data.generated_at=lastMaterial.recorded_at;

@@ -3,7 +3,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ShareButton from '../../components/ShareButton.astro';
 import LocalThreadExplain from '../../components/LocalThreadExplain.astro';
 import intelligence from '../../data/intelligence';
-import threadLinks from '../../data/thread-links';
 
 type Thread = typeof intelligence.threads[number];
 type Signal = typeof intelligence.signals[number];
@@ -36,9 +35,8 @@ interface Props {
 export function getStaticPaths() {
   const signalById = new Map(intelligence.signals.map((signal) => [signal.id, signal]));
   return intelligence.threads.map((thread) => {
-    const relation = threadLinks[thread.id as keyof typeof threadLinks];
-    const supporting = (relation?.supporting ?? []).map((id) => signalById.get(id)).filter(Boolean) as Signal[];
-    const contradicting = (relation?.contradicting ?? []).map((id) => signalById.get(id)).filter(Boolean) as Signal[];
+    const supporting = thread.signal_relations.supporting.map((id) => signalById.get(id)).filter(Boolean) as Signal[];
+    const contradicting = thread.signal_relations.contradicting.map((id) => signalById.get(id)).filter(Boolean) as Signal[];
     return { params: { id: thread.id }, props: { thread, supporting, contradicting } };
   });
 }
@@ -65,6 +63,7 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
 <BaseLayout
   title={`${thread.title} — GrepSignal thread`}
   description={thread.summary}
+  jsonAlternateHref={`${base}data/threads/${thread.id}.json`}
 >
   <main class="wrap thread-detail">
     <a class="back-link" href={`${base}threads/`}><span aria-hidden="true">←</span> All threads</a>
@@ -294,7 +293,7 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
         <div><span>Evidence since</span><strong>{thread.evidence_since}</strong></div>
         <div><span>Signals</span><strong>{linkedSignalCount}</strong></div>
         <div><span>Revisions</span><strong>{updates.length}</strong></div>
-        <div><span>Machine-readable</span><a href={`${base}data/intelligence.json`}>Open JSON →</a></div>
+        <div><span>Machine-readable</span><a href={`${base}data/threads/${thread.id}.json`}>Open JSON →</a></div>
       </aside>
     </div>
   </main>

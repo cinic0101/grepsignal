@@ -74,7 +74,8 @@
           },
           "proposed_by": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "description": "Human-readable proposal attribution retained for history compatibility. Machine consumers should prefer the normalized proposal object in /data/changes.json."
           },
           "acceptance": {
             "type": "object",
@@ -106,7 +107,8 @@
               "reference",
               "accepted_at"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "description": "Editorial acceptance metadata. The reference may point to private operational review; /data/changes.json also exposes a public acceptance receipt that does not depend on access to the private engine."
           },
           "note": {
             "type": "string",
@@ -139,6 +141,23 @@
                     "string",
                     "null"
                   ]
+                },
+                "retrieved_at": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time",
+                  "description": "Actual source retrieval/inspection time when recorded. Null means unknown and must not be inferred from recorded_at or published_at."
+                },
+                "archive_url": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "uri",
+                  "pattern": "^https://",
+                  "description": "Optional lawful public archive or durable source URL."
                 }
               },
               "required": [
