@@ -4,7 +4,7 @@
 
 Know what is worth remembering—and which judgments need to change.
 
-GrepSignal's beta tracks **agent infrastructure and technical adoption**: runtime boundaries, tools and conventions, machine access, and operating constraints. This public repository contains a static publication and machine-readable intelligence, not a comprehensive AI news feed or a self-hostable autonomous intelligence engine.
+GrepSignal's beta tracks **material shifts across AI models, agents, tooling, and infrastructure**, with a technical-builder bias. This public repository contains a static publication and machine-readable intelligence, not a comprehensive AI news feed or a self-hostable autonomous intelligence engine.
 
 It is intentionally separate from the private `grepsignal-engine`. Only publication-safe material belongs here: approved original analysis, source links/metadata, public schemas and the static site. Raw scraped content, private prompts, engine heuristics, temporary images and secrets do not belong here. Opening a reusable engine is a later roadmap item; no private operating data is made public by this work.
 
