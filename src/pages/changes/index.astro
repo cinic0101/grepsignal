@@ -1,18 +1,189 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import intelligence, { changes } from '../../data/intelligence';
-const base=import.meta.env.BASE_URL;
-const recordUrl=e => `${base}${e.record_type === 'prediction' ? 'predictions' : e.record_type === 'thread' ? 'threads' : 'signals'}/${e.record_id}/`;
+
+const base = import.meta.env.BASE_URL;
+const allRecords = [...intelligence.signals, ...intelligence.threads, ...intelligence.predictions];
+const recordUrl = event => `${base}${event.record_type === 'prediction' ? 'predictions' : event.record_type === 'thread' ? 'threads' : 'signals'}/${event.record_id}/`;
+const recordLabel = event => {
+  const record = allRecords.find(item => item.id === event.record_id);
+  if (!record) return event.record_id;
+  if ('title' in record) return record.title;
+  if ('claim' in record) return record.claim;
+  return event.record_id;
+};
+const kindLabel = kind => kind.replaceAll('_', ' ').replace(/\b\w/g, char => char.toUpperCase());
+const formatDate = value => new Intl.DateTimeFormat('en', {
+  year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
+}).format(new Date(value));
+const orderedChanges = [...changes].reverse();
 ---
 <BaseLayout title="Judgment changes & reviews — GrepSignal" description="Accepted judgment revisions, review outcomes, corrections and forecast resolutions.">
-<main class="wrap changes"><div class="eyebrow">&gt; show --changes</div><h1>What changed?</h1>
-<p>Accepted judgment changes and review records—not another daily news feed. Recorded time is distinct from verified first-publication time.</p>
-<p><a href={`${base}data/changes.json`}>JSON change feed</a> · <a href={`${base}atom.xml`}>Subscribe with Atom</a> · <a href={`${base}editorial/`}>Editorial policy</a></p>
-{changes.length === 0 ? <section><h2>The journal is ready; no changes invented.</h2><p>Existing records remain as a <a href={intelligence.accountability.baseline_ref}>legacy snapshot</a>. Earlier Thread revisions remain visible on their pages. Initialization is not a new Signal, completed review, first publication or successful forecast.</p></section> : [...changes].reverse().map(e => <article id={e.id}>
-<div class="eyebrow">#{e.sequence} · {e.kind} · revision {e.version}</div><h2><a href={recordUrl(e)}>{e.record_id}</a></h2><p>{e.note}</p>
-<p>Recorded {e.recorded_at} · Proposed by {e.proposed_by} · Accepted by {e.acceptance.actor} ({e.acceptance.scope}) · <a href={e.acceptance.reference}>acceptance reference</a></p>
-{e.evidence.length > 0 && <ul>{e.evidence.map(s => <li><a href={s.url}>{s.title}</a> — {s.publisher}; {s.role}</li>)}</ul>}
-<details><summary>Exact changed fields / review receipt</summary><pre>{JSON.stringify(e.payload,null,2)}</pre></details>
-</article>)}
-</main></BaseLayout>
-<style>.changes {padding-top:54px;padding-bottom:70px;max-width:1000px;} h1 {font-size:clamp(42px,6vw,72px);} article,section {border-top:1px solid var(--line);margin-top:30px;padding-top:24px;} p {line-height:1.7;} pre {overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;} summary {cursor:pointer;}</style>
+  <main class="wrap changes">
+    <header class="changes-head">
+      <div class="eyebrow">&gt; show --changes</div>
+      <h1>What changed?</h1>
+      <p>
+        A human-readable journal of accepted judgment changes and review records — not another daily news feed.
+        Exact receipts remain available for audit.
+      </p>
+      <div class="changes-links">
+        <a href={`${base}data/changes.json`}>JSON change feed →</a>
+        <a href={`${base}atom.xml`}>Subscribe with Atom →</a>
+        <a href={`${base}editorial/`}>Editorial policy →</a>
+      </div>
+    </header>
+
+    {orderedChanges.length === 0 ? (
+      <section class="empty-journal">
+        <span class="section-kicker">ACCOUNTABILITY</span>
+        <h2>The journal is ready; no changes invented.</h2>
+        <p>
+          Existing records remain as a <a href={intelligence.accountability.baseline_ref}>legacy snapshot</a>.
+          Earlier Thread revisions remain visible on their pages. Initialization is not a new Signal, completed review,
+          first publication or successful forecast.
+        </p>
+      </section>
+    ) : (
+      <section class="change-list" aria-label="Accepted judgment changes">
+        {orderedChanges.map((event, index) => {
+          const previous = orderedChanges[index - 1];
+          const day = event.recorded_at.slice(0, 10);
+          const showDay = !previous || previous.recorded_at.slice(0, 10) !== day;
+          return (
+            <>
+              {showDay && (
+                <div class="date-divider">
+                  <span>{formatDate(event.recorded_at)}</span>
+                </div>
+              )}
+              <article class="change-card" id={event.id}>
+                <div class="change-type">
+                  <span>{kindLabel(event.kind)}</span>
+                  <strong>{event.record_type}</strong>
+                </div>
+                <div class="change-main">
+                  <div class="change-sequence">#{event.sequence} · REVISION {event.version}</div>
+                  <h2><a href={recordUrl(event)}>{recordLabel(event)}</a></h2>
+                  <p class="change-note">{event.note}</p>
+
+                  {event.evidence.length > 0 && (
+                    <div class="change-evidence">
+                      <span class="label">Evidence reviewed</span>
+                      {event.evidence.map(source => (
+                        <a href={source.url}>{source.publisher} — {source.title}</a>
+                      ))}
+                    </div>
+                  )}
+
+                  <details class="audit-receipt">
+                    <summary>View audit receipt</summary>
+                    <div class="receipt-meta">
+                      Recorded {event.recorded_at}<br />
+                      Proposed by {event.proposed_by}<br />
+                      Accepted by {event.acceptance.actor} ({event.acceptance.scope}) · <a href={event.acceptance.reference}>acceptance reference</a>
+                    </div>
+                    <pre>{JSON.stringify(event.payload, null, 2)}</pre>
+                  </details>
+                </div>
+                <a class="change-open" href={recordUrl(event)} aria-label={`Open ${recordLabel(event)}`}>→</a>
+              </article>
+            </>
+          );
+        })}
+      </section>
+    )}
+  </main>
+</BaseLayout>
+
+<style>
+  .changes { max-width: 1060px; padding-top: 54px; padding-bottom: 90px; }
+  .changes-head { max-width: 850px; padding-bottom: 34px; }
+  .changes-head h1 { font-size: clamp(46px, 6vw, 74px); }
+  .changes-head > p { max-width: 760px; margin: 0; color: #3b3a36; font-size: 18px; line-height: 1.65; }
+  .changes-links { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-top: 22px; }
+  .changes-links a {
+    color: var(--accent);
+    font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-decoration: none;
+  }
+  .changes-links a:hover, .changes-links a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+
+  .empty-journal { margin-top: 12px; padding: 32px 0; border-top: 1px solid var(--ink); }
+  .empty-journal h2 { margin: 5px 0 12px; font: 600 30px Georgia, serif; }
+  .empty-journal p { max-width: 800px; line-height: 1.7; }
+
+  .change-list { border-top: 1px solid var(--ink); }
+  .date-divider {
+    padding: 30px 0 10px;
+    color: var(--muted);
+    font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+  .change-card {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr) auto;
+    gap: 28px;
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .date-divider + .change-card { border-top-color: var(--ink); }
+  .change-type { display: grid; gap: 6px; }
+  .change-type span,
+  .change-type strong,
+  .change-sequence {
+    font: 800 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+  .change-type span { color: var(--accent); }
+  .change-type strong, .change-sequence { color: var(--muted); }
+  .change-main h2 { margin: 7px 0 10px; font: 600 28px/1.14 Georgia, 'Times New Roman', serif; }
+  .change-main h2 a { color: inherit; text-decoration: none; }
+  .change-main h2 a:hover, .change-main h2 a:focus-visible { text-decoration: underline; text-underline-offset: 5px; }
+  .change-note { max-width: 800px; margin: 0; color: #34332f; font-size: 16px; line-height: 1.65; }
+
+  .change-evidence {
+    display: grid;
+    gap: 6px;
+    margin-top: 17px;
+    padding-left: 15px;
+    border-left: 2px solid var(--line);
+  }
+  .change-evidence a { width: fit-content; max-width: 100%; color: var(--accent); font-size: 13px; font-weight: 700; text-underline-offset: 3px; }
+
+  .audit-receipt { margin-top: 20px; }
+  .audit-receipt summary {
+    width: fit-content;
+    cursor: pointer;
+    color: var(--muted);
+    font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  .audit-receipt[open] summary { color: var(--ink); }
+  .receipt-meta { margin-top: 13px; color: var(--muted); font-size: 12px; line-height: 1.65; }
+  .receipt-meta a { color: var(--accent); }
+  pre {
+    margin-top: 14px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    padding: 14px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    font-size: 11px;
+    line-height: 1.55;
+  }
+  .change-open { align-self: center; color: var(--accent); font-size: 22px; text-decoration: none; }
+
+  @media (max-width: 760px) {
+    .changes { padding-top: 42px; }
+    .change-card { grid-template-columns: 1fr auto; gap: 10px 18px; }
+    .change-type { grid-column: 1 / -1; display: flex; gap: 10px; }
+    .change-main { grid-column: 1; }
+    .change-open { grid-column: 2; grid-row: 2; }
+  }
+</style>
