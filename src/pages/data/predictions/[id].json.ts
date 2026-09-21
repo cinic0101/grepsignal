@@ -1,4 +1,5 @@
 import intelligence from '../../../data/intelligence';
+import { buildPredictionRetrievalIdentity } from '../../../data/retrieval';
 
 export const prerender = true;
 
@@ -12,6 +13,7 @@ export function getStaticPaths() {
 export function GET({ props }) {
   const base = import.meta.env.BASE_URL;
   const record = props.record;
+  const relatedThread = intelligence.threads.find((thread) => thread.id === record.thread_id);
   return new Response(JSON.stringify({
     schema_version: intelligence.schema_version,
     publication_status: intelligence.publication_status,
@@ -25,6 +27,7 @@ export function GET({ props }) {
     record_version_schema_url: `${base}schema/record-version.schema.json`,
     collection_url: `${base}data/intelligence.json`,
     content_license: intelligence.content_license,
+    retrieval_identity: buildPredictionRetrievalIdentity(record, relatedThread, intelligence.signals),
     record,
   }, null, 2), {
     headers: {
