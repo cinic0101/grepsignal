@@ -38,7 +38,12 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
 }).format(new Date(`${value}T00:00:00Z`));
 const homepageSignals = [...intelligence.signals.filter(x => x.lifecycle === 'active')]
   .sort((a, b) => b.registered_at.localeCompare(a.registered_at))
-  .slice(0, 6);
+  .slice(0, 5);
+const leadSignal = homepageSignals[0];
+const moreSignals = homepageSignals.slice(1);
+const homepageThreads = [...intelligence.threads.filter(x => x.lifecycle === 'active')]
+  .sort((a, b) => b.last_updated.localeCompare(a.last_updated))
+  .slice(0, 3);
 ---
 <BaseLayout description={homepageDescription}>
   <section class={`preview-notice ${isPublished ? 'live-notice' : ''}`} role="note">
@@ -61,7 +66,6 @@ const homepageSignals = [...intelligence.signals.filter(x => x.lifecycle === 'ac
         <div class="meta-row"><span>Material signals</span><strong>{intelligence.stats.material_signals}</strong></div>
         <div class="meta-row"><span>Active threads</span><strong>{intelligence.stats.active_threads}</strong></div>
         <div class="meta-row"><span>Open predictions</span><strong>{intelligence.stats.open_predictions}</strong></div>
-        <div class="meta-row"><span>Language</span><strong>{intelligence.canonical_language.toUpperCase()}</strong></div>
       </div>
     </div>
   </section>
@@ -76,38 +80,55 @@ const homepageSignals = [...intelligence.signals.filter(x => x.lifecycle === 'ac
         <small>Only material changes are published.</small>
       </div>
 
-      <div class="signal-list">
-        {homepageSignals.length === 0 ? (
-          <div class="empty-state">No published signal in this dataset.</div>
-        ) : homepageSignals.map((signal, index) => (
-          <article class="signal" id={signal.id}>
-            <div class="index">{String(index + 1).padStart(2, '0')}</div>
-            <div>
+      {leadSignal ? (
+        <div class="homepage-signals">
+          <article class="lead-signal" id={leadSignal.id}>
+            <div class="lead-main">
               <div class="tagrow">
-                <span class="tag">{typeLabels[signal.type] ?? signal.type.toUpperCase()}</span>
-                <span class={`status status-${signal.status}`}>
-                  {statusMark[signal.status] ?? '·'} {signal.status.toUpperCase()}
+                <span class="tag">{typeLabels[leadSignal.type] ?? leadSignal.type.toUpperCase()}</span>
+                <span class={`status status-${leadSignal.status}`}>
+                  {statusMark[leadSignal.status] ?? '·'} {leadSignal.status.toUpperCase()}
                 </span>
               </div>
               <h3>
-                <a class="signal-title-link" href={`${base}signals/${signal.id}/`}>{signal.title}</a>
+                <a href={`${base}signals/${leadSignal.id}/`}>{leadSignal.title}</a>
               </h3>
-              <p class="summary">{signal.summary}</p>
+              <p class="lead-summary">{leadSignal.summary}</p>
               <div class="source-line">
-                {signal.source_count} linked sources · {signal.source_organization_count} source organizations · registered {formatDate(signal.registered_at)} · evidence since {formatMonth(signal.evidence_since)}
+                {leadSignal.source_count} linked sources · registered {formatDate(leadSignal.registered_at)} · evidence since {formatMonth(leadSignal.evidence_since)}
               </div>
-              <a class="signal-link" href={`${base}signals/${signal.id}/`}>
+              <a class="signal-link" href={`${base}signals/${leadSignal.id}/`}>
                 View signal <span aria-hidden="true">→</span>
               </a>
             </div>
-            <aside class="signal-aside">
-              <div><span class="label">Why it matters</span>{signal.why_it_matters}</div>
-              <div><span class="label">Second-order</span><span class="arrow">{signal.second_order_effect}</span></div>
-              <div><span class="label">Watch next</span>{signal.watch_next}</div>
+            <aside class="lead-why">
+              <span class="label">Why it matters</span>
+              <p>{leadSignal.why_it_matters}</p>
             </aside>
           </article>
-        ))}
-      </div>
+
+          {moreSignals.length > 0 && (
+            <div class="compact-signal-list" aria-label="More recent signals">
+              {moreSignals.map((signal) => (
+                <article class="compact-signal">
+                  <div class="compact-status">
+                    <span>{typeLabels[signal.type] ?? signal.type.toUpperCase()}</span>
+                    <strong>{statusMark[signal.status] ?? '·'} {signal.status}</strong>
+                  </div>
+                  <div class="compact-copy">
+                    <h3><a href={`${base}signals/${signal.id}/`}>{signal.title}</a></h3>
+                    <p>{signal.summary}</p>
+                    <span>{formatDate(signal.registered_at)} · {signal.source_count} source{signal.source_count === 1 ? '' : 's'}</span>
+                  </div>
+                  <a class="compact-open" href={`${base}signals/${signal.id}/`} aria-label={`Open ${signal.title}`}>→</a>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div class="empty-state">No published signal in this dataset.</div>
+      )}
 
       {intelligence.signals.length > 0 && (
         <div class="signal-archive-cta">
@@ -115,8 +136,6 @@ const homepageSignals = [...intelligence.signals.filter(x => x.lifecycle === 'ac
         </div>
       )}
     </section>
-
-    <CoveragePanel />
 
     <section class="grid-sections">
       <div class="card" id="threads">
@@ -127,28 +146,32 @@ const homepageSignals = [...intelligence.signals.filter(x => x.lifecycle === 'ac
           </div>
           <span class="beta">{intelligence.stats.active_threads} ACTIVE</span>
         </div>
-        {intelligence.stats.active_threads === 0 ? (
+        {homepageThreads.length === 0 ? (
           <div class="empty-card">No active thread yet.</div>
-        ) : intelligence.threads.filter(x => x.lifecycle === 'active').map((thread) => (
+        ) : homepageThreads.map((thread) => (
           <article class="thread">
             <div>
               <h3><a class="thread-title-link" href={`${base}threads/${thread.id}/`}>{thread.title}</a></h3>
               <p>{thread.summary}</p>
-              {thread.thesis && <p class="thread-thesis"><strong>Thesis:</strong> {thread.thesis}</p>}
+              {thread.thesis && <p class="thread-thesis"><strong>Current thesis:</strong> {thread.thesis}</p>}
               <a class="thread-link" href={`${base}threads/${thread.id}/`}>
                 Open thread <span aria-hidden="true">→</span>
               </a>
             </div>
             <div class="thread-stat">
-              {statusMark[thread.status] ?? '·'} {thread.status}<br />{thread.signal_count} signal{thread.signal_count === 1 ? '' : 's'}
+              {statusMark[thread.status] ?? '·'} {thread.status}<br />{thread.updates.length} revision{thread.updates.length === 1 ? '' : 's'}
             </div>
           </article>
         ))}
+        {intelligence.stats.active_threads > homepageThreads.length && (
+          <a class="card-footer-link" href={`${base}threads/`}>View all active threads →</a>
+        )}
       </div>
 
       <PredictionLedger />
-
     </section>
+
+    <CoveragePanel />
 
     <section class="agent-panel" id="agents">
       <div>
@@ -161,9 +184,9 @@ const homepageSignals = [...intelligence.signals.filter(x => x.lifecycle === 'ac
       <div class="agent-links">
         <a href={`${base}agents/`}>AGENT GUIDE</a>
         <a href={`${base}data/intelligence.json`}>JSON</a>
-        <a href={`${base}data/coverage.json`}>COVERAGE</a>
+        <a href={`${base}data/changes.json`}>CHANGES</a>
+        <a href={`${base}atom.xml`}>ATOM</a>
         <a href={`${base}schema/intelligence.schema.json`}>SCHEMA</a>
-        <a href={`${base}schema/coverage.schema.json`}>COVERAGE SCHEMA</a>
         <a href="https://github.com/cinic0101/grepsignal">GITHUB</a>
       </div>
     </section>
@@ -179,37 +202,104 @@ const homepageSignals = [...intelligence.signals.filter(x => x.lifecycle === 'ac
 
 <style>
   .live-notice strong { color: var(--accent); }
-  .signal-title-link { text-decoration: none; }
-  .signal-title-link:hover, .signal-title-link:focus-visible { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+  .homepage-signals { border-top: 1px solid var(--ink); }
+  .lead-signal {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(280px, .65fr);
+    gap: 42px;
+    padding: 34px 0 32px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .lead-signal h3 {
+    max-width: 850px;
+    margin: 0 0 14px;
+    font: 600 38px/1.05 Georgia, 'Times New Roman', serif;
+    letter-spacing: -.03em;
+  }
+  .lead-signal h3 a, .compact-signal h3 a { color: inherit; text-decoration: none; }
+  .lead-signal h3 a:hover, .lead-signal h3 a:focus-visible,
+  .compact-signal h3 a:hover, .compact-signal h3 a:focus-visible {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+  }
+  .lead-summary { max-width: 780px; margin: 0 0 14px; color: #3d3b36; font-size: 18px; line-height: 1.58; }
+  .lead-why { padding-left: 26px; border-left: 1px solid var(--line); align-self: stretch; }
+  .lead-why p { margin: 6px 0 0; color: #34332f; font-size: 16px; line-height: 1.62; }
   .signal-link {
     display: inline-flex;
     gap: 7px;
     align-items: center;
-    margin-top: 14px;
+    margin-top: 15px;
     color: var(--accent);
     font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace;
     letter-spacing: .04em;
     text-decoration: none;
   }
   .signal-link:hover, .signal-link:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
-  .signal-archive-cta { display: flex; justify-content: flex-end; padding-top: 20px; }
-  .signal-archive-cta a {
+
+  .compact-signal-list { border-bottom: 1px solid var(--line); }
+  .compact-signal {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .compact-signal:last-child { border-bottom: 0; }
+  .compact-status { display: grid; gap: 5px; align-self: start; }
+  .compact-status span,
+  .compact-status strong {
+    font: 800 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+  .compact-status span { color: var(--muted); }
+  .compact-status strong { color: var(--accent); }
+  .compact-copy h3 { margin: 0 0 5px; font: 600 23px/1.16 Georgia, 'Times New Roman', serif; }
+  .compact-copy p {
+    display: -webkit-box;
+    max-width: 800px;
+    margin: 0 0 7px;
+    overflow: hidden;
+    color: #494741;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .compact-copy > span { color: var(--muted); font-size: 11px; }
+  .compact-open { color: var(--accent); font-size: 22px; text-decoration: none; }
+
+  .signal-archive-cta { display: flex; justify-content: flex-end; padding-top: 18px; }
+  .signal-archive-cta a, .card-footer-link {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--panel);
-    padding: 9px 12px;
     color: var(--accent);
     font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace;
     letter-spacing: .04em;
     text-decoration: none;
   }
+  .signal-archive-cta a {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    padding: 9px 12px;
+  }
   .signal-archive-cta a:hover, .signal-archive-cta a:focus-visible { border-color: var(--ink); }
+
   .thread-title-link { color: inherit; text-decoration: none; }
   .thread-title-link:hover, .thread-title-link:focus-visible { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
-  .thread-thesis { margin-top: 10px !important; color: #3d3b36 !important; }
+  .thread-thesis {
+    display: -webkit-box;
+    margin-top: 10px !important;
+    overflow: hidden;
+    color: #3d3b36 !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
   .thread-link {
     display: inline-flex;
     gap: 7px;
@@ -221,8 +311,23 @@ const homepageSignals = [...intelligence.signals.filter(x => x.lifecycle === 'ac
     text-decoration: none;
     text-transform: uppercase;
   }
-  .thread-link:hover, .thread-link:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+  .thread-link:hover, .thread-link:focus-visible,
+  .card-footer-link:hover, .card-footer-link:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+  .card-footer-link { margin-top: 18px; }
   .empty-card { border-top: 1px solid var(--line); padding: 22px 0 8px; color: var(--muted); }
   .empty-card strong { color: var(--ink); font-family: Georgia, 'Times New Roman', serif; font-size: 20px; font-weight: 600; }
   .empty-card p { margin: 7px 0 0; font-size: 13px; }
+
+  @media (max-width: 900px) {
+    .lead-signal { grid-template-columns: 1fr; gap: 24px; }
+    .lead-why { padding: 22px 0 0; border-left: 0; border-top: 1px solid var(--line); }
+    .compact-signal { grid-template-columns: 150px minmax(0, 1fr) auto; }
+  }
+  @media (max-width: 620px) {
+    .lead-signal h3 { font-size: 32px; }
+    .compact-signal { grid-template-columns: 1fr auto; gap: 8px 16px; }
+    .compact-status { grid-column: 1 / -1; display: flex; gap: 10px; }
+    .compact-copy h3 { font-size: 21px; }
+    .compact-open { grid-column: 2; grid-row: 2; }
+  }
 </style>
