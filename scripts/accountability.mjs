@@ -38,7 +38,7 @@ function safe(value) {
 function evidence(xs) {
   assert(Array.isArray(xs),'evidence must be an array');
   for (const x of xs) {
-    exact(x,['url','publisher','title','role','published_at','retrieved_at','archive_url'],'evidence');
+    exact(x,['url','publisher','title','role','published_at','retrieved_at','archive_url','lineage_id'],'evidence');
     assert([x.url,x.publisher,x.title,x.role].every(text),'incomplete evidence');safeUrl(x.url);
     if (x.published_at != null) {
       assert(typeof x.published_at === 'string' && /^\d{4}-\d{2}(?:-\d{2})?$/.test(x.published_at),'source date precision');
@@ -47,17 +47,38 @@ function evidence(xs) {
     }
     if (x.retrieved_at != null) timestamp(x.retrieved_at);
     if (x.archive_url != null) safeUrl(x.archive_url);
+    if (x.lineage_id != null) assert(typeof x.lineage_id === 'string' && ID.test(x.lineage_id),'invalid evidence lineage_id');
   }
 }
 function normalizedEvidence(xs) {
-  return structuredClone(xs).map(x => ({...x,retrieved_at:x.retrieved_at ?? null,archive_url:x.archive_url ?? null}));
+  return structuredClone(xs).map(x => ({...x,retrieved_at:x.retrieved_at ?? null,archive_url:x.archive_url ?? null,lineage_id:x.lineage_id ?? null}));
+}
+function validateProposal(p) {
+  exact(p,['actor_type','provider','model_id','model_version','role','run_id','cycle_id'],'proposal');
+  assert(['model','human','program'].includes(p.actor_type),'invalid proposal actor_type');
+  assert(text(p.role),'proposal role required');
+  if (p.actor_type === 'model') assert(text(p.provider),'model proposal provider required');
+  if (p.provider != null) assert(text(p.provider),'invalid proposal provider');
+  if (p.model_id != null) assert(text(p.model_id),'invalid proposal model_id');
+  if (p.model_version != null) assert(text(p.model_version),'invalid proposal model_version');
+  if (p.actor_type !== 'model') assert(p.model_id == null && p.model_version == null,'model identifiers require model actor');
+  for (const key of ['run_id','cycle_id']) if (p[key] != null) assert(typeof p[key] === 'string' && ID.test(p[key]),`invalid proposal ${key}`);
+  return p;
 }
 function proposalAttribution(value) {
   const chatgpt=/\bchatgpt\b/i.test(value);
   return {actor_type:chatgpt?'model':'unspecified',provider:chatgpt?'OpenAI':null,model_id:null,role:/daily review/i.test(value)?'daily_review':/retrospective/i.test(value)?'retrospective_review':'proposal',display_name:value};
 }
+function canonical(value) {
+  if (Array.isArray(value)) return value.map(canonical);
+  if (value && typeof value === 'object') return Object.fromEntries(Object.keys(value).sort().map(k => [k,canonical(value[k])]));
+  return value;
+}
+function sha256(value) {
+  return createHash('sha256').update(JSON.stringify(canonical(value))).digest('hex');
+}
 function publicAcceptanceReceipt(e,sequence,resultingVersion) {
-  return {actor_type:/editor/i.test(e.acceptance.actor)?'human_editor':'unspecified',display_name:e.acceptance.actor,scope:e.acceptance.scope,accepted_at:e.acceptance.accepted_at,event_id:e.id,sequence,record_type:e.record_type,record_id:e.record_id,resulting_version:resultingVersion,public_receipt_path:`../changes/#${e.id}`,source_reference:e.acceptance.reference,source_reference_visibility:/\/grepsignal-engine\//.test(e.acceptance.reference)?'private':'public_or_external'};
+  return {actor_type:/editor/i.test(e.acceptance.actor)?'human_editor':'unspecified',display_name:e.acceptance.actor,scope:e.acceptance.scope,accepted_at:e.acceptance.accepted_at,event_id:e.id,event_sha256:sha256(e),sequence,record_type:e.record_type,record_id:e.record_id,resulting_version:resultingVersion,public_receipt_path:`../changes/#${e.id}`,source_reference:e.acceptance.reference,source_reference_visibility:/\/grepsignal-engine\//.test(e.acceptance.reference)?'private':'public_or_external'};
 }
 function forecast(p) {
   for (const k of ['claim','success_criterion','failure_criterion']) assert(text(p[k]),`forecast missing ${k}`);
@@ -69,10 +90,11 @@ function forecast(p) {
   p.resolution_sources.forEach(safeUrl);
 }
 export function validateEvent(e) {
-  exact(e,['id','record_type','record_id','expected_version','kind','recorded_at','proposed_by','acceptance','note','evidence','payload'],'event');
+  exact(e,['id','record_type','record_id','expected_version','kind','recorded_at','proposed_by','proposal','acceptance','note','evidence','payload'],'event');
   assert(typeof e.id === 'string' && typeof e.record_id === 'string' && ID.test(e.id) && ID.test(e.record_id) && Object.hasOwn(TYPES,e.record_type),'invalid event identity');
   assert(KINDS.includes(e.kind) && Number.isInteger(e.expected_version) && e.expected_version >= 0,'invalid kind/version');
   timestamp(e.recorded_at);assert(text(e.proposed_by) && text(e.note),'proposal attribution/note required');
+  if (e.proposal != null) validateProposal(e.proposal);
   exact(e.acceptance,['actor','scope','reference','accepted_at'],'acceptance');
   assert(text(e.acceptance.actor) && ['publication','review'].includes(e.acceptance.scope),'explicit acceptance scope required');
   safeUrl(e.acceptance.reference);
@@ -129,6 +151,7 @@ export function replay(baseline,journal,baselineLinks=null) {
       data[TYPES[e.record_type]].push(r);item={type:e.record_type,r};records.set(r.id,item);
     } else assert(item && item.type === e.record_type,'unknown record/type');
     const r=item.r;
+    let changedFields=null;
     assert(r.version === e.expected_version,'stale expected_version');
     if (r.lifecycle !== 'active') assert(['publication','review'].includes(e.kind),'withdrawn/replaced records cannot silently revive');
     if (e.kind === 'revise') {
@@ -136,6 +159,8 @@ export function replay(baseline,journal,baselineLinks=null) {
       exact(p,patchKeys[e.record_type],'revision patch');
       assert(Object.keys(p).length > 0 && e.evidence.length > 0,'revision needs changes and evidence');
       if ('status' in p) assert(ASSESSMENTS.includes(p.status),'invalid assessment');
+      changedFields=Object.fromEntries(Object.entries(p).filter(([key,value]) => JSON.stringify(canonical(r[key])) !== JSON.stringify(canonical(value))).map(([key,value]) => [key,{before:structuredClone(r[key] ?? null),after:structuredClone(value)}]));
+      assert(Object.keys(changedFields).length > 0,'revision must materially change at least one field');
       Object.assign(r,structuredClone(p));r.last_changed_at=e.recorded_at;
       if (e.record_type === 'thread') {
         r.last_updated=e.recorded_at.slice(0,10);
@@ -203,7 +228,8 @@ export function replay(baseline,journal,baselineLinks=null) {
     }
     const sequence=changes.length+1;
     const change=structuredClone(e);change.evidence=normalizedEvidence(change.evidence);
-    changes.push({...change,sequence,version:r.version,proposal:proposalAttribution(e.proposed_by),acceptance_receipt:publicAcceptanceReceipt(e,sequence,r.version)});
+    const proposal=e.proposal ? {...structuredClone(e.proposal),display_name:e.proposed_by} : proposalAttribution(e.proposed_by);
+    changes.push({...change,sequence,version:r.version,proposal,changed_fields:changedFields,acceptance_receipt:publicAcceptanceReceipt(e,sequence,r.version)});
   }
   for (const s of data.signals) {
     assert(ASSESSMENTS.includes(s.status),'invalid Signal assessment');evidence(s.sources);

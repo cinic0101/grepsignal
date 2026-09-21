@@ -163,3 +163,13 @@ test('roadmap scope matches the current technical-builder positioning',()=>{
   assert.ok(roadmap.includes('AI models, agents, tooling, and infrastructure'));
   assert.ok(!roadmap.includes('Initial scope: agent infrastructure and technical adoption.'));
 });
+
+test('public schemas document evidence lineage and structured proposal provenance',()=>{
+  const intelligence=JSON.parse(read('public/schema/intelligence.schema.json'));
+  const history=JSON.parse(read('public/schema/history.schema.json'));
+  assert.ok(intelligence.properties.signals.items.properties.sources.items.properties.lineage_id);
+  assert.ok(intelligence.properties.threads.items.properties.updates.items.properties.sources.items.properties.lineage_id);
+  assert.ok(history.properties.events.items.properties.proposal);
+  assert.ok(history.properties.events.items.properties.evidence.items.properties.lineage_id);
+});
+
