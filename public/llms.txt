@@ -7,7 +7,7 @@ GrepSignal is not a comprehensive news feed. JSON is the canonical machine-reada
 ## Start here
 
 - [Canonical intelligence](https://cinic0101.github.io/grepsignal/data/intelligence.json): Full current snapshot of Signals, Threads, Predictions, evidence, falsifiers, limitations, lifecycle, and derived relationships.
-- [Changes](https://cinic0101.github.io/grepsignal/data/changes.json): Sequence-cursor change feed with normalized proposal and public acceptance receipt metadata.
+- [Changes](https://cinic0101.github.io/grepsignal/data/changes.json): Sequence-cursor change feed with proposal provenance, deterministic revision diffs, and hashed public acceptance receipts.
 - [Coverage](https://cinic0101.github.io/grepsignal/data/coverage.json): What the current review cycle examined, including no-publish outcomes.
 - [For agents](https://cinic0101.github.io/grepsignal/agents/): Consumption guidance and interpretation rules.
 - [Intelligence schema](https://cinic0101.github.io/grepsignal/schema/intelligence.schema.json): Field semantics and machine-readable contract.
@@ -34,3 +34,6 @@ Signal records expose derived `thread_ids` and typed `thread_relations`. Thread 
 - [Threads](https://cinic0101.github.io/grepsignal/threads/)
 - [Changes](https://cinic0101.github.io/grepsignal/changes/)
 - [Editorial policy](https://cinic0101.github.io/grepsignal/editorial/)
+
+- In source metadata, `lineage_id` groups URLs derived from the same underlying evidence event when known. Null means lineage was not established, not that the source is independent.
+- For `revise` events, prefer `changed_fields` over reconstructing differences from prose notes.

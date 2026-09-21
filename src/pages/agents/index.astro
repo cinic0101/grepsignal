@@ -95,8 +95,8 @@ const endpoints = [
             <li><strong>Fetch JSON first.</strong> Use <code>/data/intelligence.json</code> for a full snapshot, or <code>/data/signals/&#123;id&#125;.json</code>, <code>/data/threads/&#123;id&#125;.json</code>, and <code>/data/predictions/&#123;id&#125;.json</code> for one record.</li>
             <li><strong>Check the contract.</strong> Read <code>schema_version</code> and validate against the public schema when strict parsing matters.</li>
             <li><strong>Use stable IDs and derived links.</strong> Signals expose <code>thread_ids</code>; Threads expose <code>signal_ids</code>. Typed relation fields preserve supporting vs. contradicting context.</li>
-            <li><strong>Follow evidence.</strong> Use source links to inspect primary or affected-party evidence when a claim matters. <code>retrieved_at: null</code> means GrepSignal did not record a retrieval time; do not infer one.</li>
-            <li><strong>Use public receipts.</strong> Change events expose normalized proposal metadata and a public acceptance receipt even when the operational review reference points to the private engine.</li>
+            <li><strong>Follow evidence.</strong> Use source links to inspect primary or affected-party evidence when a claim matters. <code>retrieved_at: null</code> means GrepSignal did not record a retrieval time; do not infer one. <code>lineage_id</code> groups URLs that derive from the same underlying evidence event when that lineage is known.</li>
+            <li><strong>Use public receipts.</strong> Change events expose proposal provenance, deterministic <code>changed_fields</code> for revisions, and a public acceptance receipt with an event hash even when the operational review reference points to the private engine.</li>
             <li><strong>Carry uncertainty forward.</strong> Preserve falsifiers, limitations, status, and prediction resolution instead of flattening them into a definitive claim.</li>
           </ol>
         </article>

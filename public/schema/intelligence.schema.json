@@ -208,6 +208,14 @@
                   "format": "uri",
                   "pattern": "^https://",
                   "description": "Optional lawful public archive or durable source URL. Null means no archive is published by GrepSignal."
+                },
+                "lineage_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+                  "description": "Semantic evidence lineage. URLs that merely repeat the same underlying announcement, measurement, or incident should share one lineage ID."
                 }
               },
               "additionalProperties": false
@@ -476,6 +484,14 @@
                         "format": "uri",
                         "pattern": "^https://",
                         "description": "Optional lawful public archive or durable source URL."
+                      },
+                      "lineage_id": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$",
+                        "description": "Semantic evidence lineage. URLs that merely repeat the same underlying announcement, measurement, or incident should share one lineage ID."
                       }
                     },
                     "additionalProperties": false
