@@ -3,7 +3,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import LocalExplain from '../../components/LocalExplain.astro';
 import ShareButton from '../../components/ShareButton.astro';
 import intelligence from '../../data/intelligence';
-import threadLinks from '../../data/thread-links';
 
 type Signal = typeof intelligence.signals[number];
 interface Props {
@@ -20,10 +19,7 @@ export function getStaticPaths() {
 const { signal } = Astro.props as Props;
 const base = import.meta.env.BASE_URL;
 const isPublished = intelligence.publication_status === 'published';
-const relatedThreads = intelligence.threads.filter((thread) => {
-  const relation = threadLinks[thread.id as keyof typeof threadLinks];
-  return [...(relation?.supporting ?? []), ...(relation?.contradicting ?? [])].includes(signal.id);
-});
+const relatedThreads = intelligence.threads.filter((thread) => signal.thread_ids.includes(thread.id));
 const typeLabels: Record<string, string> = {
   platform_shift: 'PLATFORM SHIFT',
   capability_delta: 'CAPABILITY DELTA',
