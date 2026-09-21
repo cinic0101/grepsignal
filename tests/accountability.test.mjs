@@ -99,7 +99,7 @@ test('change feed adds structured proposal and public acceptance receipt',()=>{
   assert.equal(changes[0].proposal.actor_type,'unspecified');
   assert.equal(changes[0].proposal.model_id,null);
   assert.equal(changes[0].acceptance_receipt.actor_type,'human_editor');
-  assert.equal(changes[0].acceptance_receipt.public_receipt_path,'changes/#evt-one');
+  assert.equal(changes[0].acceptance_receipt.public_receipt_path,'../changes/#evt-one');
   assert.equal(changes[0].acceptance_receipt.resulting_version,1);
 });
 
