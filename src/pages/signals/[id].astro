@@ -87,6 +87,7 @@ const articleJsonLd = {
   ogType="article"
   publishedAt={signal.first_public_at ?? undefined}
   jsonLd={articleJsonLd}
+  jsonAlternateHref={`${base}data/signals/${signal.id}.json`}
 >
   <section class={`preview-notice ${isPublished ? 'live-notice' : ''}`} role="note">
     <div class="wrap">
@@ -213,7 +214,7 @@ const articleJsonLd = {
         </div>
         <div class="sidebar-block">
           <span class="label">Machine-readable</span>
-          <a href={`${base}data/intelligence.json`}>Open structured JSON →</a>
+          <a href={`${base}data/signals/${signal.id}.json`}>Open structured JSON →</a>
         </div>
       </aside>
     </div>
