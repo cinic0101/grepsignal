@@ -86,12 +86,14 @@ const articleJsonLd = {
   jsonLd={articleJsonLd}
   jsonAlternateHref={`${base}data/signals/${signal.id}.json`}
 >
-  <section class={`preview-notice ${isPublished ? 'live-notice' : ''}`} role="note">
-    <div class="wrap">
-      <strong>{isPublished ? 'LIVE INTELLIGENCE' : 'PREVIEW DATA'}</strong>
-      <span>{intelligence.notice}</span>
-    </div>
-  </section>
+  {!isPublished && (
+    <section class="preview-notice" role="note">
+      <div class="wrap">
+        <strong>PREVIEW DATA</strong>
+        <span>{intelligence.notice}</span>
+      </div>
+    </section>
+  )}
 
   <main class="wrap signal-detail">
     <a class="back-link" href={`${base}signals/`}><span aria-hidden="true">←</span> All signals</a>
