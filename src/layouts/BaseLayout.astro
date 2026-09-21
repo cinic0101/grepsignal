@@ -58,14 +58,28 @@ const challengeUrl = `https://github.com/cinic0101/grepsignal/issues/new?${new U
           <span>GrepSignal</span>
           <span class="beta">BETA</span>
         </a>
-        <nav aria-label="Primary navigation">
+
+        <nav class="desktop-nav" aria-label="Primary navigation">
           <a href={`${base}signals/`}>Signals</a>
           <a href={`${base}threads/`}>Threads</a>
           <a href={`${base}#predictions`}>Predictions</a>
-          <a href={`${base}agents/`}>For agents</a>
           <a href={`${base}changes/`}>Changes</a>
-          <a href={`${base}editorial/`}>Editorial policy</a>
+          <a href={`${base}agents/`}>For agents</a>
         </nav>
+
+        <details class="mobile-menu">
+          <summary aria-label="Open navigation">Menu</summary>
+          <nav class="mobile-menu-links" aria-label="Mobile navigation">
+            <a href={`${base}signals/`}>Signals</a>
+            <a href={`${base}threads/`}>Active threads</a>
+            <a href={`${base}#predictions`}>Predictions</a>
+            <a href={`${base}changes/`}>Changes</a>
+            <a href={`${base}agents/`}>For agents</a>
+            <span class="mobile-menu-divider"></span>
+            <a href={`${base}editorial/`}>Editorial policy</a>
+            <a href="https://github.com/cinic0101/grepsignal">GitHub ↗</a>
+          </nav>
+        </details>
       </div>
     </header>
     <RecordHistory />

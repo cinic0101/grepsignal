@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import LocalExplain from '../../components/LocalExplain.astro';
 import ShareButton from '../../components/ShareButton.astro';
 import intelligence from '../../data/intelligence';
+import threadLinks from '../../data/thread-links';
 
 type Signal = typeof intelligence.signals[number];
 interface Props {
@@ -19,6 +20,10 @@ export function getStaticPaths() {
 const { signal } = Astro.props as Props;
 const base = import.meta.env.BASE_URL;
 const isPublished = intelligence.publication_status === 'published';
+const relatedThreads = intelligence.threads.filter((thread) => {
+  const relation = threadLinks[thread.id as keyof typeof threadLinks];
+  return [...(relation?.supporting ?? []), ...(relation?.contradicting ?? [])].includes(signal.id);
+});
 const typeLabels: Record<string, string> = {
   platform_shift: 'PLATFORM SHIFT',
   capability_delta: 'CAPABILITY DELTA',
@@ -91,7 +96,7 @@ const articleJsonLd = {
   </section>
 
   <main class="wrap signal-detail">
-    <a class="back-link" href={`${base}#signals`}><span aria-hidden="true">←</span> All signals</a>
+    <a class="back-link" href={`${base}signals/`}><span aria-hidden="true">←</span> All signals</a>
 
     <header class="detail-header">
       <div class="header-actions">
@@ -184,14 +189,27 @@ const articleJsonLd = {
         </section>
       </div>
 
-      <aside class="detail-sidebar" aria-label="Signal metadata">
-        <div class="sidebar-block">
-          <span class="label">Signal ID</span>
-          <code>{signal.id}</code>
-        </div>
+      <aside class="detail-sidebar" aria-label="Signal context">
         <div class="sidebar-block">
           <span class="label">Status</span>
           <strong>{statusMark[signal.status] ?? '·'} {signal.status}</strong>
+        </div>
+        {relatedThreads.length > 0 && (
+          <div class="sidebar-block sidebar-related">
+            <span class="label">Related Threads</span>
+            {relatedThreads.map((thread) => (
+              <a href={`${base}threads/${thread.id}/`}>{thread.title} →</a>
+            ))}
+          </div>
+        )}
+        <div class="sidebar-block">
+          <span class="label">Record</span>
+          <strong>Revision {signal.version}</strong>
+          <span class="sidebar-note">Last reviewed {signal.last_reviewed_at ?? 'not recorded'}</span>
+        </div>
+        <div class="sidebar-block">
+          <span class="label">Signal ID</span>
+          <code>{signal.id}</code>
         </div>
         <div class="sidebar-block">
           <span class="label">Machine-readable</span>
@@ -277,13 +295,16 @@ const articleJsonLd = {
   .detail-sidebar { align-self: start; position: sticky; top: 104px; border-top: 1px solid var(--ink); }
   .sidebar-block { padding: 18px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
   .sidebar-block code { display: block; overflow-wrap: anywhere; font: 600 11px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; color: #34332f; }
-  .sidebar-block strong { text-transform: capitalize; color: var(--accent); }
+  .sidebar-block strong { display: block; text-transform: capitalize; color: var(--accent); }
   .sidebar-block a { color: var(--accent); font-weight: 700; text-underline-offset: 3px; }
+  .sidebar-related { display: grid; gap: 8px; }
+  .sidebar-related .label { margin-bottom: 2px; }
+  .sidebar-note { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.45; }
   footer a { color: inherit; }
   @media (max-width: 900px) {
     .signal-meta { grid-template-columns: 1fr 1fr; }
     .detail-grid { grid-template-columns: 1fr; gap: 42px; }
-    .detail-sidebar { position: static; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; border-top: 1px solid var(--ink); }
+    .detail-sidebar { position: static; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; border-top: 1px solid var(--ink); }
     .sidebar-block { border-bottom: 0; }
   }
   @media (max-width: 620px) {
