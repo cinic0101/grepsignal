@@ -24,6 +24,8 @@ GrepSignal is not a comprehensive news feed. JSON is the canonical machine-reada
 
 Current record JSON includes `cite_as`, `record_version_permalink`, and the latest public `projection_sequence`. Version resources are immutable snapshots captured when that record reached the requested version. Derived cross-record context is frozen at the snapshot sequence and may later differ from the mutable current projection. Version resources are served with long-lived immutable cache headers; use the current record URL when you need the latest projection.
 
+Current record JSON also includes `retrieval_identity`: actor/entity names deterministically derived from accepted evidence publisher metadata and explicit Thread relations. This field exists to improve entity-plus-event discovery and agent lookup. It is non-canonical discovery metadata; do not treat it as an additional factual claim, and do not expect it on immutable version snapshots.
+
 Signal records expose derived `thread_ids` and typed `thread_relations`. Thread records expose derived `signal_ids` and `signal_relations`. These are projections of the canonical Thread-link history, not separately curated facts.
 
 ## Interpretation

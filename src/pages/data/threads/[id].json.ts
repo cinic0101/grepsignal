@@ -1,4 +1,5 @@
 import intelligence from '../../../data/intelligence';
+import { buildThreadRetrievalIdentity } from '../../../data/retrieval';
 
 export const prerender = true;
 
@@ -25,6 +26,7 @@ export function GET({ props }) {
     record_version_schema_url: `${base}schema/record-version.schema.json`,
     collection_url: `${base}data/intelligence.json`,
     content_license: intelligence.content_license,
+    retrieval_identity: buildThreadRetrievalIdentity(record, intelligence.signals),
     record,
   }, null, 2), {
     headers: {
