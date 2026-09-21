@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ShareButton from '../../components/ShareButton.astro';
 import LocalThreadExplain from '../../components/LocalThreadExplain.astro';
+import RecordHistory from '../../components/RecordHistory.astro';
 import intelligence from '../../data/intelligence';
 
 type Thread = typeof intelligence.threads[number];
@@ -129,8 +130,6 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
             )}
           </section>
         )}
-
-        {thread.lifecycle === 'active' && thread.status !== 'falsified' && !thread.review_required && <LocalThreadExplain thread={thread} />}
 
         {thread.analysis && (
           <section class="detail-section evidence-map-section" id="evidence-pattern">
@@ -283,6 +282,8 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
             })}
           </div>
         </section>
+
+        {thread.lifecycle === 'active' && thread.status !== 'falsified' && !thread.review_required && <LocalThreadExplain thread={thread} />}
       </div>
 
       <aside class="sidebar">
@@ -297,6 +298,8 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
       </aside>
     </div>
   </main>
+
+  <RecordHistory />
 </BaseLayout>
 
 <style>
