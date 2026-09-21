@@ -132,6 +132,100 @@
       "payload": {
         "status": "strengthening"
       }
+    },
+    {
+      "id": "evt-thread-research-automation-analysis-2026-09-21",
+      "record_type": "thread",
+      "record_id": "thread-research-automation-bottlenecks",
+      "expected_version": 1,
+      "kind": "revise",
+      "recorded_at": "2026-09-21T08:01:23Z",
+      "proposed_by": "ChatGPT Thread analysis repair",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "thread_analysis_repair",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-21-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/63",
+        "accepted_at": "2026-09-21T08:01:22Z"
+      },
+      "note": "Add the missing public evidence map, boundaries, and view tests for the Research Automation Bottlenecks Thread without changing its current strengthening assessment.",
+      "evidence": [
+        {
+          "url": "https://openai.com/index/research-acceleration-view-inside-openai/",
+          "publisher": "OpenAI",
+          "title": "Research acceleration: The view inside OpenAI",
+          "role": "primary_research_report",
+          "published_at": "2026-09-06",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "openai-research-acceleration-2026-09-06"
+        },
+        {
+          "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
+          "publisher": "Anthropic",
+          "title": "Measurements for understanding the pace of AI development inside frontier labs",
+          "role": "primary_measurement_report",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "anthropic-rd-automation-index-2026-09"
+        }
+      ],
+      "payload": {
+        "analysis": {
+          "evidence_map": [
+            {
+              "id": "cross-lab-execution",
+              "title": "Cross-lab execution shift",
+              "summary": "OpenAI and Anthropic now both report AI systems performing a large share of measured frontier-model R&D execution, using different internal metrics. The common signal is operational: coding and research execution are becoming substantially more automated inside more than one frontier lab.",
+              "signal_ids": [
+                "sig-research-automation-bottlenecks-2026-09-14"
+              ]
+            },
+            {
+              "id": "supervision-boundary",
+              "title": "Supervision remains material",
+              "summary": "The published measurements do not show human-free R&D. OpenAI reports significant intervention on longer successful tasks, while Anthropic reports no measured work subset at its fully autonomous level. Human direction and judgment remain part of the current operating loop.",
+              "signal_ids": [
+                "sig-research-automation-bottlenecks-2026-09-14"
+              ]
+            },
+            {
+              "id": "bottleneck-migration",
+              "title": "Bottlenecks migrate rather than disappear",
+              "summary": "As code and execution become easier to automate, the harder constraints move toward choosing experiments, interpreting results, allocating compute, supervising agents, and maintaining monitoring and safety infrastructure. This is the Thread's central hypothesis, not a claim that research progress scales directly with agent runtime.",
+              "signal_ids": [
+                "sig-research-automation-bottlenecks-2026-09-14"
+              ]
+            }
+          ],
+          "boundaries": [
+            "OpenAI's agent-workday measurements and Anthropic's R&D Automation Index use different definitions and should not be compared as one common quantitative scale.",
+            "Both primary measurements are produced by the frontier labs describing their own internal work. Cross-lab agreement reduces single-lab dependence but does not make the measurements externally audited.",
+            "The evidence does not establish recursive self-improvement, human-free AI R&D, or a direct causal relationship between agent usage and overall frontier-model progress.",
+            "Compute growth, organizational changes, safety restrictions, and other infrastructure changes can affect research throughput independently of coding-agent adoption."
+          ],
+          "view_tests": {
+            "strengthen": [
+              "Additional frontier labs publish comparable evidence that AI-led execution keeps increasing while human experimental judgment, supervision, compute, or safety infrastructure remain binding constraints.",
+              "Independent or externally auditable measurements show research throughput rising while code production becomes a smaller share of the limiting human work."
+            ],
+            "weaken": [
+              "More complete measurements show that intervention, review, debugging, or coordination costs erase most of the apparent execution gains from higher agent usage.",
+              "Frontier-lab evidence shows code production remains the dominant bottleneck despite much higher agent usage, rather than shifting constraint toward judgment, compute, or safety infrastructure.",
+              "End-to-end research workflows become reliably autonomous enough that human steering and experimental judgment cease to be material constraints without a corresponding shift to the other bottlenecks tracked by this Thread."
+            ]
+          }
+        }
+      }
     }
   ]
 }
