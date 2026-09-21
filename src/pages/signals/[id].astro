@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import LocalExplain from '../../components/LocalExplain.astro';
 import ShareButton from '../../components/ShareButton.astro';
 import RecordHistory from '../../components/RecordHistory.astro';
 import intelligence from '../../data/intelligence';
@@ -193,7 +192,6 @@ const articleJsonLd = {
           </div>
         </section>
 
-        {signal.lifecycle === 'active' && signal.status !== 'falsified' && !signal.review_required && <LocalExplain signal={signal} />}
       </div>
 
       <aside class="detail-sidebar" aria-label="Signal context">
