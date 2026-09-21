@@ -33,18 +33,16 @@ Issues are public, untrusted intake, not votes on truth or automatic publication
 - Optional browser-local AI reading aid using WebGPU; canonical intelligence remains static and model-independent.
 - GitHub Pages remains the initial dogfood target. Domain, hosting and feature expansion are not prerequisites for validating the core workflow.
 
-## Local Explain (experimental; no feature expansion in A/B/C)
+## Local AI (experimental)
 
-Signal pages can optionally run a small language model locally in a WebGPU-capable browser after explicit user opt-in and a one-time model download. The feature is a reading aid for intelligence that has already passed editorial review; it does not participate in discovery, research, signal gating or publication.
+GrepSignal uses a small browser-local model only where a bounded reading task can save meaningful time. It runs in a WebGPU-capable browser after explicit user action and a one-time model download; it never participates in discovery, research, signal gating or publication.
 
-Current constrained reading aids:
+Current constrained interactions:
 
-- **Signal · What changed?** — a simpler reading of the published summary.
-- **Signal · Why could it matter?** — a simpler reading of `why_it_matters`, preserving uncertainty and scope.
-- **Thread · Thread in plain English** — a simpler reading of the thesis and approved evidence-map descriptions.
-- **Thread · What changed recently?** — a simpler reading of the latest published Thread revision only.
+- **Thread · Since your last visit** — the browser remembers the last Thread revision seen on this device. When material revisions appear later, Local AI summarizes only that published delta instead of rewriting the whole Thread.
+- **Select → Explain** — select text inside the main reading surface to explain that passage locally. Only the selection and a short surrounding passage are supplied to the model.
 
-Published evidence, falsifiers, limitations, Thread boundaries and canonical analysis remain authoritative. Limitations/boundaries are rendered directly from the canonical record, not generated. Local Explain never writes back or participates in promotion. Inference runs in the browser; no inference backend is required. If unavailable, the normal static site and published intelligence remain usable. The beta was exercised in Chrome and Safari during development; that is not a guarantee for every device/version.
+The previous page-level “rewrite this Signal/Thread” reading aid is no longer surfaced. Canonical analysis, evidence, falsifiers, limitations, Thread boundaries and revision history remain authoritative. Local AI never writes back or participates in promotion. Inference runs in the browser; no inference backend or account profile is required. If unavailable, the normal static site and published intelligence remain fully usable.
 
 ## Discoverability
 
