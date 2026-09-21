@@ -90,6 +90,7 @@ const articleJsonLd = {
   publishedAt={signal.first_public_at ?? undefined}
   jsonLd={articleJsonLd}
   jsonAlternateHref={`${base}data/signals/${signal.id}.json`}
+  localAISelection={signal.lifecycle === 'active' && signal.status !== 'falsified' && !signal.review_required}
 >
   {!isPublished && (
     <section class="preview-notice" role="note">
