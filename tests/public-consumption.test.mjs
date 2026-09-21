@@ -20,3 +20,13 @@ test('withdrawn or invalidated context cannot silently use Local Explain',()=>{
 test('same-day Thread events prefer the latest appended revision',()=>{
   assert.ok(read('src/pages/threads/[id].astro').includes('[...thread.updates].reverse()'));
 });
+
+
+test('homepage search snippet uses the product definition and excludes operational coverage copy',()=>{
+  const home=read('src/pages/index.astro');
+  const coverage=read('src/components/CoveragePanel.astro');
+  assert.ok(home.includes('const homepageDescription ='));
+  assert.ok(home.includes('<BaseLayout description={homepageDescription}>'));
+  assert.ok(home.includes('<p>{homepageDescription}</p>'));
+  assert.ok(coverage.includes('data-nosnippet'));
+});

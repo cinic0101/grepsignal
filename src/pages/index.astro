@@ -6,6 +6,7 @@ import intelligence from '../data/intelligence';
 import coverage from '../data/coverage.json';
 
 const base = import.meta.env.BASE_URL;
+const homepageDescription = 'GrepSignal tracks material shifts in AI agents and infrastructure, connecting primary evidence into signals, active threads, and testable predictions.';
 const isPublished = intelligence.publication_status === 'published';
 const typeLabels: Record<string, string> = {
   platform_shift: 'PLATFORM SHIFT',
@@ -39,7 +40,7 @@ const homepageSignals = [...intelligence.signals.filter(x => x.lifecycle === 'ac
   .sort((a, b) => b.registered_at.localeCompare(a.registered_at))
   .slice(0, 6);
 ---
-<BaseLayout>
+<BaseLayout description={homepageDescription}>
   <section class={`preview-notice ${isPublished ? 'live-notice' : ''}`} role="note">
     <div class="wrap">
       <strong>{isPublished ? 'LIVE INTELLIGENCE' : 'PREVIEW DATA'}</strong>
@@ -52,10 +53,7 @@ const homepageSignals = [...intelligence.signals.filter(x => x.lifecycle === 'ac
       <div>
         <div class="eyebrow">&gt; grep --signal agent-infrastructure</div>
         <h1>Grep the noise.<br />Find the signal.</h1>
-        <p>
-          Agent infrastructure intelligence: know what is worth remembering,
-          which evidence matters, and which judgments need to change.
-        </p>
+        <p>{homepageDescription}</p>
       </div>
       <div class="hero-meta" aria-label="Publication statistics">
         <div class="meta-row"><span>{isPublished ? 'Published' : 'Preview date'}</span><strong>{updated}</strong></div>
