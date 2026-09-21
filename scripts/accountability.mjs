@@ -57,7 +57,7 @@ function proposalAttribution(value) {
   return {actor_type:chatgpt?'model':'unspecified',provider:chatgpt?'OpenAI':null,model_id:null,role:/daily review/i.test(value)?'daily_review':/retrospective/i.test(value)?'retrospective_review':'proposal',display_name:value};
 }
 function publicAcceptanceReceipt(e,sequence,resultingVersion) {
-  return {actor_type:/editor/i.test(e.acceptance.actor)?'human_editor':'unspecified',display_name:e.acceptance.actor,scope:e.acceptance.scope,accepted_at:e.acceptance.accepted_at,event_id:e.id,sequence,record_type:e.record_type,record_id:e.record_id,resulting_version:resultingVersion,public_receipt_path:`changes/#${e.id}`,source_reference:e.acceptance.reference,source_reference_visibility:/\/grepsignal-engine\//.test(e.acceptance.reference)?'private':'public_or_external'};
+  return {actor_type:/editor/i.test(e.acceptance.actor)?'human_editor':'unspecified',display_name:e.acceptance.actor,scope:e.acceptance.scope,accepted_at:e.acceptance.accepted_at,event_id:e.id,sequence,record_type:e.record_type,record_id:e.record_id,resulting_version:resultingVersion,public_receipt_path:`../changes/#${e.id}`,source_reference:e.acceptance.reference,source_reference_visibility:/\/grepsignal-engine\//.test(e.acceptance.reference)?'private':'public_or_external'};
 }
 function forecast(p) {
   for (const k of ['claim','success_criterion','failure_criterion']) assert(text(p[k]),`forecast missing ${k}`);
