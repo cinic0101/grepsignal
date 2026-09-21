@@ -14,7 +14,7 @@ It is intentionally separate from the private `grepsignal-engine`. Only publicat
 
 GrepSignal uses LLM-assisted semantic review and evidence gathering to interpret candidates and collect context. Publication is constrained by an evidence-backed signal gate: candidates can be marked `out of scope`, `no signal`, `watch` or `defer` instead of being published. Programs preserve and validate records; they do not establish truth. Editors accept publication and material judgment changes. A merged PR is not a claim that a human independently read every original source.
 
-Read the [editorial and correction policy](https://cinic0101.github.io/grepsignal/editorial/), [policy cases](docs/editorial-cases.md), [contribution guide](CONTRIBUTING.md) and [integrated roadmap](docs/roadmap.md).
+Read the [editorial and correction policy](https://cinic0101.github.io/grepsignal/editorial/), [policy cases](docs/editorial-cases.md), [writing guidance](docs/editorial-style.md), [contribution guide](CONTRIBUTING.md) and [integrated roadmap](docs/roadmap.md).
 
 ## Evidence and usage feedback
 

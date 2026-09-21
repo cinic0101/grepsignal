@@ -32,6 +32,11 @@ const payload = JSON.stringify({
   evidence_map: (thread.analysis?.evidence_map ?? []).map(({ title, summary }) => ({ title, summary })),
 }).replace(/</g, '\\u003c');
 ---
+<details class="local-ai-shell">
+  <summary>
+    <span>Local AI reading aid</span>
+    <small>Optional · WebGPU · typically hundreds of MB</small>
+  </summary>
 <section class="local-thread-explain" data-local-thread-explain>
   <div class="explain-head">
     <div>
@@ -45,7 +50,7 @@ const payload = JSON.stringify({
     </div>
   </div>
 
-  <div class="privacy-note">WebGPU required · one-time model download · inference stays in your browser · canonical Thread data remains authoritative</div>
+  <div class="privacy-note">WebGPU required · one-time model download (typically hundreds of MB; varies by selected model) · inference stays in your browser · canonical Thread data remains authoritative</div>
 
   <div class="local-progress" data-local-thread-progress hidden aria-live="polite">
     <span class="section-kicker">READING LOCALLY</span>
@@ -97,6 +102,7 @@ const payload = JSON.stringify({
   <p class="explain-error" data-local-thread-error hidden></p>
   <script is:inline type="application/json" data-local-thread-payload set:html={payload}></script>
 </section>
+</details>
 
 <script>
   type ExplainTask = 'thread_explain' | 'thread_latest_change';
@@ -321,5 +327,32 @@ const payload = JSON.stringify({
     .explain-head { flex-direction: column; }
     .actions { justify-content: flex-start; }
     .generated-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<style>
+  .local-ai-shell {
+    margin-top: 38px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+  }
+  .local-ai-shell > summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: baseline;
+    cursor: pointer;
+    font-weight: 750;
+  }
+  .local-ai-shell > summary small {
+    color: var(--muted);
+    font: 700 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-align: right;
+  }
+  .local-ai-shell[open] > summary { margin-bottom: 18px; }
+  @media (max-width: 620px) {
+    .local-ai-shell > summary { align-items: flex-start; flex-direction: column; gap: 4px; }
+    .local-ai-shell > summary small { text-align: left; }
   }
 </style>

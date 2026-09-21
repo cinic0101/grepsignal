@@ -1,7 +1,8 @@
 ---
 import '../styles/global.css';
 import LocalAIStatus from '../components/LocalAIStatus.astro';
-import RecordHistory from '../components/RecordHistory.astro';
+import RecordAlert from '../components/RecordAlert.astro';
+import intelligence from '../data/intelligence';
 
 interface Props {
   title?: string;
@@ -28,6 +29,7 @@ const intelligenceJsonUrl = new URL(jsonAlternateHref ?? `${base}data/intelligen
 const llmsUrl = new URL(`${base}llms.txt`, Astro.site ?? Astro.url.origin).toString();
 const structuredData = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : null;
 const challengeUrl = `https://github.com/cinic0101/grepsignal/issues/new?${new URLSearchParams({template: 'evidence.yml', record: canonicalUrl})}`;
+const showPredictions = intelligence.predictions.some((prediction) => prediction.first_public_at !== null);
 ---
 <!doctype html>
 <html lang="en">
@@ -66,7 +68,7 @@ const challengeUrl = `https://github.com/cinic0101/grepsignal/issues/new?${new U
         <nav class="desktop-nav" aria-label="Primary navigation">
           <a href={`${base}signals/`}>Signals</a>
           <a href={`${base}threads/`}>Threads</a>
-          <a href={`${base}#predictions`}>Predictions</a>
+          {showPredictions && <a href={`${base}#predictions`}>Predictions</a>}
           <a href={`${base}changes/`}>Changes</a>
           <a href={`${base}agents/`}>For agents</a>
         </nav>
@@ -76,7 +78,7 @@ const challengeUrl = `https://github.com/cinic0101/grepsignal/issues/new?${new U
           <nav class="mobile-menu-links" aria-label="Mobile navigation">
             <a href={`${base}signals/`}>Signals</a>
             <a href={`${base}threads/`}>Active threads</a>
-            <a href={`${base}#predictions`}>Predictions</a>
+            {showPredictions && <a href={`${base}#predictions`}>Predictions</a>}
             <a href={`${base}changes/`}>Changes</a>
             <a href={`${base}agents/`}>For agents</a>
             <span class="mobile-menu-divider"></span>
@@ -86,7 +88,7 @@ const challengeUrl = `https://github.com/cinic0101/grepsignal/issues/new?${new U
         </details>
       </div>
     </header>
-    <RecordHistory />
+    <RecordAlert />
     <slot />
     <aside class="wrap feedback-links" aria-label="Evidence and usage feedback">
       <a href={challengeUrl}>Submit evidence / challenge</a>

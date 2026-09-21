@@ -63,3 +63,53 @@ test('detail pages consume the canonical derived relation projection',()=>{
   assert.ok(!signal.includes("data/thread-links"));
   assert.ok(!thread.includes("data/thread-links"));
 });
+
+test('record alerts stay above content while full history stays after canonical detail',()=>{
+  const layout=read('src/layouts/BaseLayout.astro');
+  assert.ok(layout.includes('RecordAlert'));
+  assert.ok(!layout.includes('RecordHistory'));
+  const history=read('src/components/RecordHistory.astro');
+  assert.ok(!history.includes('First observed: '));
+  assert.ok(history.includes('Unrecorded timestamps are omitted rather than inferred'));
+  for (const path of ['signals','threads','predictions']) {
+    const page=read('src/pages/'+path+'/[id].astro');
+    assert.ok(page.includes('<RecordHistory />'));
+    assert.ok(page.indexOf('<RecordHistory />') > page.indexOf('</main>'));
+  }
+});
+
+test('canonical analysis precedes optional Local AI reading aids',()=>{
+  const signal=read('src/pages/signals/[id].astro');
+  assert.ok(signal.indexOf('<LocalExplain signal={signal} />') > signal.indexOf('aria-label="Review notes"'));
+  const thread=read('src/pages/threads/[id].astro');
+  assert.ok(thread.indexOf('<LocalThreadExplain thread={thread} />') > thread.indexOf('class="detail-section history-section"'));
+  for (const path of ['src/components/LocalExplain.astro','src/components/LocalThreadExplain.astro']) {
+    const component=read(path);
+    assert.ok(component.includes('<details class="local-ai-shell">'));
+    assert.ok(component.includes('typically hundreds of MB'));
+  }
+});
+
+test('Signal archive exposes only filter values present in current records',()=>{
+  const archive=read('src/pages/signals/index.astro');
+  assert.ok(archive.includes('statusOptions.map'));
+  assert.ok(archive.includes('signals.some((signal) => signal.type === value)'));
+  assert.ok(archive.includes('Array.from(statusSelect.options)'));
+  assert.ok(!archive.includes('<option value="stable">Stable</option>'));
+});
+
+test('editorial style advisory is explicit and non-blocking',()=>{
+  const pkg=JSON.parse(read('package.json'));
+  assert.equal(pkg.scripts['editorial:lint'],'node scripts/editorial-lint.mjs');
+  assert.ok(pkg.scripts.build.startsWith('node scripts/editorial-lint.mjs &&'));
+  const lint=read('scripts/editorial-lint.mjs');
+  assert.ok(lint.includes('process.exitCode = 0'));
+  assert.ok(lint.includes('LONG_SENTENCE_WORDS = 30'));
+  assert.ok(read('docs/editorial-style.md').includes('not a truth oracle or publication gate'));
+});
+
+test('Predictions navigation is hidden until there is a public ledger entry',()=>{
+  const layout=read('src/layouts/BaseLayout.astro');
+  assert.ok(layout.includes('const showPredictions = intelligence.predictions.some((prediction) => prediction.first_public_at !== null)'));
+  assert.ok(layout.includes('showPredictions && <a href'));
+});

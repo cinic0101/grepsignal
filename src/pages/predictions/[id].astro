@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import intelligence from '../../data/intelligence';
+import RecordHistory from '../../components/RecordHistory.astro';
 
 export function getStaticPaths() {
   return intelligence.predictions.map(prediction => ({
@@ -135,6 +136,8 @@ const probability = Math.round(prediction.initial_probability * 100);
       </aside>
     </div>
   </main>
+
+  <RecordHistory />
 </BaseLayout>
 
 <style>
@@ -143,7 +146,7 @@ const probability = Math.round(prediction.initial_probability * 100);
     display: inline-flex;
     gap: 8px;
     color: var(--muted);
-    font: 750 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+    font: 750 12px ui-monospace, SFMono-Regular, Menlo, monospace;
     letter-spacing: .04em;
     text-decoration: none;
   }
@@ -175,7 +178,7 @@ const probability = Math.round(prediction.initial_probability * 100);
   }
   .probability-card span {
     color: var(--muted);
-    font: 800 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+    font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace;
     letter-spacing: .07em;
   }
   .prediction-meta {
@@ -188,7 +191,7 @@ const probability = Math.round(prediction.initial_probability * 100);
   .prediction-meta dt,
   .prediction-sidebar span {
     color: var(--muted);
-    font: 800 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+    font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace;
     letter-spacing: .07em;
     text-transform: uppercase;
   }
@@ -220,12 +223,12 @@ const probability = Math.round(prediction.initial_probability * 100);
   .criteria-grid .insufficient .criterion-mark { color: var(--accent-warm); }
 
   .section-heading-row { display: flex; align-items: end; justify-content: space-between; gap: 20px; }
-  .resolution-count { color: var(--muted); font: 800 9px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .06em; }
+  .resolution-count { color: var(--muted); font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .06em; }
   .resolution-list { border-top: 1px solid var(--ink); }
   .resolution { padding: 22px 0; border-bottom: 1px solid var(--line); }
   .resolution-head { display: flex; justify-content: space-between; gap: 20px; align-items: baseline; }
   .resolution-head strong { color: var(--accent); text-transform: uppercase; }
-  .resolution-head span, .resolution-score { color: var(--muted); font: 700 10px ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .resolution-head span, .resolution-score { color: var(--muted); font: 700 11px ui-monospace, SFMono-Regular, Menlo, monospace; }
   .resolution p { max-width: 800px; margin: 10px 0; line-height: 1.62; }
   .resolution ul { margin: 14px 0 0; padding-left: 20px; }
   .resolution li + li { margin-top: 7px; }
@@ -237,7 +240,7 @@ const probability = Math.round(prediction.initial_probability * 100);
   .prediction-sidebar { position: sticky; top: 104px; align-self: start; border-top: 1px solid var(--ink); }
   .prediction-sidebar div { padding: 18px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
   .prediction-sidebar span { display: block; margin-bottom: 6px; }
-  .prediction-sidebar code { display: block; overflow-wrap: anywhere; font: 600 11px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .prediction-sidebar code { display: block; overflow-wrap: anywhere; font: 600 12px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; }
   .prediction-sidebar strong { color: var(--accent); text-transform: capitalize; }
   .prediction-sidebar a { color: var(--accent); font-weight: 700; text-underline-offset: 3px; }
 
