@@ -87,6 +87,7 @@ const threadJsonLd = {
   publishedAt={thread.first_public_at ?? undefined}
   jsonLd={threadJsonLd}
   jsonAlternateHref={`${base}data/threads/${thread.id}.json`}
+  localAISelection={thread.lifecycle === 'active' && thread.status !== 'falsified' && !thread.review_required}
 >
   <main class="wrap thread-detail">
     <a class="back-link" href={`${base}threads/`}><span aria-hidden="true">←</span> All threads</a>
