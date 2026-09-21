@@ -1,0 +1,282 @@
+---
+interface ThreadLike {
+  id: string;
+  title: string;
+  summary: string;
+  thesis?: string;
+  updates: Array<{
+    date: string;
+    assessment: string;
+    change: string;
+  }>;
+}
+
+interface Props {
+  thread: ThreadLike;
+}
+
+const { thread } = Astro.props;
+const revisions = [...thread.updates]
+  .sort((a, b) => b.date.localeCompare(a.date))
+  .map((update) => ({
+    ...update,
+    key: `${update.date}␟${update.assessment}␟${update.change}`,
+  }));
+
+const payload = JSON.stringify({
+  id: thread.id,
+  title: thread.title,
+  thesis: thread.thesis ?? thread.summary,
+  revisions,
+}).replace(/</g, '\\u003c');
+---
+<section class="thread-since" data-thread-since hidden>
+  <div class="since-copy">
+    <span class="section-kicker">LOCAL AI · SINCE YOUR LAST VISIT</span>
+    <h2 data-thread-since-title></h2>
+    <p data-thread-since-description></p>
+  </div>
+
+  <div class="since-actions" data-thread-since-actions hidden>
+    <button type="button" data-thread-since-run>Summarize locally</button>
+    <a href="#history">View revisions</a>
+  </div>
+
+  <div class="since-output" data-thread-since-output hidden aria-live="polite">
+    <span class="section-kicker">LOCAL SUMMARY</span>
+    <p data-thread-since-result></p>
+    <small data-thread-since-note></small>
+  </div>
+
+  <p class="since-error" data-thread-since-error hidden></p>
+  <script is:inline type="application/json" data-thread-since-payload set:html={payload}></script>
+</section>
+
+<script>
+  type Revision = {
+    key: string;
+    date: string;
+    assessment: string;
+    change: string;
+  };
+  type Payload = {
+    id: string;
+    title: string;
+    thesis: string;
+    revisions: Revision[];
+  };
+  type Seen = {
+    key: string;
+    date: string;
+    seenAt: string;
+  };
+  type SessionState = {
+    previous: Seen | null;
+  };
+  type LocalAIState = {
+    enabled: boolean;
+    phase: string;
+    modelId?: string | null;
+  };
+  type StreamUpdate = {
+    visible: string;
+  };
+  type Manager = {
+    getState: () => LocalAIState;
+    enable: () => Promise<void>;
+    generate: (
+      task: 'thread_since_visit',
+      payload: unknown,
+      onUpdate?: (update: StreamUpdate) => void,
+    ) => Promise<string>;
+  };
+
+  const getManager = async (): Promise<Manager> => {
+    const current = (window as any).__grepsignalLocalAI as Manager | undefined;
+    if (current) return current;
+    return await new Promise((resolve) => {
+      window.addEventListener('grepsignal:local-ai-manager-ready', () => {
+        resolve((window as any).__grepsignalLocalAI as Manager);
+      }, { once: true });
+    });
+  };
+
+  const readJson = <T,>(storage: Storage, key: string): T | null => {
+    try {
+      const raw = storage.getItem(key);
+      return raw ? JSON.parse(raw) as T : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const writeJson = (storage: Storage, key: string, value: unknown) => {
+    try {
+      storage.setItem(key, JSON.stringify(value));
+    } catch {
+      // Local history is best-effort. The Thread remains fully usable without it.
+    }
+  };
+
+  const clean = (value: string) => value
+    .trim()
+    .replace(/^['“"]+/, '')
+    .replace(/['”"]+$/, '')
+    .trim();
+
+  document.querySelectorAll<HTMLElement>('[data-thread-since]').forEach((root) => {
+    const payloadNode = root.querySelector<HTMLScriptElement>('[data-thread-since-payload]');
+    const title = root.querySelector<HTMLElement>('[data-thread-since-title]');
+    const description = root.querySelector<HTMLElement>('[data-thread-since-description]');
+    const actions = root.querySelector<HTMLElement>('[data-thread-since-actions]');
+    const run = root.querySelector<HTMLButtonElement>('[data-thread-since-run]');
+    const output = root.querySelector<HTMLElement>('[data-thread-since-output]');
+    const result = root.querySelector<HTMLElement>('[data-thread-since-result]');
+    const note = root.querySelector<HTMLElement>('[data-thread-since-note]');
+    const error = root.querySelector<HTMLElement>('[data-thread-since-error]');
+    if (!payloadNode || !title || !description || !actions || !run || !output || !result || !note || !error) return;
+
+    const data = JSON.parse(payloadNode.textContent || '{}') as Payload;
+    const current = data.revisions[0];
+    if (!current) return;
+
+    const storageKey = `grepsignal.thread-last-visit.v1:${data.id}`;
+    const sessionKey = `grepsignal.thread-visit-session.v1:${data.id}`;
+    const localSeen = readJson<Seen>(localStorage, storageKey);
+    const existingSession = readJson<SessionState>(sessionStorage, sessionKey);
+    const previous = existingSession ? existingSession.previous : localSeen;
+
+    if (!existingSession) writeJson(sessionStorage, sessionKey, { previous } satisfies SessionState);
+    writeJson(localStorage, storageKey, {
+      key: current.key,
+      date: current.date,
+      seenAt: new Date().toISOString(),
+    } satisfies Seen);
+
+    let newRevisions: Revision[] = [];
+    if (previous) {
+      const priorIndex = data.revisions.findIndex((revision) => revision.key === previous.key);
+      newRevisions = priorIndex >= 0
+        ? data.revisions.slice(0, priorIndex)
+        : data.revisions.filter((revision) => revision.date > previous.date);
+    }
+
+    root.hidden = false;
+
+    if (!previous) {
+      title.textContent = 'Tracking starts with this revision';
+      description.textContent = 'This browser will remember the current Thread revision. When you return after a material update, Local AI can summarize only the delta.';
+      return;
+    }
+
+    if (newRevisions.length === 0) {
+      title.textContent = "You're caught up";
+      description.textContent = 'No new material Thread revisions since your previous visit in this browser.';
+      return;
+    }
+
+    title.textContent = `${newRevisions.length} new material revision${newRevisions.length === 1 ? '' : 's'}`;
+    description.textContent = 'Summarize only what changed since you last checked this Thread. The published revisions remain authoritative.';
+    actions.hidden = false;
+    run.textContent = `Summarize ${newRevisions.length} update${newRevisions.length === 1 ? '' : 's'} locally`;
+
+    run.addEventListener('click', async () => {
+      run.disabled = true;
+      error.hidden = true;
+      output.hidden = false;
+      result.textContent = '';
+      note.textContent = 'Preparing Local AI…';
+
+      try {
+        const manager = await getManager();
+        if (manager.getState().phase !== 'ready') {
+          await manager.enable();
+        }
+
+        note.textContent = 'Reading only the new published revisions…';
+        const generated = clean(await manager.generate('thread_since_visit', {
+          title: data.title,
+          thesis: data.thesis,
+          previous_revision_date: previous.date,
+          new_updates: newRevisions.map(({ date, assessment, change }) => ({ date, assessment, change })),
+        }, (update) => {
+          const visible = clean(update.visible);
+          if (visible) result.textContent = visible;
+        }));
+
+        if (!generated) throw new Error('Local AI did not produce a delta summary.');
+        result.textContent = generated;
+        note.textContent = `Based only on ${newRevisions.length} published Thread revision${newRevisions.length === 1 ? '' : 's'} · generated in this browser.`;
+        writeJson(sessionStorage, sessionKey, {
+          previous: { key: current.key, date: current.date, seenAt: new Date().toISOString() },
+        } satisfies SessionState);
+      } catch (cause) {
+        output.hidden = true;
+        error.textContent = cause instanceof Error
+          ? `${cause.message} You can still read the published revisions below.`
+          : 'Local summary failed. You can still read the published revisions below.';
+        error.hidden = false;
+      } finally {
+        run.disabled = false;
+      }
+    });
+  });
+</script>
+
+<style>
+  .thread-since {
+    margin: 22px 0 30px;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    background: #f7f4ec;
+  }
+  .thread-since[hidden] { display: none; }
+  .thread-since h2 {
+    margin: 5px 0 6px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 23px;
+    line-height: 1.15;
+  }
+  .thread-since p { margin: 0; color: #3c3a35; line-height: 1.55; }
+  .since-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .since-actions[hidden], .since-output[hidden], .since-error[hidden] { display: none; }
+  .since-actions button {
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    background: var(--accent);
+    color: white;
+    padding: 9px 13px;
+    font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .since-actions button:disabled { cursor: wait; opacity: .65; }
+  .since-actions a {
+    color: var(--accent);
+    font: 750 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+  .since-output {
+    margin-top: 16px;
+    padding-top: 15px;
+    border-top: 1px solid var(--line);
+  }
+  .since-output p { margin-top: 7px; white-space: pre-wrap; }
+  .since-output small {
+    display: block;
+    margin-top: 9px;
+    color: var(--muted);
+    font: 650 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .since-error { margin-top: 12px !important; color: #8b2b24 !important; font-size: 12px; }
+</style>

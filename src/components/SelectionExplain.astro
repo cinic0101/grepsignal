@@ -1,0 +1,227 @@
+<button type="button" class="selection-explain-action" data-selection-explain-action hidden>Explain</button>
+
+<aside class="selection-explain-card" data-selection-explain-card hidden aria-live="polite">
+  <div class="selection-explain-head">
+    <span class="section-kicker">LOCAL AI · SELECTION</span>
+    <button type="button" class="selection-close" data-selection-explain-close aria-label="Close local explanation">×</button>
+  </div>
+  <blockquote data-selection-explain-quote></blockquote>
+  <p class="selection-state" data-selection-explain-state>Explaining locally…</p>
+  <p class="selection-result" data-selection-explain-result hidden></p>
+  <p class="selection-note">Only the selected text and a short surrounding passage are sent to the model running in this browser.</p>
+</aside>
+
+<script>
+  type LocalAIState = {
+    enabled: boolean;
+    phase: string;
+  };
+  type Manager = {
+    getState: () => LocalAIState;
+    enable: () => Promise<void>;
+    generate: (
+      task: 'selection_explain',
+      payload: unknown,
+      onUpdate?: (update: { visible: string }) => void,
+    ) => Promise<string>;
+  };
+
+  const getManager = async (): Promise<Manager> => {
+    const current = (window as any).__grepsignalLocalAI as Manager | undefined;
+    if (current) return current;
+    return await new Promise((resolve) => {
+      window.addEventListener('grepsignal:local-ai-manager-ready', () => {
+        resolve((window as any).__grepsignalLocalAI as Manager);
+      }, { once: true });
+    });
+  };
+
+  const action = document.querySelector<HTMLButtonElement>('[data-selection-explain-action]');
+  const card = document.querySelector<HTMLElement>('[data-selection-explain-card]');
+  const close = document.querySelector<HTMLButtonElement>('[data-selection-explain-close]');
+  const quote = document.querySelector<HTMLElement>('[data-selection-explain-quote]');
+  const state = document.querySelector<HTMLElement>('[data-selection-explain-state]');
+  const result = document.querySelector<HTMLElement>('[data-selection-explain-result]');
+
+  if (action && card && close && quote && state && result) {
+    let captured: { text: string; context: string } | null = null;
+
+    const clean = (value: string) => value
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(/^['“"]+/, '')
+      .replace(/['”"]+$/, '')
+      .trim();
+
+    const hideAction = () => { action.hidden = true; };
+
+    const captureSelection = () => {
+      if (!card.hidden) return;
+      const selection = window.getSelection();
+      if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
+        hideAction();
+        return;
+      }
+
+      const text = clean(selection.toString());
+      if (text.length < 8 || text.length > 900) {
+        hideAction();
+        return;
+      }
+
+      const range = selection.getRangeAt(0);
+      const node = range.commonAncestorContainer;
+      const element = node.nodeType === Node.ELEMENT_NODE ? node as Element : node.parentElement;
+      const main = element?.closest('main');
+      if (!element || !main) {
+        hideAction();
+        return;
+      }
+
+      const contextElement = element.closest('p, li, dd, dt, blockquote, h1, h2, h3, h4, pre, code')
+        ?? element.parentElement;
+      const context = clean((contextElement?.textContent ?? text).slice(0, 1600));
+      const rect = range.getBoundingClientRect();
+      if (!rect.width && !rect.height) {
+        hideAction();
+        return;
+      }
+
+      captured = { text, context };
+      action.style.left = `${Math.max(10, Math.min(window.innerWidth - 92, rect.left))}px`;
+      const below = rect.bottom + 8;
+      action.style.top = `${below + 42 < window.innerHeight ? below : Math.max(10, rect.top - 40)}px`;
+      action.hidden = false;
+    };
+
+    const scheduleCapture = () => window.setTimeout(captureSelection, 0);
+
+    document.addEventListener('pointerup', scheduleCapture);
+    document.addEventListener('keyup', (event) => {
+      if (event.key === 'Shift' || event.key.startsWith('Arrow')) scheduleCapture();
+    });
+    document.addEventListener('scroll', hideAction, { passive: true });
+    window.addEventListener('resize', hideAction);
+
+    action.addEventListener('click', async () => {
+      if (!captured) return;
+      hideAction();
+      card.hidden = false;
+      quote.textContent = captured.text;
+      state.hidden = false;
+      state.textContent = 'Preparing Local AI…';
+      result.hidden = true;
+      result.textContent = '';
+
+      try {
+        const manager = await getManager();
+        if (manager.getState().phase !== 'ready') {
+          await manager.enable();
+        }
+
+        state.textContent = 'Explaining the selected passage locally…';
+        const generated = clean(await manager.generate('selection_explain', {
+          selected_text: captured.text,
+          context: captured.context,
+        }, (update) => {
+          const visible = clean(update.visible);
+          if (visible) {
+            result.textContent = visible;
+            result.hidden = false;
+          }
+        }));
+
+        if (!generated) throw new Error('Local AI did not produce an explanation.');
+        result.textContent = generated;
+        result.hidden = false;
+        state.hidden = true;
+      } catch (cause) {
+        state.hidden = false;
+        state.textContent = cause instanceof Error
+          ? `${cause.message} The original page remains unchanged.`
+          : 'Local explanation failed. The original page remains unchanged.';
+      }
+    });
+
+    close.addEventListener('click', () => {
+      card.hidden = true;
+      result.hidden = true;
+      state.hidden = false;
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        hideAction();
+        card.hidden = true;
+      }
+    });
+  }
+</script>
+
+<style>
+  .selection-explain-action {
+    position: fixed;
+    z-index: 70;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    background: #191815;
+    color: #fff;
+    padding: 8px 12px;
+    box-shadow: 0 8px 24px rgba(35, 33, 28, .16);
+    font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .selection-explain-action[hidden], .selection-explain-card[hidden], .selection-result[hidden] { display: none; }
+  .selection-explain-card {
+    position: fixed;
+    right: 18px;
+    bottom: 92px;
+    z-index: 69;
+    width: min(420px, calc(100vw - 36px));
+    max-height: min(520px, calc(100vh - 130px));
+    overflow: auto;
+    padding: 17px 18px;
+    border: 1px solid var(--ink);
+    border-radius: 10px;
+    background: #f7f4ec;
+    box-shadow: 0 16px 48px rgba(35, 33, 28, .18);
+  }
+  .selection-explain-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .selection-close {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    padding: 0;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .selection-explain-card blockquote {
+    margin: 12px 0;
+    padding: 10px 12px;
+    border-left: 2px solid var(--line);
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .selection-state, .selection-result { margin: 10px 0 0; line-height: 1.55; }
+  .selection-state { color: var(--muted); font-size: 12px; }
+  .selection-result { color: #34332f; font-size: 14px; }
+  .selection-note {
+    margin: 13px 0 0;
+    padding-top: 11px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font: 650 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (max-width: 620px) {
+    .selection-explain-card {
+      right: 12px;
+      bottom: 76px;
+      width: calc(100vw - 24px);
+      max-height: 52vh;
+    }
+  }
+</style>

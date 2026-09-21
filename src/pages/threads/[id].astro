@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ShareButton from '../../components/ShareButton.astro';
-import LocalThreadExplain from '../../components/LocalThreadExplain.astro';
+import LocalThreadSinceVisit from '../../components/LocalThreadSinceVisit.astro';
 import RecordHistory from '../../components/RecordHistory.astro';
 import intelligence from '../../data/intelligence';
 import { buildAlternativeHeadline, buildSearchTitle, buildThreadRetrievalIdentity, jsonLdThings } from '../../data/retrieval';
@@ -87,6 +87,7 @@ const threadJsonLd = {
   publishedAt={thread.first_public_at ?? undefined}
   jsonLd={threadJsonLd}
   jsonAlternateHref={`${base}data/threads/${thread.id}.json`}
+  localAISelection={thread.lifecycle === 'active' && thread.status !== 'falsified' && !thread.review_required}
 >
   <main class="wrap thread-detail">
     <a class="back-link" href={`${base}threads/`}><span aria-hidden="true">←</span> All threads</a>
@@ -121,6 +122,10 @@ const threadJsonLd = {
       <a href="#related-signals">Signals</a>
       <a href="#history">History</a>
     </nav>
+
+    {thread.lifecycle === 'active' && thread.status !== 'falsified' && !thread.review_required && (
+      <LocalThreadSinceVisit thread={thread} />
+    )}
 
     <div class="thread-grid">
       <div>
@@ -306,7 +311,6 @@ const threadJsonLd = {
           </div>
         </section>
 
-        {thread.lifecycle === 'active' && thread.status !== 'falsified' && !thread.review_required && <LocalThreadExplain thread={thread} />}
       </div>
 
       <aside class="sidebar">

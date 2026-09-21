@@ -11,10 +11,11 @@ test('public metadata never substitutes registration for verified publication',(
   assert.ok(!s.includes('datePublished: signal.registered_at'));
   assert.ok(!s.includes('publishedAt={signal.registered_at}'));
 });
-test('withdrawn or invalidated context cannot silently use Local Explain',()=>{
+test('withdrawn or invalidated context cannot silently use contextual Local AI',()=>{
   for (const [path,record] of [['signals','signal'],['threads','thread']]) {
     const s=read(`src/pages/${path}/[id].astro`);
-    assert.ok(s.includes(`${record}.lifecycle === 'active' && ${record}.status !== 'falsified' && !${record}.review_required`));
+    const guard=`${record}.lifecycle === 'active' && ${record}.status !== 'falsified' && !${record}.review_required`;
+    assert.ok(s.includes(`localAISelection={${guard}}`));
   }
 });
 test('same-day Thread events prefer the latest appended revision',()=>{
@@ -78,16 +79,18 @@ test('record alerts stay above content while full history stays after canonical 
   }
 });
 
-test('canonical analysis precedes optional Local AI reading aids',()=>{
+test('canonical content precedes contextual Local AI interactions',()=>{
   const signal=read('src/pages/signals/[id].astro');
-  assert.ok(signal.indexOf('<LocalExplain signal={signal} />') > signal.indexOf('aria-label="Review notes"'));
+  assert.ok(!signal.includes('<LocalExplain signal={signal} />'));
+  assert.ok(signal.includes('localAISelection={signal.lifecycle'));
+
   const thread=read('src/pages/threads/[id].astro');
-  assert.ok(thread.indexOf('<LocalThreadExplain thread={thread} />') > thread.indexOf('class="detail-section history-section"'));
-  for (const path of ['src/components/LocalExplain.astro','src/components/LocalThreadExplain.astro']) {
-    const component=read(path);
-    assert.ok(component.includes('<details class="local-ai-shell">'));
-    assert.ok(component.includes('typically hundreds of MB'));
-  }
+  assert.ok(thread.indexOf('<LocalThreadSinceVisit thread={thread} />') > thread.indexOf('CURRENT THESIS'));
+  assert.ok(thread.indexOf('<LocalThreadSinceVisit thread={thread} />') < thread.indexOf('class="thread-grid"'));
+
+  const selection=read('src/components/SelectionExplain.astro');
+  assert.ok(selection.includes("element?.closest('main')"));
+  assert.ok(selection.includes('short surrounding passage'));
 });
 
 test('Signal archive exposes only filter values present in current records',()=>{

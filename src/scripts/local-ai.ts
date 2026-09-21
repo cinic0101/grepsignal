@@ -29,8 +29,30 @@ type ExplainThread = {
   evidence_map: Array<{ title: string; summary: string }>;
 };
 
-type ExplainInput = ExplainSignal | ExplainThread;
-type ExplainTask = 'what_changed' | 'why_it_matters' | 'thread_explain' | 'thread_latest_change';
+type ExplainSelection = {
+  selected_text: string;
+  context: string;
+};
+
+type ExplainThreadDelta = {
+  title: string;
+  thesis: string;
+  previous_revision_date: string | null;
+  new_updates: Array<{
+    date: string;
+    assessment: string;
+    change: string;
+  }>;
+};
+
+type ExplainInput = ExplainSignal | ExplainThread | ExplainSelection | ExplainThreadDelta;
+type ExplainTask =
+  | 'what_changed'
+  | 'why_it_matters'
+  | 'thread_explain'
+  | 'thread_latest_change'
+  | 'selection_explain'
+  | 'thread_since_visit';
 
 type CompletionResponse = {
   choices: Array<{ message?: { content?: string | null } }>;
@@ -116,6 +138,8 @@ function isCompletionStream(value: CompletionResult): value is CompletionStream 
 }
 
 function taskDetail(task: ExplainTask) {
+  if (task === 'selection_explain') return 'Explaining your selection locally…';
+  if (task === 'thread_since_visit') return 'Summarizing new Thread revisions locally…';
   if (task === 'what_changed') return 'Simplifying what changed locally…';
   if (task === 'why_it_matters') return 'Explaining why it could matter locally…';
   if (task === 'thread_explain') return 'Explaining the current Thread locally…';
@@ -146,6 +170,30 @@ function taskInstruction(task: ExplainTask) {
       'Do not invent a trend, adoption claim, deployment pattern, causal background, or motivation that is not explicitly stated in the published why-it-matters text.',
       'Do not strengthen the claim and do not add recommendations or new facts.',
       'Return only the rewritten prose. No label, heading, bullet, preamble, or quote marks.',
+    ].join('\n');
+  }
+
+  if (task === 'selection_explain') {
+    return [
+      'Explain the selected text in one to three short plain-English sentences.',
+      'Use the surrounding passage only to resolve what the selected words mean in this page.',
+      'Define technical wording simply when needed, but do not add background knowledge that is not supported by the supplied passage.',
+      'Preserve qualifiers, attribution, scope, comparisons, and causal direction.',
+      'If the passage is not sufficient to explain a claim safely, say that the surrounding text does not establish more than it does.',
+      'Do not add recommendations, forecasts, names, numbers, examples, or external facts.',
+      'Return only the explanation. No heading, bullets, preamble, or quote marks.',
+    ].join('\n');
+  }
+
+  if (task === 'thread_since_visit') {
+    return [
+      'Summarize only the published Thread revisions that are new since the reader last saw this Thread.',
+      'Use two to four concise plain-English sentences. Lead with the material delta instead of restating the whole Thread.',
+      'Preserve each revision assessment direction and any uncertainty or scope in the supplied change notes.',
+      'Use the current thesis only as context for understanding the delta.',
+      'Do not invent causes, evidence, actors, trends, recommendations, forecasts, or changes that are not in NEW_REVISIONS.',
+      'Do not treat multiple revisions as independent evidence unless the supplied revisions explicitly establish that.',
+      'Return only the delta summary. No heading, bullets, preamble, or quote marks.',
     ].join('\n');
   }
 
@@ -188,6 +236,26 @@ function taskInput(task: ExplainTask, input: ExplainInput) {
       `TITLE: ${signal.title}`,
       `PUBLISHED_SUMMARY_FOR_CONTEXT: ${signal.summary}`,
       `PUBLISHED_WHY_IT_MATTERS: ${signal.why_it_matters}`,
+    ].join('\n');
+  }
+
+  if (task === 'selection_explain') {
+    const selection = input as ExplainSelection;
+    return [
+      '/no_think',
+      `SELECTED_TEXT: ${selection.selected_text}`,
+      `SURROUNDING_PASSAGE: ${selection.context}`,
+    ].join('\n');
+  }
+
+  if (task === 'thread_since_visit') {
+    const delta = input as ExplainThreadDelta;
+    return [
+      '/no_think',
+      `THREAD: ${delta.title}`,
+      `CURRENT_THESIS: ${delta.thesis}`,
+      `PREVIOUS_REVISION_DATE: ${delta.previous_revision_date ?? 'unknown'}`,
+      `NEW_REVISIONS: ${delta.new_updates.map((item) => `${item.date} [${item.assessment}]: ${item.change}`).join(' | ')}`,
     ].join('\n');
   }
 
@@ -292,7 +360,7 @@ const manager: LocalAIManager = {
           {
             role: 'system',
             content: [
-              'You are GrepSignal Local Explain, a constrained reading aid.',
+              'You are GrepSignal Local AI, a constrained reading aid.',
               'Use only the supplied approved intelligence.',
               'Simplify wording, not meaning.',
               'Do not add external facts, recommendations, forecasts, names, numbers, or background knowledge.',
@@ -308,7 +376,7 @@ const manager: LocalAIManager = {
         ],
         temperature: 0.3,
         top_p: 0.8,
-        max_tokens: task.startsWith('thread_') ? 180 : 140,
+        max_tokens: task === 'thread_since_visit' ? 220 : task === 'selection_explain' ? 160 : task.startsWith('thread_') ? 180 : 140,
         stream: true,
         extra_body: {
           enable_thinking: false,
