@@ -14,6 +14,17 @@ Stable identity, source lineage, honest timestamps, original judgments, version-
 
 Due-review context in the existing workflow; explicit reviewed/unchanged/inconclusive outcomes; bounded counter-evidence work; immutable prediction criteria with human resolution and deterministic scoring; visible corrections/retractions; one canonical history producing JSON and a sitewide Atom feed. Fixtures exercise failures without creating fake public intelligence. New material changes require editorial acceptance; deterministic coverage refresh remains separate.
 
+## Discovery checkpoint — custom domain
+
+A custom domain is not a prerequisite for product validity or indexing. Revisit migration when GrepSignal has enough organic discovery to justify preserving a dedicated brand boundary without waiting until URL authority is expensive to move.
+
+Trigger a custom-domain migration review when either condition is met in settled Google Search Console data:
+
+- rolling 28 days reaches at least **1,000 impressions and 30 clicks**; or
+- the query report exposes at least **5 distinct non-brand discovery queries with 3+ impressions each** in the rolling 28-day window.
+
+If neither condition is met, run a time-boxed review on **2026-10-31** rather than deferring indefinitely. A triggered review is a migration decision point, not an automatic domain change.
+
 ## Deferred until A/B/C are reviewed
 
 Discuss and select the first China-native ecosystem evidence layer. Do not add Chinese discovery sources, rename brands, open the private engine, add MCP/dynamic APIs, expand Local AI, add analytics, change live schedules, or manufacture forecasts in A/B/C. Independent OSS deployment is a later work package, not implied by an open static website.
