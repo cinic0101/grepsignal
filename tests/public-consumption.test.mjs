@@ -52,3 +52,14 @@ test('detail pages point agents at the matching record resource',()=>{
   assert.ok(thread.includes('data/threads/${thread.id}.json'));
   assert.ok(prediction.includes('data/predictions/${prediction.id}.json'));
 });
+
+
+test('detail pages consume the canonical derived relation projection',()=>{
+  const signal=read('src/pages/signals/[id].astro');
+  const thread=read('src/pages/threads/[id].astro');
+  assert.ok(signal.includes('signal.thread_ids.includes(thread.id)'));
+  assert.ok(thread.includes('thread.signal_relations.supporting'));
+  assert.ok(thread.includes('thread.signal_relations.contradicting'));
+  assert.ok(!signal.includes("data/thread-links"));
+  assert.ok(!thread.includes("data/thread-links"));
+});
