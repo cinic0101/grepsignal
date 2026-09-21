@@ -214,3 +214,41 @@ test('record-version schema and agent docs explain frozen derived context',()=>{
   assert.ok(agents.includes('snapshot_sequence'));
 });
 
+
+
+test('retrieval identity improves entity-plus-event discovery without rewriting canonical judgments',()=>{
+  const helper=read('src/data/retrieval.ts');
+  assert.ok(helper.includes("derivation: 'accepted_evidence_metadata'"));
+  assert.ok(helper.includes('source.publisher'));
+  assert.ok(helper.includes('buildSignalRetrievalIdentity'));
+  assert.ok(helper.includes('buildThreadRetrievalIdentity'));
+  assert.ok(helper.includes('buildPredictionRetrievalIdentity'));
+
+  for (const path of ['signals','threads','predictions']) {
+    const page=read(`src/pages/${path}/[id].astro`);
+    assert.ok(page.includes('entity-subtitle'));
+    assert.ok(page.includes('alternativeHeadline'));
+    assert.ok(page.includes('about: jsonLdThings'));
+    assert.ok(page.includes('mentions: jsonLdThings'));
+    assert.ok(page.includes('buildSearchTitle'));
+  }
+
+  for (const path of [
+    'src/pages/data/signals/[id].json.ts',
+    'src/pages/data/threads/[id].json.ts',
+    'src/pages/data/predictions/[id].json.ts',
+  ]) {
+    assert.ok(read(path).includes('retrieval_identity:'));
+  }
+
+  assert.ok(read('src/pages/agents/index.astro').includes('retrieval_identity'));
+  assert.ok(read('public/llms.txt').includes('entity-plus-event discovery'));
+});
+
+test('custom-domain roadmap gate is measurable from GSC',()=>{
+  const roadmap=read('docs/roadmap.md');
+  assert.ok(roadmap.includes('1,000 impressions and 30 clicks'));
+  assert.ok(roadmap.includes('5 distinct non-brand discovery queries'));
+  assert.ok(roadmap.includes('2026-10-31'));
+  assert.ok(roadmap.includes('not an automatic domain change'));
+});
