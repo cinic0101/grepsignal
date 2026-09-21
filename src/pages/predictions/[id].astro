@@ -14,6 +14,7 @@ const { prediction } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const relatedThread = intelligence.threads.find(thread => thread.id === prediction.thread_id);
 const probability = Math.round(prediction.initial_probability * 100);
+const formatTimestamp = (value: string) => new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'UTC', timeZoneName: 'short' }).format(new Date(value));
 ---
 <BaseLayout title={`${prediction.claim} — GrepSignal prediction`} description={prediction.claim} jsonAlternateHref={`${base}data/predictions/${prediction.id}.json`}>
   <main class="wrap prediction-detail">
@@ -33,7 +34,7 @@ const probability = Math.round(prediction.initial_probability * 100);
     <dl class="prediction-meta">
       <div><dt>Status</dt><dd>{prediction.status}</dd></div>
       <div><dt>Lifecycle</dt><dd>{prediction.lifecycle}</dd></div>
-      <div><dt>Deadline</dt><dd>{prediction.deadline}</dd></div>
+      <div><dt>Deadline</dt><dd><time datetime={prediction.deadline} title={prediction.deadline}>{formatTimestamp(prediction.deadline)}</time></dd></div>
       <div>
         <dt>Related thread</dt>
         <dd>
@@ -89,7 +90,7 @@ const probability = Math.round(prediction.initial_probability * 100);
                 <article class="resolution">
                   <div class="resolution-head">
                     <strong>{resolution.outcome}</strong>
-                    <span>{resolution.recorded_at}</span>
+                    <span><time datetime={resolution.recorded_at} title={resolution.recorded_at}>{formatTimestamp(resolution.recorded_at)}</time></span>
                   </div>
                   <p>{resolution.note}</p>
                   <div class="resolution-score">Brier score: {resolution.brier_score ?? 'unscored'}</div>
@@ -123,7 +124,7 @@ const probability = Math.round(prediction.initial_probability * 100);
         </div>
         <div>
           <span>Deadline</span>
-          <strong>{prediction.deadline}</strong>
+          <strong><time datetime={prediction.deadline} title={prediction.deadline}>{formatTimestamp(prediction.deadline)}</time></strong>
         </div>
         <div>
           <span>Context</span>
