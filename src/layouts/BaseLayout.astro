@@ -29,7 +29,7 @@ const intelligenceJsonUrl = new URL(jsonAlternateHref ?? `${base}data/intelligen
 const llmsUrl = new URL(`${base}llms.txt`, Astro.site ?? Astro.url.origin).toString();
 const structuredData = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : null;
 const challengeUrl = `https://github.com/cinic0101/grepsignal/issues/new?${new URLSearchParams({template: 'evidence.yml', record: canonicalUrl})}`;
-const showPredictions = intelligence.predictions.length > 0;
+const showPredictions = intelligence.predictions.some((prediction) => prediction.first_public_at !== null);
 ---
 <!doctype html>
 <html lang="en">
