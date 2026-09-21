@@ -6,17 +6,19 @@ const id = Astro.url.pathname.split('/').filter(Boolean).at(-1);
 const record = [...intelligence.signals, ...intelligence.threads, ...intelligence.predictions].find((item) => item.id === id);
 const events = record ? changes.filter((event) => event.record_id === record.id) : [];
 const targetUrl = (target) => `${base}${intelligence.threads.some(r => r.id === target) ? 'threads' : intelligence.predictions.some(r => r.id === target) ? 'predictions' : 'signals'}/${target}/`;
+const formatTimestamp = (value) => new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'UTC', timeZoneName: 'short' }).format(new Date(value));
+const formatDateOnly = (value) => new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(new Date(`${value}T00:00:00Z`));
 
 const facts = [];
 if (record) {
-  if ('registered_at' in record && record.registered_at) facts.push(['Registered', record.registered_at]);
-  if ('created_at' in record && record.created_at) facts.push(['Created', record.created_at]);
-  if (record.first_observed_at) facts.push(['First observed', record.first_observed_at]);
-  if (record.first_public_at) facts.push(['Verified first public', record.first_public_at]);
-  if (record.last_reviewed_at) facts.push(['Last reviewed', record.last_reviewed_at]);
-  if (record.last_changed_at) facts.push(['Last changed', record.last_changed_at]);
-  if (record.next_review_at) facts.push(['Next check', record.next_review_at]);
-  if (record.last_review_outcome) facts.push(['Last review outcome', record.last_review_outcome]);
+  if ('registered_at' in record && record.registered_at) facts.push(['Registered', record.registered_at, 'date']);
+  if ('created_at' in record && record.created_at) facts.push(['Created', record.created_at, record.created_at.includes('T') ? 'timestamp' : 'date']);
+  if (record.first_observed_at) facts.push(['First observed', record.first_observed_at, 'timestamp']);
+  if (record.first_public_at) facts.push(['Verified first public', record.first_public_at, 'timestamp']);
+  if (record.last_reviewed_at) facts.push(['Last reviewed', record.last_reviewed_at, 'timestamp']);
+  if (record.last_changed_at) facts.push(['Last changed', record.last_changed_at, 'timestamp']);
+  if (record.next_review_at) facts.push(['Next check', record.next_review_at, 'timestamp']);
+  if (record.last_review_outcome) facts.push(['Last review outcome', record.last_review_outcome, 'text']);
 }
 ---
 {record && (
@@ -26,10 +28,12 @@ if (record) {
 
       {facts.length > 0 && (
         <dl class="history-facts">
-          {facts.map(([label, value]) => (
+          {facts.map(([label, value, kind]) => (
             <div>
               <dt>{label}</dt>
-              <dd>{value}</dd>
+              <dd>
+                {kind === 'timestamp' ? <time datetime={value} title={value}>{formatTimestamp(value)}</time> : kind === 'date' ? <time datetime={value} title={value}>{formatDateOnly(value)}</time> : value}
+              </dd>
             </div>
           ))}
         </dl>
@@ -46,7 +50,7 @@ if (record) {
         <ol class="history-events">
           {events.map((event) => (
             <li>
-              <a href={`${base}changes/#${event.id}`}>{event.recorded_at} · {event.kind}</a>
+              <a href={`${base}changes/#${event.id}`}><time datetime={event.recorded_at} title={event.recorded_at}>{formatTimestamp(event.recorded_at)}</time> · {event.kind}</a>
               <p>{event.note}</p>
             </li>
           ))}
