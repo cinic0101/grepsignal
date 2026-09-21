@@ -1,0 +1,53 @@
+---
+import intelligence from '../data/intelligence';
+
+const id = Astro.url.pathname.split('/').filter(Boolean).at(-1);
+const record = [...intelligence.signals, ...intelligence.threads, ...intelligence.predictions].find((item) => item.id === id);
+const builtAt = new Date().toISOString();
+const overdue = record?.lifecycle === 'active' && record.review_due_since && Date.parse(record.review_due_since) <= Date.parse(builtAt);
+const hasAlert = record && (
+  record.lifecycle !== 'active' ||
+  record.status === 'falsified' ||
+  record.review_required ||
+  overdue
+);
+const base = import.meta.env.BASE_URL;
+const targetUrl = (target) => `${base}${intelligence.threads.some(r => r.id === target) ? 'threads' : intelligence.predictions.some(r => r.id === target) ? 'predictions' : 'signals'}/${target}/`;
+---
+{hasAlert && record && (
+  <aside class="wrap record-alerts" aria-label="Record status alerts">
+    {record.lifecycle !== 'active' && (
+      <p class="record-alert" role="note">
+        <strong>{record.lifecycle.toUpperCase()}.</strong>
+        Retained for historical reference, not current guidance.
+        {record.superseded_by && <> <a href={targetUrl(record.superseded_by)}>Read its replacement →</a></>}
+      </p>
+    )}
+    {record.status === 'falsified' && (
+      <p class="record-alert" role="note">
+        <strong>THESIS FALSIFIED.</strong> Read the revision and evidence before reusing the original judgment.
+      </p>
+    )}
+    {record.review_required && (
+      <p class="record-alert" role="note">
+        <strong>Re-review needed.</strong> Linked judgments changed or the last review was inconclusive. This is not an automatic reversal.
+      </p>
+    )}
+    {overdue && (
+      <p class="record-alert" role="note">
+        <strong>Review due / overdue.</strong> As of build {builtAt.slice(0, 10)}. Unfinished work is not a fresh endorsement.
+      </p>
+    )}
+  </aside>
+)}
+<style>
+  .record-alerts { padding-top: 18px; }
+  .record-alert {
+    margin: 0 0 10px;
+    border: 2px solid var(--ink);
+    padding: 14px 16px;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  .record-alert a { color: var(--accent); font-weight: 700; }
+</style>
