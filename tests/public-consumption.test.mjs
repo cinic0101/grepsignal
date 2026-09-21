@@ -113,3 +113,53 @@ test('Predictions navigation is hidden until there is a public ledger entry',()=
   assert.ok(layout.includes('const showPredictions = intelligence.predictions.some((prediction) => prediction.first_public_at !== null)'));
   assert.ok(layout.includes('showPredictions && <a href'));
 });
+
+
+test('human reading guide is discoverable and indexed',()=>{
+  const layout=read('src/layouts/BaseLayout.astro');
+  const sitemap=read('src/pages/sitemap.xml.ts');
+  const guide=read('src/pages/read/index.astro');
+  assert.ok(layout.includes('How to read'));
+  assert.ok(sitemap.includes("absoluteUrl('read/')"));
+  assert.ok(guide.includes('How to read GrepSignal.'));
+  assert.ok(guide.includes('Strengthening is not a confidence score.'));
+});
+
+test('human pages format timestamps while preserving machine datetime values',()=>{
+  const history=read('src/components/RecordHistory.astro');
+  const changes=read('src/pages/changes/index.astro');
+  const prediction=read('src/pages/predictions/[id].astro');
+  for (const file of [history,changes,prediction]) {
+    assert.ok(file.includes('Intl.DateTimeFormat'));
+    assert.ok(file.includes('datetime='));
+  }
+  assert.ok(history.includes('title={value}'));
+  assert.ok(changes.includes('title={event.recorded_at}'));
+  assert.ok(prediction.includes('title={prediction.deadline}'));
+});
+
+test('published Signal detail does not repeat the long publication notice',()=>{
+  const signal=read('src/pages/signals/[id].astro');
+  assert.ok(signal.includes('{!isPublished && ('));
+  assert.ok(!signal.includes("isPublished ? 'LIVE INTELLIGENCE'"));
+});
+
+test('share metadata has a default preview image',()=>{
+  const layout=read('src/layouts/BaseLayout.astro');
+  assert.ok(layout.includes('property="og:image"'));
+  assert.ok(layout.includes('name="twitter:image"'));
+  assert.ok(layout.includes('how-grepsignal-works.webp'));
+});
+
+test('usage form distinguishes consumer type and record IDs',()=>{
+  const usage=read('.github/ISSUE_TEMPLATE/usage.yml');
+  assert.ok(usage.includes('id: consumer_type'));
+  assert.ok(usage.includes('AI agent / automated workflow'));
+  assert.ok(usage.includes('id: record_ids_used'));
+});
+
+test('roadmap scope matches the current technical-builder positioning',()=>{
+  const roadmap=read('docs/roadmap.md');
+  assert.ok(roadmap.includes('AI models, agents, tooling, and infrastructure'));
+  assert.ok(!roadmap.includes('Initial scope: agent infrastructure and technical adoption.'));
+});
