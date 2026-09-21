@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import intelligence from '../../data/intelligence';
+import RecordHistory from '../../components/RecordHistory.astro';
 
 export function getStaticPaths() {
   return intelligence.predictions.map(prediction => ({
@@ -135,6 +136,8 @@ const probability = Math.round(prediction.initial_probability * 100);
       </aside>
     </div>
   </main>
+
+  <RecordHistory />
 </BaseLayout>
 
 <style>
