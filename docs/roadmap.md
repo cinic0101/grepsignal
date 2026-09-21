@@ -1,6 +1,6 @@
 # Integrated roadmap — A / B / C first
 
-Product: help humans and agents know what is worth remembering and which judgments need to change. Initial scope: agent infrastructure and technical adoption.
+Product: help humans and agents know what is worth remembering and which judgments need to change. Current beta scope: material shifts across AI models, agents, tooling, and infrastructure, with a technical-builder bias rather than a claim of comprehensive AI coverage.
 
 ## A — Public contract and feedback
 
