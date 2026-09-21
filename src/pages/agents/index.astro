@@ -25,6 +25,12 @@ const endpoints = [
     description: 'What GrepSignal reviewed in the current cycle, including publication and no-publish outcomes.',
   },
   {
+    label: 'VERSION SCHEMA',
+    href: `${base}schema/record-version.schema.json`,
+    path: '/schema/record-version.schema.json',
+    description: 'Immutable record-version snapshot envelope for stable citations.',
+  },
+  {
     label: 'INTELLIGENCE SCHEMA',
     href: `${base}schema/intelligence.schema.json`,
     path: '/schema/intelligence.schema.json',
@@ -94,7 +100,8 @@ const endpoints = [
             <li><strong>Discover once.</strong> <code>/llms.txt</code> points to the canonical machine interfaces and explains the time semantics.</li>
             <li><strong>Fetch JSON first.</strong> Use <code>/data/intelligence.json</code> for a full snapshot, or <code>/data/signals/&#123;id&#125;.json</code>, <code>/data/threads/&#123;id&#125;.json</code>, and <code>/data/predictions/&#123;id&#125;.json</code> for one record.</li>
             <li><strong>Check the contract.</strong> Read <code>schema_version</code> and validate against the public schema when strict parsing matters.</li>
-            <li><strong>Use stable IDs and derived links.</strong> Signals expose <code>thread_ids</code>; Threads expose <code>signal_ids</code>. Typed relation fields preserve supporting vs. contradicting context.</li>
+            <li><strong>Use stable IDs and version citations.</strong> Current record JSON exposes <code>cite_as</code> and an immutable <code>record_version_permalink</code>. Version snapshots freeze derived context at their <code>snapshot_sequence</code>; current derived relations may move later.</li>
+            <li><strong>Use derived links as context.</strong> Signals expose <code>thread_ids</code>; Threads expose <code>signal_ids</code>. Typed relation fields preserve supporting vs. contradicting context.</li>
             <li><strong>Follow evidence.</strong> Use source links to inspect primary or affected-party evidence when a claim matters. <code>retrieved_at: null</code> means GrepSignal did not record a retrieval time; do not infer one. <code>lineage_id</code> groups URLs that derive from the same underlying evidence event when that lineage is known.</li>
             <li><strong>Use public receipts.</strong> Change events expose proposal provenance, deterministic <code>changed_fields</code> for revisions, and a public acceptance receipt with an event hash even when the operational review reference points to the private engine.</li>
             <li><strong>Carry uncertainty forward.</strong> Preserve falsifiers, limitations, status, and prediction resolution instead of flattening them into a definitive claim.</li>
