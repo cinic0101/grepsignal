@@ -65,6 +65,7 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
 <BaseLayout
   title={`${thread.title} — GrepSignal thread`}
   description={thread.summary}
+  jsonAlternateHref={`${base}data/threads/${thread.id}.json`}
 >
   <main class="wrap thread-detail">
     <a class="back-link" href={`${base}threads/`}><span aria-hidden="true">←</span> All threads</a>
@@ -294,7 +295,7 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
         <div><span>Evidence since</span><strong>{thread.evidence_since}</strong></div>
         <div><span>Signals</span><strong>{linkedSignalCount}</strong></div>
         <div><span>Revisions</span><strong>{updates.length}</strong></div>
-        <div><span>Machine-readable</span><a href={`${base}data/intelligence.json`}>Open JSON →</a></div>
+        <div><span>Machine-readable</span><a href={`${base}data/threads/${thread.id}.json`}>Open JSON →</a></div>
       </aside>
     </div>
   </main>
