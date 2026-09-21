@@ -68,7 +68,7 @@ const showPredictions = intelligence.predictions.length > 0;
         <nav class="desktop-nav" aria-label="Primary navigation">
           <a href={`${base}signals/`}>Signals</a>
           <a href={`${base}threads/`}>Threads</a>
-          {showPredictions && {showPredictions && <a href={`${base}#predictions`}>Predictions</a>}}
+          {showPredictions && <a href={`${base}#predictions`}>Predictions</a>}
           <a href={`${base}changes/`}>Changes</a>
           <a href={`${base}agents/`}>For agents</a>
         </nav>
@@ -78,7 +78,7 @@ const showPredictions = intelligence.predictions.length > 0;
           <nav class="mobile-menu-links" aria-label="Mobile navigation">
             <a href={`${base}signals/`}>Signals</a>
             <a href={`${base}threads/`}>Active threads</a>
-            <a href={`${base}#predictions`}>Predictions</a>
+            {showPredictions && <a href={`${base}#predictions`}>Predictions</a>}
             <a href={`${base}changes/`}>Changes</a>
             <a href={`${base}agents/`}>For agents</a>
             <span class="mobile-menu-divider"></span>
