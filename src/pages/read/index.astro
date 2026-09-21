@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+const terms = [
+  ['Signal', 'A bounded material change that passed the publication gate. A Signal is not a complete news item or a claim that the change applies everywhere.'],
+  ['Thread', 'A maintained thesis that connects material changes over time. Threads can strengthen, stay unchanged, weaken, become inconclusive, or be falsified as evidence changes.'],
+  ['Falsifier', 'A concrete observation that would weaken or overturn the current judgment. Falsifiers are conditions to watch, not predictions that GrepSignal expects to happen.'],
+  ['Limitation', 'A known boundary on what the evidence supports. A limitation narrows the claim; it is not boilerplate legal caution.'],
+  ['Watch next', 'The observations that would be most useful for updating the judgment. It is a monitoring agenda, not a generic recommendation.'],
+  ['Prediction', 'A separately registered, time-bounded and falsifiable claim with fixed resolution criteria. GrepSignal does not create one merely to fill the ledger.'],
+  ['Lifecycle', 'Whether a record is active, superseded, or retracted. Lifecycle is separate from the judgment assessment such as strengthening or weakening.'],
+  ['Revision', 'An accepted material change to a published judgment. Cosmetic presentation changes are not revisions.'],
+];
+---
+<BaseLayout
+  title="How to read GrepSignal"
+  description="A human guide to Signals, Threads, falsifiers, limitations, predictions, and GrepSignal's evidence and revision conventions."
+>
+  <main class="wrap reading-guide">
+    <header class="guide-hero">
+      <div class="eyebrow">&gt; help --read-grepsignal</div>
+      <h1>How to read GrepSignal.</h1>
+      <p class="lead">
+        GrepSignal is a maintained judgment layer, not a news feed. Start with what changed, then read why it matters,
+        what would change the view, and where the evidence came from.
+      </p>
+    </header>
+
+    <section class="quick-read" aria-labelledby="quick-read-title">
+      <span class="section-kicker">30-SECOND VERSION</span>
+      <h2 id="quick-read-title">Read the judgment before the machinery.</h2>
+      <ol>
+        <li><strong>Signal:</strong> What materially changed?</li>
+        <li><strong>Why it matters:</strong> What should a technical builder update in their mental model?</li>
+        <li><strong>Second-order effect:</strong> What could change one step downstream?</li>
+        <li><strong>Watch next:</strong> What evidence would make the judgment move?</li>
+        <li><strong>Falsifiers + limitations:</strong> Where could this be wrong or overgeneralized?</li>
+        <li><strong>Sources:</strong> Trace important claims back to the linked evidence.</li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="terms-title">
+      <div class="section-heading">
+        <span class="section-kicker">GLOSSARY</span>
+        <h2 id="terms-title">The terms GrepSignal uses.</h2>
+      </div>
+      <div class="term-list">
+        {terms.map(([term, definition]) => (
+          <article>
+            <h3>{term}</h3>
+            <p>{definition}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="interpretation-grid" aria-label="How to interpret GrepSignal records">
+      <article>
+        <span class="section-kicker">STATUS</span>
+        <h2>Strengthening is not a confidence score.</h2>
+        <p>
+          <code>emerging</code>, <code>strengthening</code>, <code>stable</code>, <code>weakening</code>, and <code>falsified</code>
+          describe how the tracked judgment is moving. They are not probabilities and there is no target distribution across statuses.
+        </p>
+      </article>
+      <article>
+        <span class="section-kicker">ABSENCE</span>
+        <h2>Not published does not mean unimportant.</h2>
+        <p>
+          An event may be unreviewed, out of scope, below the materiality threshold, deferred, or still under watch.
+          GrepSignal intentionally allows zero new Signals.
+        </p>
+      </article>
+      <article>
+        <span class="section-kicker">DATES</span>
+        <h2>Registration is not the event date.</h2>
+        <p>
+          GrepSignal keeps registration, observation, source publication, retrieval, review, and public-publication times separate.
+          Unknown historical timestamps remain unknown rather than being reconstructed.
+        </p>
+      </article>
+      <article>
+        <span class="section-kicker">SOURCES</span>
+        <h2>More URLs do not automatically mean more evidence.</h2>
+        <p>
+          Vendor sources can establish narrow facts about their own products. General performance, adoption, or causal claims need
+          evidence appropriate to those claims. Several articles repeating one announcement are still one evidence lineage.
+        </p>
+      </article>
+    </section>
+
+    <section class="trust-section">
+      <span class="section-kicker">TRUST MODEL</span>
+      <h2>What to trust, and what not to.</h2>
+      <p>
+        Treat the published Signal or Thread as GrepSignal's current editorial judgment. Treat linked evidence as the basis for
+        checking important claims. Local AI explanations are optional reading aids and cannot change the canonical record.
+        The Changes journal shows accepted revisions and reviews when judgments move.
+      </p>
+      <div class="actions">
+        <a href={\`\${base}signals/\`}>Browse Signals →</a>
+        <a href={\`\${base}threads/\`}>Browse Threads →</a>
+        <a href={\`\${base}changes/\`}>See judgment changes →</a>
+        <a href={\`\${base}editorial/\`}>Read the editorial policy →</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .reading-guide { max-width: 1040px; padding-top: 66px; padding-bottom: 90px; }
+  .guide-hero { max-width: 880px; padding-bottom: 44px; }
+  .guide-hero h1 { margin: 9px 0 20px; font-size: clamp(48px, 7vw, 82px); }
+  .lead { max-width: 820px; margin: 0; color: #383733; font-size: 21px; line-height: 1.6; }
+  .quick-read, .trust-section { border-top: 1px solid var(--ink); padding-top: 27px; margin-top: 18px; }
+  h2 { margin: 6px 0 16px; font: 600 31px/1.12 Georgia, 'Times New Roman', serif; letter-spacing: -.02em; }
+  .quick-read ol { max-width: 840px; margin: 0; padding-left: 22px; }
+  .quick-read li { padding: 9px 0; line-height: 1.6; }
+  .section-heading { margin-top: 58px; padding-top: 28px; border-top: 1px solid var(--ink); }
+  .term-list { border-top: 1px solid var(--line); }
+  .term-list article { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 28px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .term-list h3 { margin: 0; font: 650 21px Georgia, 'Times New Roman', serif; }
+  .term-list p { max-width: 760px; margin: 0; color: #3b3a36; line-height: 1.65; }
+  .interpretation-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; margin-top: 58px; }
+  .interpretation-grid article { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); padding: 26px; }
+  .interpretation-grid h2 { font-size: 25px; }
+  .interpretation-grid p, .trust-section p { color: #3b3a36; line-height: 1.7; }
+  .interpretation-grid code { font-size: .9em; }
+  .trust-section { margin-top: 58px; }
+  .trust-section p { max-width: 820px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 22px; }
+  .actions a { color: var(--accent); font-weight: 750; }
+  @media (max-width: 700px) {
+    .reading-guide { padding-top: 46px; }
+    .lead { font-size: 18px; }
+    .term-list article, .interpretation-grid { grid-template-columns: 1fr; }
+    .term-list article { gap: 8px; }
+  }
+</style>
