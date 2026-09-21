@@ -12,6 +12,7 @@ interface Props {
   publishedAt?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   jsonAlternateHref?: string;
+  ogImage?: string;
 }
 
 const {
@@ -22,11 +23,13 @@ const {
   publishedAt,
   jsonLd,
   jsonAlternateHref,
+  ogImage,
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
 const intelligenceJsonUrl = new URL(jsonAlternateHref ?? `${base}data/intelligence.json`, Astro.site ?? Astro.url.origin).toString();
 const llmsUrl = new URL(`${base}llms.txt`, Astro.site ?? Astro.url.origin).toString();
+const ogImageUrl = new URL(ogImage ?? `${base}how-grepsignal-works.webp`, Astro.site ?? Astro.url.origin).toString();
 const structuredData = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : null;
 const challengeUrl = `https://github.com/cinic0101/grepsignal/issues/new?${new URLSearchParams({template: 'evidence.yml', record: canonicalUrl})}`;
 const showPredictions = intelligence.predictions.some((prediction) => prediction.first_public_at !== null);
@@ -49,10 +52,13 @@ const showPredictions = intelligence.predictions.some((prediction) => prediction
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content="GrepSignal — grep the noise, find the signal." />
     {publishedAt && <meta property="article:published_time" content={publishedAt} />}
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
     {structuredData && <script type="application/ld+json" set:html={structuredData} />}
     <title>{title}</title>
   </head>
@@ -68,6 +74,7 @@ const showPredictions = intelligence.predictions.some((prediction) => prediction
         <nav class="desktop-nav" aria-label="Primary navigation">
           <a href={`${base}signals/`}>Signals</a>
           <a href={`${base}threads/`}>Threads</a>
+          <a href={`${base}read/`}>How to read</a>
           {showPredictions && <a href={`${base}#predictions`}>Predictions</a>}
           <a href={`${base}changes/`}>Changes</a>
           <a href={`${base}agents/`}>For agents</a>
@@ -78,6 +85,7 @@ const showPredictions = intelligence.predictions.some((prediction) => prediction
           <nav class="mobile-menu-links" aria-label="Mobile navigation">
             <a href={`${base}signals/`}>Signals</a>
             <a href={`${base}threads/`}>Active threads</a>
+            <a href={`${base}read/`}>How to read</a>
             {showPredictions && <a href={`${base}#predictions`}>Predictions</a>}
             <a href={`${base}changes/`}>Changes</a>
             <a href={`${base}agents/`}>For agents</a>

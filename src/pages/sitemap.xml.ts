@@ -18,6 +18,7 @@ export const GET: APIRoute = ({ site }) => {
 
   const entries: Array<{ loc: string; lastmod?: string }> = [
     { loc: absoluteUrl('agents/') },
+    { loc: absoluteUrl('read/') },
     { loc: absoluteUrl('editorial/') },
     { loc: absoluteUrl('changes/') },
   ];

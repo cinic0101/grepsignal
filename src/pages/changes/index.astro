@@ -16,6 +16,9 @@ const kindLabel = kind => kind.replaceAll('_', ' ').replace(/\b\w/g, char => cha
 const formatDate = value => new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
 }).format(new Date(value));
+const formatTimestamp = value => new Intl.DateTimeFormat('en', {
+  year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'UTC', timeZoneName: 'short'
+}).format(new Date(value));
 const orderedChanges = [...changes].reverse();
 ---
 <BaseLayout title="Judgment changes & reviews — GrepSignal" description="Accepted judgment revisions, review outcomes, corrections and forecast resolutions.">
@@ -79,9 +82,9 @@ const orderedChanges = [...changes].reverse();
                   <details class="audit-receipt">
                     <summary>View audit receipt</summary>
                     <div class="receipt-meta">
-                      Recorded {event.recorded_at}<br />
+                      Recorded <time datetime={event.recorded_at} title={event.recorded_at}>{formatTimestamp(event.recorded_at)}</time><br />
                       Proposed by {event.proposed_by}<br />
-                      Accepted by {event.acceptance.actor} ({event.acceptance.scope}) · <a href={event.acceptance.reference}>acceptance reference</a>
+                      Accepted by {event.acceptance.actor} ({event.acceptance.scope}) on <time datetime={event.acceptance.accepted_at} title={event.acceptance.accepted_at}>{formatTimestamp(event.acceptance.accepted_at)}</time> · <a href={event.acceptance.reference}>acceptance reference</a>
                     </div>
                     <pre>{JSON.stringify(event.payload, null, 2)}</pre>
                   </details>
