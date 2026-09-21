@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LocalExplain from '../../components/LocalExplain.astro';
 import ShareButton from '../../components/ShareButton.astro';
+import RecordHistory from '../../components/RecordHistory.astro';
 import intelligence from '../../data/intelligence';
 
 type Signal = typeof intelligence.signals[number];
@@ -130,8 +131,6 @@ const articleJsonLd = {
 
     <div class="detail-grid">
       <div class="detail-main">
-        {signal.lifecycle === 'active' && signal.status !== 'falsified' && !signal.review_required && <LocalExplain signal={signal} />}
-
         <section class="detail-section">
           <span class="section-kicker">INTERPRETATION</span>
           <h2>Why it matters</h2>
@@ -184,6 +183,8 @@ const articleJsonLd = {
             <ul>{signal.limitations.map((item) => <li>{item}</li>)}</ul>
           </div>
         </section>
+
+        {signal.lifecycle === 'active' && signal.status !== 'falsified' && !signal.review_required && <LocalExplain signal={signal} />}
       </div>
 
       <aside class="detail-sidebar" aria-label="Signal context">
@@ -215,6 +216,8 @@ const articleJsonLd = {
       </aside>
     </div>
   </main>
+
+  <RecordHistory />
 
   <footer>
     <div class="wrap footerline">
