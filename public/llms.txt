@@ -22,7 +22,7 @@ GrepSignal is not a comprehensive news feed. JSON is the canonical machine-reada
 - Immutable Thread version: `/grepsignal/data/threads/{thread_id}/versions/{version}.json`
 - Immutable Prediction version: `/grepsignal/data/predictions/{prediction_id}/versions/{version}.json`
 
-Current record JSON includes `cite_as`, `record_version_permalink`, and the latest public `projection_sequence`. Version resources are immutable snapshots captured when that record reached the requested version. Derived cross-record context is frozen at the snapshot sequence and may later differ from the mutable current projection.
+Current record JSON includes `cite_as`, `record_version_permalink`, and the latest public `projection_sequence`. Version resources are immutable snapshots captured when that record reached the requested version. Derived cross-record context is frozen at the snapshot sequence and may later differ from the mutable current projection. Version resources are served with long-lived immutable cache headers; use the current record URL when you need the latest projection.
 
 Signal records expose derived `thread_ids` and typed `thread_relations`. Thread records expose derived `signal_ids` and `signal_relations`. These are projections of the canonical Thread-link history, not separately curated facts.
 
