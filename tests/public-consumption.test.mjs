@@ -110,6 +110,6 @@ test('editorial style advisory is explicit and non-blocking',()=>{
 
 test('Predictions navigation is hidden until there is a public ledger entry',()=>{
   const layout=read('src/layouts/BaseLayout.astro');
-  assert.ok(layout.includes('const showPredictions = intelligence.predictions.length > 0'));
+  assert.ok(layout.includes('const showPredictions = intelligence.predictions.some((prediction) => prediction.first_public_at !== null)'));
   assert.ok(layout.includes('showPredictions && <a href'));
 });
