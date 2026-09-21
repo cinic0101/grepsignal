@@ -15,6 +15,19 @@ body:
     validations:
       required: true
   - type: dropdown
+    id: consumer_type
+    attributes:
+      label: Consumer type
+      description: Who or what directly consumed GrepSignal for this task?
+      options:
+        - Human reader
+        - AI agent / automated workflow
+        - Human using an AI agent
+        - Software integration
+        - Other
+    validations:
+      required: true
+  - type: dropdown
     id: interface
     attributes:
       label: Interface used
@@ -28,6 +41,14 @@ body:
         - Other
     validations:
       required: true
+  - type: input
+    id: record_ids_used
+    attributes:
+      label: GrepSignal record IDs used
+      description: Optional comma-separated Signal, Thread, or Prediction IDs. Leave blank if the task was site-level.
+      placeholder: sig-example, thread-example
+    validations:
+      required: false
   - type: textarea
     id: result
     attributes:
