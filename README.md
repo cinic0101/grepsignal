@@ -29,6 +29,7 @@ Issues are public, untrusted intake, not votes on truth or automatic publication
 - No third-party article images.
 - JSON is a first-class public output; HTML is a presentation layer.
 - Published records expose evidence links, falsifiers and limitations; discovery channels such as Hacker News are not counted as factual evidence.
+- Structured observers such as Epoch capability data and OpenRouter market telemetry may nominate items for research, but they are outside formal coverage and are not publication evidence.
 - Active Threads keep durable, provenance-linked revision history so a thesis can strengthen, weaken or change without requiring a new standalone Signal.
 - Optional browser-local AI reading aid using WebGPU; canonical intelligence remains static and model-independent.
 - GitHub Pages remains the initial dogfood target. Domain, hosting and feature expansion are not prerequisites for validating the core workflow.
