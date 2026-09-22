@@ -41,6 +41,7 @@ type ExplainThreadDelta = {
   new_updates: Array<{
     date: string;
     assessment: string;
+    effect_on_thesis?: string;
     change: string;
   }>;
 };
@@ -189,7 +190,8 @@ function taskInstruction(task: ExplainTask) {
     return [
       'Summarize only the published Thread revisions that are new since the reader last saw this Thread.',
       'Use two to four concise plain-English sentences. Lead with the material delta instead of restating the whole Thread.',
-      'Preserve each revision assessment direction and any uncertainty or scope in the supplied change notes.',
+      'Preserve each revision assessment direction, explicit effect_on_thesis, and any uncertainty or scope in the supplied change notes.',
+      'If effect_on_thesis is unchanged, say that plainly instead of implying the thesis moved.',
       'Use the current thesis only as context for understanding the delta.',
       'Do not invent causes, evidence, actors, trends, recommendations, forecasts, or changes that are not in NEW_REVISIONS.',
       'Do not treat multiple revisions as independent evidence unless the supplied revisions explicitly establish that.',
@@ -255,7 +257,7 @@ function taskInput(task: ExplainTask, input: ExplainInput) {
       `THREAD: ${delta.title}`,
       `CURRENT_THESIS: ${delta.thesis}`,
       `PREVIOUS_REVISION_DATE: ${delta.previous_revision_date ?? 'unknown'}`,
-      `NEW_REVISIONS: ${delta.new_updates.map((item) => `${item.date} [${item.assessment}]: ${item.change}`).join(' | ')}`,
+      `NEW_REVISIONS: ${delta.new_updates.map((item) => `${item.date} [${item.assessment}; thesis=${item.effect_on_thesis ?? 'legacy-unknown'}]: ${item.change}`).join(' | ')}`,
     ].join('\n');
   }
 
