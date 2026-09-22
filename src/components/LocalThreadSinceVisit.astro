@@ -7,6 +7,7 @@ interface ThreadLike {
   updates: Array<{
     date: string;
     assessment: string;
+    effect_on_thesis?: string;
     change: string;
   }>;
 }
@@ -20,7 +21,7 @@ const revisions = [...thread.updates]
   .sort((a, b) => b.date.localeCompare(a.date))
   .map((update) => ({
     ...update,
-    key: `${update.date}␟${update.assessment}␟${update.change}`,
+    key: `${update.date}␟${update.assessment}␟${update.effect_on_thesis ?? ""}␟${update.change}`,
   }));
 
 const payload = JSON.stringify({
@@ -57,6 +58,7 @@ const payload = JSON.stringify({
     key: string;
     date: string;
     assessment: string;
+    effect_on_thesis?: string;
     change: string;
   };
   type Payload = {
@@ -198,7 +200,7 @@ const payload = JSON.stringify({
           title: data.title,
           thesis: data.thesis,
           previous_revision_date: previous.date,
-          new_updates: newRevisions.map(({ date, assessment, change }) => ({ date, assessment, change })),
+          new_updates: newRevisions.map(({ date, assessment, effect_on_thesis, change }) => ({ date, assessment, effect_on_thesis, change })),
         }, (update) => {
           const visible = clean(update.visible);
           if (visible) result.textContent = visible;
