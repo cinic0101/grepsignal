@@ -431,6 +431,329 @@
       "payload": {
         "effect_on_thesis": "strengthened"
       }
+    },
+    {
+      "id": "evt-sig-open-weight-capability-cost-frontier-2026-09-22",
+      "record_type": "signal",
+      "record_id": "sig-open-weight-capability-cost-frontier-2026-09-22",
+      "expected_version": 0,
+      "kind": "register",
+      "recorded_at": "2026-09-22T07:26:20Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-22-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/70",
+        "accepted_at": "2026-09-22T07:26:09Z"
+      },
+      "note": "Register the bounded open-weight capability-cost Signal recovered after the Sep 22 daily cycle: MiMo-V2.6-Pro combines a current high-end independent benchmark score with substantially lower first-party API pricing than recent high-capability open-weight reference points.",
+      "evidence": [
+        {
+          "publisher": "Artificial Analysis",
+          "title": "MiMo-V2.6-Pro - Intelligence, Performance & Price Analysis",
+          "url": "https://artificialanalysis.ai/models/mimo-v2-6-pro",
+          "role": "independent_benchmark",
+          "published_at": "2026-09",
+          "retrieved_at": "2026-09-22T07:25:00Z",
+          "archive_url": null,
+          "lineage_id": "aa-mimo-v2-6-pro-2026-09"
+        },
+        {
+          "publisher": "Artificial Analysis",
+          "title": "Kimi K3 (max) - Intelligence, Performance & Price Analysis",
+          "url": "https://artificialanalysis.ai/models/kimi-k3/",
+          "role": "historical_benchmark",
+          "published_at": "2026-07",
+          "retrieved_at": "2026-09-22T07:25:00Z",
+          "archive_url": null,
+          "lineage_id": "aa-kimi-k3-2026-07"
+        },
+        {
+          "publisher": "Artificial Analysis",
+          "title": "GLM-5.3 (max) - Intelligence, Performance & Price Analysis",
+          "url": "https://artificialanalysis.ai/models/glm-5-3/",
+          "role": "historical_benchmark",
+          "published_at": "2026-08",
+          "retrieved_at": "2026-09-22T07:25:00Z",
+          "archive_url": null,
+          "lineage_id": "aa-glm-5-3-2026-08"
+        },
+        {
+          "publisher": "OpenRouter",
+          "title": "The Open Weight Models that Matter: June 2026",
+          "url": "https://openrouter.ai/blog/insights/the-open-weight-models-that-matter-june-2026/",
+          "role": "historical_market_analysis",
+          "published_at": "2026-06-27",
+          "retrieved_at": "2026-09-22T07:25:00Z",
+          "archive_url": null,
+          "lineage_id": "openrouter-open-weight-june-2026"
+        }
+      ],
+      "payload": {
+        "id": "sig-open-weight-capability-cost-frontier-2026-09-22",
+        "type": "cost_intelligence",
+        "status": "strengthening",
+        "title": "Xiaomi MiMo-V2.6-Pro — high-end open-weight capability moved sharply down the API cost curve",
+        "summary": "Artificial Analysis currently scores Xiaomi MiMo-V2.6-Pro at 46 on its Intelligence Index while listing Xiaomi API pricing at $0.435 per million input tokens and $0.87 per million output tokens. Recent open-weight leaders with similar current scores are materially more expensive: Kimi K3 (max) scores 44 at $3/$15 and GLM-5.3 (max) scores 45 at $1.40/$4.40. June's DeepSeek V4 Flash had already shown that open-weight agentic models could be extremely cheap; MiMo's material delta is that the high-capability end is now reaching a much lower API-cost band.",
+        "why_it_matters": "For teams that can use open weights or first-party APIs, the capability trade-off required to leave premium closed-model pricing is getting smaller. That changes model-routing, procurement, local-deployment evaluation, and the economics of running large agent workloads: price can fall sharply without moving as far down the independently measured capability curve as it did only months ago.",
+        "our_read": "The shift is not simply 'open models are cheap.' The reviewed sequence shows the low-cost and high-capability corners moving toward each other: DeepSeek V4 Flash established the cheap agentic corner, Kimi K3 and GLM-5.3 pushed the open-weight capability ceiling, and MiMo-V2.6-Pro now combines a current high-end score with sub-$1/M first-party input/output pricing.",
+        "second_order_effect": "As high-capability open-weight inference becomes cheaper, model choice can move from vendor access and token price toward workload fit, latency, deployment control, and verified task quality; premium closed-model pricing faces pressure on workloads where the capability gap is no longer decisive.",
+        "watch_next": "Track whether Epoch and other independent evaluations corroborate MiMo's capability, whether OpenRouter usage shows real adoption after credentialed telemetry is enabled, whether Xiaomi pricing persists, and whether the next open-weight leaders keep moving capability upward without giving back the cost gains.",
+        "source_count": 4,
+        "source_organization_count": 2,
+        "registered_at": "2026-09-22",
+        "evidence_since": "2026-06",
+        "falsifiers": [
+          "Independent evaluations on relevant coding, agentic, reasoning, and multimodal workloads place MiMo-V2.6-Pro materially below the capability band implied by the current Artificial Analysis score.",
+          "The sub-$1/M Xiaomi pricing proves temporary, highly constrained, or unavailable at meaningful production scale while comparable high-capability open-weight models remain materially more expensive.",
+          "Subsequent open-weight capability leaders repeatedly return to substantially higher inference prices, leaving low-cost and high-capability models as separate market segments rather than a converging frontier."
+        ],
+        "limitations": [
+          "Artificial Analysis is one composite benchmark suite; its Intelligence Index should not be treated as a universal model-quality score and its methodology evolves over time.",
+          "The price comparison uses first-party API prices reported by Artificial Analysis. It does not include self-hosting hardware, engineering, utilization, energy, or operations costs.",
+          "Kimi K3, GLM-5.3, DeepSeek V4 Flash, and MiMo-V2.6 differ in architecture, modalities, speed, context behavior, licensing, and workload strengths, so equal or nearby index scores do not make them interchangeable.",
+          "MiMo-V2.6 is newly released. Adoption, production reliability, rate limits, provider diversity, and long-run pricing are not yet established.",
+          "The first live Epoch observer snapshot reviewed on September 22 does not include MiMo-V2.6 in its observed top-20 ECI set; Epoch therefore does not currently corroborate the MiMo capability point."
+        ],
+        "sources": [
+          {
+            "publisher": "Artificial Analysis",
+            "title": "MiMo-V2.6-Pro - Intelligence, Performance & Price Analysis",
+            "url": "https://artificialanalysis.ai/models/mimo-v2-6-pro",
+            "role": "independent_benchmark",
+            "published_at": "2026-09",
+            "retrieved_at": "2026-09-22T07:25:00Z",
+            "archive_url": null,
+            "lineage_id": "aa-mimo-v2-6-pro-2026-09"
+          },
+          {
+            "publisher": "Artificial Analysis",
+            "title": "Kimi K3 (max) - Intelligence, Performance & Price Analysis",
+            "url": "https://artificialanalysis.ai/models/kimi-k3/",
+            "role": "historical_benchmark",
+            "published_at": "2026-07",
+            "retrieved_at": "2026-09-22T07:25:00Z",
+            "archive_url": null,
+            "lineage_id": "aa-kimi-k3-2026-07"
+          },
+          {
+            "publisher": "Artificial Analysis",
+            "title": "GLM-5.3 (max) - Intelligence, Performance & Price Analysis",
+            "url": "https://artificialanalysis.ai/models/glm-5-3/",
+            "role": "historical_benchmark",
+            "published_at": "2026-08",
+            "retrieved_at": "2026-09-22T07:25:00Z",
+            "archive_url": null,
+            "lineage_id": "aa-glm-5-3-2026-08"
+          },
+          {
+            "publisher": "OpenRouter",
+            "title": "The Open Weight Models that Matter: June 2026",
+            "url": "https://openrouter.ai/blog/insights/the-open-weight-models-that-matter-june-2026/",
+            "role": "historical_market_analysis",
+            "published_at": "2026-06-27",
+            "retrieved_at": "2026-09-22T07:25:00Z",
+            "archive_url": null,
+            "lineage_id": "openrouter-open-weight-june-2026"
+          }
+        ]
+      }
+    },
+    {
+      "id": "evt-thread-open-weight-capability-cost-frontier-2026-09-22",
+      "record_type": "thread",
+      "record_id": "thread-open-weight-capability-cost-frontier",
+      "expected_version": 0,
+      "kind": "register",
+      "recorded_at": "2026-09-22T07:26:21Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-22-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/70",
+        "accepted_at": "2026-09-22T07:26:09Z"
+      },
+      "note": "Create the Open-Weight Capability–Cost Frontier Thread from the bounded cross-actor backfill. The thesis is convergence between the low-cost and high-capability corners, not that every open-weight model is frontier-class or that API price equals self-host cost.",
+      "evidence": [
+        {
+          "publisher": "Artificial Analysis",
+          "title": "MiMo-V2.6-Pro - Intelligence, Performance & Price Analysis",
+          "url": "https://artificialanalysis.ai/models/mimo-v2-6-pro",
+          "role": "independent_benchmark",
+          "published_at": "2026-09",
+          "retrieved_at": "2026-09-22T07:25:00Z",
+          "archive_url": null,
+          "lineage_id": "aa-mimo-v2-6-pro-2026-09"
+        },
+        {
+          "publisher": "Artificial Analysis",
+          "title": "Kimi K3 (max) - Intelligence, Performance & Price Analysis",
+          "url": "https://artificialanalysis.ai/models/kimi-k3/",
+          "role": "historical_benchmark",
+          "published_at": "2026-07",
+          "retrieved_at": "2026-09-22T07:25:00Z",
+          "archive_url": null,
+          "lineage_id": "aa-kimi-k3-2026-07"
+        },
+        {
+          "publisher": "Artificial Analysis",
+          "title": "GLM-5.3 (max) - Intelligence, Performance & Price Analysis",
+          "url": "https://artificialanalysis.ai/models/glm-5-3/",
+          "role": "historical_benchmark",
+          "published_at": "2026-08",
+          "retrieved_at": "2026-09-22T07:25:00Z",
+          "archive_url": null,
+          "lineage_id": "aa-glm-5-3-2026-08"
+        },
+        {
+          "publisher": "OpenRouter",
+          "title": "The Open Weight Models that Matter: June 2026",
+          "url": "https://openrouter.ai/blog/insights/the-open-weight-models-that-matter-june-2026/",
+          "role": "historical_market_analysis",
+          "published_at": "2026-06-27",
+          "retrieved_at": "2026-09-22T07:25:00Z",
+          "archive_url": null,
+          "lineage_id": "openrouter-open-weight-june-2026"
+        }
+      ],
+      "payload": {
+        "id": "thread-open-weight-capability-cost-frontier",
+        "title": "Open-Weight Capability–Cost Frontier",
+        "status": "strengthening",
+        "summary": "Open-weight model competition is increasingly combining high independently measured capability with much lower inference prices rather than forcing a choice between the two.",
+        "thesis": "The open-weight model frontier is shifting from separate high-capability and low-cost corners toward models that combine both, moving usable model capability down the inference-cost curve and increasing pressure on premium closed-model economics for workloads where the remaining capability gap is not decisive.",
+        "created_at": "2026-09-22",
+        "last_updated": "2026-09-22",
+        "evidence_since": "2026-06",
+        "signal_count": 1,
+        "updates": [
+          {
+            "id": "threadrev-open-weight-capability-cost-frontier-2026-09-22",
+            "date": "2026-09-22",
+            "assessment": "strengthening",
+            "change": "Bounded historical review shows a coherent cross-actor sequence: DeepSeek V4 Flash established a very low-cost open-weight agentic corner, Kimi K3 and GLM-5.3 raised the high-capability end, and MiMo-V2.6-Pro now combines a current Artificial Analysis score of 46 with sub-$1/M first-party input/output pricing. The Thread tracks whether this convergence persists beyond one benchmark and one newly released model.",
+            "signal_ids": [
+              "sig-open-weight-capability-cost-frontier-2026-09-22"
+            ],
+            "sources": [
+              {
+                "publisher": "Artificial Analysis",
+                "title": "MiMo-V2.6-Pro - Intelligence, Performance & Price Analysis",
+                "url": "https://artificialanalysis.ai/models/mimo-v2-6-pro",
+                "role": "independent_benchmark",
+                "published_at": "2026-09",
+                "retrieved_at": "2026-09-22T07:25:00Z",
+                "archive_url": null,
+                "lineage_id": "aa-mimo-v2-6-pro-2026-09"
+              },
+              {
+                "publisher": "Artificial Analysis",
+                "title": "Kimi K3 (max) - Intelligence, Performance & Price Analysis",
+                "url": "https://artificialanalysis.ai/models/kimi-k3/",
+                "role": "historical_benchmark",
+                "published_at": "2026-07",
+                "retrieved_at": "2026-09-22T07:25:00Z",
+                "archive_url": null,
+                "lineage_id": "aa-kimi-k3-2026-07"
+              },
+              {
+                "publisher": "Artificial Analysis",
+                "title": "GLM-5.3 (max) - Intelligence, Performance & Price Analysis",
+                "url": "https://artificialanalysis.ai/models/glm-5-3/",
+                "role": "historical_benchmark",
+                "published_at": "2026-08",
+                "retrieved_at": "2026-09-22T07:25:00Z",
+                "archive_url": null,
+                "lineage_id": "aa-glm-5-3-2026-08"
+              },
+              {
+                "publisher": "OpenRouter",
+                "title": "The Open Weight Models that Matter: June 2026",
+                "url": "https://openrouter.ai/blog/insights/the-open-weight-models-that-matter-june-2026/",
+                "role": "historical_market_analysis",
+                "published_at": "2026-06-27",
+                "retrieved_at": "2026-09-22T07:25:00Z",
+                "archive_url": null,
+                "lineage_id": "openrouter-open-weight-june-2026"
+              }
+            ],
+            "pattern_scope": "cross_actor",
+            "event_independence": "independent_events",
+            "mechanism_coherence": "strong"
+          }
+        ],
+        "analysis": {
+          "evidence_map": [
+            {
+              "id": "low-cost-agentic-corner",
+              "title": "Low-cost agentic capability was already real",
+              "summary": "OpenRouter's June review identified DeepSeek V4 Flash as a performance/cost Pareto point, showing that very cheap open-weight agentic inference predated MiMo-V2.6.",
+              "signal_ids": [
+                "sig-open-weight-capability-cost-frontier-2026-09-22"
+              ]
+            },
+            {
+              "id": "high-capability-open-weight-ceiling",
+              "title": "The high-capability end kept moving",
+              "summary": "Artificial Analysis currently places Kimi K3 (max) at 44 and GLM-5.3 (max) at 45, providing recent independent reference points for the upper end of open-weight capability before MiMo-V2.6.",
+              "signal_ids": [
+                "sig-open-weight-capability-cost-frontier-2026-09-22"
+              ]
+            },
+            {
+              "id": "capability-cost-convergence",
+              "title": "Capability and cost are converging",
+              "summary": "MiMo-V2.6-Pro's current Artificial Analysis score of 46 at Xiaomi API pricing of $0.435/M input and $0.87/M output moves a high-end open-weight capability point into a substantially lower price band than the recent Kimi and GLM leaders.",
+              "signal_ids": [
+                "sig-open-weight-capability-cost-frontier-2026-09-22"
+              ]
+            }
+          ],
+          "boundaries": [
+            "Artificial Analysis is a composite benchmark suite, not a universal measure of model quality; workload-specific rankings can differ.",
+            "API pricing is not self-host total cost, and provider prices, caching, batching, and negotiated rates can change the practical economics.",
+            "The compared models differ in architecture, modality support, throughput, context behavior, and licensing, so nearby index scores do not imply interchangeability.",
+            "MiMo-V2.6 is too new for GrepSignal to claim broad adoption or durable production reliability.",
+            "Epoch's current ECI snapshot does not yet corroborate MiMo-V2.6 as a top observed capability point."
+          ],
+          "view_tests": {
+            "strengthen": [
+              "Independent evaluations beyond Artificial Analysis place new open-weight models near the high-capability frontier while first-party or widely available inference pricing remains in the low-cost band.",
+              "OpenRouter or other usage telemetry shows sustained developer adoption of these high-capability, low-cost open-weight models in real workloads.",
+              "Successive open-weight releases continue raising capability without reverting to the higher API prices seen in recent leaders such as Kimi K3 and GLM-5.3."
+            ],
+            "weaken": [
+              "Independent task suites consistently place the low-priced models materially below premium open-weight or closed-model capability on the workloads developers actually route to them.",
+              "Low launch pricing proves temporary or unavailable at production scale, eliminating the apparent capability-cost convergence.",
+              "The next several open-weight capability leaders require materially higher inference prices, indicating that MiMo-V2.6 was an isolated price point rather than a durable frontier shift."
+            ]
+          }
+        },
+        "signal_relations": {
+          "supporting": [
+            "sig-open-weight-capability-cost-frontier-2026-09-22"
+          ],
+          "contradicting": []
+        }
+      }
     }
   ]
 }
