@@ -15,6 +15,22 @@ const templatePatterns = [
   { name: 'material-change-not-but', re: /\bmaterial (?:change|shift)\b[^.!?]{0,120}\bnot\b[^.!?]{0,120}\bbut\b/i },
   { name: 'x-is-becoming-y', re: /\b(?:is|are) becoming\b/i },
 ];
+const genericWatchPatterns = [
+  /\bmonitor (?:the )?(?:space|ecosystem|landscape)\b/i,
+  /\bwatch (?:the )?(?:space|ecosystem|landscape)\b/i,
+  /\bsee how (?:this|it|the space|the ecosystem) evolves\b/i,
+];
+const contentWords = (text) => new Set(
+  (String(text).toLowerCase().match(/[\p{L}\p{N}'’-]+/gu) ?? [])
+    .filter((word) => word.length > 3)
+);
+const overlap = (a, b) => {
+  const left = contentWords(a);
+  const right = contentWords(b);
+  if (left.size < 4 || right.size < 4) return 0;
+  const shared = [...left].filter((word) => right.has(word)).length;
+  return shared / Math.min(left.size, right.size);
+};
 
 function inspectText(recordType, id, field, text) {
   if (!text) return;
@@ -41,8 +57,19 @@ for (const signal of data.signals.filter((record) => record.lifecycle === 'activ
   inspectText('signal', signal.id, 'title', signal.title);
   inspectText('signal', signal.id, 'summary', signal.summary);
   inspectText('signal', signal.id, 'why_it_matters', signal.why_it_matters);
+  inspectText('signal', signal.id, 'our_read', signal.our_read);
   inspectText('signal', signal.id, 'second_order_effect', signal.second_order_effect);
   inspectText('signal', signal.id, 'watch_next', signal.watch_next);
+
+  if (signal.our_read && overlap(signal.summary, signal.our_read) >= 0.75) {
+    advisories.push({kind:'redundant-interpretation',recordType:'signal',id:signal.id,field:'our_read',detail:'high lexical overlap with summary; verify this adds interpretation'});
+  }
+  if (overlap(signal.summary, signal.why_it_matters) >= 0.8) {
+    advisories.push({kind:'redundant-materiality',recordType:'signal',id:signal.id,field:'why_it_matters',detail:'high lexical overlap with summary; verify this explains why the change is worth surfacing'});
+  }
+  if (signal.watch_next && genericWatchPatterns.some((pattern) => pattern.test(signal.watch_next))) {
+    advisories.push({kind:'generic-watch',recordType:'signal',id:signal.id,field:'watch_next',detail:'watch item looks generic rather than falsifiable or decision-relevant'});
+  }
 
   if (sentences(signal.summary).length > 2) {
     advisories.push({
