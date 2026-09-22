@@ -51,8 +51,11 @@ if (data.publication_status === 'published') {
   const publishedSignalIds = new Set(data.signals.map((signal) => signal.id));
   for (const signal of data.signals) {
     for (const key of ['id', 'type', 'status', 'title', 'summary', 'why_it_matters',
-      'second_order_effect', 'watch_next', 'registered_at', 'evidence_since']) {
+      'registered_at', 'evidence_since']) {
       if (!nonEmpty(signal[key])) fail(`published signal ${signal.id ?? '<unknown>'} missing ${key}`);
+    }
+    for (const key of ['our_read', 'second_order_effect', 'watch_next']) {
+      if (signal[key] != null && !nonEmpty(signal[key])) fail(`published signal ${signal.id} has empty optional ${key}`);
     }
     if (!Array.isArray(signal.sources) || signal.sources.length === 0) {
       fail(`published signal ${signal.id} needs linked evidence`);
@@ -102,6 +105,9 @@ if (data.publication_status === 'published') {
       updateIds.add(update.id);
       if (!['emerging', 'strengthening', 'stable', 'weakening', 'falsified'].includes(update.assessment)) {
         fail(`published thread ${thread.id} has invalid revision assessment`);
+      }
+      if (update.effect_on_thesis != null && !['unchanged', 'strengthened', 'weakened', 'revised', 'falsified'].includes(update.effect_on_thesis)) {
+        fail(`published thread ${thread.id} revision ${update.id} has invalid effect_on_thesis`);
       }
       if (!Array.isArray(update.signal_ids) || !Array.isArray(update.sources)) {
         fail(`published thread ${thread.id} revision ${update.id} needs signal_ids and sources arrays`);
