@@ -12,6 +12,7 @@ type ThreadRevision = Thread['updates'][number] & {
   pattern_scope?: 'cross_actor' | 'same_actor' | 'mixed' | 'unclear';
   event_independence?: 'independent_events' | 'same_event_repeated' | 'mixed' | 'unclear';
   mechanism_coherence?: 'strong' | 'partial' | 'weak' | 'unclear';
+  effect_on_thesis?: 'unchanged' | 'strengthened' | 'weakened' | 'revised' | 'falsified';
 };
 type ThreadAnalysis = {
   evidence_map: Array<{
@@ -59,6 +60,13 @@ const statusMark: Record<string, string> = {
   stable: '→',
   weakening: '↓',
   falsified: '×',
+};
+const thesisEffectHeading: Record<string, string> = {
+  unchanged: 'Evidence added · Thesis unchanged',
+  strengthened: 'Thesis strengthened',
+  weakened: 'Thesis weakened',
+  revised: 'Thesis revised',
+  falsified: 'Thesis falsified',
 };
 const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
@@ -133,8 +141,8 @@ const threadJsonLd = {
           <section class="latest-change" id="latest-change">
             <div class="latest-change-head">
               <div>
-                <span class="section-kicker">LATEST CHANGE</span>
-                <h2>Why our view changed</h2>
+                <span class="section-kicker">LATEST UPDATE</span>
+                <h2>{latestUpdate.effect_on_thesis ? thesisEffectHeading[latestUpdate.effect_on_thesis] : 'Why our view changed'}</h2>
               </div>
               <div class="latest-stamp">
                 <time datetime={latestUpdate.date}>{formatDate(latestUpdate.date)}</time>
@@ -142,7 +150,7 @@ const threadJsonLd = {
               </div>
             </div>
             <p>{latestUpdate.change}</p>
-            {(latestUpdate.pattern_scope || latestUpdate.event_independence || latestUpdate.mechanism_coherence) && (
+            {(latestUpdate.pattern_scope || latestUpdate.event_independence || latestUpdate.mechanism_coherence || latestUpdate.effect_on_thesis) && (
               <div class="interpretation-strip" aria-label="Latest revision interpretation">
                 {latestUpdate.pattern_scope && (
                   <div><span>Pattern</span><strong>{latestUpdate.pattern_scope.replace('_', ' ')}</strong></div>
@@ -153,7 +161,7 @@ const threadJsonLd = {
                 {latestUpdate.mechanism_coherence && (
                   <div><span>Mechanism</span><strong>{latestUpdate.mechanism_coherence}</strong></div>
                 )}
-                <div><span>Effect on thesis</span><strong>{latestUpdate.assessment}</strong></div>
+                <div><span>Effect on thesis</span><strong>{latestUpdate.effect_on_thesis ?? latestUpdate.assessment}</strong></div>
               </div>
             )}
           </section>
@@ -268,7 +276,7 @@ const threadJsonLd = {
             </div>
             <span class="count">{updates.length} revision{updates.length === 1 ? '' : 's'}</span>
           </div>
-          <p class="history-intro">A Thread revision is added only when reviewed evidence materially changes the tracked interpretation. New coverage alone is not a revision.</p>
+          <p class="history-intro">A Thread revision is added only when reviewed evidence is materially worth adding to the tracked interpretation. The thesis may remain unchanged; new coverage alone is not a revision.</p>
           <div class="timeline">
             {updates.map((update, index) => {
               const linkedSignals = update.signal_ids
@@ -286,8 +294,9 @@ const threadJsonLd = {
                       <span>{statusMark[update.assessment] ?? '·'} {update.assessment}</span>
                     </div>
                     <p class="timeline-change">{update.change}</p>
-                    {(update.pattern_scope || update.event_independence || update.mechanism_coherence) && (
+                    {(update.pattern_scope || update.event_independence || update.mechanism_coherence || update.effect_on_thesis) && (
                       <div class="pattern-tags" aria-label="Revision interpretation">
+                        {update.effect_on_thesis && <span>thesis: {update.effect_on_thesis}</span>}
                         {update.pattern_scope && <span>{update.pattern_scope.replace('_', ' ')}</span>}
                         {update.event_independence && <span>{update.event_independence.replaceAll('_', ' ')}</span>}
                         {update.mechanism_coherence && <span>mechanism: {update.mechanism_coherence}</span>}
