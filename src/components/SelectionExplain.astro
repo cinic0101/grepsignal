@@ -45,6 +45,7 @@
 
   if (action && card && close && quote && state && result) {
     let captured: { text: string; context: string } | null = null;
+    let requestVersion = 0;
 
     const clean = (value: string) => value
       .replace(/\s+/g, ' ')
@@ -56,7 +57,6 @@
     const hideAction = () => { action.hidden = true; };
 
     const captureSelection = () => {
-      if (!card.hidden) return;
       const selection = window.getSelection();
       if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
         hideAction();
@@ -105,9 +105,11 @@
 
     action.addEventListener('click', async () => {
       if (!captured) return;
+      const request = { ...captured };
+      const version = ++requestVersion;
       hideAction();
       card.hidden = false;
-      quote.textContent = captured.text;
+      quote.textContent = request.text;
       state.hidden = false;
       state.textContent = 'Preparing Local AI…';
       result.hidden = true;
@@ -118,12 +120,14 @@
         if (manager.getState().phase !== 'ready') {
           await manager.enable();
         }
+        if (version !== requestVersion) return;
 
         state.textContent = 'Explaining the selected passage locally…';
         const generated = clean(await manager.generate('selection_explain', {
-          selected_text: captured.text,
-          context: captured.context,
+          selected_text: request.text,
+          context: request.context,
         }, (update) => {
+          if (version !== requestVersion) return;
           const visible = clean(update.visible);
           if (visible) {
             result.textContent = visible;
@@ -131,11 +135,13 @@
           }
         }));
 
+        if (version !== requestVersion) return;
         if (!generated) throw new Error('Local AI did not produce an explanation.');
         result.textContent = generated;
         result.hidden = false;
         state.hidden = true;
       } catch (cause) {
+        if (version !== requestVersion) return;
         state.hidden = false;
         state.textContent = cause instanceof Error
           ? `${cause.message} The original page remains unchanged.`
@@ -144,6 +150,7 @@
     });
 
     close.addEventListener('click', () => {
+      requestVersion += 1;
       card.hidden = true;
       result.hidden = true;
       state.hidden = false;
@@ -151,6 +158,7 @@
 
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
+        requestVersion += 1;
         hideAction();
         card.hidden = true;
       }

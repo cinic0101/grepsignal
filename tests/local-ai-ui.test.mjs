@@ -30,3 +30,13 @@ test('Local AI runtime exposes bounded selection and thread-delta tasks', () => 
   assert.match(selection, /selected_text/);
   assert.match(selection, /short surrounding passage/);
 });
+
+
+test('Selection Explain can be reused while the result panel stays open', () => {
+  const selection = read('src/components/SelectionExplain.astro');
+
+  assert.doesNotMatch(selection, /if \(!card\.hidden\) return/);
+  assert.match(selection, /const request = \{ \.\.\.captured \}/);
+  assert.match(selection, /let requestVersion = 0/);
+  assert.match(selection, /version !== requestVersion/);
+});
