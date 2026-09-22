@@ -5,12 +5,13 @@ import { pathToFileURL } from 'node:url';
 
 const TYPES = {signal:'signals', thread:'threads', prediction:'predictions'};
 const ASSESSMENTS = ['emerging','strengthening','stable','weakening','falsified'];
+const THESIS_EFFECTS = ['unchanged','strengthened','weakened','revised','falsified'];
 const KINDS = ['register','revise','review','supersede','retract','resolve','publication','relate'];
 const ID = /^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$/;
 const FORBIDDEN = /^(raw_html|raw_text|source_text|source_body|image_bytes|screenshot|prompt|private_notes|cache_file|secret|token|__proto__|constructor|prototype)$/;
 const patchKeys = {
-  signal:['title','summary','why_it_matters','second_order_effect','watch_next','status','falsifiers','limitations','sources','source_count','source_organization_count'],
-  thread:['title','summary','thesis','status','analysis'],
+  signal:['title','summary','why_it_matters','our_read','second_order_effect','watch_next','status','falsifiers','limitations','sources','source_count','source_organization_count'],
+  thread:['title','summary','thesis','status','analysis','effect_on_thesis'],
 };
 export function assert(ok,message) { if (!ok) throw new Error(`Accountability: ${message}`); }
 function text(s) { return typeof s === 'string' && s.trim().length > 0 && s.length <= 10000; }
@@ -178,7 +179,7 @@ export function replay(baseline,journal,baselineLinks=null) {
     const p=e.payload;let item=records.get(e.record_id);
     if (e.kind === 'register') {
       assert(!item && e.expected_version === 0,'record already registered');
-      const allowed=e.record_type === 'signal' ? ['id','type','status','title','summary','why_it_matters','second_order_effect','watch_next','source_count','source_organization_count','registered_at','evidence_since','falsifiers','limitations','sources'] : e.record_type === 'thread' ? ['id','title','status','summary','thesis','created_at','last_updated','evidence_since','signal_count','updates','analysis','signal_relations'] : ['id','thread_id','claim','created_at','deadline','success_criterion','failure_criterion','insufficient_evidence_policy','resolution_sources','initial_probability'];
+      const allowed=e.record_type === 'signal' ? ['id','type','status','title','summary','why_it_matters','our_read','second_order_effect','watch_next','source_count','source_organization_count','registered_at','evidence_since','falsifiers','limitations','sources'] : e.record_type === 'thread' ? ['id','title','status','summary','thesis','created_at','last_updated','evidence_since','signal_count','updates','analysis','signal_relations'] : ['id','thread_id','claim','created_at','deadline','success_criterion','failure_criterion','insufficient_evidence_policy','resolution_sources','initial_probability'];
       exact(p,[...allowed,'first_observed_at'],'registration');assert(p.id === e.record_id,'registration ID mismatch');
       if (e.record_type === 'prediction') {
         forecast(p);assert(records.get(p.thread_id)?.type === 'thread','unknown forecast Thread');
@@ -204,13 +205,26 @@ export function replay(baseline,journal,baselineLinks=null) {
       assert(e.record_type !== 'prediction','prediction terms are immutable');
       exact(p,patchKeys[e.record_type],'revision patch');
       assert(Object.keys(p).length > 0 && e.evidence.length > 0,'revision needs changes and evidence');
-      if ('status' in p) assert(ASSESSMENTS.includes(p.status),'invalid assessment');
-      changedFields=Object.fromEntries(Object.entries(p).filter(([key,value]) => JSON.stringify(canonical(r[key])) !== JSON.stringify(canonical(value))).map(([key,value]) => [key,{before:structuredClone(r[key] ?? null),after:structuredClone(value)}]));
-      assert(Object.keys(changedFields).length > 0,'revision must materially change at least one field');
-      Object.assign(r,structuredClone(p));r.last_changed_at=e.recorded_at;
+      const patch=structuredClone(p);
+      const explicitThreadEffect=e.record_type === 'thread' ? (patch.effect_on_thesis ?? null) : null;
       if (e.record_type === 'thread') {
+        if (explicitThreadEffect != null) assert(THESIS_EFFECTS.includes(explicitThreadEffect),'invalid effect_on_thesis');
+        delete patch.effect_on_thesis;
+      }
+      if ('status' in patch) assert(ASSESSMENTS.includes(patch.status),'invalid assessment');
+      changedFields=Object.fromEntries(Object.entries(patch).filter(([key,value]) => JSON.stringify(canonical(r[key])) !== JSON.stringify(canonical(value))).map(([key,value]) => [key,{before:structuredClone(r[key] ?? null),after:structuredClone(value)}]));
+      assert(Object.keys(changedFields).length > 0 || explicitThreadEffect !== null,'revision must materially change a field or record an explicit Thread evidence delta');
+      const previousStatus=r.status;
+      Object.assign(r,patch);r.last_changed_at=e.recorded_at;
+      if (e.record_type === 'thread') {
+        const inferredThreadEffect=explicitThreadEffect
+          ?? (Object.hasOwn(changedFields,'thesis') ? 'revised'
+            : Object.hasOwn(changedFields,'status') && r.status === 'falsified' ? 'falsified'
+            : Object.hasOwn(changedFields,'status') && r.status === 'weakening' ? 'weakened'
+            : Object.hasOwn(changedFields,'status') && r.status === 'strengthening' && previousStatus !== 'strengthening' ? 'strengthened'
+            : 'unchanged');
         r.last_updated=e.recorded_at.slice(0,10);
-        r.updates.push({id:e.id,date:r.last_updated,assessment:r.status,change:e.note,signal_ids:[],sources:structuredClone(e.evidence)});
+        r.updates.push({id:e.id,date:r.last_updated,assessment:r.status,effect_on_thesis:inferredThreadEffect,change:e.note,signal_ids:[],sources:structuredClone(e.evidence)});
       }
     } else if (e.kind === 'review') {
       exact(p,['outcome','counterevidence_checked','next_review_at'],'review');

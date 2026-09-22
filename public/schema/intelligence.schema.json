@@ -69,8 +69,6 @@
           "title",
           "summary",
           "why_it_matters",
-          "second_order_effect",
-          "watch_next",
           "source_count",
           "source_organization_count",
           "evidence_since",
@@ -120,13 +118,20 @@
             "type": "string"
           },
           "why_it_matters": {
-            "type": "string"
+            "type": "string",
+            "description": "Concise materiality statement: why this verified change is worth surfacing."
+          },
+          "our_read": {
+            "type": ["string", "null"],
+            "description": "Optional GrepSignal interpretation that adds meaning beyond the source summary. Omit or null when no additional interpretation is earned."
           },
           "second_order_effect": {
-            "type": "string"
+            "type": ["string", "null"],
+            "description": "Optional downstream consequence. Omit or null rather than manufacturing a second-order effect."
           },
           "watch_next": {
-            "type": "string"
+            "type": ["string", "null"],
+            "description": "Optional evidence that could update the judgment. Omit or null when there is no specific useful watch item."
           },
           "source_count": {
             "type": "integer",
@@ -427,6 +432,11 @@
                     "weakening",
                     "falsified"
                   ]
+                },
+                "effect_on_thesis": {
+                  "type": ["string", "null"],
+                  "enum": ["unchanged", "strengthened", "weakened", "revised", "falsified", null],
+                  "description": "How this revision affects the tracked thesis. Legacy revisions may omit this field."
                 },
                 "change": {
                   "type": "string"

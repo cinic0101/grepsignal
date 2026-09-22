@@ -141,22 +141,34 @@ const articleJsonLd = {
     <div class="detail-grid">
       <div class="detail-main">
         <section class="detail-section">
-          <span class="section-kicker">INTERPRETATION</span>
-          <h2>Why it matters</h2>
+          <span class="section-kicker">MATERIALITY</span>
+          <h2>Why we're surfacing it</h2>
           <p>{signal.why_it_matters}</p>
         </section>
 
-        <section class="detail-section second-order-section">
-          <span class="section-kicker">SECOND-ORDER EFFECT</span>
-          <h2>What changes next</h2>
-          <p>{signal.second_order_effect}</p>
-        </section>
+        {signal.our_read && (
+          <section class="detail-section">
+            <span class="section-kicker">INTERPRETATION</span>
+            <h2>Our read</h2>
+            <p>{signal.our_read}</p>
+          </section>
+        )}
 
-        <section class="detail-section">
-          <span class="section-kicker">MONITOR</span>
-          <h2>Watch next</h2>
-          <p>{signal.watch_next}</p>
-        </section>
+        {signal.second_order_effect && (
+          <section class="detail-section second-order-section">
+            <span class="section-kicker">SECOND-ORDER EFFECT</span>
+            <h2>What changes next</h2>
+            <p>{signal.second_order_effect}</p>
+          </section>
+        )}
+
+        {signal.watch_next && (
+          <section class="detail-section">
+            <span class="section-kicker">MONITOR</span>
+            <h2>Watch next</h2>
+            <p>{signal.watch_next}</p>
+          </section>
+        )}
 
         <section class="detail-section" id="evidence">
           <div class="section-heading-row">

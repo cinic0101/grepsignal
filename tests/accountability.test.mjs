@@ -20,6 +20,19 @@ test('Thread revision preserves earlier history',()=>{
   const e=event({record_type:'thread',record_id:'thread-example',payload:{status:'weakening'}});
   const {data}=run([e]);assert.equal(data.threads[0].updates.length,2);assert.equal(data.threads[0].updates[0].id,'rev-old');
 });
+test('Thread can record material evidence while thesis stays unchanged',()=>{
+  const e=event({record_type:'thread',record_id:'thread-example',note:'New reviewed evidence is worth recording; the thesis is unchanged.',payload:{effect_on_thesis:'unchanged'}});
+  const {data}=run([e]);
+  assert.equal(data.threads[0].status,'emerging');
+  assert.equal(data.threads[0].thesis,'A testable thesis');
+  assert.equal(data.threads[0].updates.length,2);
+  assert.equal(data.threads[0].updates[1].effect_on_thesis,'unchanged');
+});
+test('Signal revision may add an earned our_read without padding other fields',()=>{
+  const e=event({payload:{our_read:'This is the interpretation GrepSignal adds beyond the source summary.'}});
+  const {data}=run([e]);
+  assert.equal(data.signals[0].our_read,'This is the interpretation GrepSignal adds beyond the source summary.');
+});
 test('review does not change judgment or intelligence publication time',()=>{
   const e=event({kind:'review',record_type:'thread',record_id:'thread-example',payload:{outcome:'unchanged',counterevidence_checked:['Checked original evaluation; no new result'],next_review_at:'2026-09-27T00:00:00Z'}});
   const {data}=run([e]);assert.equal(data.generated_at,baseline.generated_at);assert.equal(data.threads[0].status,'emerging');assert.equal(data.threads[0].last_reviewed_at,e.recorded_at);assert.equal(data.threads[0].last_changed_at,null);

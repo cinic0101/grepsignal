@@ -25,6 +25,8 @@ test('Local AI runtime exposes bounded selection and thread-delta tasks', () => 
   assert.match(runtime, /Use only the supplied approved intelligence/);
   assert.match(since, /grepsignal\.thread-last-visit\.v1/);
   assert.match(since, /new_updates/);
+  assert.match(since, /effect_on_thesis/);
+  assert.match(runtime, /thesis=.*effect_on_thesis|effect_on_thesis/);
   assert.match(selection, /selected_text/);
   assert.match(selection, /short surrounding passage/);
 });
