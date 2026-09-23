@@ -754,6 +754,415 @@
           "contradicting": []
         }
       }
+    },
+    {
+      "id": "evt-thread-decision-native-runtimes-2026-09-23",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 1,
+      "kind": "revise",
+      "recorded_at": "2026-09-23T04:19:00Z",
+      "proposed_by": "ChatGPT daily review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "daily_editorial_publish",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/71",
+        "accepted_at": "2026-09-23T04:19:00Z"
+      },
+      "note": "JevBench v1.3.0 keeps Jev first on its published balanced score while several open or general-model-derived alternatives sit close behind, and llm-typesafe exposes the same bounded yes/no, choice, and score contract through general LLM tooling. This strengthens the decision-native runtime/interface pattern while narrowing the uniquely separate model-class hypothesis; broad production advantage remains unproven.",
+      "evidence": [
+        {
+          "url": "https://www.benchmarkheaven.com/jev-models",
+          "publisher": "Benchmark Heaven",
+          "title": "Jev-class decision models — JevBench v1.3.0",
+          "role": "independent_benchmark",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "url": "https://simonwillison.net/2026/Sep/22/llm-typesafe/",
+          "publisher": "Simon Willison’s Weblog",
+          "title": "Release: llm-typesafe 0.1a0",
+          "role": "primary_practitioner_release",
+          "published_at": "2026-09-22",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "strengthened"
+      }
+    },
+    {
+      "id": "evt-thread-open-weight-capability-cost-frontier-2026-09-23",
+      "record_type": "thread",
+      "record_id": "thread-open-weight-capability-cost-frontier",
+      "expected_version": 1,
+      "kind": "revise",
+      "recorded_at": "2026-09-23T04:19:01Z",
+      "proposed_by": "ChatGPT daily review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "daily_editorial_publish",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/71",
+        "accepted_at": "2026-09-23T04:19:00Z"
+      },
+      "note": "Interconnects adds adoption and research-use follow-through beyond yesterday’s benchmark/API-price point, while Ornn’s sampled analysis shows open-weight cost advantages at several matched capability thresholds and some self-hosting cases. This strengthens the Thread without claiming universal cost superiority: closed models remain cheaper at some thresholds, the closed frontier still leads at the top end, and the Ornn hardware comparison has measurement and commercial-interest caveats.",
+      "evidence": [
+        {
+          "url": "https://www.interconnects.ai/p/the-current-balance-of-power-in-open",
+          "publisher": "Interconnects",
+          "title": "The current balance of power in open models",
+          "role": "independent_market_analysis",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "url": "https://data.ornn.com/publications/the-economics-of-open-weight-inference",
+          "publisher": "Ornn Data",
+          "title": "The Economics of Open-Weight Inference",
+          "role": "deployment_economics_analysis",
+          "published_at": "2026-09-07",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "strengthened"
+      }
+    },
+    {
+      "id": "evt-thread-open-weight-capability-cost-frontier-boundary-2026-09-23",
+      "record_type": "thread",
+      "record_id": "thread-open-weight-capability-cost-frontier",
+      "expected_version": 2,
+      "kind": "revise",
+      "recorded_at": "2026-09-23T04:52:00Z",
+      "proposed_by": "ChatGPT daily review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "daily_editorial_publish",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/pull/58",
+        "accepted_at": "2026-09-23T04:52:00Z"
+      },
+      "note": "GPT-6 Luna adds important counter-pressure to the open-weight capability-cost interpretation. OpenAI cut Luna standard API pricing to $0.10/M input and $0.50/M output, and Artificial Analysis finds the release materially improving proprietary cost efficiency. The open-weight frontier can still strengthen, but low-cost capable inference is not an open-weight-exclusive mechanism; proprietary serving efficiency and price compression must be tracked as a competing path.",
+      "evidence": [
+        {
+          "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+          "publisher": "OpenAI",
+          "title": "Introducing GPT-6 Sol and Luna",
+          "role": "primary_pricing_announcement",
+          "published_at": "2026-09-22",
+          "retrieved_at": "2026-09-23T04:52:00Z",
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "url": "https://artificialanalysis.ai/articles/gpt-6-sol-and-luna-push-the-cost-efficiency-frontier",
+          "publisher": "Artificial Analysis",
+          "title": "GPT-6 Sol and Luna push the cost efficiency frontier",
+          "role": "independent_cost_efficiency_analysis",
+          "published_at": "2026-09-22",
+          "retrieved_at": "2026-09-23T04:52:00Z",
+          "archive_url": null,
+          "lineage_id": null
+        }
+      ],
+      "payload": {
+        "analysis": {
+          "evidence_map": [
+            {
+              "id": "low-cost-agentic-corner",
+              "title": "Low-cost agentic capability was already real",
+              "summary": "OpenRouter's June review identified DeepSeek V4 Flash as a performance/cost Pareto point, showing that very cheap open-weight agentic inference predated MiMo-V2.6.",
+              "signal_ids": [
+                "sig-open-weight-capability-cost-frontier-2026-09-22"
+              ]
+            },
+            {
+              "id": "high-capability-open-weight-ceiling",
+              "title": "The high-capability end kept moving",
+              "summary": "Artificial Analysis currently places Kimi K3 (max) at 44 and GLM-5.3 (max) at 45, providing recent independent reference points for the upper end of open-weight capability before MiMo-V2.6.",
+              "signal_ids": [
+                "sig-open-weight-capability-cost-frontier-2026-09-22"
+              ]
+            },
+            {
+              "id": "capability-cost-convergence",
+              "title": "Capability and cost are converging",
+              "summary": "MiMo-V2.6-Pro's current Artificial Analysis score of 46 at Xiaomi API pricing of $0.435/M input and $0.87/M output moves a high-end open-weight capability point into a substantially lower price band than the recent Kimi and GLM leaders.",
+              "signal_ids": [
+                "sig-open-weight-capability-cost-frontier-2026-09-22"
+              ]
+            }
+          ],
+          "boundaries": [
+            "Artificial Analysis is a composite benchmark suite, not a universal measure of model quality; workload-specific rankings can differ.",
+            "API pricing is not self-host total cost, and provider prices, caching, batching, and negotiated rates can change the practical economics.",
+            "The compared models differ in architecture, modality support, throughput, context behavior, and licensing, so nearby index scores do not imply interchangeability.",
+            "MiMo-V2.6 is too new for GrepSignal to claim broad adoption or durable production reliability.",
+            "Epoch's current ECI snapshot does not yet corroborate MiMo-V2.6 as a top observed capability point.",
+            "Capability-cost compression is not exclusive to open weights. Proprietary providers can move capable models down the same cost curve through serving efficiency, scale, and aggressive pricing; GPT-6 Luna is a current example, so open weights should not be treated as having a monopoly on low-cost capable inference."
+          ],
+          "view_tests": {
+            "strengthen": [
+              "Independent evaluations beyond Artificial Analysis place new open-weight models near the high-capability frontier while first-party or widely available inference pricing remains in the low-cost band.",
+              "OpenRouter or other usage telemetry shows sustained developer adoption of these high-capability, low-cost open-weight models in real workloads.",
+              "Successive open-weight releases continue raising capability without reverting to the higher API prices seen in recent leaders such as Kimi K3 and GLM-5.3."
+            ],
+            "weaken": [
+              "Independent task suites consistently place the low-priced models materially below premium open-weight or closed-model capability on the workloads developers actually route to them.",
+              "Low launch pricing proves temporary or unavailable at production scale, eliminating the apparent capability-cost convergence.",
+              "The next several open-weight capability leaders require materially higher inference prices, indicating that MiMo-V2.6 was an isolated price point rather than a durable frontier shift.",
+              "Proprietary models repeatedly match or undercut open-weight models at comparable useful capability and deployed cost while retaining material reliability, latency, or operational advantages, making openness or control—not cost efficiency—the main remaining differentiator."
+            ]
+          }
+        },
+        "effect_on_thesis": "unchanged"
+      }
+    },
+    {
+      "id": "evt-thread-research-automation-bottlenecks-challenge-readiness-2026-09-23",
+      "record_type": "thread",
+      "record_id": "thread-research-automation-bottlenecks",
+      "expected_version": 3,
+      "kind": "revise",
+      "recorded_at": "2026-09-23T04:52:01Z",
+      "proposed_by": "ChatGPT daily review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "daily_editorial_publish",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/pull/58",
+        "accepted_at": "2026-09-23T04:52:00Z"
+      },
+      "note": "Challenge-readiness backfill: the Thread now states what would actually strengthen or weaken the bottleneck-migration thesis. More agent code or runtime alone is not enough; the key test is whether expert steering, experimental judgment, evaluation, compute allocation, and safety remain binding—or whether agents begin reliably absorbing those functions too.",
+      "evidence": [
+        {
+          "url": "https://openai.com/index/research-acceleration-view-inside-openai/",
+          "publisher": "OpenAI",
+          "title": "Research acceleration: The view inside OpenAI",
+          "role": "primary_research_report",
+          "published_at": "2026-09-06",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "url": "https://timdettmers.com/2026/09/21/dlab-open-source-week/",
+          "publisher": "Tim Dettmers",
+          "title": "dlab Open Source Week: Frontier AI on Your Own Hardware",
+          "role": "primary_practitioner_report",
+          "published_at": "2026-09-21",
+          "retrieved_at": "2026-09-22T04:05:45.505876Z",
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "url": "https://www.scientificamerican.com/article/did-openai-solve-the-wrong-navier-stokes-problem/",
+          "publisher": "Scientific American",
+          "title": "Did OpenAI solve the wrong Navier-Stokes problem?",
+          "role": "independent_reporting",
+          "published_at": null,
+          "retrieved_at": "2026-09-22T04:05:55.578861Z",
+          "archive_url": null,
+          "lineage_id": null
+        }
+      ],
+      "payload": {
+        "analysis": {
+          "evidence_map": [
+            {
+              "id": "implementation-scarcity",
+              "title": "Implementation is becoming cheaper",
+              "summary": "The original Thread evidence shows coding agents absorbing a large share of research execution, reducing the scarcity of code production without directly proving scientific progress.",
+              "signal_ids": [
+                "sig-research-automation-bottlenecks-2026-09-14"
+              ]
+            },
+            {
+              "id": "judgment-migration",
+              "title": "Judgment can become the binding constraint",
+              "summary": "Recent practitioner and reporting evidence is consistent with a shift toward experiment design, interpretation, prioritization, and validation as implementation becomes cheaper.",
+              "signal_ids": [
+                "sig-research-automation-bottlenecks-2026-09-14"
+              ]
+            },
+            {
+              "id": "automation-counterhypothesis",
+              "title": "The bottleneck may move again",
+              "summary": "The Thread should weaken if agents reliably absorb experiment selection, failure diagnosis, and research prioritization rather than only code production.",
+              "signal_ids": [
+                "sig-research-automation-bottlenecks-2026-09-14"
+              ]
+            }
+          ],
+          "boundaries": [
+            "Agent runtime, generated code volume, or agent-workday equivalents do not directly measure research value, novelty, correctness, or scientific progress.",
+            "The strongest organization-level evidence currently comes from a frontier lab with simultaneously increasing compute, so observed acceleration cannot be attributed to coding agents alone.",
+            "Bottleneck migration is not permanent by definition: if agents become reliable at experiment selection, interpretation, and prioritization, the binding constraint can move again."
+          ],
+          "view_tests": {
+            "strengthen": [
+              "Implementation effort continues to fall while expert time spent choosing experiments, diagnosing failures, interpreting results, or allocating compute remains flat or rises per useful result.",
+              "Agent throughput produces more plausible experiments or artifacts than human reviewers and evaluation systems can meaningfully triage, making validation capacity the measurable constraint.",
+              "Independent research organizations report that evaluation, compute allocation, safety controls, or scientific judgment—not coding throughput—limit further automation gains."
+            ],
+            "weaken": [
+              "Agents reliably choose high-value experiments, diagnose failed runs, and reprioritize research with materially less expert steering rather than merely producing more code.",
+              "End-to-end autonomous research systems repeatedly generate novel, correct, and reproducible results across independent groups without a comparable increase in human review burden.",
+              "Human steering time per useful research result falls as agent adoption rises instead of reappearing in evaluation, interpretation, compute allocation, or safety work."
+            ]
+          }
+        },
+        "effect_on_thesis": "unchanged"
+      }
+    },
+    {
+      "id": "evt-thread-agent-runtime-containment-challenge-readiness-2026-09-23",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 2,
+      "kind": "revise",
+      "recorded_at": "2026-09-23T04:52:02Z",
+      "proposed_by": "ChatGPT daily review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "daily_editorial_publish",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/pull/58",
+        "accepted_at": "2026-09-23T04:52:00Z"
+      },
+      "note": "Challenge-readiness backfill: adoption of sandboxes is not itself proof that heavy runtime containment is always necessary. The Thread now explicitly tests a competing mechanism—whether model-level safety plus narrowly typed, least-privilege capabilities can make stronger isolation add little marginal protection—and distinguishes agent-specific containment failures from ordinary application-security mistakes.",
+      "evidence": [
+        {
+          "url": "https://openai.com/index/running-codex-safely/",
+          "publisher": "OpenAI",
+          "title": "Running Codex safely at OpenAI",
+          "role": "primary_product_security",
+          "published_at": "2026-05-08",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "url": "https://www.anthropic.com/engineering/claude-code-sandboxing",
+          "publisher": "Anthropic",
+          "title": "Beyond permission prompts: making Claude Code more secure and autonomous",
+          "role": "primary_historical_baseline",
+          "published_at": "2025-10-20",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "url": "https://robocurve.org/roboharm/",
+          "publisher": "RoboCurve",
+          "title": "RoboHarm: Do Frontier Robot Policies Refuse Unsafe Instructions?",
+          "role": "primary_benchmark_release",
+          "published_at": null,
+          "retrieved_at": "2026-09-22T04:05:52.631190Z",
+          "archive_url": null,
+          "lineage_id": null
+        }
+      ],
+      "payload": {
+        "analysis": {
+          "evidence_map": [
+            {
+              "id": "boundary-failures",
+              "title": "Boundary failures",
+              "summary": "Reviewed incidents show model behavior can cross tool and network boundaries when surrounding environments fail.",
+              "signal_ids": [
+                "sig-agent-security-runtime-boundary-2026-09-14"
+              ]
+            },
+            {
+              "id": "runtime-response",
+              "title": "Runtime response",
+              "summary": "Sandboxing, network policy, scoped credentials, runtime permission evaluation, and continuous monitoring are becoming the enforcement layer around autonomous agents.",
+              "signal_ids": [
+                "sig-agent-security-runtime-boundary-2026-09-14"
+              ]
+            },
+            {
+              "id": "multi-organization-evidence",
+              "title": "Multi-organization evidence",
+              "summary": "The current public record combines frontier-lab incident and product-security evidence with affected-party evidence, rather than relying on one vendor narrative.",
+              "signal_ids": [
+                "sig-agent-security-runtime-boundary-2026-09-14"
+              ]
+            }
+          ],
+          "boundaries": [
+            "The reviewed incidents do not imply that ordinary production agents routinely escape containment.",
+            "Frontier-lab security responses may not generalize to smaller agent products or every deployment model.",
+            "RubyGems confirmed the malicious package campaign and API-key-stealing behavior, but not the AI-agent attribution itself.",
+            "Runtime containment is one defense layer, not a claim that every deployment needs the same isolation depth. Strong model-level safety, narrowly typed tool capabilities, and least-privilege interfaces may reduce the marginal value of heavier sandboxing for some bounded workloads."
+          ],
+          "view_tests": {
+            "strengthen": [
+              "Major agent platforms make per-session isolation, tightly scoped egress, scoped credentials, and auditable server-side tool policies standard defaults rather than specialist options."
+            ],
+            "weaken": [
+              "Major agent platforms continue to rely mainly on interactive approval prompts without adopting stronger runtime isolation and egress controls.",
+              "Independent incident data shows containment failures are rare enough that sandboxing and policy runtimes remain niche rather than becoming standard agent infrastructure.",
+              "Independent deployments show that model-level policy plus narrowly typed, least-privilege tool capabilities reliably prevent harmful side effects, so stronger sandboxing or egress isolation adds little marginal protection for comparable workloads.",
+              "A substantial share of incidents attributed to autonomous-agent containment turn out to be ordinary credential, configuration, or application-security failures that occur at similar rates in non-agent software, weakening the agent-specific runtime mechanism."
+            ]
+          }
+        },
+        "effect_on_thesis": "unchanged"
+      }
     }
   ]
 }
