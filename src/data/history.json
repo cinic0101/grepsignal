@@ -754,6 +754,106 @@
           "contradicting": []
         }
       }
+    },
+    {
+      "id": "evt-thread-decision-native-runtimes-2026-09-23",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 1,
+      "kind": "revise",
+      "recorded_at": "2026-09-23T04:19:00Z",
+      "proposed_by": "ChatGPT daily review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "daily_editorial_publish",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/71",
+        "accepted_at": "2026-09-23T04:19:00Z"
+      },
+      "note": "JevBench v1.3.0 keeps Jev first on its published balanced score while several open or general-model-derived alternatives sit close behind, and llm-typesafe exposes the same bounded yes/no, choice, and score contract through general LLM tooling. This strengthens the decision-native runtime/interface pattern while narrowing the uniquely separate model-class hypothesis; broad production advantage remains unproven.",
+      "evidence": [
+        {
+          "url": "https://www.benchmarkheaven.com/jev-models",
+          "publisher": "Benchmark Heaven",
+          "title": "Jev-class decision models — JevBench v1.3.0",
+          "role": "independent_benchmark",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "url": "https://simonwillison.net/2026/Sep/22/llm-typesafe/",
+          "publisher": "Simon Willison’s Weblog",
+          "title": "Release: llm-typesafe 0.1a0",
+          "role": "primary_practitioner_release",
+          "published_at": "2026-09-22",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "strengthened"
+      }
+    },
+    {
+      "id": "evt-thread-open-weight-capability-cost-frontier-2026-09-23",
+      "record_type": "thread",
+      "record_id": "thread-open-weight-capability-cost-frontier",
+      "expected_version": 1,
+      "kind": "revise",
+      "recorded_at": "2026-09-23T04:19:01Z",
+      "proposed_by": "ChatGPT daily review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "daily_editorial_publish",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/71",
+        "accepted_at": "2026-09-23T04:19:00Z"
+      },
+      "note": "Interconnects adds adoption and research-use follow-through beyond yesterday’s benchmark/API-price point, while Ornn’s sampled analysis shows open-weight cost advantages at several matched capability thresholds and some self-hosting cases. This strengthens the Thread without claiming universal cost superiority: closed models remain cheaper at some thresholds, the closed frontier still leads at the top end, and the Ornn hardware comparison has measurement and commercial-interest caveats.",
+      "evidence": [
+        {
+          "url": "https://www.interconnects.ai/p/the-current-balance-of-power-in-open",
+          "publisher": "Interconnects",
+          "title": "The current balance of power in open models",
+          "role": "independent_market_analysis",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "url": "https://data.ornn.com/publications/the-economics-of-open-weight-inference",
+          "publisher": "Ornn Data",
+          "title": "The Economics of Open-Weight Inference",
+          "role": "deployment_economics_analysis",
+          "published_at": "2026-09-07",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "strengthened"
+      }
     }
   ]
 }
