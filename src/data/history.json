@@ -1163,6 +1163,630 @@
         },
         "effect_on_thesis": "unchanged"
       }
+    },
+    {
+      "id": "evt-sig-ai-self-improvement-engineering-loops-2026-09-23",
+      "record_type": "signal",
+      "record_id": "sig-ai-self-improvement-engineering-loops-2026-09-23",
+      "expected_version": 0,
+      "kind": "register",
+      "recorded_at": "2026-09-23T10:55:00Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/73",
+        "accepted_at": "2026-09-23T10:54:10Z"
+      },
+      "note": "Register a bounded cross-lab Signal for feedback-driven AI engineering loops. The material delta is agents participating in iterative experimentation, diagnosis, validation, and infrastructure optimization; the claim explicitly stops short of human-free recursive self-improvement.",
+      "evidence": [
+        {
+          "publisher": "Alibaba Cloud",
+          "title": "Alibaba Unveils Roadmap on Full-Stack AI Strategy from Chips, Cloud Infrastructure, Models to Agents",
+          "url": "https://www.alibabacloud.com/en/press-room/alibaba-unveils-roadmap-on-full-stack-ai-strategy?_p_lc=1",
+          "role": "primary_lab_announcement",
+          "published_at": "2026-09-22",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "alibaba-apsara-rsi-2026-09-22"
+        },
+        {
+          "publisher": "Z.ai",
+          "title": "Toward Recursive Self-Improvement: How GLM Built Its Own Inference Infrastructure",
+          "url": "https://z.ai/blog/glm-built-its-inference-infrastructure",
+          "role": "primary_lab_case_study",
+          "published_at": "2026-09-17",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "zai-glm-infra-agent-2026-09-17"
+        }
+      ],
+      "payload": {
+        "id": "sig-ai-self-improvement-engineering-loops-2026-09-23",
+        "type": "second_order_effect",
+        "status": "emerging",
+        "title": "Qwen and GLM teams report feedback-driven agents optimizing AI systems themselves",
+        "summary": "Alibaba reports that Qwen3.8-Max ran more than a month of automated pipeline design, data validation, iterative experimentation, and error diagnosis across 33 cycles, while Z.ai reports a GLM-5.3-powered Infra Agent helping adapt and optimize GLM-5.3-Flash for production in under two weeks. The cross-lab change is not human-free recursive self-improvement; it is the movement of AI agents from code generation into feedback-driven loops that modify training or inference systems used by AI itself.",
+        "why_it_matters": "This pushes on a key boundary in research automation. If agents can repeatedly diagnose failures, test hypotheses, optimize infrastructure, and feed validated changes back into the system, some work previously treated as expert steering or systems judgment is becoming automatable rather than merely faster to implement.",
+        "our_read": "The material signal is the feedback loop, not the vendors' RSI framing. Both reports still retain human objectives, boundaries, acceptance criteria, and risk decisions, so the evidence narrows the human-bottleneck thesis without establishing autonomous end-to-end AI research.",
+        "second_order_effect": "feedback-driven agents enter AI engineering loops → implementation and diagnosis become cheaper → human bottlenecks migrate toward objective selection, risk, evaluation design, and acceptance criteria → the boundary of automatable R&D keeps moving",
+        "watch_next": "Look for independent replication, comparable measurements across labs, and evidence that agents choose experiments or reprioritize research with materially less human steering rather than operating inside human-designed feedback loops.",
+        "source_count": 2,
+        "source_organization_count": 2,
+        "registered_at": "2026-09-23",
+        "evidence_since": "2026-09",
+        "falsifiers": [
+          "Independent evaluation finds that the reported loops depend on extensive hidden human intervention for diagnosis, experiment choice, or acceptance and do not outperform ordinary agent-assisted engineering.",
+          "The pattern fails to recur outside the two first-party lab reports, leaving these as isolated internal demonstrations rather than a broader shift in AI engineering workflows.",
+          "Subsequent systems show that feedback-driven agents can execute changes but cannot reliably choose or diagnose the next useful step without expert intervention."
+        ],
+        "limitations": [
+          "Both sources are first-party lab reports, not externally audited measurements.",
+          "Alibaba's reported Artificial Analysis score change and chip-design results are vendor claims; GrepSignal is not treating them as independently reproduced benchmark improvements.",
+          "The two cases cover different workflows—training/post-training experimentation and inference infrastructure—and do not form one common quantitative scale.",
+          "Z.ai explicitly says humans still choose objectives, set boundaries, and assess risk; neither source establishes human-free recursive self-improvement."
+        ],
+        "sources": [
+          {
+            "publisher": "Alibaba Cloud",
+            "title": "Alibaba Unveils Roadmap on Full-Stack AI Strategy from Chips, Cloud Infrastructure, Models to Agents",
+            "url": "https://www.alibabacloud.com/en/press-room/alibaba-unveils-roadmap-on-full-stack-ai-strategy?_p_lc=1",
+            "role": "primary_lab_announcement",
+            "published_at": "2026-09-22",
+            "retrieved_at": "2026-09-23T10:18:00Z",
+            "archive_url": null,
+            "lineage_id": "alibaba-apsara-rsi-2026-09-22"
+          },
+          {
+            "publisher": "Z.ai",
+            "title": "Toward Recursive Self-Improvement: How GLM Built Its Own Inference Infrastructure",
+            "url": "https://z.ai/blog/glm-built-its-inference-infrastructure",
+            "role": "primary_lab_case_study",
+            "published_at": "2026-09-17",
+            "retrieved_at": "2026-09-23T10:18:00Z",
+            "archive_url": null,
+            "lineage_id": "zai-glm-infra-agent-2026-09-17"
+          }
+        ]
+      }
+    },
+    {
+      "id": "evt-thread-research-automation-bottlenecks-self-improvement-2026-09-23",
+      "record_type": "thread",
+      "record_id": "thread-research-automation-bottlenecks",
+      "expected_version": 4,
+      "kind": "revise",
+      "recorded_at": "2026-09-23T10:55:01Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/73",
+        "accepted_at": "2026-09-23T10:54:10Z"
+      },
+      "note": "Alibaba and Z.ai now provide cross-lab counterevidence to the strongest reading of the bottleneck-migration thesis: agents are being used inside feedback-driven loops for experiment iteration, error diagnosis, and AI infrastructure optimization, not only for code production. This weakens the assumption that experimental or systems judgment remains a fixed human bottleneck, while the first-party evidence and continued human control over objectives, boundaries, acceptance, and risk stop short of showing end-to-end autonomous research.",
+      "evidence": [
+        {
+          "publisher": "Alibaba Cloud",
+          "title": "Alibaba Unveils Roadmap on Full-Stack AI Strategy from Chips, Cloud Infrastructure, Models to Agents",
+          "url": "https://www.alibabacloud.com/en/press-room/alibaba-unveils-roadmap-on-full-stack-ai-strategy?_p_lc=1",
+          "role": "primary_lab_announcement",
+          "published_at": "2026-09-22",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "alibaba-apsara-rsi-2026-09-22"
+        },
+        {
+          "publisher": "Z.ai",
+          "title": "Toward Recursive Self-Improvement: How GLM Built Its Own Inference Infrastructure",
+          "url": "https://z.ai/blog/glm-built-its-inference-infrastructure",
+          "role": "primary_lab_case_study",
+          "published_at": "2026-09-17",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "zai-glm-infra-agent-2026-09-17"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "weakened"
+      }
+    },
+    {
+      "id": "evt-thread-research-automation-bottlenecks-relate-self-improvement-2026-09-23",
+      "record_type": "thread",
+      "record_id": "thread-research-automation-bottlenecks",
+      "expected_version": 5,
+      "kind": "relate",
+      "recorded_at": "2026-09-23T10:55:02Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/73",
+        "accepted_at": "2026-09-23T10:54:10Z"
+      },
+      "note": "Record the feedback-driven AI engineering Signal as counterevidence to the current Research Automation Bottlenecks thesis, because it shows agents beginning to absorb diagnosis and experiment-loop work that the Thread treats as a potential weakening condition.",
+      "evidence": [
+        {
+          "publisher": "Alibaba Cloud",
+          "title": "Alibaba Unveils Roadmap on Full-Stack AI Strategy from Chips, Cloud Infrastructure, Models to Agents",
+          "url": "https://www.alibabacloud.com/en/press-room/alibaba-unveils-roadmap-on-full-stack-ai-strategy?_p_lc=1",
+          "role": "primary_lab_announcement",
+          "published_at": "2026-09-22",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "alibaba-apsara-rsi-2026-09-22"
+        },
+        {
+          "publisher": "Z.ai",
+          "title": "Toward Recursive Self-Improvement: How GLM Built Its Own Inference Infrastructure",
+          "url": "https://z.ai/blog/glm-built-its-inference-infrastructure",
+          "role": "primary_lab_case_study",
+          "published_at": "2026-09-17",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "zai-glm-infra-agent-2026-09-17"
+        }
+      ],
+      "payload": {
+        "target_id": "sig-ai-self-improvement-engineering-loops-2026-09-23",
+        "relationship": "challenges",
+        "target_version": 1
+      }
+    },
+    {
+      "id": "evt-sig-coding-agent-plugin-supply-chain-boundary-2026-09-23",
+      "record_type": "signal",
+      "record_id": "sig-coding-agent-plugin-supply-chain-boundary-2026-09-23",
+      "expected_version": 0,
+      "kind": "register",
+      "recorded_at": "2026-09-23T10:55:03Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/73",
+        "accepted_at": "2026-09-23T10:54:10Z"
+      },
+      "note": "Register Plugin4Shell as a bounded agent-runtime security Signal: extension provenance can fail even when a marketplace pins reviewed code, and Codex's primary fix verifies the materialized checkout rather than trusting the requested SHA.",
+      "evidence": [
+        {
+          "publisher": "Air Security",
+          "title": "Plugin4Shell - Zero Click RCE Vulnerability found in top 4 most popular coding agents, millions of agents affected",
+          "url": "https://www.air.security/blog-posts/plugin4shell",
+          "role": "independent_security_research",
+          "published_at": "2026-09-17",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "plugin4shell-disclosure-2026-09-17"
+        },
+        {
+          "publisher": "OpenAI",
+          "title": "Verify Git plugin SHA checkouts",
+          "url": "https://github.com/openai/codex/pull/34644",
+          "role": "primary_security_fix",
+          "published_at": "2026-07-22",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "codex-plugin-sha-verification-fix-2026-07"
+        }
+      ],
+      "payload": {
+        "id": "sig-coding-agent-plugin-supply-chain-boundary-2026-09-23",
+        "type": "platform_shift",
+        "status": "emerging",
+        "title": "Plugin4Shell exposed plugin provenance as a shared coding-agent runtime boundary",
+        "summary": "Air Security disclosed a Git ref-resolution flaw that it reports affected plugin installation across Claude Code, Codex, GitHub Copilot, and Gemini CLI: a marketplace could pin a reviewed commit while the client materialized different code because it did not verify the resolved checkout. OpenAI's merged Codex fix independently documents the same failure mode and now verifies the checked-out HEAD against the requested SHA.",
+        "why_it_matters": "Coding-agent security now includes the provenance of code loaded into the runtime, not only sandboxing, credentials, and network egress. A trusted marketplace and a pinned hash are insufficient if the client never verifies what was actually materialized, and background plugin updates can turn a supply-chain mistake into execution without a new user action.",
+        "our_read": "The durable mechanism is client-side materialization integrity. As agents gain plugin, skill, and marketplace ecosystems, exact commit verification, signed artifacts, provenance policy, and update controls become part of the agent runtime security boundary.",
+        "second_order_effect": "plugin ecosystems + background updates → more executable third-party code enters agent runtimes → provenance verification becomes an enforcement primitive → marketplace trust shifts from metadata and pins toward verified materialization and update policy",
+        "watch_next": "Track affected-vendor fixes, whether plugin managers verify resolved commits or signed artifacts by default, and whether enterprise agent platforms expose auditable provenance and update controls.",
+        "source_count": 2,
+        "source_organization_count": 2,
+        "registered_at": "2026-09-23",
+        "evidence_since": "2026-07",
+        "falsifiers": [
+          "Affected vendors show that the reported cross-vendor exploit conditions were not reachable in supported plugin workflows or did not permit attacker-controlled code execution.",
+          "Major coding-agent plugin systems converge on verified immutable artifacts without similar incidents, leaving this as a narrow implementation bug rather than a durable runtime-security layer.",
+          "Independent reproduction fails under the supported repository hosts and update paths that Air Security describes."
+        ],
+        "limitations": [
+          "The cross-vendor scope and non-OpenAI fix status are reported by Air Security; GrepSignal independently verified only the corresponding Codex failure description and fix in OpenAI's public PR.",
+          "One exploit path requires a Git host that permits a branch name shaped like a 40-hex hash; GitHub itself rejects that branch-name form, while Air reports other supported hosts can allow it.",
+          "The vulnerability concerns plugin materialization and update paths, not arbitrary coding-agent sessions with no plugin marketplace configured.",
+          "Air Security sells agent-security products, so its severity framing should be separated from the technical mechanism and affected-vendor evidence."
+        ],
+        "sources": [
+          {
+            "publisher": "Air Security",
+            "title": "Plugin4Shell - Zero Click RCE Vulnerability found in top 4 most popular coding agents, millions of agents affected",
+            "url": "https://www.air.security/blog-posts/plugin4shell",
+            "role": "independent_security_research",
+            "published_at": "2026-09-17",
+            "retrieved_at": "2026-09-23T10:18:00Z",
+            "archive_url": null,
+            "lineage_id": "plugin4shell-disclosure-2026-09-17"
+          },
+          {
+            "publisher": "OpenAI",
+            "title": "Verify Git plugin SHA checkouts",
+            "url": "https://github.com/openai/codex/pull/34644",
+            "role": "primary_security_fix",
+            "published_at": "2026-07-22",
+            "retrieved_at": "2026-09-23T10:18:00Z",
+            "archive_url": null,
+            "lineage_id": "codex-plugin-sha-verification-fix-2026-07"
+          }
+        ]
+      }
+    },
+    {
+      "id": "evt-thread-agent-runtime-containment-plugin-supply-chain-2026-09-23",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 3,
+      "kind": "revise",
+      "recorded_at": "2026-09-23T10:55:04Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/73",
+        "accepted_at": "2026-09-23T10:54:10Z"
+      },
+      "note": "Plugin4Shell adds a distinct supply-chain boundary to Agent Runtime Containment. The reviewed mechanism shows that a runtime can sandbox tools correctly yet still execute attacker-controlled plugin code if its extension loader trusts a requested SHA without verifying the commit actually materialized. OpenAI's Codex fix explicitly adds that verification. The Thread therefore expands from execution/network/credential containment to include provenance and update integrity for executable agent extensions.",
+      "evidence": [
+        {
+          "publisher": "Air Security",
+          "title": "Plugin4Shell - Zero Click RCE Vulnerability found in top 4 most popular coding agents, millions of agents affected",
+          "url": "https://www.air.security/blog-posts/plugin4shell",
+          "role": "independent_security_research",
+          "published_at": "2026-09-17",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "plugin4shell-disclosure-2026-09-17"
+        },
+        {
+          "publisher": "OpenAI",
+          "title": "Verify Git plugin SHA checkouts",
+          "url": "https://github.com/openai/codex/pull/34644",
+          "role": "primary_security_fix",
+          "published_at": "2026-07-22",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "codex-plugin-sha-verification-fix-2026-07"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "strengthened"
+      }
+    },
+    {
+      "id": "evt-thread-agent-runtime-containment-relate-plugin-supply-chain-2026-09-23",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 4,
+      "kind": "relate",
+      "recorded_at": "2026-09-23T10:55:05Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/73",
+        "accepted_at": "2026-09-23T10:54:10Z"
+      },
+      "note": "Link the Plugin4Shell Signal as supporting evidence that the runtime boundary includes provenance and update integrity for executable plugins, not only sandbox, credential, network, and action controls.",
+      "evidence": [
+        {
+          "publisher": "Air Security",
+          "title": "Plugin4Shell - Zero Click RCE Vulnerability found in top 4 most popular coding agents, millions of agents affected",
+          "url": "https://www.air.security/blog-posts/plugin4shell",
+          "role": "independent_security_research",
+          "published_at": "2026-09-17",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "plugin4shell-disclosure-2026-09-17"
+        },
+        {
+          "publisher": "OpenAI",
+          "title": "Verify Git plugin SHA checkouts",
+          "url": "https://github.com/openai/codex/pull/34644",
+          "role": "primary_security_fix",
+          "published_at": "2026-07-22",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "codex-plugin-sha-verification-fix-2026-07"
+        }
+      ],
+      "payload": {
+        "target_id": "sig-coding-agent-plugin-supply-chain-boundary-2026-09-23",
+        "relationship": "supports",
+        "target_version": 1
+      }
+    },
+    {
+      "id": "evt-sig-agent-harness-cost-frontier-2026-09-23",
+      "record_type": "signal",
+      "record_id": "sig-agent-harness-cost-frontier-2026-09-23",
+      "expected_version": 0,
+      "kind": "register",
+      "recorded_at": "2026-09-23T10:55:06Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/73",
+        "accepted_at": "2026-09-23T10:54:10Z"
+      },
+      "note": "Register a bounded cost-intelligence Signal from HarnessTax plus Unreal Agent: coding-agent harness choice is becoming a measurable economic variable separate from model choice.",
+      "evidence": [
+        {
+          "publisher": "Arena",
+          "title": "HarnessTax: How Much Does the Harness Matter for Coding Agents?",
+          "url": "https://arena.ai/blog/coding-agents-harness-tax",
+          "role": "independent_benchmark_study",
+          "published_at": "2026-09-16",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "arena-harnesstax-2026-09-16"
+        },
+        {
+          "publisher": "Unreal Labs",
+          "title": "Unreal Agent",
+          "url": "https://unreallabs.ai/blog/unreal-agent/",
+          "role": "primary_practitioner_implementation",
+          "published_at": "2026-09-22",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "unreal-agent-harness-2026-09-22"
+        }
+      ],
+      "payload": {
+        "id": "sig-agent-harness-cost-frontier-2026-09-23",
+        "type": "cost_intelligence",
+        "status": "emerging",
+        "title": "Coding-agent harness choice can shift cost even when task success is similar",
+        "summary": "Arena tested 21 model–harness combinations across Claude Code, Codex CLI, and Pi and found that harness choice changed benchmark cost much more than task success for several shared models; the same model reached similar success at costs differing by as much as 5x in the tested combinations. Unreal Labs separately reports an asynchronous tool-orchestration harness that reduces model-side tool-management overhead and lowers cost versus Codex on its tested workloads.",
+        "why_it_matters": "Teams comparing coding agents by model name alone can miss a separate systems variable. Context size, tool schemas, orchestration, polling, concurrency, and execution-loop design can materially change the cost of applying the same underlying model, so model routing and agent procurement need harness-level measurement.",
+        "our_read": "The new frontier is model × harness, not model alone. The strongest evidence so far is about cost efficiency rather than universal correctness gains, which makes harness architecture an optimization layer that should be benchmarked independently instead of assumed to be bundled with model capability.",
+        "second_order_effect": "models become portable across runtimes → harness architecture becomes independently optimizable → agent economics shift toward context/tool/orchestration efficiency → providers compete on runtime quality and cost as well as model intelligence",
+        "watch_next": "Look for independent production telemetry, matched-configuration replications, adaptive harness selection, and whether harness cost gaps persist as models become more capable and tool calling becomes cheaper.",
+        "source_count": 2,
+        "source_organization_count": 2,
+        "registered_at": "2026-09-23",
+        "evidence_since": "2026-09",
+        "falsifiers": [
+          "Matched-configuration replications show that the observed cost gaps disappear once caching, tools, effort levels, and context are normalized.",
+          "Production workloads show model choice overwhelmingly dominates cost and quality while harness substitutions produce only small or unstable differences.",
+          "Success-rate or reliability penalties consistently offset the apparent cost advantage of simpler or asynchronous harnesses."
+        ],
+        "limitations": [
+          "HarnessTax uses 30 sampled tasks from each of SWE-bench Lite and Terminal-Bench 2.0 with native high-effort harness settings; results may not generalize to other workflows.",
+          "Turn definitions and provider-specific features differ across harnesses, so observed cost differences do not isolate one implementation variable.",
+          "Unreal Labs is reporting its own product and its claimed savings are not independently replicated.",
+          "The evidence supports a harness-economics layer, not a claim that one harness is universally better."
+        ],
+        "sources": [
+          {
+            "publisher": "Arena",
+            "title": "HarnessTax: How Much Does the Harness Matter for Coding Agents?",
+            "url": "https://arena.ai/blog/coding-agents-harness-tax",
+            "role": "independent_benchmark_study",
+            "published_at": "2026-09-16",
+            "retrieved_at": "2026-09-23T10:18:00Z",
+            "archive_url": null,
+            "lineage_id": "arena-harnesstax-2026-09-16"
+          },
+          {
+            "publisher": "Unreal Labs",
+            "title": "Unreal Agent",
+            "url": "https://unreallabs.ai/blog/unreal-agent/",
+            "role": "primary_practitioner_implementation",
+            "published_at": "2026-09-22",
+            "retrieved_at": "2026-09-23T10:18:00Z",
+            "archive_url": null,
+            "lineage_id": "unreal-agent-harness-2026-09-22"
+          }
+        ]
+      }
+    },
+    {
+      "id": "evt-thread-agent-harness-economics-2026-09-23",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 0,
+      "kind": "register",
+      "recorded_at": "2026-09-23T10:55:07Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-23-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/73",
+        "accepted_at": "2026-09-23T10:54:10Z"
+      },
+      "note": "Create the Agent Harness Economics Thread around the emerging evidence that context footprint, tool orchestration, concurrency, and execution-loop design can materially change agent cost and efficiency even for the same underlying model.",
+      "evidence": [
+        {
+          "publisher": "Arena",
+          "title": "HarnessTax: How Much Does the Harness Matter for Coding Agents?",
+          "url": "https://arena.ai/blog/coding-agents-harness-tax",
+          "role": "independent_benchmark_study",
+          "published_at": "2026-09-16",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "arena-harnesstax-2026-09-16"
+        },
+        {
+          "publisher": "Unreal Labs",
+          "title": "Unreal Agent",
+          "url": "https://unreallabs.ai/blog/unreal-agent/",
+          "role": "primary_practitioner_implementation",
+          "published_at": "2026-09-22",
+          "retrieved_at": "2026-09-23T10:18:00Z",
+          "archive_url": null,
+          "lineage_id": "unreal-agent-harness-2026-09-22"
+        }
+      ],
+      "payload": {
+        "id": "thread-agent-harness-economics",
+        "title": "Agent Harness Economics",
+        "status": "emerging",
+        "summary": "Coding-agent harness architecture is becoming an independent cost/performance layer rather than a transparent wrapper around the model.",
+        "thesis": "As frontier models become increasingly usable across multiple agent runtimes, harness design—context footprint, tool orchestration, concurrency, and execution loop—can materially shift cost and task efficiency independently of model choice.",
+        "created_at": "2026-09-23",
+        "last_updated": "2026-09-23",
+        "evidence_since": "2026-09",
+        "signal_count": 1,
+        "updates": [
+          {
+            "id": "threadrev-agent-harness-economics-2026-09-23",
+            "date": "2026-09-23",
+            "assessment": "emerging",
+            "change": "Arena's controlled HarnessTax study and Unreal Labs' independent implementation evidence establish harness architecture as an economically material layer: context footprint and tool orchestration can change the cost of applying the same model even when measured task success is similar. The Thread tracks whether that effect persists in production and across matched configurations.",
+            "signal_ids": [
+              "sig-agent-harness-cost-frontier-2026-09-23"
+            ],
+            "sources": [
+              {
+                "publisher": "Arena",
+                "title": "HarnessTax: How Much Does the Harness Matter for Coding Agents?",
+                "url": "https://arena.ai/blog/coding-agents-harness-tax",
+                "role": "independent_benchmark_study",
+                "published_at": "2026-09-16",
+                "retrieved_at": "2026-09-23T10:18:00Z",
+                "archive_url": null,
+                "lineage_id": "arena-harnesstax-2026-09-16"
+              },
+              {
+                "publisher": "Unreal Labs",
+                "title": "Unreal Agent",
+                "url": "https://unreallabs.ai/blog/unreal-agent/",
+                "role": "primary_practitioner_implementation",
+                "published_at": "2026-09-22",
+                "retrieved_at": "2026-09-23T10:18:00Z",
+                "archive_url": null,
+                "lineage_id": "unreal-agent-harness-2026-09-22"
+              }
+            ],
+            "pattern_scope": "cross_actor",
+            "event_independence": "independent_events",
+            "mechanism_coherence": "strong"
+          }
+        ],
+        "analysis": {
+          "evidence_map": [
+            {
+              "id": "controlled-harness-comparison",
+              "title": "Same model, different harness cost",
+              "summary": "HarnessTax reports similar task success across several shared-model harness swaps while benchmark costs differed materially, including up to 5x in tested combinations.",
+              "signal_ids": [
+                "sig-agent-harness-cost-frontier-2026-09-23"
+              ]
+            },
+            {
+              "id": "orchestration-followthrough",
+              "title": "Orchestration is being optimized directly",
+              "summary": "Unreal Labs' async tool-call harness targets waits, polling, and tool-management overhead, providing a separate implementation path consistent with harness-level cost optimization.",
+              "signal_ids": [
+                "sig-agent-harness-cost-frontier-2026-09-23"
+              ]
+            }
+          ],
+          "boundaries": [
+            "HarnessTax covers two public benchmarks and native high-effort configurations rather than all production workflows.",
+            "Unreal Labs' reported savings are vendor-authored and not independently replicated.",
+            "Harnesses differ in tools, context, caching, effort controls, and product features, so observed cost differences do not isolate one universal causal variable."
+          ],
+          "view_tests": {
+            "strengthen": [
+              "Independent matched-model studies reproduce material cost or reliability differences across harnesses on production-like workloads.",
+              "Production routing systems begin selecting or adapting harnesses separately from model selection based on measured cost/performance."
+            ],
+            "weaken": [
+              "Matched configurations and production telemetry show harness substitutions have only small effects once model, tools, context, caching, and effort are controlled.",
+              "The apparent cost advantages consistently trade off against materially worse reliability, task completion, or user intervention."
+            ]
+          }
+        },
+        "signal_relations": {
+          "supporting": [
+            "sig-agent-harness-cost-frontier-2026-09-23"
+          ],
+          "contradicting": []
+        }
+      }
     }
   ]
 }
