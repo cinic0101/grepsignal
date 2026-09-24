@@ -1787,6 +1787,96 @@
           "contradicting": []
         }
       }
+    },
+    {
+      "id": "evt-thread-decision-native-runtimes-boundary-economics-2026-09-24",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 2,
+      "kind": "revise",
+      "recorded_at": "2026-09-24T06:24:07Z",
+      "proposed_by": "ChatGPT supplemental recovery editorial review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "supplemental_recovery_publish",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-24-staged-recovery-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/76",
+        "accepted_at": "2026-09-24T06:24:06Z"
+      },
+      "note": "Two independent boundary checks sharpen the Decision-Native AI Runtimes Thread without changing its thesis. A general Qwen model can reproduce the bounded choice/logit interface without Jev-specific training, while a 770-post benchmark finds raw Jev slightly behind Sonnet 5 on weighted Brier score but much faster and cheaper. The open question therefore shifts toward whether specialized training and calibration create durable production advantages beyond an interface that general-purpose models can reproduce.",
+      "evidence": [
+        {
+          "url": "https://www.nobodywho.ai/posts/jev-in-25-lines/",
+          "publisher": "NobodyWho",
+          "title": "Jev in 25 lines of Python",
+          "role": "independent_interface_reproduction",
+          "published_at": null,
+          "retrieved_at": "2026-09-24T05:02:29.999018Z",
+          "archive_url": null,
+          "lineage_id": "jev-interface-reproduction-2026-09-24"
+        },
+        {
+          "url": "https://github.com/dchristopoulos/jev-aita",
+          "publisher": "dchristopoulos",
+          "title": "Jev vs. LLMs on 770 \"Am I the Asshole?\" posts",
+          "role": "independent_benchmark",
+          "published_at": null,
+          "retrieved_at": "2026-09-24T05:02:45.493714Z",
+          "archive_url": null,
+          "lineage_id": "jev-aita-benchmark-2026-09-24"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      }
+    },
+    {
+      "id": "evt-thread-research-automation-bottlenecks-enzyme-search-2026-09-24",
+      "record_type": "thread",
+      "record_id": "thread-research-automation-bottlenecks",
+      "expected_version": 6,
+      "kind": "revise",
+      "recorded_at": "2026-09-24T06:24:08Z",
+      "proposed_by": "ChatGPT supplemental recovery editorial review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "supplemental_recovery_publish",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-24-staged-recovery-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/76",
+        "accepted_at": "2026-09-24T06:24:06Z"
+      },
+      "note": "Anthropic's enzyme-search case expands the Research Automation Bottlenecks Thread into life-science discovery: roughly 950 agents performed large-scale genomic search and candidate selection over 21 hours, while humans supplied high-level direction and all wet-lab validation. This does not reverse yesterday's weakening from feedback-driven self-improvement loops; it clarifies the current boundary between increasingly automated search and still-human validation, experiment execution, and acceptance.",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/news/claude-discovers-novel-enzyme-system",
+          "publisher": "Anthropic",
+          "title": "Claude discovers a novel enzyme system",
+          "role": "primary_lab_case_study",
+          "published_at": null,
+          "retrieved_at": "2026-09-24T05:02:56.600553Z",
+          "archive_url": null,
+          "lineage_id": "anthropic-enzyme-agent-search-2026-09-24"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      }
     }
   ]
 }
