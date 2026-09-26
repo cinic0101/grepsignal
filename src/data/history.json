@@ -2007,6 +2007,46 @@
       "payload": {
         "effect_on_thesis": "unchanged"
       }
+    },
+    {
+      "id": "evt-thread-agent-runtime-containment-loopjacking-2026-09-26",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 6,
+      "kind": "revise",
+      "recorded_at": "2026-09-26T05:32:39Z",
+      "proposed_by": "ChatGPT daily editorial review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "daily_editorial_publish",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-26-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/84",
+        "accepted_at": "2026-09-26T05:32:38Z"
+      },
+      "note": "Loopjacking adds a use-time authorization boundary to Agent Runtime Containment. In a controlled LangGraph Agent Server test, an approver reviewed one pending transfer, a lower-privilege maker then replaced that pending operation through the A2A route, and the stale approval released the mutated transfer. The important boundary is therefore not merely whether a task or thread was approved, but whether approval is bound to the exact operation dispatched after mutable state is resolved. This is a controlled demonstration, not evidence that every A2A or human-approval implementation is vulnerable.",
+      "evidence": [
+        {
+          "publisher": "Adithyan Arun Kumar",
+          "title": "Loopjacking in A2A Implementations: Hijacking Human-in-the-Loop Approvals",
+          "url": "https://adithyanak.com/loopjacking-in-a2a-implementations/",
+          "role": "controlled_agent_security_test",
+          "published_at": null,
+          "retrieved_at": "2026-09-26T04:12:38.655086Z",
+          "archive_url": null,
+          "lineage_id": "loopjacking-a2a-approval-substitution-2026-09"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "strengthened"
+      }
     }
   ]
 }
