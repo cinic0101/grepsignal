@@ -1,1 +1,25 @@
-{"coverage_status":"reviewed","cycle_id":"cycle-2026-09-25-staged-recovery-001","exact_sources_materialized":8,"generated_at":"2026-09-25T12:39:21.986086Z","note":"Coverage describes the configured scheduled intake window. Research follow-up counts refer to that frozen cycle; public intelligence output may also include later Editorial Recovery registered for the same date.","research_targets_reviewed":11,"schema_version":3,"sources":[{"intake_count":30,"name":"Simon Willison’s Weblog","reviewed_count":30,"scope":"Unresolved observations in the retained feed backlog; unchanged watches wait for revisit_at; selected up to 30","source_id":"simon-willison"},{"intake_count":66,"name":"Hacker News","reviewed_count":66,"scope":"Latest Top 100 IDs; first 60 eligible stories plus rising, configured primary-source recall candidates, and up to 5 due deferred carryover items; unchanged watches wait for revisit_at","source_id":"hacker-news"}]}
+{
+  "schema_version": 3,
+  "coverage_status": "reviewed",
+  "cycle_id": "cycle-2026-09-26-staged-001",
+  "generated_at": "2026-09-26T05:27:33.920321Z",
+  "research_targets_reviewed": 20,
+  "exact_sources_materialized": 12,
+  "note": "Coverage describes the configured scheduled intake window. The Sep 26 private cycle finalized partial: all 95 selected items were reviewed and all captured Research targets left research, but 9 items remained explicit evidence-blocked/deferred outcomes. Public intelligence publishes only the accepted evidence-backed Runtime Containment Thread revision; unresolved items are not converted into public claims.",
+  "sources": [
+    {
+      "source_id": "simon-willison",
+      "name": "Simon Willison’s Weblog",
+      "scope": "Unresolved observations in the retained feed backlog; unchanged watches wait for revisit_at; selected up to 30",
+      "intake_count": 30,
+      "reviewed_count": 30
+    },
+    {
+      "source_id": "hacker-news",
+      "name": "Hacker News",
+      "scope": "Latest Top 100 IDs; first 60 eligible stories plus rising, configured primary-source recall candidates, and up to 5 due deferred carryover items; unchanged watches wait for revisit_at",
+      "intake_count": 65,
+      "reviewed_count": 65
+    }
+  ]
+}
