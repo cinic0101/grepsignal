@@ -23,6 +23,9 @@ const relatedThread = (threadId: string) =>
       <p>
         Forecasts derived from active Threads. Probability, deadline, and resolution terms are fixed at public registration; outcomes remain visible whether correct, incorrect, or unresolved.
       </p>
+      <p class="method-note">
+        Probabilities are structured editorial judgments, rounded to five-point increments. GrepSignal does not claim statistical calibration yet; each forecast records the evidence and counter-factors behind its original estimate.
+      </p>
     </header>
 
     <section class="ledger-summary" aria-label="Prediction ledger summary">
@@ -71,6 +74,7 @@ const relatedThread = (threadId: string) =>
   .page-head { max-width: 880px; padding-bottom: 42px; border-bottom: 1px solid var(--ink); }
   .page-head h1 { margin: 8px 0 18px; font-size: clamp(48px, 7vw, 82px); line-height: .98; }
   .page-head p { margin: 0; max-width: 800px; color: #3a3935; font-size: 19px; line-height: 1.6; }
+  .page-head .method-note { margin-top: 14px; color: var(--muted); font-size: 13px; line-height: 1.6; }
   .ledger-summary {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
