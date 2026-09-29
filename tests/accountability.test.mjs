@@ -99,6 +99,73 @@ test('forecast basis must be pre-deadline and reference an immutable Thread snap
   const unknown=forecastBasis();unknown.payload.thread_snapshot_version=99;
   assert.throws(()=>run([register(),publication(),unknown]));
 });
+const forecastReview=(assessment='supporting')=>event({
+  id:'evt-forecast-review',
+  record_type:'prediction',
+  record_id:prediction.id,
+  expected_version:3,
+  kind:'forecast_review',
+  recorded_at:'2026-09-23T00:00:00Z',
+  evidence:assessment === 'supporting' || assessment === 'challenging' ? [source] : [],
+  note:'New evidence changes how the fixed forecast should be interpreted without changing its probability.',
+  payload:{
+    assessment,
+    counterevidence_checked:['Checked for contrary evidence in the accepted Thread context.'],
+    thread_snapshot_version:0,
+    next_review_at:'2026-09-29T00:00:00Z',
+  },
+});
+test('forecast review appends evidence movement while preserving the original forecast',()=>{
+  const {data}=run([register(),publication(),forecastBasis(),forecastReview()]);
+  const p=data.predictions[0];
+  assert.equal(p.initial_probability,.7);
+  assert.equal(p.claim,prediction.claim);
+  assert.equal(p.status,'open');
+  assert.equal(p.reviews.length,1);
+  assert.equal(p.reviews[0].assessment,'supporting');
+  assert.equal(p.reviews[0].original_probability,.7);
+  assert.equal(p.reviews[0].thread_snapshot_version,0);
+  assert.equal(p.last_reviewed_at,'2026-09-23T00:00:00Z');
+});
+test('directional forecast reviews require evidence and all forecast reviews are pre-deadline',()=>{
+  const missing=forecastReview('supporting');missing.evidence=[];
+  assert.throws(()=>run([register(),publication(),forecastBasis(),missing]));
+  const late=forecastReview('neutral');late.recorded_at='2026-10-01T00:00:00Z';late.payload.next_review_at=null;
+  assert.throws(()=>run([register(),publication(),forecastBasis(),late]));
+});
+test('neutral forecast review may record checked counterevidence without manufacturing evidence',()=>{
+  const neutral=forecastReview('neutral');neutral.payload.next_review_at=null;
+  const p=run([register(),publication(),forecastBasis(),neutral]).data.predictions[0];
+  assert.equal(p.reviews[0].assessment,'neutral');
+  assert.deepEqual(p.reviews[0].evidence,[]);
+  assert.equal(p.reviews[0].original_probability,.7);
+});
+test('forecast review must reference an existing Thread snapshot and cannot smuggle probability changes',()=>{
+  const unknown=forecastReview();unknown.payload.thread_snapshot_version=99;
+  assert.throws(()=>run([register(),publication(),forecastBasis(),unknown]));
+  const altered=forecastReview();altered.payload.initial_probability=.2;
+  assert.throws(()=>run([register(),publication(),forecastBasis(),altered]));
+});
+test('generic review is not valid for Predictions',()=>{
+  const generic=event({
+    id:'evt-generic-prediction-review',
+    record_type:'prediction',
+    record_id:prediction.id,
+    expected_version:3,
+    kind:'review',
+    recorded_at:'2026-09-23T00:00:00Z',
+    payload:{outcome:'unchanged',counterevidence_checked:['Checked evidence'],next_review_at:'2026-09-29T00:00:00Z'},
+  });
+  assert.throws(()=>run([register(),publication(),forecastBasis(),generic]));
+});
+test('resolution after forecast reviews still scores the original probability',()=>{
+  const review=forecastReview();
+  const resolved=resolution('true');resolved.expected_version=4;resolved.evidence=[source];
+  const p=run([register(),publication(),forecastBasis(),review,resolved]).data.predictions[0];
+  assert.equal(p.initial_probability,.7);
+  assert.equal(p.reviews.length,1);
+  assert.ok(Math.abs(p.brier_score-.09)<1e-10);
+});
 test('unverified or late public registration cannot score',()=>{assert.throws(()=>run([register(),resolution()]));const p=publication();p.payload.first_public_at='2026-10-01T01:00:00Z';assert.throws(()=>run([register(),p]));});
 test('eligible outcome scores only after deadline',()=>{const {data}=run([register(),publication(),resolution()]);assert.ok(Math.abs(data.predictions[0].brier_score-.49)<1e-10);assert.equal(data.predictions[0].initial_probability,.7);assert.equal(data.stats.open_predictions,0);});
 test('deadline does not force decisive resolution',()=>{const {data}=run([register(),publication(),resolution('unresolved')]);assert.equal(data.predictions[0].brier_score,null);assert.equal(data.predictions[0].status,'unresolved');assert.equal(data.stats.open_predictions,1);});
