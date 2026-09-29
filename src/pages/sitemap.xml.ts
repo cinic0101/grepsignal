@@ -15,6 +15,7 @@ export const GET: APIRoute = ({ site }) => {
   const base = import.meta.env.BASE_URL;
   const absoluteUrl = (path = '') => new URL(`${base}${path}`, origin).toString();
   const generatedDate = intelligence.generated_at.slice(0, 10);
+  const publishedPredictions = intelligence.predictions.filter((prediction) => prediction.first_public_at !== null);
 
   const entries: Array<{ loc: string; lastmod?: string }> = [
     { loc: absoluteUrl('agents/') },
@@ -37,9 +38,12 @@ export const GET: APIRoute = ({ site }) => {
       loc: absoluteUrl(`threads/${thread.id}/`),
       lastmod: thread.last_updated,
     })));
+    if (publishedPredictions.length > 0) {
+      entries.push({ loc: absoluteUrl('predictions/'), lastmod: generatedDate });
+    }
   }
 
-  entries.push(...intelligence.predictions.map(p => ({ loc: absoluteUrl(`predictions/${p.id}/`), lastmod: p.last_changed_at?.slice(0,10) ?? p.created_at.slice(0,10) })));
+  entries.push(...publishedPredictions.map(p => ({ loc: absoluteUrl(`predictions/${p.id}/`), lastmod: p.last_changed_at?.slice(0,10) ?? p.created_at.slice(0,10) })));
 
   const urls = entries.map(({ loc, lastmod }) => [
     '  <url>',
