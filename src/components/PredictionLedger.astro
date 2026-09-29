@@ -1,16 +1,135 @@
 ---
 import intelligence from '../data/intelligence';
 const base = import.meta.env.BASE_URL;
+const predictions = [...intelligence.predictions]
+  .filter((prediction) => prediction.first_public_at !== null)
+  .sort((a, b) => a.deadline.localeCompare(b.deadline));
+const threadTitle = (threadId: string) =>
+  intelligence.threads.find((thread) => thread.id === threadId)?.title ?? threadId;
+const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
+  year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
+}).format(new Date(value));
 ---
-<div class="card" id="predictions">
-  <div class="cardtop"><div><span class="section-kicker">ACCOUNTABILITY</span><h2>Prediction ledger</h2></div><span class="beta">{intelligence.stats.open_predictions} OPEN / UNRESOLVED</span></div>
-  {intelligence.predictions.length === 0 ? <div class="empty-card"><strong>No formal prediction yet.</strong><p>Forecasts are not manufactured to fill the ledger. Fixtures and private drafts do not count.</p></div> : intelligence.predictions.map(p => <article class="prediction" id={p.id}>
-    <span class="label">{p.lifecycle} · {p.status} · deadline {p.deadline}</span><h3><a href={`${base}predictions/${p.id}/`}>{p.claim}</a></h3>
-    <p>Initial probability: {Math.round(p.initial_probability*100)}% · Public registration: {p.first_public_at ?? 'not yet verified; not in scored track record'}</p>
-    <details><summary>Original criteria and resolution history</summary><p>Success: {p.success_criterion}</p><p>Failure: {p.failure_criterion}</p><p>Insufficient evidence: {p.insufficient_evidence_policy}</p>
-      <ul>{p.resolution_sources.map(url => <li><a href={url}>Resolution source</a></li>)}</ul>
-      {p.resolutions?.map(r => <p><a href={`${base}changes/#${r.id}`}>{r.recorded_at}: {r.outcome}</a> · Brier {r.brier_score === null ? 'unscored' : r.brier_score.toFixed(4)}<br />{r.note}</p>)}
-    </details>
-  </article>)}
-  <p class="muted">Preserve misses and unresolved outcomes; never score only successes. A few outcomes do not establish calibration.</p>
+<div class="card prediction-card" id="predictions">
+  <div class="cardtop">
+    <div>
+      <span class="section-kicker">ACCOUNTABILITY</span>
+      <h2>Prediction ledger</h2>
+    </div>
+    <span class="beta">{intelligence.stats.open_predictions} OPEN</span>
+  </div>
+
+  {predictions.length === 0 ? (
+    <div class="empty-card">
+      <strong>No formal prediction yet.</strong>
+      <p>Forecasts are not manufactured to fill the ledger. Fixtures and private drafts do not count.</p>
+    </div>
+  ) : (
+    <div class="prediction-compact-list">
+      {predictions.map((prediction) => (
+        <article class="prediction prediction-compact" id={prediction.id}>
+          <div class="prediction-probability" aria-label={`Initial probability ${Math.round(prediction.initial_probability * 100)} percent`}>
+            <strong>{Math.round(prediction.initial_probability * 100)}%</strong>
+            <span>INITIAL</span>
+          </div>
+          <div class="prediction-compact-copy">
+            <div class="prediction-compact-meta">
+              <span>{prediction.status.toUpperCase()}</span>
+              <span>DEADLINE {formatDate(prediction.deadline).toUpperCase()}</span>
+            </div>
+            <h3>
+              <a href={`${base}predictions/${prediction.id}/`}>
+                {threadTitle(prediction.thread_id)}
+              </a>
+            </h3>
+            <p class="prediction-claim-preview">{prediction.claim}</p>
+            <a class="prediction-open" href={`${base}predictions/${prediction.id}/`}>
+              View forecast <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  )}
+
+  {predictions.length > 0 && (
+    <a class="prediction-ledger-link" href={`${base}predictions/`}>View all predictions →</a>
+  )}
+  <p class="muted prediction-ledger-note">Preserve misses and unresolved outcomes; never score only successes. A few outcomes do not establish calibration.</p>
 </div>
+
+<style>
+  .prediction-card { min-width: 0; }
+  .prediction-compact-list { border-top: 1px solid var(--line); }
+  .prediction-compact {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 18px;
+    padding: 20px 0;
+    border-top: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .prediction-probability {
+    display: grid;
+    align-content: start;
+    gap: 4px;
+    padding-top: 2px;
+  }
+  .prediction-probability strong {
+    color: var(--accent);
+    font: 600 30px/1 Georgia, 'Times New Roman', serif;
+    letter-spacing: -.035em;
+  }
+  .prediction-probability span,
+  .prediction-compact-meta {
+    color: var(--muted);
+    font: 800 9px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .055em;
+  }
+  .prediction-compact-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin-bottom: 6px;
+  }
+  .prediction-compact-copy h3 {
+    margin: 0 0 7px;
+    font: 600 20px/1.18 Georgia, 'Times New Roman', serif;
+    letter-spacing: -.015em;
+  }
+  .prediction-compact-copy h3 a { color: inherit; text-decoration: none; }
+  .prediction-compact-copy h3 a:hover,
+  .prediction-compact-copy h3 a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+  .prediction-claim-preview {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: #47453f;
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  .prediction-open,
+  .prediction-ledger-link {
+    display: inline-flex;
+    margin-top: 10px;
+    color: var(--accent);
+    font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .035em;
+    text-decoration: none;
+  }
+  .prediction-open:hover,
+  .prediction-open:focus-visible,
+  .prediction-ledger-link:hover,
+  .prediction-ledger-link:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+  .prediction-ledger-link { margin-top: 18px; }
+  .prediction-ledger-note { margin-top: 16px; line-height: 1.5; }
+
+  @media (max-width: 620px) {
+    .prediction-compact { grid-template-columns: 60px minmax(0, 1fr); gap: 14px; }
+    .prediction-probability strong { font-size: 27px; }
+    .prediction-compact-copy h3 { font-size: 19px; }
+    .prediction-claim-preview { -webkit-line-clamp: 2; }
+  }
+</style>
