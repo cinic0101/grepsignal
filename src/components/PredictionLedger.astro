@@ -55,7 +55,7 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
   {predictions.length > 0 && (
     <a class="prediction-ledger-link" href={`${base}predictions/`}>View all predictions →</a>
   )}
-  <p class="muted prediction-ledger-note">Preserve misses and unresolved outcomes; never score only successes. A few outcomes do not establish calibration.</p>
+  <p class="muted prediction-ledger-note">Probabilities are structured editorial judgments, not calibrated model outputs. Open each forecast to see its recorded basis. Preserve misses and unresolved outcomes; never score only successes.</p>
 </div>
 
 <style>
