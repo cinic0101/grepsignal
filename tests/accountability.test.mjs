@@ -127,6 +127,11 @@ test('forecast review appends evidence movement while preserving the original fo
   assert.equal(p.reviews[0].thread_snapshot_version,0);
   assert.equal(p.last_reviewed_at,'2026-09-23T00:00:00Z');
 });
+test('forecast review advances the change journal without pretending intelligence materially changed',()=>{
+  const {data,changes}=run([register(),publication(),forecastBasis(),forecastReview()]);
+  assert.equal(changes.at(-1).kind,'forecast_review');
+  assert.equal(data.generated_at,'2026-09-22T00:00:00Z');
+});
 test('directional forecast reviews require evidence and all forecast reviews are pre-deadline',()=>{
   const missing=forecastReview('supporting');missing.evidence=[];
   assert.throws(()=>run([register(),publication(),forecastBasis(),missing]));
