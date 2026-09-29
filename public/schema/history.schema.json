@@ -65,7 +65,8 @@
               "resolve",
               "publication",
               "relate",
-              "forecast_basis"
+              "forecast_basis",
+              "forecast_review"
             ]
           },
           "recorded_at": {
@@ -499,6 +500,59 @@
                     "counter_factors",
                     "thread_snapshot_version",
                     "calibration_note"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "forecast_review"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "payload": {
+                  "type": "object",
+                  "properties": {
+                    "assessment": {
+                      "enum": [
+                        "supporting",
+                        "challenging",
+                        "neutral",
+                        "inconclusive"
+                      ]
+                    },
+                    "counterevidence_checked": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "thread_snapshot_version": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "next_review_at": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "format": "date-time",
+                      "pattern": "Z$"
+                    }
+                  },
+                  "required": [
+                    "assessment",
+                    "counterevidence_checked",
+                    "thread_snapshot_version",
+                    "next_review_at"
                   ],
                   "additionalProperties": false
                 }
