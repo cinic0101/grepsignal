@@ -36,6 +36,9 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
             <div class="prediction-compact-meta">
               <span>{prediction.status.toUpperCase()}</span>
               <span>DEADLINE {formatDate(prediction.deadline).toUpperCase()}</span>
+              {prediction.reviews.length > 0 && (
+                <span>{prediction.reviews.length} REVIEW{prediction.reviews.length === 1 ? '' : 'S'} · LAST {formatDate(prediction.reviews.at(-1).recorded_at).toUpperCase()}</span>
+              )}
             </div>
             <h3>
               <a href={`${base}predictions/${prediction.id}/`}>
