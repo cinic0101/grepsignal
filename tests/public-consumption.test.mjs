@@ -118,6 +118,22 @@ test('Predictions navigation is hidden until there is a public ledger entry and 
   assert.ok(layout.includes('${base}predictions/'));
 });
 
+test('Prediction presentation separates readable headings from immutable forecast contracts',()=>{
+  const home=read('src/components/PredictionLedger.astro');
+  const list=read('src/pages/predictions/index.astro');
+  const detail=read('src/pages/predictions/[id].astro');
+  assert.ok(home.includes('{threadTitle(prediction.thread_id)}'));
+  assert.ok(home.includes('prediction-claim-preview'));
+  assert.ok(!home.includes('<details>'));
+  assert.ok(home.includes('View all predictions'));
+  assert.ok(list.includes("thread?.title ?? prediction.thread_id"));
+  assert.ok(list.includes('class="prediction-claim"'));
+  assert.ok(detail.includes("<h1>{relatedThread?.title ?? 'Prediction'}</h1>"));
+  assert.ok(detail.includes('ORIGINAL FORECAST'));
+  assert.ok(detail.includes('<p class="claim-copy">{prediction.claim}</p>'));
+  assert.ok(!detail.includes('<h1>{prediction.claim}</h1>'));
+});
+
 test('Prediction ledger provides published list-to-detail navigation',()=>{
   const list=read('src/pages/predictions/index.astro');
   const detail=read('src/pages/predictions/[id].astro');
