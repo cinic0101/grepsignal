@@ -6,7 +6,7 @@ import { pathToFileURL } from 'node:url';
 const TYPES = {signal:'signals', thread:'threads', prediction:'predictions'};
 const ASSESSMENTS = ['emerging','strengthening','stable','weakening','falsified'];
 const THESIS_EFFECTS = ['unchanged','strengthened','weakened','revised','falsified'];
-const KINDS = ['register','revise','review','supersede','retract','resolve','publication','relate','forecast_basis'];
+const KINDS = ['register','revise','review','supersede','retract','resolve','publication','relate','forecast_basis','forecast_review'];
 const ID = /^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$/;
 const FORBIDDEN = /^(raw_html|raw_text|source_text|source_body|image_bytes|screenshot|prompt|private_notes|cache_file|secret|token|__proto__|constructor|prototype)$/;
 const patchKeys = {
@@ -99,6 +99,7 @@ function snapshotProjection(type,r,links) {
     for (const update of out.updates ?? []) update.sources=normalizedEvidence(update.sources ?? []);
   } else if (type === 'prediction') {
     if (out.forecast_basis) out.forecast_basis.evidence=normalizedEvidence(out.forecast_basis.evidence ?? []);
+    for (const review of out.reviews ?? []) review.evidence=normalizedEvidence(review.evidence ?? []);
     for (const resolution of out.resolutions ?? []) resolution.evidence=normalizedEvidence(resolution.evidence ?? []);
   }
   return out;
@@ -195,7 +196,7 @@ export function replay(baseline,journal,baselineLinks=null) {
       }
       if (p.first_observed_at != null) assert(timestamp(p.first_observed_at) <= timestamp(e.recorded_at),'observation cannot be in the future');
       r.first_observed_at=p.first_observed_at ?? null;r.last_changed_at=e.recorded_at;
-      if (e.record_type === 'prediction') {r.status='unregistered';r.resolutions=[];r.brier_score=null;r.forecast_basis=null;}
+      if (e.record_type === 'prediction') {r.status='unregistered';r.reviews=[];r.resolutions=[];r.brier_score=null;r.forecast_basis=null;}
       data[TYPES[e.record_type]].push(r);item={type:e.record_type,r};records.set(r.id,item);
     } else assert(item && item.type === e.record_type,'unknown record/type');
     const r=item.r;
@@ -228,6 +229,7 @@ export function replay(baseline,journal,baselineLinks=null) {
         r.updates.push({id:e.id,date:r.last_updated,assessment:r.status,effect_on_thesis:inferredThreadEffect,change:e.note,signal_ids:[],sources:structuredClone(e.evidence)});
       }
     } else if (e.kind === 'review') {
+      assert(e.record_type !== 'prediction','predictions use forecast_review');
       exact(p,['outcome','counterevidence_checked','next_review_at'],'review');
       assert(['unchanged','inconclusive'].includes(p.outcome),'judgment changes require a revision');
       assert(Array.isArray(p.counterevidence_checked) && p.counterevidence_checked.length > 0 && p.counterevidence_checked.every(text),'counter-evidence work must be recorded');
@@ -261,6 +263,34 @@ export function replay(baseline,journal,baselineLinks=null) {
         recorded_at:e.recorded_at,
         event_id:e.id,
       };
+    } else if (e.kind === 'forecast_review') {
+      exact(p,['assessment','counterevidence_checked','thread_snapshot_version','next_review_at'],'forecast review');
+      assert(e.record_type === 'prediction','forecast review applies only to predictions');
+      assert(r.first_public_at !== null && r.status === 'open','forecast review requires an open publicly registered prediction');
+      assert(timestamp(e.recorded_at) < timestamp(r.deadline),'forecast review must be recorded before deadline');
+      assert(['supporting','challenging','neutral','inconclusive'].includes(p.assessment),'invalid forecast review assessment');
+      assert(Array.isArray(p.counterevidence_checked) && p.counterevidence_checked.length > 0 && p.counterevidence_checked.every(text),'forecast review counter-evidence work must be recorded');
+      assert(Number.isInteger(p.thread_snapshot_version) && p.thread_snapshot_version >= 0,'forecast review Thread snapshot version required');
+      assert(versions.threads?.[r.thread_id]?.[String(p.thread_snapshot_version)],'forecast review references unknown Thread snapshot');
+      if (['supporting','challenging'].includes(p.assessment)) assert(e.evidence.length > 0,'directional forecast review requires evidence');
+      if (p.next_review_at != null) {
+        assert(timestamp(p.next_review_at) > timestamp(e.recorded_at) && timestamp(p.next_review_at) < timestamp(r.deadline),'next forecast review must be after this review and before deadline');
+      }
+      r.reviews.push({
+        id:e.id,
+        assessment:p.assessment,
+        recorded_at:e.recorded_at,
+        note:e.note,
+        evidence:structuredClone(e.evidence),
+        counterevidence_checked:structuredClone(p.counterevidence_checked),
+        thread_snapshot_version:p.thread_snapshot_version,
+        next_review_at:p.next_review_at ?? null,
+        original_probability:r.initial_probability,
+      });
+      r.last_reviewed_at=e.recorded_at;
+      r.last_review_outcome=p.assessment;
+      r.next_review_at=p.next_review_at ?? null;
+      r.review_due_since=p.next_review_at ?? null;
     } else if (e.kind === 'publication') {
       exact(p,['first_public_at','verification_url'],'publication receipt');safeUrl(p.verification_url);
       assert(r.first_public_at === null,'first publication receipt is immutable');
@@ -345,10 +375,11 @@ export function replay(baseline,journal,baselineLinks=null) {
       for (const key of ['method','rationale','calibration_note']) assert(text(p.forecast_basis[key]),`invalid forecast basis ${key}`);
       for (const key of ['supporting_factors','counter_factors']) assert(Array.isArray(p.forecast_basis[key]) && p.forecast_basis[key].length > 0 && p.forecast_basis[key].every(text),`invalid forecast basis ${key}`);
     }
+    for (const review of p.reviews ?? []) review.evidence=normalizedEvidence(review.evidence);
     for (const resolution of p.resolutions ?? []) resolution.evidence=normalizedEvidence(resolution.evidence);
   }
   data.stats={material_signals:data.signals.filter(x => x.lifecycle === 'active').length,active_threads:data.threads.filter(x => x.lifecycle === 'active').length,open_predictions:data.predictions.filter(x => ['open','unresolved'].includes(x.status) && x.lifecycle === 'active').length};
-  const lastMaterial=changes.filter(x => !['review','publication'].includes(x.kind)).at(-1);
+  const lastMaterial=changes.filter(x => !['review','forecast_review','publication'].includes(x.kind)).at(-1);
   if (lastMaterial) data.generated_at=lastMaterial.recorded_at;
   data.accountability={baseline_ref:journal.baseline_ref,initialized_at:journal.initialized_at,latest_sequence:changes.length,last_recorded_at:changes.at(-1)?.recorded_at ?? null};
   return {data,changes,links,versions};

@@ -8,6 +8,7 @@ const terms = [
   ['Limitation', 'A known boundary on what the evidence supports. A limitation narrows the claim; it is not boilerplate legal caution.'],
   ['Watch next', 'The observations that would be most useful for updating the judgment. It is a monitoring agenda, not a generic recommendation.'],
   ['Prediction', 'A separately registered, time-bounded and falsifiable claim with a fixed probability and resolution criteria. Each public forecast records a pre-deadline Forecast Basis explaining the evidence, counter-factors, Thread snapshot, and method behind the original probability.'],
+  ['Prediction review', 'An append-only pre-deadline update on how new evidence bears on a fixed forecast. Reviews can be supporting, challenging, neutral, or inconclusive, but they never revise the original probability or resolution terms.'],
   ['Lifecycle', 'Whether a record is active, superseded, or retracted. Lifecycle is separate from the judgment assessment such as strengthening or weakening.'],
   ['Revision', 'An accepted material change to a published judgment. Cosmetic presentation changes are not revisions.'],
 ];
@@ -84,7 +85,7 @@ const terms = [
         <h2>Probability is a judgment we intend to calibrate.</h2>
         <p>
           Early GrepSignal probabilities are structured editorial judgments, rounded to five-point increments rather than outputs of a calibrated statistical model.
-          The Forecast Basis is recorded before the deadline and stays attached to the original estimate; resolved forecasts keep the original probability, outcome, evidence, Brier score, and lesson learned.
+          The Forecast Basis is recorded before the deadline and stays attached to the original estimate. Prediction reviews can then record how evidence moves while the original probability stays fixed; resolved forecasts keep the original probability, outcome, evidence, Brier score, and lesson learned.
         </p>
       </article>
       <article>

@@ -133,6 +133,20 @@ test('Prediction pages expose the recorded forecast basis and calibration bounda
   assert.ok(guide.includes('Forecast Basis'));
 });
 
+test('Prediction review timeline is public, append-only, and keeps the original probability visible',()=>{
+  const home=read('src/components/PredictionLedger.astro');
+  const list=read('src/pages/predictions/index.astro');
+  const detail=read('src/pages/predictions/[id].astro');
+  const guide=read('src/pages/read/index.astro');
+  assert.ok(home.includes('prediction.reviews.length'));
+  assert.ok(list.includes('prediction.reviews.length'));
+  assert.ok(detail.includes('REVIEW TIMELINE'));
+  assert.ok(detail.includes('Original probability'));
+  assert.ok(detail.includes('unchanged by design'));
+  assert.ok(detail.includes('counterevidence_checked'));
+  assert.ok(guide.includes('Prediction review'));
+});
+
 test('Prediction presentation separates readable headings from immutable forecast contracts',()=>{
   const home=read('src/components/PredictionLedger.astro');
   const list=read('src/pages/predictions/index.astro');
@@ -209,6 +223,13 @@ test('roadmap scope matches the current technical-builder positioning',()=>{
   const roadmap=read('docs/roadmap.md');
   assert.ok(roadmap.includes('AI models, agents, tooling, and infrastructure'));
   assert.ok(!roadmap.includes('Initial scope: agent infrastructure and technical adoption.'));
+});
+
+test('public schemas document Prediction forecast reviews',()=>{
+  const intelligence=JSON.parse(read('public/schema/intelligence.schema.json'));
+  const history=JSON.parse(read('public/schema/history.schema.json'));
+  assert.ok(history.properties.events.items.properties.kind.enum.includes('forecast_review'));
+  assert.ok(intelligence.properties.predictions.items.properties.reviews);
 });
 
 test('public schemas document append-only Prediction forecast basis',()=>{
