@@ -2127,6 +2127,150 @@
       "payload": {
         "effect_on_thesis": "strengthened"
       }
+    },
+    {
+      "id": "evt-thread-agent-harness-economics-agent-native-interfaces-2026-09-29",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 1,
+      "kind": "revise",
+      "recorded_at": "2026-09-29T06:20:01Z",
+      "proposed_by": "ChatGPT daily editorial review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "daily_editorial_publish",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-29-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/163",
+        "accepted_at": "2026-09-29T06:19:03Z"
+      },
+      "note": "Agent-native interfaces are becoming part of harness economics. Cloudflare redesigned broad API access around observed agent usage, while Vespper reports a specialized document tool with a distinct accuracy, latency, and cost profile. The update strengthens the architectural thesis without treating either first-party result as a universal measured advantage.",
+      "evidence": [
+        {
+          "publisher": "Cloudflare",
+          "title": "Introducing cf: the agentic CLI for the entire Cloudflare API",
+          "url": "https://blog.cloudflare.com/cloudflare-cf-cli-launch/",
+          "role": "primary_product_announcement",
+          "published_at": null,
+          "retrieved_at": "2026-09-29T04:50:54.943852Z",
+          "archive_url": null,
+          "lineage_id": "lineage-cloudflare-cf-cli-202609"
+        },
+        {
+          "publisher": "Vespper",
+          "title": "Launching Vespper DOCX MCP: 3× faster, 2× cheaper, more accurate",
+          "url": "https://www.vespper.com/blog/launching-vespper-docx-mcp",
+          "role": "primary_product_benchmark",
+          "published_at": null,
+          "retrieved_at": "2026-09-29T04:51:04.693518Z",
+          "archive_url": null,
+          "lineage_id": "lineage-vespper-docx-mcp-202609"
+        }
+      ],
+      "payload": {
+        "status": "strengthening",
+        "thesis": "As frontier models become usable across multiple agent runtimes, harness and tool-interface design—including context management, structured operations, specialization, concurrency, and execution loops—can materially shift cost and task efficiency independently of model choice.",
+        "effect_on_thesis": "strengthened"
+      }
+    },
+    {
+      "id": "evt-thread-agent-runtime-containment-productization-2026-09-29",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 8,
+      "kind": "revise",
+      "recorded_at": "2026-09-29T06:20:02Z",
+      "proposed_by": "ChatGPT daily editorial review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "daily_editorial_publish",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-29-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/163",
+        "accepted_at": "2026-09-29T06:19:03Z"
+      },
+      "note": "Runtime containment is moving from defensive principle to product layer. A reported consumer-agent incident illustrates real consequences from unverified state and delegated actions, while Nvidia's Open Agent Safety Platform explicitly separates execution-layer capability restriction and monitoring from model-level safeguards. The update strengthens the Thread without claiming universal deployment effectiveness.",
+      "evidence": [
+        {
+          "publisher": "Simon Willison",
+          "title": "A quote from Muse AI Agent",
+          "url": "https://simonwillison.net/2026/Sep/28/muse-ai-agent/",
+          "role": "expert_summary",
+          "published_at": "2026-09-28",
+          "retrieved_at": "2026-09-29T04:42:58.197434Z",
+          "archive_url": null,
+          "lineage_id": "lineage-muse-agent-marketplace-incident-202609"
+        },
+        {
+          "publisher": "CNBC",
+          "title": "Nvidia releases software platform to stop AI agents from misbehaving",
+          "url": "https://www.cnbc.com/2026/09/28/nvidia-releases.html",
+          "role": "independent_product_report",
+          "published_at": "2026-09-28",
+          "retrieved_at": "2026-09-29T04:46:47.484238Z",
+          "archive_url": null,
+          "lineage_id": "lineage-nvidia-open-agent-safety-202609"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "strengthened"
+      }
+    },
+    {
+      "id": "evt-thread-open-weight-capability-cost-frontier-closed-efficiency-2026-09-29",
+      "record_type": "thread",
+      "record_id": "thread-open-weight-capability-cost-frontier",
+      "expected_version": 3,
+      "kind": "revise",
+      "recorded_at": "2026-09-29T06:20:03Z",
+      "proposed_by": "ChatGPT daily editorial review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "daily_editorial_publish",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-29-staged-001"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/163",
+        "accepted_at": "2026-09-29T06:19:03Z"
+      },
+      "note": "Closed-model efficiency is now a material boundary on the open-weight cost-pressure thesis. Anthropic reports Sonnet 5.5 at unchanged listed token prices while improving generation speed and reducing task-level token use. Open-weight models still push capability down the cost curve, but cost pressure is increasingly a two-sided race rather than an open-weight-exclusive mechanism.",
+      "evidence": [
+        {
+          "publisher": "Anthropic",
+          "title": "Introducing Claude Sonnet 5.5",
+          "url": "https://www.anthropic.com/claude-sonnet-5-5",
+          "role": "primary_model_announcement",
+          "published_at": "2026-09-28",
+          "retrieved_at": "2026-09-29T04:46:35.975062Z",
+          "archive_url": null,
+          "lineage_id": "lineage-anthropic-sonnet-5-5-202609"
+        }
+      ],
+      "payload": {
+        "status": "weakening",
+        "thesis": "Open-weight models continue to push usable capability down the inference-cost curve, but the economic pressure on premium closed models is increasingly a two-sided capability-cost race: closed vendors can offset open-weight advantages through lower prices, faster inference, and lower task-level token use where openness itself is not decisive.",
+        "effect_on_thesis": "weakened"
+      }
     }
   ]
 }
