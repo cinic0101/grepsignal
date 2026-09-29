@@ -930,6 +930,123 @@
               }
             },
             "additionalProperties": false
+          },
+          "reviews": {
+            "type": "array",
+            "description": "Append-only pre-deadline reviews of evidence movement for the fixed forecast. Reviews never revise the original claim, probability, deadline, or resolution contract.",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "assessment",
+                "recorded_at",
+                "note",
+                "evidence",
+                "counterevidence_checked",
+                "thread_snapshot_version",
+                "next_review_at",
+                "original_probability"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "assessment": {
+                  "enum": [
+                    "supporting",
+                    "challenging",
+                    "neutral",
+                    "inconclusive"
+                  ]
+                },
+                "recorded_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "publisher",
+                      "title",
+                      "url",
+                      "role"
+                    ],
+                    "properties": {
+                      "publisher": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "pattern": "^https://"
+                      },
+                      "role": {
+                        "type": "string"
+                      },
+                      "published_at": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "retrieved_at": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "format": "date-time"
+                      },
+                      "archive_url": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "format": "uri"
+                      },
+                      "lineage_id": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "counterevidence_checked": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "thread_snapshot_version": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "next_review_at": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time"
+                },
+                "original_probability": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "additionalProperties": false
+            }
           }
         },
         "additionalProperties": true
