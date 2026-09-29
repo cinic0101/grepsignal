@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import intelligence from '../../data/intelligence';
+
+const base = import.meta.env.BASE_URL;
+const predictions = [...intelligence.predictions]
+  .filter((prediction) => prediction.first_public_at !== null)
+  .sort((a, b) => b.created_at.localeCompare(a.created_at));
+const formatTimestamp = (value: string) => new Intl.DateTimeFormat('en', {
+  year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
+}).format(new Date(value));
+const threadTitle = (threadId: string) =>
+  intelligence.threads.find((thread) => thread.id === threadId)?.title ?? threadId;
+---
+<BaseLayout
+  title="Prediction ledger — GrepSignal"
+  description="Public, immutable GrepSignal forecasts with fixed probabilities, deadlines, and resolution contracts."
+>
+  <main class="wrap prediction-ledger-page">
+    <header class="page-head">
+      <span class="section-kicker">ACCOUNTABILITY</span>
+      <h1>Prediction ledger</h1>
+      <p>
+        Forecasts derived from active Threads. Probability, deadline, and resolution terms are fixed at public registration; outcomes remain visible whether correct, incorrect, or unresolved.
+      </p>
+    </header>
+
+    <section class="ledger-summary" aria-label="Prediction ledger summary">
+      <div><strong>{predictions.length}</strong><span>PUBLIC FORECASTS</span></div>
+      <div><strong>{predictions.filter((prediction) => prediction.status === 'open').length}</strong><span>OPEN</span></div>
+      <div><strong>{predictions.filter((prediction) => prediction.status === 'resolved').length}</strong><span>RESOLVED</span></div>
+    </section>
+
+    <section class="prediction-list" aria-label="Public predictions">
+      {predictions.map((prediction, index) => {
+        const probability = Math.round(prediction.initial_probability * 100);
+        return (
+          <article class="prediction-row">
+            <div class="prediction-index">{String(index + 1).padStart(2, '0')}</div>
+            <div class="prediction-copy">
+              <div class="prediction-meta">
+                <span>{prediction.status.toUpperCase()}</span>
+                <span>{probability}% INITIAL</span>
+                <span>DEADLINE {formatTimestamp(prediction.deadline).toUpperCase()}</span>
+              </div>
+              <h2><a href={base + 'predictions/' + prediction.id + '/'}>{prediction.claim}</a></h2>
+              <p>
+                Related Thread:
+                <a href={base + 'threads/' + prediction.thread_id + '/'}>{threadTitle(prediction.thread_id)}</a>
+              </p>
+            </div>
+            <a class="open-prediction" href={base + 'predictions/' + prediction.id + '/'}>Open forecast →</a>
+          </article>
+        );
+      })}
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .prediction-ledger-page { padding-top: 68px; padding-bottom: 100px; }
+  .page-head { max-width: 880px; padding-bottom: 42px; border-bottom: 1px solid var(--ink); }
+  .page-head h1 { margin: 8px 0 18px; font-size: clamp(48px, 7vw, 82px); line-height: .98; }
+  .page-head p { max-width: 800px; margin: 0; color: #3a3935; font-size: 19px; line-height: 1.6; }
+  .ledger-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--ink); }
+  .ledger-summary div { display: grid; gap: 6px; padding: 24px 0; }
+  .ledger-summary strong { font: 600 34px/1 Georgia, 'Times New Roman', serif; color: var(--accent); }
+  .ledger-summary span { color: var(--muted); font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .06em; }
+  .prediction-row { display: grid; grid-template-columns: 58px minmax(0, 1fr) auto; gap: 28px; align-items: center; padding: 32px 0; border-bottom: 1px solid var(--line); }
+  .prediction-index { color: var(--muted); font: 700 11px ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .prediction-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 9px; color: var(--accent); font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .04em; }
+  .prediction-copy h2 { max-width: 900px; margin: 0; font: 600 28px/1.2 Georgia, 'Times New Roman', serif; }
+  .prediction-copy h2 a { color: inherit; text-decoration: none; }
+  .prediction-copy h2 a:hover, .prediction-copy h2 a:focus-visible { text-decoration: underline; text-underline-offset: 5px; }
+  .prediction-copy p { margin: 11px 0 0; color: var(--muted); font-size: 13px; }
+  .prediction-copy p a { margin-left: 5px; color: var(--accent); text-underline-offset: 3px; }
+  .open-prediction { color: var(--accent); font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace; text-decoration: none; white-space: nowrap; }
+  @media (max-width: 760px) {
+    .prediction-ledger-page { padding-top: 44px; }
+    .ledger-summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .prediction-row { grid-template-columns: 1fr; gap: 12px; }
+    .prediction-index { display: none; }
+    .open-prediction { justify-self: start; }
+  }
+</style>

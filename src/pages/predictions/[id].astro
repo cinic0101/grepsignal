@@ -5,7 +5,7 @@ import RecordHistory from '../../components/RecordHistory.astro';
 import { buildAlternativeHeadline, buildPredictionRetrievalIdentity, buildSearchTitle, jsonLdThings } from '../../data/retrieval';
 
 export function getStaticPaths() {
-  return intelligence.predictions.map(prediction => ({
+  return intelligence.predictions.filter(prediction => prediction.first_public_at !== null).map(prediction => ({
     params: { id: prediction.id },
     props: { prediction },
   }));
@@ -45,7 +45,7 @@ const predictionJsonLd = {
   jsonAlternateHref={`${base}data/predictions/${prediction.id}.json`}
 >
   <main class="wrap prediction-detail">
-    <a class="back-link" href={`${base}#predictions`}><span aria-hidden="true">←</span> Prediction ledger</a>
+    <a class="back-link" href={`${base}predictions/`}><span aria-hidden="true">←</span> Prediction ledger</a>
 
     <header class="prediction-header">
       <div>
