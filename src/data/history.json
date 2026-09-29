@@ -2644,6 +2644,131 @@
         "thesis": "Some high-frequency semantic operations may separate from general text generation into decision-native runtimes that accept state plus predefined choices and return typed probabilities directly; the growing question is whether the durable category is a specialized model family or an interface/runtime pattern layered onto general-purpose backbones.",
         "effect_on_thesis": "strengthened"
       }
+    },
+    {
+      "id": "evt-pred-runtime-exact-authorization-2026-10-30-register",
+      "record_type": "prediction",
+      "record_id": "pred-runtime-exact-authorization-2026-10-30",
+      "expected_version": 0,
+      "kind": "register",
+      "recorded_at": "2026-09-29T08:39:04Z",
+      "proposed_by": "ChatGPT Prediction Review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "prediction_review",
+        "run_id": null,
+        "cycle_id": null
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/167",
+        "accepted_at": "2026-09-29T08:37:36Z"
+      },
+      "note": "Register the first Runtime Containment forecast at 70%. The event tests whether the observed shift toward runtime enforcement produces a new post-registration control at a major provider within roughly one month; existing controls do not count.",
+      "evidence": [],
+      "payload": {
+        "id": "pred-runtime-exact-authorization-2026-10-30",
+        "thread_id": "thread-agent-runtime-containment",
+        "claim": "By 2026-10-30, at least one of OpenAI, Anthropic, Google, or Microsoft will publicly ship or document a new or materially expanded agent runtime control that binds execution to operation-specific authorization or independent runtime policy enforcement beyond prompt-level model refusal.",
+        "created_at": "2026-09-29T07:53:33Z",
+        "deadline": "2026-10-30T23:59:59Z",
+        "success_criterion": "A qualifying provider publishes, after this forecast was created and by the deadline, a primary release note or product document describing a newly shipped or materially expanded control that operates at the runtime, tool, action, permission, egress, or execution layer and constrains a concrete capability independently of the model's own refusal behavior. Controls already public by 2026-09-29T07:53:33Z, policy-only statements, benchmark results, and model-level refusal tuning do not count.",
+        "failure_criterion": "None of the four named providers publishes a qualifying new or materially expanded runtime control by the deadline.",
+        "insufficient_evidence_policy": "unresolved",
+        "resolution_sources": [
+          "https://github.com/openai/codex/releases",
+          "https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md",
+          "https://github.com/google-gemini/gemini-cli/blob/main/docs/changelogs/index.md",
+          "https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new"
+        ],
+        "initial_probability": 0.7
+      }
+    },
+    {
+      "id": "evt-pred-decision-native-proliferation-2026-11-30-register",
+      "record_type": "prediction",
+      "record_id": "pred-decision-native-proliferation-2026-11-30",
+      "expected_version": 0,
+      "kind": "register",
+      "recorded_at": "2026-09-29T08:39:05Z",
+      "proposed_by": "ChatGPT Prediction Review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "prediction_review",
+        "run_id": null,
+        "cycle_id": null
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/167",
+        "accepted_at": "2026-09-29T08:37:36Z"
+      },
+      "note": "Register the Decision-Native Runtimes forecast at 55%. The event tests independent organizational diffusion rather than more variants from organizations already represented in the Thread.",
+      "evidence": [],
+      "payload": {
+        "id": "pred-decision-native-proliferation-2026-11-30",
+        "thread_id": "thread-decision-native-runtimes",
+        "claim": "By 2026-11-30, at least two organizations not already represented in GrepSignal's Decision-Native Runtimes evidence as of 2026-09-29 will release an open model or runtime whose first-class inference contract returns typed choices or scores with probabilities for bounded semantic decisions rather than using free-form text generation as the primary interface.",
+        "created_at": "2026-09-29T07:53:33Z",
+        "deadline": "2026-11-30T23:59:59Z",
+        "success_criterion": "Two distinct organizations must each publish, after this forecast was created and by the deadline, public code, weights, or a documented open runtime whose primary decision API directly returns probabilities or confidence over predefined choices, labels, or scores for bounded semantic work. Simple JSON-schema wrappers around ordinary generated text, forks or repackagings of the same implementation, and organizations already represented in the Thread's accepted evidence by 2026-09-29 do not count.",
+        "failure_criterion": "Fewer than two qualifying new independent organizations publish such an implementation by the deadline.",
+        "insufficient_evidence_policy": "unresolved",
+        "resolution_sources": [
+          "https://huggingface.co/models",
+          "https://github.com/topics/large-language-models"
+        ],
+        "initial_probability": 0.55
+      }
+    },
+    {
+      "id": "evt-pred-open-weight-capability-cost-2026-12-31-register",
+      "record_type": "prediction",
+      "record_id": "pred-open-weight-capability-cost-2026-12-31",
+      "expected_version": 0,
+      "kind": "register",
+      "recorded_at": "2026-09-29T08:39:06Z",
+      "proposed_by": "ChatGPT Prediction Review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "prediction_review",
+        "run_id": null,
+        "cycle_id": null
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/167",
+        "accepted_at": "2026-09-29T08:37:36Z"
+      },
+      "note": "Register the Open-Weight Capability–Cost forecast at 65%. The event tests the narrow continuation of high-capability open-weight models moving down the API cost curve, not a general claim that open weights will outperform closed models.",
+      "evidence": [],
+      "payload": {
+        "id": "pred-open-weight-capability-cost-2026-12-31",
+        "thread_id": "thread-open-weight-capability-cost-frontier",
+        "claim": "By 2026-12-31, at least one open-weight model released after 2026-09-29 will appear on Artificial Analysis with an Intelligence Index of at least 46 while listed API pricing is no more than $1 per million input tokens and $3 per million output tokens.",
+        "created_at": "2026-09-29T07:53:33Z",
+        "deadline": "2026-12-31T23:59:59Z",
+        "success_criterion": "Artificial Analysis must list a model released after this forecast was created as open weights, with Intelligence Index >=46 and listed API pricing simultaneously <=$1/M input and <=$3/M output. The same model must satisfy all thresholds on the allowed source. If Artificial Analysis retires or materially changes the Intelligence Index so the stated threshold is no longer comparable, this criterion cannot be inferred from a replacement metric.",
+        "failure_criterion": "Artificial Analysis still reports the same comparable Intelligence Index and pricing fields at the deadline, but no post-2026-09-29 open-weight model satisfies all three thresholds.",
+        "insufficient_evidence_policy": "unresolved",
+        "resolution_sources": [
+          "https://artificialanalysis.ai/leaderboards/models/",
+          "https://artificialanalysis.ai/leaderboards/models?is_open_weights=open_source"
+        ],
+        "initial_probability": 0.65
+      }
     }
   ]
 }
