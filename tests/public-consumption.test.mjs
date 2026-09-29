@@ -111,10 +111,23 @@ test('editorial style advisory is explicit and non-blocking',()=>{
   assert.ok(read('docs/editorial-style.md').includes('not a truth oracle or publication gate'));
 });
 
-test('Predictions navigation is hidden until there is a public ledger entry',()=>{
+test('Predictions navigation is hidden until there is a public ledger entry and routes to the ledger list',()=>{
   const layout=read('src/layouts/BaseLayout.astro');
   assert.ok(layout.includes('const showPredictions = intelligence.predictions.some((prediction) => prediction.first_public_at !== null)'));
   assert.ok(layout.includes('showPredictions && <a href'));
+  assert.ok(layout.includes('${base}predictions/'));
+});
+
+test('Prediction ledger provides published list-to-detail navigation',()=>{
+  const list=read('src/pages/predictions/index.astro');
+  const detail=read('src/pages/predictions/[id].astro');
+  const sitemap=read('src/pages/sitemap.xml.ts');
+  assert.ok(list.includes("filter((prediction) => prediction.first_public_at !== null)"));
+  assert.ok(list.includes("base + 'predictions/' + prediction.id + '/'"));
+  assert.ok(detail.includes("filter(prediction => prediction.first_public_at !== null)"));
+  assert.ok(detail.includes('href={`${base}predictions/`}'));
+  assert.ok(sitemap.includes("absoluteUrl('predictions/')"));
+  assert.ok(sitemap.includes('publishedPredictions.map'));
 });
 
 
