@@ -49,6 +49,11 @@ const relatedThread = (threadId: string) =>
               <div class="prediction-meta">
                 <span>{prediction.status.toUpperCase()}</span>
                 <span>DEADLINE {formatTimestamp(prediction.deadline).toUpperCase()}</span>
+                {prediction.reviews.length > 0 && (
+                  <span>
+                    {prediction.reviews.length} REVIEW{prediction.reviews.length === 1 ? '' : 'S'} · LAST {formatTimestamp(prediction.reviews.at(-1).recorded_at).toUpperCase()}
+                  </span>
+                )}
               </div>
               <h2>
                 <a href={base + 'predictions/' + prediction.id + '/'}>
