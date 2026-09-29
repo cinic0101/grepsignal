@@ -229,6 +229,7 @@ export function replay(baseline,journal,baselineLinks=null) {
         r.updates.push({id:e.id,date:r.last_updated,assessment:r.status,effect_on_thesis:inferredThreadEffect,change:e.note,signal_ids:[],sources:structuredClone(e.evidence)});
       }
     } else if (e.kind === 'review') {
+      assert(e.record_type !== 'prediction','predictions use forecast_review');
       exact(p,['outcome','counterevidence_checked','next_review_at'],'review');
       assert(['unchanged','inconclusive'].includes(p.outcome),'judgment changes require a revision');
       assert(Array.isArray(p.counterevidence_checked) && p.counterevidence_checked.length > 0 && p.counterevidence_checked.every(text),'counter-evidence work must be recorded');
