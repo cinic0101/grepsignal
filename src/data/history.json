@@ -2769,6 +2769,96 @@
         ],
         "initial_probability": 0.65
       }
+    },
+    {
+      "id": "evt-pred-runtime-exact-authorization-2026-10-30-publication",
+      "record_type": "prediction",
+      "record_id": "pred-runtime-exact-authorization-2026-10-30",
+      "expected_version": 1,
+      "kind": "publication",
+      "recorded_at": "2026-09-29T08:40:38Z",
+      "proposed_by": "ChatGPT Publication Reconciliation",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "publication_reconciliation",
+        "run_id": null,
+        "cycle_id": null
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/167",
+        "accepted_at": "2026-09-29T08:37:36Z"
+      },
+      "note": "Record the verified first public registration timestamp from the merged forecast-registration commit. This receipt does not change the original forecast terms.",
+      "evidence": [],
+      "payload": {
+        "first_public_at": "2026-09-29T08:40:17Z",
+        "verification_url": "https://github.com/cinic0101/grepsignal/commit/f74e2f9ba409fba502061f83dc12e84a950cdc00"
+      }
+    },
+    {
+      "id": "evt-pred-decision-native-proliferation-2026-11-30-publication",
+      "record_type": "prediction",
+      "record_id": "pred-decision-native-proliferation-2026-11-30",
+      "expected_version": 1,
+      "kind": "publication",
+      "recorded_at": "2026-09-29T08:40:39Z",
+      "proposed_by": "ChatGPT Publication Reconciliation",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "publication_reconciliation",
+        "run_id": null,
+        "cycle_id": null
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/167",
+        "accepted_at": "2026-09-29T08:37:36Z"
+      },
+      "note": "Record the verified first public registration timestamp from the merged forecast-registration commit. This receipt does not change the original forecast terms.",
+      "evidence": [],
+      "payload": {
+        "first_public_at": "2026-09-29T08:40:17Z",
+        "verification_url": "https://github.com/cinic0101/grepsignal/commit/f74e2f9ba409fba502061f83dc12e84a950cdc00"
+      }
+    },
+    {
+      "id": "evt-pred-open-weight-capability-cost-2026-12-31-publication",
+      "record_type": "prediction",
+      "record_id": "pred-open-weight-capability-cost-2026-12-31",
+      "expected_version": 1,
+      "kind": "publication",
+      "recorded_at": "2026-09-29T08:40:40Z",
+      "proposed_by": "ChatGPT Publication Reconciliation",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "publication_reconciliation",
+        "run_id": null,
+        "cycle_id": null
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/167",
+        "accepted_at": "2026-09-29T08:37:36Z"
+      },
+      "note": "Record the verified first public registration timestamp from the merged forecast-registration commit. This receipt does not change the original forecast terms.",
+      "evidence": [],
+      "payload": {
+        "first_public_at": "2026-09-29T08:40:17Z",
+        "verification_url": "https://github.com/cinic0101/grepsignal/commit/f74e2f9ba409fba502061f83dc12e84a950cdc00"
+      }
     }
   ]
 }
