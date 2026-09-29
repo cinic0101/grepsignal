@@ -118,6 +118,21 @@ test('Predictions navigation is hidden until there is a public ledger entry and 
   assert.ok(layout.includes('${base}predictions/'));
 });
 
+test('Prediction pages expose the recorded forecast basis and calibration boundary',()=>{
+  const home=read('src/components/PredictionLedger.astro');
+  const list=read('src/pages/predictions/index.astro');
+  const detail=read('src/pages/predictions/[id].astro');
+  const guide=read('src/pages/read/index.astro');
+  assert.ok(home.includes('structured editorial judgments'));
+  assert.ok(list.includes('rounded to five-point increments'));
+  assert.ok(detail.includes('FORECAST BASIS'));
+  assert.ok(detail.includes('supporting_factors'));
+  assert.ok(detail.includes('counter_factors'));
+  assert.ok(detail.includes('thread_snapshot_version'));
+  assert.ok(detail.includes('Calibration status'));
+  assert.ok(guide.includes('Forecast Basis'));
+});
+
 test('Prediction presentation separates readable headings from immutable forecast contracts',()=>{
   const home=read('src/components/PredictionLedger.astro');
   const list=read('src/pages/predictions/index.astro');
@@ -194,6 +209,13 @@ test('roadmap scope matches the current technical-builder positioning',()=>{
   const roadmap=read('docs/roadmap.md');
   assert.ok(roadmap.includes('AI models, agents, tooling, and infrastructure'));
   assert.ok(!roadmap.includes('Initial scope: agent infrastructure and technical adoption.'));
+});
+
+test('public schemas document append-only Prediction forecast basis',()=>{
+  const intelligence=JSON.parse(read('public/schema/intelligence.schema.json'));
+  const history=JSON.parse(read('public/schema/history.schema.json'));
+  assert.ok(history.properties.events.items.properties.kind.enum.includes('forecast_basis'));
+  assert.ok(intelligence.properties.predictions.items.properties.forecast_basis);
 });
 
 test('public schemas document evidence lineage and structured proposal provenance',()=>{
