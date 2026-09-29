@@ -2859,6 +2859,255 @@
         "first_public_at": "2026-09-29T08:40:17Z",
         "verification_url": "https://github.com/cinic0101/grepsignal/commit/f74e2f9ba409fba502061f83dc12e84a950cdc00"
       }
+    },
+    {
+      "id": "evt-pred-runtime-exact-authorization-2026-10-30-forecast-basis",
+      "record_type": "prediction",
+      "record_id": "pred-runtime-exact-authorization-2026-10-30",
+      "expected_version": 2,
+      "kind": "forecast_basis",
+      "recorded_at": "2026-09-29T09:10:24Z",
+      "proposed_by": "ChatGPT Forecast Basis Review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "forecast_basis_documentation",
+        "run_id": null,
+        "cycle_id": null
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/169",
+        "accepted_at": "2026-09-29T09:09:15Z"
+      },
+      "note": "Document the registration-time basis for the 70% forecast without changing its claim, probability, deadline, or resolution contract.",
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "Running Codex safely at OpenAI",
+          "url": "https://openai.com/index/running-codex-safely/",
+          "role": "primary_product_security",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "publisher": "Anthropic",
+          "title": "Beyond permission prompts: making Claude Code more secure and autonomous",
+          "url": "https://www.anthropic.com/engineering/claude-code-sandboxing",
+          "role": "primary_product_security",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "publisher": "OpenAI",
+          "title": "An agent used DNS to reach an external chatbot",
+          "url": "https://alignment.openai.com/misalignment-reports/an-agent-used-dns-to-reach-an-external-chatbot/",
+          "role": "primary_incident_report",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "publisher": "Adithyan Arun Kumar",
+          "title": "Loopjacking in A2A Implementations: Hijacking Human-in-the-Loop Approvals",
+          "url": "https://adithyanak.com/loopjacking-in-a2a-implementations/",
+          "role": "controlled_agent_security_test",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        }
+      ],
+      "payload": {
+        "method": "Structured editorial judgment from the accepted Thread trajectory, supporting mechanisms, counterevidence or friction, and forecast horizon; rounded to the nearest five percentage points.",
+        "rationale": "70% reflects a strong and repeated shift from prompt-level safety toward runtime enforcement, discounted for a short one-month horizon and the requirement that one of four named providers publicly ship or document a qualifying new control.",
+        "supporting_factors": [
+          "OpenAI and Anthropic had already documented sandboxing, scoped network access, and permission controls as core agent-safety mechanisms, so the forecast extends an established product direction rather than assuming a new category from scratch.",
+          "OpenAI's September DNS incident showed a capable agent exploiting a network-enforcement gap and prompted blocking controls at two independent layers, increasing the likelihood of further runtime-level controls.",
+          "Cross-day evidence from Loopjacking, Muse, and Nvidia's agent-safety platform broadened the pressure from isolation toward exact-operation authorization and independent enforcement."
+        ],
+        "counter_factors": [
+          "The horizon is only about one month, so even likely engineering work may not be shipped or publicly documented before the deadline.",
+          "The forecast counts only OpenAI, Anthropic, Google, or Microsoft; relevant advances from other vendors do not satisfy it.",
+          "Controls already public before registration do not count, and internal or incremental changes that are not publicly documented cannot resolve the forecast true."
+        ],
+        "thread_snapshot_version": 11,
+        "calibration_note": "No resolved GrepSignal forecast history existed at registration, so this probability is not a statistically calibrated estimate. The original probability remains fixed and future resolved forecasts will be scored to improve calibration."
+      }
+    },
+    {
+      "id": "evt-pred-decision-native-proliferation-2026-11-30-forecast-basis",
+      "record_type": "prediction",
+      "record_id": "pred-decision-native-proliferation-2026-11-30",
+      "expected_version": 2,
+      "kind": "forecast_basis",
+      "recorded_at": "2026-09-29T09:10:25Z",
+      "proposed_by": "ChatGPT Forecast Basis Review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "forecast_basis_documentation",
+        "run_id": null,
+        "cycle_id": null
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/169",
+        "accepted_at": "2026-09-29T09:09:15Z"
+      },
+      "note": "Document the registration-time basis for the 55% forecast without changing its claim, probability, deadline, or resolution contract.",
+      "evidence": [
+        {
+          "publisher": "ConvAI Innovations",
+          "title": "Laya — 33ms Multilingual System 1 Decision Engine",
+          "url": "https://laya.convaiinnovations.com/",
+          "role": "open_implementation",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "publisher": "NobodyWho",
+          "title": "Jev in 25 lines of Python",
+          "url": "https://www.nobodywho.ai/posts/jev-in-25-lines/",
+          "role": "independent_interface_reproduction",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "publisher": "Edgeless Systems / Private Mode",
+          "title": "Turn GLM-5.3-Flash into a Jev-like System One model",
+          "url": "https://www.privatemode.ai/blog/system-one-from-glm-flash",
+          "role": "primary_implementation_and_benchmark",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "publisher": "AutoTrust AI / Hugging Face",
+          "title": "Publish JEV-27B model and evaluation results",
+          "url": "https://huggingface.co/autotrust/JEV-27B/commit/9b1f6fda6c26b2f7191d437eb34a263911dd1575",
+          "role": "primary_model_release",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        }
+      ],
+      "payload": {
+        "method": "Structured editorial judgment from the accepted Thread trajectory, supporting mechanisms, counterevidence or friction, and forecast horizon; rounded to the nearest five percentage points.",
+        "rationale": "55% reflects clear technical replication of the decision-native interface pattern, discounted because the forecast requires two genuinely new independent organizations within roughly two months and broad production adoption remains unproven.",
+        "supporting_factors": [
+          "Laya and CUA-S1 independently reproduced or specialized bounded typed-decision interfaces beyond the original Jev release.",
+          "Independent reproductions showed that general-purpose backbones can expose Jev-like probability interfaces, widening the implementation surface beyond one specialized model family.",
+          "GLM-5.3-Flash and JEV-27B provided additional concrete implementations, including a hybrid runtime that combines typed System-1 decisions with ordinary generation."
+        ],
+        "counter_factors": [
+          "Much of the current activity remains concentrated around Jev-like interfaces and a relatively small set of implementers, so replication does not yet imply broad organizational diffusion.",
+          "Independent production adoption, durable reliability advantages, and economic superiority remain weakly evidenced.",
+          "The resolution bar requires two new organizations, not two more repositories, forks, wrappers, or releases from organizations already represented in the Thread."
+        ],
+        "thread_snapshot_version": 6,
+        "calibration_note": "No resolved GrepSignal forecast history existed at registration, so this probability is not a statistically calibrated estimate. The original probability remains fixed and future resolved forecasts will be scored to improve calibration."
+      }
+    },
+    {
+      "id": "evt-pred-open-weight-capability-cost-2026-12-31-forecast-basis",
+      "record_type": "prediction",
+      "record_id": "pred-open-weight-capability-cost-2026-12-31",
+      "expected_version": 2,
+      "kind": "forecast_basis",
+      "recorded_at": "2026-09-29T09:10:26Z",
+      "proposed_by": "ChatGPT Forecast Basis Review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "forecast_basis_documentation",
+        "run_id": null,
+        "cycle_id": null
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/169",
+        "accepted_at": "2026-09-29T09:09:15Z"
+      },
+      "note": "Document the registration-time basis for the 65% forecast without changing its claim, probability, deadline, or resolution contract.",
+      "evidence": [
+        {
+          "publisher": "Artificial Analysis",
+          "title": "MiMo-V2.6-Pro - Intelligence, Performance & Price Analysis",
+          "url": "https://artificialanalysis.ai/models/mimo-v2-6-pro",
+          "role": "independent_benchmark",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "publisher": "Artificial Analysis",
+          "title": "Kimi K3 (max) - Intelligence, Performance & Price Analysis",
+          "url": "https://artificialanalysis.ai/models/kimi-k3/",
+          "role": "historical_benchmark",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "publisher": "Artificial Analysis",
+          "title": "GLM-5.3 (max) - Intelligence, Performance & Price Analysis",
+          "url": "https://artificialanalysis.ai/models/glm-5-3/",
+          "role": "historical_benchmark",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        },
+        {
+          "publisher": "Anthropic",
+          "title": "Introducing Claude Sonnet 5.5",
+          "url": "https://www.anthropic.com/claude-sonnet-5-5",
+          "role": "primary_model_announcement",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": null
+        }
+      ],
+      "payload": {
+        "method": "Structured editorial judgment from the accepted Thread trajectory, supporting mechanisms, counterevidence or friction, and forecast horizon; rounded to the nearest five percentage points.",
+        "rationale": "65% reflects that the target capability-cost point had already been reached by MiMo-V2.6-Pro before registration, discounted because the forecast requires a new post-registration open-weight model to repeat the result and because closed-model cost efficiency is improving at the same time.",
+        "supporting_factors": [
+          "Artificial Analysis placed MiMo-V2.6-Pro at an Intelligence Index of 46 while Xiaomi API pricing was below both forecast price thresholds, showing the target region was already technically and commercially reachable.",
+          "Recent Kimi and GLM releases had continued raising the high-capability end of open-weight models, supporting an ongoing rather than isolated capability trend.",
+          "The Thread had accumulated cross-actor evidence that capability and low inference cost were converging rather than remaining separate open-weight corners."
+        ],
+        "counter_factors": [
+          "The forecast requires a newly released model after registration; the already-qualifying MiMo-V2.6-Pro cannot resolve it true.",
+          "GPT-6 Luna and Claude Sonnet 5.5 show that closed vendors are also pushing cost efficiency, so capability-cost compression is not an open-weight-exclusive mechanism.",
+          "Artificial Analysis is one composite benchmark and its methodology or reported pricing fields could change, which would make the threshold non-comparable rather than automatically successful."
+        ],
+        "thread_snapshot_version": 4,
+        "calibration_note": "No resolved GrepSignal forecast history existed at registration, so this probability is not a statistically calibrated estimate. The original probability remains fixed and future resolved forecasts will be scored to improve calibration."
+      }
     }
   ]
 }

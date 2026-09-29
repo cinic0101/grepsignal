@@ -122,15 +122,24 @@
             "description": "Concise materiality statement: why this verified change is worth surfacing."
           },
           "our_read": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "Optional GrepSignal interpretation that adds meaning beyond the source summary. Omit or null when no additional interpretation is earned."
           },
           "second_order_effect": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "Optional downstream consequence. Omit or null rather than manufacturing a second-order effect."
           },
           "watch_next": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "Optional evidence that could update the judgment. Omit or null when there is no specific useful watch item."
           },
           "source_count": {
@@ -434,8 +443,18 @@
                   ]
                 },
                 "effect_on_thesis": {
-                  "type": ["string", "null"],
-                  "enum": ["unchanged", "strengthened", "weakened", "revised", "falsified", null],
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "enum": [
+                    "unchanged",
+                    "strengthened",
+                    "weakened",
+                    "revised",
+                    "falsified",
+                    null
+                  ],
                   "description": "How this revision affects the tracked thesis. Legacy revisions may omit this field."
                 },
                 "change": {
@@ -814,6 +833,103 @@
           "version": {
             "type": "integer",
             "minimum": 0
+          },
+          "forecast_basis": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Immutable, pre-deadline explanation of the registration-time probability judgment. It documents method, supporting and counter factors, the Thread snapshot used, and public evidence; it does not change the original forecast terms.",
+            "properties": {
+              "method": {
+                "type": "string"
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "supporting_factors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "counter_factors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "thread_snapshot_version": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "calibration_note": {
+                "type": "string"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "publisher",
+                    "title",
+                    "url",
+                    "role"
+                  ],
+                  "properties": {
+                    "publisher": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string",
+                      "format": "uri",
+                      "pattern": "^https://"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "published_at": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "retrieved_at": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "format": "date-time"
+                    },
+                    "archive_url": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "format": "uri"
+                    },
+                    "lineage_id": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "recorded_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "event_id": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
           }
         },
         "additionalProperties": true

@@ -66,6 +66,39 @@ const publication=()=>event({id:'evt-publish',record_type:'prediction',record_id
 const resolution=(outcome='false')=>event({id:'evt-resolve',record_type:'prediction',record_id:prediction.id,expected_version:2,kind:'resolve',recorded_at:'2026-10-02T00:00:00Z',payload:{outcome,supersedes_resolution:null}});
 test('unverified prediction excluded from public track record',()=>{const {data}=run([register()]);assert.equal(data.stats.open_predictions,0);assert.equal(data.predictions[0].status,'unregistered');});
 test('forecast terms immutable',()=>assert.throws(()=>run([register(),event({id:'evt-rewrite',record_type:'prediction',record_id:prediction.id,expected_version:1,payload:{claim:'Easy replacement'}})])));
+const forecastBasis=()=>event({
+  id:'evt-basis',
+  record_type:'prediction',
+  record_id:prediction.id,
+  expected_version:2,
+  kind:'forecast_basis',
+  recorded_at:'2026-09-22T00:00:00Z',
+  evidence:[source],
+  payload:{
+    method:'Structured editorial judgment from accepted evidence and forecast horizon.',
+    rationale:'The evidence points in this direction, discounted for a short horizon.',
+    supporting_factors:['Repeated evidence supports the mechanism.'],
+    counter_factors:['The deadline is short and public evidence may lag engineering work.'],
+    thread_snapshot_version:0,
+    calibration_note:'No resolved forecast history exists yet; this estimate is not statistically calibrated.',
+  },
+});
+test('forecast basis is append-only context and does not rewrite forecast terms',()=>{
+  const {data}=run([register(),publication(),forecastBasis()]);
+  const p=data.predictions[0];
+  assert.equal(p.initial_probability,.7);
+  assert.equal(p.claim,prediction.claim);
+  assert.equal(p.forecast_basis.thread_snapshot_version,0);
+  assert.equal(p.forecast_basis.evidence[0].url,source.url);
+  const second=forecastBasis();second.id='evt-basis-two';second.expected_version=3;
+  assert.throws(()=>run([register(),publication(),forecastBasis(),second]));
+});
+test('forecast basis must be pre-deadline and reference an immutable Thread snapshot',()=>{
+  const late=forecastBasis();late.recorded_at='2026-10-02T00:00:00Z';
+  assert.throws(()=>run([register(),publication(),late]));
+  const unknown=forecastBasis();unknown.payload.thread_snapshot_version=99;
+  assert.throws(()=>run([register(),publication(),unknown]));
+});
 test('unverified or late public registration cannot score',()=>{assert.throws(()=>run([register(),resolution()]));const p=publication();p.payload.first_public_at='2026-10-01T01:00:00Z';assert.throws(()=>run([register(),p]));});
 test('eligible outcome scores only after deadline',()=>{const {data}=run([register(),publication(),resolution()]);assert.ok(Math.abs(data.predictions[0].brier_score-.49)<1e-10);assert.equal(data.predictions[0].initial_probability,.7);assert.equal(data.stats.open_predictions,0);});
 test('deadline does not force decisive resolution',()=>{const {data}=run([register(),publication(),resolution('unresolved')]);assert.equal(data.predictions[0].brier_score,null);assert.equal(data.predictions[0].status,'unresolved');assert.equal(data.stats.open_predictions,1);});

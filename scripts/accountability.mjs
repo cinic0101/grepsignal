@@ -6,7 +6,7 @@ import { pathToFileURL } from 'node:url';
 const TYPES = {signal:'signals', thread:'threads', prediction:'predictions'};
 const ASSESSMENTS = ['emerging','strengthening','stable','weakening','falsified'];
 const THESIS_EFFECTS = ['unchanged','strengthened','weakened','revised','falsified'];
-const KINDS = ['register','revise','review','supersede','retract','resolve','publication','relate'];
+const KINDS = ['register','revise','review','supersede','retract','resolve','publication','relate','forecast_basis'];
 const ID = /^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$/;
 const FORBIDDEN = /^(raw_html|raw_text|source_text|source_body|image_bytes|screenshot|prompt|private_notes|cache_file|secret|token|__proto__|constructor|prototype)$/;
 const patchKeys = {
@@ -98,6 +98,7 @@ function snapshotProjection(type,r,links) {
     out.signal_ids=[...relation.supporting,...relation.contradicting];
     for (const update of out.updates ?? []) update.sources=normalizedEvidence(update.sources ?? []);
   } else if (type === 'prediction') {
+    if (out.forecast_basis) out.forecast_basis.evidence=normalizedEvidence(out.forecast_basis.evidence ?? []);
     for (const resolution of out.resolutions ?? []) resolution.evidence=normalizedEvidence(resolution.evidence ?? []);
   }
   return out;
@@ -194,7 +195,7 @@ export function replay(baseline,journal,baselineLinks=null) {
       }
       if (p.first_observed_at != null) assert(timestamp(p.first_observed_at) <= timestamp(e.recorded_at),'observation cannot be in the future');
       r.first_observed_at=p.first_observed_at ?? null;r.last_changed_at=e.recorded_at;
-      if (e.record_type === 'prediction') {r.status='unregistered';r.resolutions=[];r.brier_score=null;}
+      if (e.record_type === 'prediction') {r.status='unregistered';r.resolutions=[];r.brier_score=null;r.forecast_basis=null;}
       data[TYPES[e.record_type]].push(r);item={type:e.record_type,r};records.set(r.id,item);
     } else assert(item && item.type === e.record_type,'unknown record/type');
     const r=item.r;
@@ -243,6 +244,23 @@ export function replay(baseline,journal,baselineLinks=null) {
       r.lifecycle='superseded';r.superseded_by=p.superseded_by;r.last_changed_at=e.recorded_at;
     } else if (e.kind === 'retract') {
       exact(p,[],'retraction');r.lifecycle='retracted';r.last_changed_at=e.recorded_at;
+    } else if (e.kind === 'forecast_basis') {
+      exact(p,['method','rationale','supporting_factors','counter_factors','thread_snapshot_version','calibration_note'],'forecast basis');
+      assert(e.record_type === 'prediction','forecast basis applies only to predictions');
+      assert(r.forecast_basis === null,'forecast basis is immutable once recorded');
+      assert(timestamp(e.recorded_at) < timestamp(r.deadline),'forecast basis must be recorded before deadline');
+      assert(e.evidence.length > 0,'forecast basis requires evidence');
+      assert(text(p.method) && text(p.rationale) && text(p.calibration_note),'forecast basis prose required');
+      assert(Array.isArray(p.supporting_factors) && p.supporting_factors.length > 0 && p.supporting_factors.every(text),'forecast basis supporting factors required');
+      assert(Array.isArray(p.counter_factors) && p.counter_factors.length > 0 && p.counter_factors.every(text),'forecast basis counter factors required');
+      assert(Number.isInteger(p.thread_snapshot_version) && p.thread_snapshot_version >= 0,'forecast basis Thread snapshot version required');
+      assert(versions.threads?.[r.thread_id]?.[String(p.thread_snapshot_version)],'forecast basis references unknown Thread snapshot');
+      r.forecast_basis={
+        ...structuredClone(p),
+        evidence:structuredClone(e.evidence),
+        recorded_at:e.recorded_at,
+        event_id:e.id,
+      };
     } else if (e.kind === 'publication') {
       exact(p,['first_public_at','verification_url'],'publication receipt');safeUrl(p.verification_url);
       assert(r.first_public_at === null,'first publication receipt is immutable');
@@ -320,7 +338,15 @@ export function replay(baseline,journal,baselineLinks=null) {
     for (const id of t.signal_relations.contradicting) signalThreadRelations.get(id)?.push({thread_id:t.id,relationship:'contradicting'});
   }
   for (const s of data.signals) {s.sources=normalizedEvidence(s.sources);s.thread_relations=signalThreadRelations.get(s.id) ?? [];s.thread_ids=[...new Set(s.thread_relations.map(x => x.thread_id))];}
-  for (const p of data.predictions) {forecast(p);for (const resolution of p.resolutions ?? []) resolution.evidence=normalizedEvidence(resolution.evidence);}
+  for (const p of data.predictions) {
+    forecast(p);
+    if (p.forecast_basis) {
+      evidence(p.forecast_basis.evidence ?? []);
+      for (const key of ['method','rationale','calibration_note']) assert(text(p.forecast_basis[key]),`invalid forecast basis ${key}`);
+      for (const key of ['supporting_factors','counter_factors']) assert(Array.isArray(p.forecast_basis[key]) && p.forecast_basis[key].length > 0 && p.forecast_basis[key].every(text),`invalid forecast basis ${key}`);
+    }
+    for (const resolution of p.resolutions ?? []) resolution.evidence=normalizedEvidence(resolution.evidence);
+  }
   data.stats={material_signals:data.signals.filter(x => x.lifecycle === 'active').length,active_threads:data.threads.filter(x => x.lifecycle === 'active').length,open_predictions:data.predictions.filter(x => ['open','unresolved'].includes(x.status) && x.lifecycle === 'active').length};
   const lastMaterial=changes.filter(x => !['review','publication'].includes(x.kind)).at(-1);
   if (lastMaterial) data.generated_at=lastMaterial.recorded_at;

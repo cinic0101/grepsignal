@@ -88,6 +88,52 @@ const predictionJsonLd = {
           </p>
         </section>
 
+        {prediction.forecast_basis && (
+          <section class="prediction-section forecast-basis">
+            <span class="section-kicker">FORECAST BASIS</span>
+            <h2>Why {probability}%?</h2>
+            <p class="basis-rationale">{prediction.forecast_basis.rationale}</p>
+
+            <div class="basis-grid">
+              <article>
+                <h3>Evidence pushing the estimate up</h3>
+                <ul>
+                  {prediction.forecast_basis.supporting_factors.map((factor) => <li>{factor}</li>)}
+                </ul>
+              </article>
+              <article>
+                <h3>Why not higher</h3>
+                <ul>
+                  {prediction.forecast_basis.counter_factors.map((factor) => <li>{factor}</li>)}
+                </ul>
+              </article>
+            </div>
+
+            <div class="basis-method">
+              <div>
+                <strong>Method</strong>
+                <p>{prediction.forecast_basis.method}</p>
+              </div>
+              <div>
+                <strong>Calibration status</strong>
+                <p>{prediction.forecast_basis.calibration_note}</p>
+              </div>
+              <a href={`${base}data/threads/${prediction.thread_id}/versions/${prediction.forecast_basis.thread_snapshot_version}.json`}>
+                Thread snapshot v{prediction.forecast_basis.thread_snapshot_version} →
+              </a>
+            </div>
+
+            <div class="basis-sources">
+              <strong>Evidence snapshot at registration</strong>
+              <ul>
+                {prediction.forecast_basis.evidence.map((source) => (
+                  <li><a href={source.url}>{source.publisher}: {source.title}</a></li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
         <section class="prediction-section">
           <span class="section-kicker">RESOLUTION CONTRACT</span>
           <h2>How this gets resolved</h2>
@@ -285,6 +331,63 @@ const predictionJsonLd = {
     line-height: 1.6;
   }
 
+  .basis-rationale {
+    max-width: 820px;
+    margin: 0 0 22px;
+    color: #34322e;
+    font-size: 16px;
+    line-height: 1.62;
+  }
+  .basis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    border-top: 1px solid var(--ink);
+  }
+  .basis-grid article { padding: 20px 0 8px; }
+  .basis-grid h3 {
+    margin: 0 0 10px;
+    font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .055em;
+    text-transform: uppercase;
+  }
+  .basis-grid ul,
+  .basis-sources ul { margin: 0; padding-left: 20px; }
+  .basis-grid li,
+  .basis-sources li { line-height: 1.58; }
+  .basis-grid li + li,
+  .basis-sources li + li { margin-top: 8px; }
+  .basis-method {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    margin-top: 20px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .basis-method strong,
+  .basis-sources > strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--muted);
+    font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .055em;
+    text-transform: uppercase;
+  }
+  .basis-method p { margin: 0; color: #45433e; font-size: 13px; line-height: 1.58; }
+  .basis-method > a {
+    grid-column: 1 / -1;
+    justify-self: start;
+    color: var(--accent);
+    font: 800 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-decoration: none;
+  }
+  .basis-method > a:hover,
+  .basis-method > a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+  .basis-sources { margin-top: 20px; }
+  .basis-sources a { color: var(--accent); text-underline-offset: 3px; }
+
   .criteria-grid { display: grid; border-top: 1px solid var(--ink); }
   .criteria-grid article {
     display: grid;
@@ -362,6 +465,8 @@ const predictionJsonLd = {
     .prediction-sidebar { grid-template-columns: 1fr; }
     .prediction-grid { padding-top: 24px; }
     .claim-copy { font-size: 19px; }
+    .basis-grid,
+    .basis-method { grid-template-columns: 1fr; gap: 12px; }
     .section-heading-row { align-items: flex-start; flex-direction: column; gap: 8px; }
   }
 </style>
