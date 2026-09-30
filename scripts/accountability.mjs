@@ -6,6 +6,7 @@ import { pathToFileURL } from 'node:url';
 const TYPES = {signal:'signals', thread:'threads', prediction:'predictions'};
 const ASSESSMENTS = ['emerging','strengthening','stable','weakening','falsified'];
 const THESIS_EFFECTS = ['unchanged','strengthened','weakened','revised','falsified'];
+const THREAD_REVIEW_INTERVAL_MS = 7*24*60*60*1000;
 const KINDS = ['register','revise','review','supersede','retract','resolve','publication','relate','forecast_basis','forecast_review'];
 const ID = /^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$/;
 const FORBIDDEN = /^(raw_html|raw_text|source_text|source_body|image_bytes|screenshot|prompt|private_notes|cache_file|secret|token|__proto__|constructor|prototype)$/;
@@ -192,7 +193,7 @@ export function replay(baseline,journal,baselineLinks=null) {
         exact(p.signal_relations,['supporting','contradicting'],'initial Thread relations');
         assert(Array.isArray(p.signal_relations.supporting) && Array.isArray(p.signal_relations.contradicting),'explicit initial Thread relations required');
         links[r.id]=structuredClone(p.signal_relations);delete r.signal_relations;
-        r.next_review_at=new Date(timestamp(e.recorded_at)+7*24*60*60*1000).toISOString();r.review_due_since=r.next_review_at;
+        r.next_review_at=new Date(timestamp(e.recorded_at)+THREAD_REVIEW_INTERVAL_MS).toISOString();r.review_due_since=r.next_review_at;
       }
       if (p.first_observed_at != null) assert(timestamp(p.first_observed_at) <= timestamp(e.recorded_at),'observation cannot be in the future');
       r.first_observed_at=p.first_observed_at ?? null;r.last_changed_at=e.recorded_at;
@@ -227,6 +228,14 @@ export function replay(baseline,journal,baselineLinks=null) {
             : 'unchanged');
         r.last_updated=e.recorded_at.slice(0,10);
         r.updates.push({id:e.id,date:r.last_updated,assessment:r.status,effect_on_thesis:inferredThreadEffect,change:e.note,signal_ids:[],sources:structuredClone(e.evidence)});
+        // A material Thread revision is a stronger accountability act than an unchanged review:
+        // evidence was reviewed and the public judgment was explicitly accepted. Satisfy the
+        // current review obligation and start a fresh cadence from this accepted revision.
+        r.last_reviewed_at=e.recorded_at;
+        r.last_review_outcome='revised';
+        r.next_review_at=new Date(timestamp(e.recorded_at)+THREAD_REVIEW_INTERVAL_MS).toISOString();
+        r.review_due_since=r.next_review_at;
+        r.review_required=false;
       }
     } else if (e.kind === 'review') {
       assert(e.record_type !== 'prediction','predictions use forecast_review');
