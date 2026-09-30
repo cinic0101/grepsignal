@@ -28,6 +28,25 @@ test('Thread can record material evidence while thesis stays unchanged',()=>{
   assert.equal(data.threads[0].updates.length,2);
   assert.equal(data.threads[0].updates[1].effect_on_thesis,'unchanged');
 });
+test('material Thread revision satisfies the current review cadence',()=>{
+  const e=event({record_type:'thread',record_id:'thread-example',recorded_at:'2026-09-30T00:00:00Z',payload:{status:'strengthening'}});
+  const threadRecord=run([e]).data.threads[0];
+  assert.equal(threadRecord.last_reviewed_at,e.recorded_at);
+  assert.equal(threadRecord.last_review_outcome,'revised');
+  assert.equal(threadRecord.review_required,false);
+  assert.equal(threadRecord.next_review_at,'2026-10-07T00:00:00.000Z');
+  assert.equal(threadRecord.review_due_since,'2026-10-07T00:00:00.000Z');
+});
+test('material Thread revision clears an earlier inconclusive review warning',()=>{
+  const review=event({id:'evt-review-first',kind:'review',record_type:'thread',record_id:'thread-example',recorded_at:'2026-09-21T00:00:00Z',payload:{outcome:'inconclusive',counterevidence_checked:['Primary data unavailable'],next_review_at:'2026-09-22T00:00:00Z'}});
+  const revise=event({id:'evt-revise-after-review',record_type:'thread',record_id:'thread-example',expected_version:1,recorded_at:'2026-09-23T00:00:00Z',note:'New evidence resolves the open review and materially strengthens the thesis.',payload:{status:'strengthening',effect_on_thesis:'strengthened'}});
+  const threadRecord=run([review,revise]).data.threads[0];
+  assert.equal(threadRecord.review_required,false);
+  assert.equal(threadRecord.last_reviewed_at,revise.recorded_at);
+  assert.equal(threadRecord.last_review_outcome,'revised');
+  assert.equal(threadRecord.next_review_at,'2026-09-30T00:00:00.000Z');
+  assert.equal(threadRecord.review_due_since,'2026-09-30T00:00:00.000Z');
+});
 test('Signal revision may add an earned our_read without padding other fields',()=>{
   const e=event({payload:{our_read:'This is the interpretation GrepSignal adds beyond the source summary.'}});
   const {data}=run([e]);

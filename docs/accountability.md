@@ -15,7 +15,7 @@ Required event fields: id, record_type, record_id, expected_version, kind, recor
 ## Event kinds
 
 - register: a new stable Signal/Thread/Prediction. Optional known first_observed_at is not inferred from a source date. Threads include explicit signal_relations (supporting/contradicting) and initial evidence-backed update. Original IDs, registration dates and forecast terms are not patchable.
-- revise: allowlisted Signal/Thread content/assessment/evidence, with change reason and sources. Thread history gets the matching update. A changed conclusion is not a generic review receipt.
+- revise: allowlisted Signal/Thread content/assessment/evidence, with change reason and sources. Thread history gets the matching update. A changed conclusion is not a generic review receipt. For Threads, an accepted material revision also satisfies the current review obligation because the evidence and judgment were explicitly re-evaluated; it clears any stale review warning and starts a fresh seven-day review cadence from the revision timestamp.
 - review: unchanged/inconclusive review for Signals/Threads, with actual counterevidence_checked and next_review_at. Predictions use forecast_review instead. An inconclusive attempt preserves its warning/due origin. Reviews do not advance the intelligence publication date.
 - supersede: existing active same-type replacement, no self-reference/cycles. retract: visibly withdraw without deleting. Inactive records cannot silently revive. Dependents get a review warning, not automatic falsification.
 - relate: evidence-backed supports/challenges/depends_on, with target_id and target_version. Thread-to-Signal support/challenge updates the current link map. Empty relations mean no recorded assertion, not proof of no relation.
