@@ -31,7 +31,7 @@ Required event fields: id, record_type, record_id, expected_version, kind, recor
   that parent is active, has no pending review warning and is not overdue, and no other
   flagged explicit dependency remains. A stale snapshot is valid history but not clearance.
   `incomplete`, stale/blocked-parent reviews and unrelated dependency warnings preserve
-  the prior review-due origin. Later parent revisions/withdrawals reflag the Prediction,
+  the prior review-due origin. Later parent revisions, explicit evidence/dependency relation edits and withdrawals reflag the Prediction,
   including changes appended at the same timestamp. A complete parent review cannot clear
   an unrelated dependency warning; that needs a separately scoped dependency review design.
   New reviews expose the optional completion attestation in their immutable public snapshots;

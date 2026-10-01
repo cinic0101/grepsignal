@@ -377,6 +377,14 @@ export function replay(baseline,journal,baselineLinks=null) {
         if (records.get(other.id).type === 'prediction') reviewCauses(other.id).add(r.id);
       }
     }
+    // Explicit evidence/dependency relation edits change a Thread's accepted
+    // context just like a revision. Reflag its Predictions, not mere metadata reviews.
+    if (e.record_type === 'thread' && e.kind === 'relate') for (const {type,r:other} of records.values()) {
+      if (type === 'prediction' && (other.thread_id === r.id || other.relations?.some(x => x.target_id === r.id))) {
+        other.review_required=true;
+        reviewCauses(other.id).add(r.id);
+      }
+    }
     const sequence=changes.length+1;
     const change=structuredClone(e);change.evidence=normalizedEvidence(change.evidence);
     const proposal=e.proposal ? {...structuredClone(e.proposal),display_name:e.proposed_by} : proposalAttribution(e.proposed_by);

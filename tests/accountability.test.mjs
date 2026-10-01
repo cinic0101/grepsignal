@@ -431,3 +431,17 @@ test('parent-bound review never clears unrelated explicit dependency warning',()
   const before=run(es).data.predictions[0];const p=run([...es,review]).data.predictions[0];
   assert.equal(p.review_required,true);assert.equal(p.review_due_since,before.review_due_since);
 });
+test('material parent relation edit reflags completed Prediction review',()=>{
+  const relation=event({id:'evt-parent-evidence-relation',record_type:'thread',record_id:thread.id,
+    expected_version:1,kind:'relate',recorded_at:'2026-09-23T00:00:00Z',
+    payload:{target_id:signal.id,target_version:0,relationship:'challenges'}});
+  const p=run([...forecastPrelude(),changedParent(),completedForecastReview(),relation]).data.predictions[0];
+  assert.equal(p.review_required,true);
+});
+test('nonmaterial parent review metadata alone does not reflag completed Prediction',()=>{
+  const parentReview=event({id:'evt-parent-review-only',record_type:'thread',record_id:thread.id,
+    expected_version:1,kind:'review',recorded_at:'2026-09-23T00:00:00Z',
+    payload:{outcome:'unchanged',counterevidence_checked:['No accepted evidence delta'],next_review_at:'2026-09-30T00:00:00Z'}});
+  const p=run([...forecastPrelude(),changedParent(),completedForecastReview(),parentReview]).data.predictions[0];
+  assert.equal(p.review_required,false);
+});
