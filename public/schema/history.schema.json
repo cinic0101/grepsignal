@@ -546,6 +546,13 @@
                       ],
                       "format": "date-time",
                       "pattern": "Z$"
+                    },
+                    "review_completion": {
+                      "enum": [
+                        "complete",
+                        "incomplete"
+                      ],
+                      "description": "Optional explicit completion of review work, separate from evidence assessment or forecast resolution. Only complete reviews bound to the current ready parent Thread may clear its warning; omission preserves legacy behavior."
                     }
                   },
                   "required": [

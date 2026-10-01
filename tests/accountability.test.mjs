@@ -338,3 +338,110 @@ test('review events create immutable record versions without fabricating a mater
   assert.equal(snapshot.record.last_review_outcome,'unchanged');
   assert.equal(snapshot.snapshot_event_id,'evt-review-version');
 });
+
+// Explicit review-work completion is independent of the forecast assessment/outcome.
+const changedParent=()=>event({id:'evt-parent-change',record_type:'thread',record_id:thread.id,
+  recorded_at:'2026-09-22T12:00:00Z',payload:{summary:'Reviewed parent evidence changed'}});
+const completedForecastReview=(assessment='neutral',version=1)=>{
+  const review=forecastReview(assessment);
+  review.payload.thread_snapshot_version=version;
+  review.payload.review_completion='complete';
+  return review;
+};
+const forecastPrelude=()=>[register(),publication(),forecastBasis()];
+for (const assessment of ['supporting','challenging','neutral','inconclusive']) {
+  test(`complete current-parent ${assessment} review clears obligation without resolving forecast`,()=>{
+    const events=[...forecastPrelude(),changedParent(),completedForecastReview(assessment)];
+    const {data,versions}=run(events);const p=data.predictions[0];
+    assert.equal(p.review_required,false);
+    assert.equal(p.review_due_since,'2026-09-29T00:00:00Z');
+    assert.equal(p.status,'open');assert.equal(p.brier_score,null);assert.deepEqual(p.resolutions,[]);
+    for(const key of ['claim','initial_probability','deadline','success_criterion','failure_criterion','resolution_sources'])
+      assert.deepEqual(p[key],prediction[key]);
+    assert.equal(p.reviews[0].review_completion,'complete');
+    assert.equal(p.reviews[0].assessment,assessment);
+    assert.equal(versions.predictions[prediction.id]['4'].record.reviews[0].review_completion,'complete');
+    assert.equal(versions.predictions[prediction.id]['3'].record.reviews.length,0);
+  });
+}
+test('legacy review has no inferred completion and cannot clear a parent warning',()=>{
+  const review=forecastReview('neutral');review.payload.thread_snapshot_version=1;
+  const p=run([...forecastPrelude(),changedParent(),review]).data.predictions[0];
+  assert.equal(p.review_required,true);assert.equal(Object.hasOwn(p.reviews[0],'review_completion'),false);
+});
+test('incomplete and stale complete reviews retain prior due origin',()=>{
+  for (const [completion,version] of [['incomplete',1],['complete',0]]) {
+    const review=completedForecastReview('inconclusive',version);review.payload.review_completion=completion;
+    const before=run([...forecastPrelude(),changedParent()]).data.predictions[0];
+    const p=run([...forecastPrelude(),changedParent(),review]).data.predictions[0];
+    assert.equal(p.review_required,true);assert.equal(p.review_due_since,before.review_due_since);
+    assert.equal(p.last_reviewed_at,review.recorded_at);
+  }
+});
+test('new completion attestations are strict; unknown or missing snapshot cannot clear',()=>{
+  for(const completion of [null,true,'finished','']) {
+    const review=completedForecastReview();review.payload.review_completion=completion;
+    assert.throws(()=>run([...forecastPrelude(),changedParent(),review]),/invalid forecast review completion/);
+  }
+  for(const version of [undefined,null,99]) {
+    const review=completedForecastReview();review.payload.thread_snapshot_version=version;
+    assert.throws(()=>run([...forecastPrelude(),changedParent(),review]),/Thread snapshot/);
+  }
+});
+test('later complete review can finish previously incomplete work',()=>{
+  const first=completedForecastReview();first.payload.review_completion='incomplete';
+  const second=completedForecastReview('neutral');second.id='evt-complete-later';second.expected_version=4;
+  second.recorded_at='2026-09-24T00:00:00Z';
+  const p=run([...forecastPrelude(),changedParent(),first,second]).data.predictions[0];
+  assert.equal(p.review_required,false);assert.equal(p.reviews.length,2);
+  assert.equal(p.reviews[0].review_completion,'incomplete');
+});
+test('later parent revision reflags even with identical event timestamp',()=>{
+  const review=completedForecastReview();
+  const later=changedParent();later.id='evt-parent-later';later.expected_version=1;
+  later.recorded_at=review.recorded_at;later.payload={summary:'Another accepted evidence change'};
+  const p=run([...forecastPrelude(),changedParent(),review,later]).data.predictions[0];
+  assert.equal(p.review_required,true);
+});
+for(const kind of ['retract','supersede']) test(`withdrawn parent (${kind}) cannot be cleared`,()=>{
+  const es=forecastPrelude();
+  if(kind==='supersede') {
+    const replacement={...structuredClone(thread),id:'thread-replacement',signal_relations:{supporting:['sig-example'],contradicting:[]}};
+    es.push(event({id:'evt-replacement',record_type:'thread',record_id:replacement.id,kind:'register',recorded_at:'2026-09-22T01:00:00Z',payload:replacement}));
+  }
+  es.push(event({id:'evt-parent-withdraw',record_type:'thread',record_id:thread.id,kind,recorded_at:'2026-09-22T12:00:00Z',payload:kind==='supersede'?{superseded_by:'thread-replacement'}:{}}));
+  const p=run([...es,completedForecastReview()]).data.predictions[0];assert.equal(p.review_required,true);
+});
+test('parent warning from a Signal change blocks clearance without changing parent version',()=>{
+  const es=[...forecastPrelude(),changedParent(),event({id:'evt-signal-later',recorded_at:'2026-09-22T13:00:00Z'})];
+  const result=run([...es,completedForecastReview()]);
+  assert.equal(result.data.threads[0].version,1);assert.equal(result.data.threads[0].review_required,true);
+  assert.equal(result.data.predictions[0].review_required,true);
+});
+test('overdue current parent cannot masquerade as a fresh completed dependency review',()=>{
+  const review=completedForecastReview('neutral',0);review.recorded_at='2026-09-27T00:00:00Z';
+  assert.equal(run([...forecastPrelude(),review]).data.predictions[0].review_required,true);
+});
+test('parent-bound review never clears unrelated explicit dependency warning',()=>{
+  const relation=event({id:'evt-pred-dependency',record_type:'prediction',record_id:prediction.id,expected_version:3,
+    kind:'relate',recorded_at:'2026-09-22T01:00:00Z',payload:{target_id:signal.id,target_version:0,relationship:'depends_on'}});
+  const signalChange=event({id:'evt-dependency-change',recorded_at:'2026-09-22T02:00:00Z'});
+  const review=completedForecastReview();review.expected_version=4;
+  const es=[...forecastPrelude(),relation,signalChange,changedParent()];
+  const before=run(es).data.predictions[0];const p=run([...es,review]).data.predictions[0];
+  assert.equal(p.review_required,true);assert.equal(p.review_due_since,before.review_due_since);
+});
+test('material parent relation edit reflags completed Prediction review',()=>{
+  const relation=event({id:'evt-parent-evidence-relation',record_type:'thread',record_id:thread.id,
+    expected_version:1,kind:'relate',recorded_at:'2026-09-23T00:00:00Z',
+    payload:{target_id:signal.id,target_version:0,relationship:'challenges'}});
+  const p=run([...forecastPrelude(),changedParent(),completedForecastReview(),relation]).data.predictions[0];
+  assert.equal(p.review_required,true);
+});
+test('nonmaterial parent review metadata alone does not reflag completed Prediction',()=>{
+  const parentReview=event({id:'evt-parent-review-only',record_type:'thread',record_id:thread.id,
+    expected_version:1,kind:'review',recorded_at:'2026-09-23T00:00:00Z',
+    payload:{outcome:'unchanged',counterevidence_checked:['No accepted evidence delta'],next_review_at:'2026-09-30T00:00:00Z'}});
+  const p=run([...forecastPrelude(),changedParent(),completedForecastReview(),parentReview]).data.predictions[0];
+  assert.equal(p.review_required,false);
+});
