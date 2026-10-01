@@ -1043,6 +1043,13 @@
                   "type": "number",
                   "minimum": 0,
                   "maximum": 1
+                },
+                "review_completion": {
+                  "enum": [
+                    "complete",
+                    "incomplete"
+                  ],
+                  "description": "Explicit review-work completion when attested by the accepted event; absent for legacy reviews. This does not state that forecast criteria are satisfied."
                 }
               },
               "additionalProperties": false

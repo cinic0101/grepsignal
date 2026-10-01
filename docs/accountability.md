@@ -22,6 +22,20 @@ Required event fields: id, record_type, record_id, expected_version, kind, recor
 - publication: immutable operator-attested actual first_public_at and verification_url. Forecasts must have been public before deadline; private drafts/planned deployments are not public forecasts.
 - forecast_basis: one immutable, evidence-backed, pre-deadline explanation attached to a Prediction after registration. It records the judgment method, supporting factors, counter-factors, calibration status, and an immutable Thread snapshot version. It may explain an existing probability but cannot change the claim, probability, deadline or resolution rules.
 - forecast_review: append-only pre-deadline evidence movement for an open public Prediction. Assessment is supporting/challenging/neutral/inconclusive, with counterevidence_checked, an immutable Thread snapshot version, and optional next_review_at. Supporting/challenging reviews require evidence. The reducer copies the original probability into the projected review; the event cannot supply or alter a probability. Forecast reviews do not advance the intelligence publication date.
+  New forecast reviews may additionally attest `review_completion: complete|incomplete`.
+  This describes whether the review work was completed, independently of `assessment`:
+  a complete review may find criterion satisfaction inconclusive, and never resolves the
+  forecast or changes its probability. Omission preserves legacy journal behavior and
+  cannot clear a warning. Explicit `complete` clears the parent-caused warning only when
+  `thread_snapshot_version` equals the current linked public Thread version at this event,
+  that parent is active, has no pending review warning and is not overdue, and no other
+  flagged explicit dependency remains. A stale snapshot is valid history but not clearance.
+  `incomplete`, stale/blocked-parent reviews and unrelated dependency warnings preserve
+  the prior review-due origin. Later parent revisions/withdrawals reflag the Prediction,
+  including changes appended at the same timestamp. A complete parent review cannot clear
+  an unrelated dependency warning; that needs a separately scoped dependency review design.
+  New reviews expose the optional completion attestation in their immutable public snapshots;
+  historical entries are neither rewritten nor assigned invented completion attestations.
 - resolve: an originally publicly registered forecast after deadline, outcome true/false/unresolved; corrections name supersedes_resolution. Decisive evidence includes an originally allowed source. Original terms and every resolution remain. Binary Brier score is `(initial_probability - outcome)^2`; unresolved is unscored, never zero. A few scored events do not prove calibration. Forecast Basis is preserved so later lesson-learned notes can be compared against the reasoning actually recorded before the deadline.
 
 See public/schema/history.schema.json and synthetic tests. Structure is not truth, source access permission or editorial acceptance. Fixtures stay outside the live journal.

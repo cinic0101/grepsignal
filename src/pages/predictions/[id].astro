@@ -169,6 +169,12 @@ const predictionJsonLd = {
                         </a>
                       </dd>
                     </div>
+                    {review.review_completion && (
+                      <div>
+                        <dt>Review work</dt>
+                        <dd>{review.review_completion === 'complete' ? 'Complete (not a forecast resolution)' : 'Incomplete at this review'}</dd>
+                      </div>
+                    )}
                     {review.next_review_at && (
                       <div>
                         <dt>Next review</dt>

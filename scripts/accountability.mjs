@@ -150,6 +150,14 @@ export function replay(baseline,journal,baselineLinks=null) {
   data.history_schema_version=1;
   const links=structuredClone(baselineLinks ?? Object.fromEntries((baseline.threads ?? []).map(t => [t.id,{supporting:[...new Set(t.updates.flatMap(x => x.signal_ids))],contradicting:[]}])));
   const records=new Map();
+  // Track why a Prediction was flagged while replaying the immutable journal.
+  // A parent-bound review must not erase an unrelated dependency's warning.
+  const predictionReviewCauses=new Map();
+  const incompleteForecastReview=Symbol('incomplete forecast review');
+  const reviewCauses=id => {
+    if (!predictionReviewCauses.has(id)) predictionReviewCauses.set(id,new Set());
+    return predictionReviewCauses.get(id);
+  };
   for (const [type,key] of Object.entries(TYPES)) {
     data[key]=(baseline[key] ?? []).map(r => bootstrap(r,type,journal));
     for (const r of data[key]) {assert(!records.has(r.id),'duplicate record ID');records.set(r.id,{type,r});}
@@ -273,7 +281,9 @@ export function replay(baseline,journal,baselineLinks=null) {
         event_id:e.id,
       };
     } else if (e.kind === 'forecast_review') {
-      exact(p,['assessment','counterevidence_checked','thread_snapshot_version','next_review_at'],'forecast review');
+      exact(p,['assessment','counterevidence_checked','thread_snapshot_version','next_review_at','review_completion'],'forecast review');
+      const hasCompletion=Object.hasOwn(p,'review_completion');
+      if (hasCompletion) assert(['complete','incomplete'].includes(p.review_completion),'invalid forecast review completion');
       assert(e.record_type === 'prediction','forecast review applies only to predictions');
       assert(r.first_public_at !== null && r.status === 'open','forecast review requires an open publicly registered prediction');
       assert(timestamp(e.recorded_at) < timestamp(r.deadline),'forecast review must be recorded before deadline');
@@ -295,11 +305,32 @@ export function replay(baseline,journal,baselineLinks=null) {
         thread_snapshot_version:p.thread_snapshot_version,
         next_review_at:p.next_review_at ?? null,
         original_probability:r.initial_probability,
+        ...(hasCompletion ? {review_completion:p.review_completion} : {}),
       });
       r.last_reviewed_at=e.recorded_at;
       r.last_review_outcome=p.assessment;
       r.next_review_at=p.next_review_at ?? null;
-      r.review_due_since=p.next_review_at ?? null;
+      if (!hasCompletion) {
+        // Backward compatibility: old reviews did not attest completion, so retain
+        // their historic scheduling behavior without retroactively clearing flags.
+        r.review_due_since=p.next_review_at ?? null;
+      } else {
+        const parent=records.get(r.thread_id)?.r;
+        const currentParent=parent && parent.version === p.thread_snapshot_version;
+        const parentReady=currentParent && parent.lifecycle === 'active' && !parent.review_required
+          && (parent.next_review_at == null || timestamp(parent.next_review_at) > timestamp(e.recorded_at));
+        const causes=reviewCauses(r.id);
+        if (p.review_completion === 'complete' && parentReady) {
+          causes.delete(r.thread_id);
+          causes.delete(incompleteForecastReview);
+          r.review_required=causes.size > 0;
+          if (!r.review_required) r.review_due_since=p.next_review_at ?? null;
+        } else {
+          // An incomplete or stale-bound review is useful history, not clearance.
+          causes.add(incompleteForecastReview);
+          r.review_required=true;
+        }
+      }
     } else if (e.kind === 'publication') {
       exact(p,['first_public_at','verification_url'],'publication receipt');safeUrl(p.verification_url);
       assert(r.first_public_at === null,'first publication receipt is immutable');
@@ -341,7 +372,10 @@ export function replay(baseline,journal,baselineLinks=null) {
     r.version+=1;r.revision_ids.push(e.id);
     if (['revise','supersede','retract'].includes(e.kind)) for (const {r:other} of records.values()) {
       const linked=other.relations?.some(x => x.target_id === r.id) || other.updates?.some(x => x.signal_ids.includes(r.id)) || other.thread_id === r.id;
-      if (other.id !== r.id && linked) other.review_required=true;
+      if (other.id !== r.id && linked) {
+        other.review_required=true;
+        if (records.get(other.id).type === 'prediction') reviewCauses(other.id).add(r.id);
+      }
     }
     const sequence=changes.length+1;
     const change=structuredClone(e);change.evidence=normalizedEvidence(change.evidence);
