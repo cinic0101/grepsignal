@@ -3700,6 +3700,147 @@
         "reference": "https://github.com/cinic0101/grepsignal-engine/pull/257",
         "accepted_at": "2026-10-01T05:21:33Z"
       }
+    },
+    {
+      "id": "evt-thread-offensive-cyber-economics-glm53-supplement-2026-10-01",
+      "record_type": "thread",
+      "record_id": "thread-offensive-cyber-economics",
+      "expected_version": 0,
+      "kind": "revise",
+      "proposed_by": "ChatGPT supplementary editorial review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "supplementary_editorial_review",
+        "run_id": null,
+        "cycle_id": null
+      },
+      "note": "Anthropic adds a bounded labor-and-compute example from researcher-directed, offline testing: a GLM-5.3-Flash known-vulnerability exercise used 20 minutes of human attention and eight model-hours, with an estimated $20.40 API charge. This is one competitor-authored experiment, not total campaign cost or evidence of real-world attack prevalence. CAISI independently reports stronger open-weight cyber capability while retaining a substantial gap to the US frontier; it does not corroborate the cost result. The Thread thesis and assessment remain unchanged.",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/research/glm-5-3-and-the-spread-of-advanced-cyber-capabilities",
+          "publisher": "Anthropic / Andrew Fasano, Marius Fleischer, Cole McFaul, Robert Xiao and Tripp Gallagher",
+          "title": "GLM-5.3 and the spread of advanced cyber capabilities",
+          "role": "primary_controlled_research_report",
+          "published_at": "2026-09-29",
+          "lineage_id": "anthropic-glm53-cyber-20260929"
+        },
+        {
+          "url": "https://www.nist.gov/news-events/news/2026/09/caisis-assessment-zais-glm-53-cyber-capabilities",
+          "publisher": "NIST / CAISI",
+          "title": "CAISI’s Assessment of Z.ai’s GLM-5.3 Cyber Capabilities",
+          "role": "independent_capability_assessment",
+          "published_at": "2026-09-17",
+          "lineage_id": "nist-caisi-glm53-20260917"
+        }
+      ],
+      "payload": {
+        "status": "strengthening",
+        "thesis": "As models and agentic cyber frameworks absorb more reconnaissance, exploit research, tool development and data-processing work, attacker capability depends less on scarce specialist labor, shifting the economics toward more parallel campaigns, broader targeting and lower-resource operators.",
+        "effect_on_thesis": "unchanged"
+      },
+      "recorded_at": "2026-10-01T09:19:09.824656Z",
+      "acceptance": {
+        "actor": "Owner-authorized dot operator",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/272#issuecomment-5928374504",
+        "accepted_at": "2026-10-01T09:12:10Z"
+      }
+    },
+    {
+      "id": "evt-thread-agent-harness-economics-pi-codemode-2026-10-01",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 4,
+      "kind": "revise",
+      "proposed_by": "ChatGPT supplementary editorial review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "supplementary_editorial_review",
+        "run_id": null,
+        "cycle_id": null
+      },
+      "note": "Pi now supports deferred or Codemode-only tool metadata and JavaScript composition of structured MCP calls; orchestration state is retained in the session transcript. These are concrete changes to context handling and execution design, so they add implementation evidence to the Harness Economics Thread independently of the Jev example. The source supplies no matched cost, latency or completion comparison. The thesis and assessment stay unchanged, and no measured savings are credited.",
+      "evidence": [
+        {
+          "url": "https://earendil.com/posts/you-said-no-mcp/",
+          "publisher": "Earendil Engineering",
+          "title": "“You Said No MCP!” | Earendil",
+          "role": "primary_implementation_report",
+          "published_at": "2026-09-29",
+          "lineage_id": "lineage-earendil-pi-mcp-20260929"
+        }
+      ],
+      "payload": {
+        "status": "strengthening",
+        "thesis": "As frontier models become usable across multiple agent runtimes, harness and tool-interface design—including context management, structured operations, specialization, concurrency, and execution loops—can materially shift cost and task efficiency independently of model choice.",
+        "effect_on_thesis": "unchanged"
+      },
+      "recorded_at": "2026-10-01T09:19:09.824656Z",
+      "acceptance": {
+        "actor": "Owner-authorized dot operator",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/272#issuecomment-5928374504",
+        "accepted_at": "2026-10-01T09:12:10Z"
+      }
+    },
+    {
+      "id": "evt-pred-runtime-authorization-argon-review-2026-10-01",
+      "record_type": "prediction",
+      "record_id": "pred-runtime-exact-authorization-2026-10-30",
+      "expected_version": 3,
+      "kind": "forecast_review",
+      "proposed_by": "ChatGPT supplementary editorial review",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "supplementary_editorial_review",
+        "run_id": null,
+        "cycle_id": null
+      },
+      "note": "The Argon announcement describes runtime monitoring and isolated environments, but Google had already described supervisors, intervention and high-risk synchronous prevention on June 18. The reviewed material does not establish a newly shipped or materially expanded control after this Prediction was created. Neither blog is an originally allowed resolution source. This scoped review is inconclusive about qualification; the Prediction remains open, with its original 70% probability and terms unchanged.",
+      "evidence": [
+        {
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+          "publisher": "Google / Koray Kavukcuoglu",
+          "title": "Gemini 4 Argon: our next era of frontier intelligence",
+          "role": "primary_product_announcement",
+          "published_at": "2026-09-30",
+          "lineage_id": "lineage-google-argon-launch-20260930"
+        },
+        {
+          "url": "https://deepmind.google/blog/securing-the-future-of-ai-agents/",
+          "publisher": "Google DeepMind / Rohin Shah and Four Flynn",
+          "title": "Securing the future of AI agents",
+          "role": "primary_prior_control_description",
+          "published_at": "2026-06-18",
+          "lineage_id": "deepmind-ai-control-20260618"
+        }
+      ],
+      "payload": {
+        "assessment": "inconclusive",
+        "counterevidence_checked": [
+          "Compared the September 30 Argon control descriptions with the June 18 primary description of supervisors, blocking and synchronous prevention.",
+          "Checked the original post-registration novelty requirement and fixed allowed resolution-source list; these sources do not establish a qualifying change."
+        ],
+        "thread_snapshot_version": 13,
+        "review_completion": "complete",
+        "next_review_at": "2026-10-08T06:30:00Z"
+      },
+      "recorded_at": "2026-10-01T09:19:09.824656Z",
+      "acceptance": {
+        "actor": "Owner-authorized dot operator",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/272#issuecomment-5928374504",
+        "accepted_at": "2026-10-01T09:12:10Z"
+      }
     }
   ]
 }
