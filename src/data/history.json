@@ -3506,6 +3506,200 @@
         "thesis": "As agents become more autonomous, the durable safety boundary moves outward from the model prompt to the runtime that governs what the agent can execute, access and reach—and to authorization that binds user intent to the exact data and action the runtime permits.",
         "effect_on_thesis": "strengthened"
       }
+    },
+    {
+      "id": "evt-signal-gemini-argon-gated-long-output-2026-10-01",
+      "record_type": "signal",
+      "record_id": "sig-gemini-argon-gated-long-output-rollout-2026-09-30",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "ChatGPT daily synthesis",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "daily_synthesis",
+        "run_id": null,
+        "cycle_id": "cycle-2026-10-01-staged-001"
+      },
+      "note": "Register the bounded first-party announcement of a gated defensive rollout and enlarged output allowance, with pricing and evidence limitations retained.",
+      "evidence": [
+        {
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+          "publisher": "Google / Koray Kavukcuoglu",
+          "title": "Gemini 4 Argon: our next era of frontier intelligence",
+          "role": "primary_product_announcement",
+          "published_at": "2026-09-30",
+          "retrieved_at": "2026-10-01T02:50:22.827721Z",
+          "lineage_id": "lineage-google-argon-launch-20260930"
+        }
+      ],
+      "payload": {
+        "id": "sig-gemini-argon-gated-long-output-rollout-2026-09-30",
+        "type": "capability_delta",
+        "title": "Gemini 4 Argon expands output capacity under a gated defensive rollout",
+        "summary": "Google announced Gemini 4 Argon on September 30 with initial access for selected cyber defenders through Fairwind. It raises the stated output ceiling from 64,000 to one million tokens. Announced introductory API prices are $2 per million input tokens and $10 per million output tokens, increasing to $4 and $20 after the introductory period; cached inputs receive a 95% discount.",
+        "why_it_matters": "The larger output allowance changes the ceiling for a single long-running reasoning or code-generation trajectory. Builders still need to plan around restricted availability, potentially large per-task output bills, and later pricing rather than treat the announcement as unrestricted production access.",
+        "falsifiers": [
+          "The advertised output allowance is not exposed to the intended developer tier, or remains unavailable after the announced expansion."
+        ],
+        "limitations": [
+          "This is a verified first-party announcement, not an independent performance evaluation or a test of generally available access.",
+          "The release does not specify when the introductory pricing expires or when broad access begins.",
+          "The output ceiling is distinct from input context capacity; one million output tokens are an upper allowance, not a recommended default.",
+          "Unavailable artwork and cyber benchmark graphics do not support this claim; no claim of universal benchmark leadership or containment effectiveness is made.",
+          "Practical completion gains and total per-task cost for very long output trajectories have not been independently established."
+        ],
+        "second_order_effect": "The larger output allowance raises the ceiling for single-trajectory work, while access gates and later pricing constrain deployment planning.",
+        "watch_next": "Whether the intended developer tier exposes the advertised output allowance; when introductory pricing ends and broader access begins; and measured completion gains and total per-task costs for very long outputs.",
+        "status": "emerging",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "evidence_since": "2026-09",
+        "registered_at": "2026-10-01",
+        "sources": [
+          {
+            "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+            "publisher": "Google / Koray Kavukcuoglu",
+            "title": "Gemini 4 Argon: our next era of frontier intelligence",
+            "role": "primary_product_announcement",
+            "published_at": "2026-09-30",
+            "retrieved_at": "2026-10-01T02:50:22.827721Z",
+            "lineage_id": "lineage-google-argon-launch-20260930"
+          }
+        ]
+      },
+      "recorded_at": "2026-10-01T05:21:33Z",
+      "acceptance": {
+        "actor": "Owner-authorized dot operator",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/257",
+        "accepted_at": "2026-10-01T05:21:33Z"
+      }
+    },
+    {
+      "id": "evt-thread-agent-runtime-containment-argon-controls-2026-10-01",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 12,
+      "kind": "revise",
+      "proposed_by": "ChatGPT daily synthesis",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "daily_synthesis",
+        "run_id": null,
+        "cycle_id": "cycle-2026-10-01-staged-001"
+      },
+      "note": "Google describes execution-stopping monitors and isolated, sealed environments for high-risk Argon training and evaluation. This adds another lab's concrete runtime-control design to the containment record. The thesis is unchanged: implementation descriptions and stronger model-level injection resistance do not establish that runtime boundaries are effective under adversarial use.",
+      "evidence": [
+        {
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+          "publisher": "Google / Koray Kavukcuoglu",
+          "title": "Gemini 4 Argon: our next era of frontier intelligence",
+          "role": "primary_product_announcement",
+          "published_at": "2026-09-30",
+          "retrieved_at": "2026-10-01T02:50:22.827721Z",
+          "lineage_id": "lineage-google-argon-launch-20260930"
+        }
+      ],
+      "payload": {
+        "status": "strengthening",
+        "thesis": "As agents become more autonomous, the durable safety boundary moves outward from the model prompt to the runtime that governs what the agent can execute, access and reach—and to authorization that binds user intent to the exact data and action the runtime permits.",
+        "effect_on_thesis": "unchanged"
+      },
+      "recorded_at": "2026-10-01T05:21:33Z",
+      "acceptance": {
+        "actor": "Owner-authorized dot operator",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/257",
+        "accepted_at": "2026-10-01T05:21:33Z"
+      }
+    },
+    {
+      "id": "evt-thread-decision-native-runtimes-pi-jev-codemode-2026-10-01",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 8,
+      "kind": "revise",
+      "proposed_by": "ChatGPT daily synthesis",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "daily_synthesis",
+        "run_id": null,
+        "cycle_id": "cycle-2026-10-01-staged-001"
+      },
+      "note": "Pi integrates Jev classification into a JavaScript tool-orchestration environment alongside MCP retrieval. This adds a concrete application of bounded decisions within an agent workflow, while leaving the existing thesis unchanged. It reuses Jev rather than adding another independent model provider; the demonstration does not establish calibration, cost savings, or classification accuracy.",
+      "evidence": [
+        {
+          "url": "https://earendil.com/posts/you-said-no-mcp/",
+          "publisher": "Earendil Engineering",
+          "title": "“You Said No MCP!” | Earendil",
+          "role": "primary_implementation_report",
+          "published_at": "2026-09-29",
+          "retrieved_at": "2026-10-01T02:42:17.918569Z",
+          "lineage_id": "lineage-earendil-pi-mcp-20260929"
+        }
+      ],
+      "payload": {
+        "status": "strengthening",
+        "thesis": "Some high-frequency semantic operations are separating from free-form text generation into decision-native interfaces that accept context plus bounded questions or choices and return constrained decisions or scores; probability-native models are one implementation, while general-purpose backbones can expose the same application contract through a dedicated API or runtime.",
+        "effect_on_thesis": "unchanged"
+      },
+      "recorded_at": "2026-10-01T05:21:33Z",
+      "acceptance": {
+        "actor": "Owner-authorized dot operator",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/257",
+        "accepted_at": "2026-10-01T05:21:33Z"
+      }
+    },
+    {
+      "id": "evt-thread-research-automation-bottlenecks-argon-engineering-2026-10-01",
+      "record_type": "thread",
+      "record_id": "thread-research-automation-bottlenecks",
+      "expected_version": 8,
+      "kind": "revise",
+      "proposed_by": "ChatGPT daily synthesis",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "daily_synthesis",
+        "run_id": null,
+        "cycle_id": "cycle-2026-10-01-staged-001"
+      },
+      "note": "Google reports Argon agents conducting profile-guided code optimization and deployed memory optimization, adding another lab's concrete evidence that feedback-driven engineering loops extend beyond code generation. Critical migrations still undergo automated and manual audits and testing. These first-party results extend existing counterevidence to a fixed human-only experimental bottleneck without establishing autonomous end-to-end research.",
+      "evidence": [
+        {
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+          "publisher": "Google / Koray Kavukcuoglu",
+          "title": "Gemini 4 Argon: our next era of frontier intelligence",
+          "role": "primary_product_announcement",
+          "published_at": "2026-09-30",
+          "retrieved_at": "2026-10-01T02:50:22.827721Z",
+          "lineage_id": "lineage-google-argon-launch-20260930"
+        }
+      ],
+      "payload": {
+        "status": "strengthening",
+        "thesis": "As coding agents automate more of frontier AI R&D, the binding constraints shift from code production toward human steering, experimental judgment, compute allocation, and safety infrastructure.",
+        "effect_on_thesis": "unchanged"
+      },
+      "recorded_at": "2026-10-01T05:21:33Z",
+      "acceptance": {
+        "actor": "Owner-authorized dot operator",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/257",
+        "accepted_at": "2026-10-01T05:21:33Z"
+      }
     }
   ]
 }
