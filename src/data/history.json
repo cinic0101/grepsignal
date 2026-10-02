@@ -3841,6 +3841,145 @@
         "reference": "https://github.com/cinic0101/grepsignal-engine/pull/272#issuecomment-5928374504",
         "accepted_at": "2026-10-01T09:12:10Z"
       }
+    },
+    {
+      "acceptance": {
+        "accepted_at": "2026-10-02T06:55:51Z",
+        "actor": "Owner-authorized dot operator",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/339#issuecomment-5947008914",
+        "scope": "publication"
+      },
+      "evidence": [
+        {
+          "lineage_id": "lineage-earendil-pi-durable-20261001",
+          "published_at": "2026-10-01",
+          "publisher": "Earendil",
+          "retrieved_at": "2026-10-02T02:37:12.648898Z",
+          "role": "primary_implementation_report",
+          "title": "Pi Durable | Earendil",
+          "url": "https://earendil.com/posts/pi-durable/"
+        },
+        {
+          "lineage_id": "lineage-earendil-pi-durable-20261001",
+          "published_at": "2026-10-01",
+          "publisher": "Earendil",
+          "retrieved_at": "2026-10-02T02:37:15.036881Z",
+          "role": "same_release_announcement",
+          "title": "Pi 1.0 | Earendil",
+          "url": "https://earendil.com/posts/pi-1-0/"
+        }
+      ],
+      "expected_version": 0,
+      "id": "evt-signal-pi-durable-replay-aware-harness-2026-10-02",
+      "kind": "register",
+      "note": "Register the experimental Pi Durable release as a bounded framework-availability and design change. The two Earendil pages describe one release lineage; no independent reliability, cost or external exactly-once result is established.",
+      "payload": {
+        "evidence_since": "2026-10",
+        "falsifiers": [
+          "The advertised package or documented recovery interfaces are unavailable in the released implementation.",
+          "Crash testing shows that checkpoint or replay behavior does not match the documented contract."
+        ],
+        "id": "sig-pi-durable-replay-aware-harness-2026-10-02",
+        "limitations": [
+          "This is a first-party release and design report; code examples and recovery demonstrations were not executed or independently replicated.",
+          "Pi Durable is experimental and its API may change.",
+          "Submission deduplication does not guarantee exactly-once effects in external systems; callers still need appropriate idempotency and replay policies.",
+          "No matched cost, latency, task-completion or production reliability result is established. Embedded video demonstrations were not visually reviewed."
+        ],
+        "registered_at": "2026-10-02",
+        "second_order_effect": "Long-running agent builders can treat checkpoint storage, tool replay and application documents as explicit framework interfaces; the operational benefits still need testing.",
+        "source_count": 2,
+        "source_organization_count": 1,
+        "sources": [
+          {
+            "lineage_id": "lineage-earendil-pi-durable-20261001",
+            "published_at": "2026-10-01",
+            "publisher": "Earendil",
+            "retrieved_at": "2026-10-02T02:37:12.648898Z",
+            "role": "primary_implementation_report",
+            "title": "Pi Durable | Earendil",
+            "url": "https://earendil.com/posts/pi-durable/"
+          },
+          {
+            "lineage_id": "lineage-earendil-pi-durable-20261001",
+            "published_at": "2026-10-01",
+            "publisher": "Earendil",
+            "retrieved_at": "2026-10-02T02:37:15.036881Z",
+            "role": "same_release_announcement",
+            "title": "Pi 1.0 | Earendil",
+            "url": "https://earendil.com/posts/pi-1-0/"
+          }
+        ],
+        "status": "emerging",
+        "summary": "Earendil released Pi Durable alongside Pi 1.0 as a separate experimental package. The framework records task progress in persistent storage, reruns interrupted tools only when they declare replay safe, and supports background context compaction and multiple clients steering a conversation. Its application documents can be committed together with transcript updates.",
+        "title": "Pi Durable adds explicit crash-recovery and replay controls to an experimental agent framework",
+        "type": "platform_shift",
+        "watch_next": "Whether released behavior matches the documented restart and replay contract, and what independent tests show about failure recovery and total task cost.",
+        "why_it_matters": "Builders of long-running agent applications now have a concrete framework option for coordinating conversation recovery, tool replay and application state. Those boundaries affect architecture choices even before production reliability or efficiency has been demonstrated."
+      },
+      "proposal": {
+        "actor_type": "model",
+        "cycle_id": "cycle-2026-10-02-staged-002",
+        "model_id": null,
+        "model_version": null,
+        "provider": "OpenAI",
+        "role": "daily_synthesis",
+        "run_id": null
+      },
+      "proposed_by": "ChatGPT daily synthesis",
+      "record_id": "sig-pi-durable-replay-aware-harness-2026-10-02",
+      "record_type": "signal",
+      "recorded_at": "2026-10-02T06:56:33.069605Z"
+    },
+    {
+      "acceptance": {
+        "accepted_at": "2026-10-02T06:55:51Z",
+        "actor": "Owner-authorized dot operator",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/339#issuecomment-5947008914",
+        "scope": "publication"
+      },
+      "evidence": [
+        {
+          "lineage_id": "lineage-earendil-pi-durable-20261001",
+          "published_at": "2026-10-01",
+          "publisher": "Earendil",
+          "retrieved_at": "2026-10-02T02:37:12.648898Z",
+          "role": "primary_implementation_report",
+          "title": "Pi Durable | Earendil",
+          "url": "https://earendil.com/posts/pi-durable/"
+        },
+        {
+          "lineage_id": "lineage-earendil-pi-durable-20261001",
+          "published_at": "2026-10-01",
+          "publisher": "Earendil",
+          "retrieved_at": "2026-10-02T02:37:15.036881Z",
+          "role": "same_release_announcement",
+          "title": "Pi 1.0 | Earendil",
+          "url": "https://earendil.com/posts/pi-1-0/"
+        }
+      ],
+      "expected_version": 5,
+      "id": "evt-thread-agent-harness-economics-pi-durable-2026-10-02",
+      "kind": "relate",
+      "note": "Earendil has released experimental Pi Durable, adding persisted task checkpoints, explicit tool replay policies and background context compaction to its agent framework. Application state and transcripts can advance in a shared commit. This is a new implementation delta beyond the earlier MCP/Codemode integration. The existing thesis and assessment remain unchanged: the announcement establishes a design and availability claim, not measured savings or production recovery reliability.",
+      "payload": {
+        "relationship": "supports",
+        "target_id": "sig-pi-durable-replay-aware-harness-2026-10-02",
+        "target_version": 1
+      },
+      "proposal": {
+        "actor_type": "model",
+        "cycle_id": "cycle-2026-10-02-staged-002",
+        "model_id": null,
+        "model_version": null,
+        "provider": "OpenAI",
+        "role": "daily_synthesis",
+        "run_id": null
+      },
+      "proposed_by": "ChatGPT daily synthesis",
+      "record_id": "thread-agent-harness-economics",
+      "record_type": "thread",
+      "recorded_at": "2026-10-02T06:56:33.069605Z"
     }
   ]
 }
