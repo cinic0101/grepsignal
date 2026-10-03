@@ -1,10 +1,10 @@
 {
   "coverage_status": "reviewed",
-  "cycle_id": "cycle-2026-10-01-staged-001",
-  "exact_sources_materialized": 17,
-  "generated_at": "2026-10-01T04:53:53.103513Z",
-  "note": "Coverage describes the October 1 frozen intake: all 97 selected items have recorded dispositions and 23 Research targets were processed, including three unresolved evidence-access defers. The overall cycle remains partial. Reviewed counts mean recorded review decisions, not complete source reading or complete coverage of AI news. Public intelligence is separately approved.",
-  "research_targets_reviewed": 23,
+  "cycle_id": "cycle-2026-10-03-staged-001",
+  "exact_sources_materialized": 26,
+  "generated_at": "2026-10-03T06:06:31.440564Z",
+  "note": "Coverage describes the October 3 frozen intake: all 104 selected items have recorded dispositions and 31 Research targets were processed. The overall cycle remains partial, with 13 unresolved items including 9 defers. Reviewed counts mean recorded dispositions, not complete source reading or complete coverage of AI news. Public intelligence is separately approved.",
+  "research_targets_reviewed": 31,
   "schema_version": 3,
   "sources": [
     {
@@ -15,9 +15,9 @@
       "source_id": "simon-willison"
     },
     {
-      "intake_count": 67,
+      "intake_count": 74,
       "name": "Hacker News",
-      "reviewed_count": 67,
+      "reviewed_count": 74,
       "scope": "Latest Top 100 IDs; first 60 eligible stories plus rising, configured primary-source recall candidates, and up to 5 due deferred carryover items; unchanged watches wait for revisit_at",
       "source_id": "hacker-news"
     }
