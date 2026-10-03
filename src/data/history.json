@@ -3980,6 +3980,323 @@
       "record_id": "thread-agent-harness-economics",
       "record_type": "thread",
       "recorded_at": "2026-10-02T06:56:33.069605Z"
+    },
+    {
+      "acceptance": {
+        "accepted_at": "2026-10-03T08:39:48Z",
+        "actor": "Owner-authorized dot operator",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/388#issuecomment-5967263694",
+        "scope": "publication"
+      },
+      "evidence": [
+        {
+          "lineage_id": "lineage-ai2-astabrief-release-20261002",
+          "published_at": null,
+          "publisher": "Ai2",
+          "retrieved_at": "2026-10-03T01:50:52.659430Z",
+          "role": "primary_release_report",
+          "title": "Open-sourcing AstaBrief, the fast report-generation model in Asta  | Ai2",
+          "url": "https://allenai.org/blog/astabrief"
+        }
+      ],
+      "expected_version": 0,
+      "id": "evt-signal-astabrief-open-report-workflow-2026-10-03",
+      "kind": "register",
+      "note": "Register this bounded source-reported finding with its stated evidence and availability limits. No independent execution, replicated performance or broader frontier superiority is established.",
+      "payload": {
+        "evidence_since": "2026-10",
+        "falsifiers": [
+          "Withdraw or narrow the availability claim if the announced model, data or workflow cannot be obtained or do not support the described report-generation stage."
+        ],
+        "id": "sig-astabrief-open-report-workflow-2026-10-03",
+        "limitations": [
+          "This is an attributed release report; downloads, licenses and local execution were not independently tested.",
+          "Most evaluations were completed in 2025 and were not rerun against current frontier models. The text reports 51.1 versus 178.5 seconds for full pipelines, with both model and scaffolding changed; this does not isolate harness savings or establish current model superiority.",
+          "Serving-cost reductions are not quantified. The missing evaluation chart and small human study do not support broader quality claims. Citation accuracy does not establish preservation of scientific scope."
+        ],
+        "registered_at": "2026-10-03",
+        "second_order_effect": "A specialized report-generation stage becomes an inspectable local-deployment option; independent checks of report scope, citations and serving cost still determine practical value.",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "sources": [
+          {
+            "lineage_id": "lineage-ai2-astabrief-release-20261002",
+            "published_at": null,
+            "publisher": "Ai2",
+            "retrieved_at": "2026-10-03T01:50:52.659430Z",
+            "role": "primary_release_report",
+            "title": "Open-sourcing AstaBrief, the fast report-generation model in Asta  | Ai2",
+            "url": "https://allenai.org/blog/astabrief"
+          }
+        ],
+        "status": "emerging",
+        "summary": "Ai2 announced AstaBrief 8B on October 2, releasing model weights, training data and an example PDF workflow. The specialized model also powers Asta’s Fast mode, generating a complete cited report in one pass.",
+        "title": "Ai2 releases AstaBrief for locally deployable scientific reports",
+        "type": "platform_shift",
+        "watch_next": "Whether the released weights and workflow can be reproduced locally, and how report quality and end-to-end cost compare on current, matched workloads.",
+        "why_it_matters": "Research teams gain a concrete option for hosting this report-generation stage on their own infrastructure and examining its training recipe."
+      },
+      "proposal": {
+        "actor_type": "model",
+        "cycle_id": "cycle-2026-10-03-staged-001",
+        "model_id": null,
+        "model_version": null,
+        "provider": "OpenAI",
+        "role": "daily_synthesis",
+        "run_id": null
+      },
+      "proposed_by": "ChatGPT daily synthesis",
+      "record_id": "sig-astabrief-open-report-workflow-2026-10-03",
+      "record_type": "signal",
+      "recorded_at": "2026-10-03T08:40:17.981259Z"
+    },
+    {
+      "acceptance": {
+        "accepted_at": "2026-10-03T08:39:48Z",
+        "actor": "Owner-authorized dot operator",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/388#issuecomment-5967263694",
+        "scope": "publication"
+      },
+      "evidence": [
+        {
+          "lineage_id": "lineage-dwarfstar-ds4-implementation",
+          "published_at": null,
+          "publisher": "DwarfStar",
+          "retrieved_at": "2026-10-03T01:50:30.775178Z",
+          "role": "project_implementation_report",
+          "title": "DwarfStar 4 (ds4): Local DeepSeek V4.1, Qwen and GLM",
+          "url": "https://dwarfstar.sh/"
+        }
+      ],
+      "expected_version": 0,
+      "id": "evt-signal-ds4-local-inference-stack-2026-10-03",
+      "kind": "register",
+      "note": "Register this bounded source-reported finding with its stated evidence and availability limits. No independent execution, replicated performance or broader frontier superiority is established.",
+      "payload": {
+        "evidence_since": "2026-10",
+        "falsifiers": [
+          "Narrow the implementation claim if the referenced release lacks the advertised shared-state interfaces or cannot restore the supported cached prefixes."
+        ],
+        "id": "sig-ds4-local-inference-stack-2026-10-03",
+        "limitations": [
+          "The project page is the only reviewed evidence; code, hardware compatibility and API behavior were not executed.",
+          "Throughput figures are project estimates. Quantization quality, total cost, energy use and comparisons with alternative engines are not independently established.",
+          "Supported model layouts and high-memory hardware constrain applicability. No launch date is established by this undated page."
+        ],
+        "registered_at": "2026-10-03",
+        "second_order_effect": "Persisting model state and prompt prefixes can become an explicit part of local agent-stack design; workload-specific quality, hardware and total-cost tradeoffs still need measurement.",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "sources": [
+          {
+            "lineage_id": "lineage-dwarfstar-ds4-implementation",
+            "published_at": null,
+            "publisher": "DwarfStar",
+            "retrieved_at": "2026-10-03T01:50:30.775178Z",
+            "role": "project_implementation_report",
+            "title": "DwarfStar 4 (ds4): Local DeepSeek V4.1, Qwen and GLM",
+            "url": "https://dwarfstar.sh/"
+          }
+        ],
+        "status": "emerging",
+        "summary": "DwarfStar’s ds4 project describes a C inference engine for selected DeepSeek, GLM and Qwen builds on Metal, CUDA and ROCm. Its CLI, API server and coding agent share model state, with SSD-backed reuse of long prompt prefixes.",
+        "title": "ds4 combines local open-model inference, persistent prefixes and agent interfaces",
+        "type": "platform_shift",
+        "watch_next": "Reproducible tests of the stated interfaces, cached-prefix restoration, supported hardware, quantization quality and total serving cost.",
+        "why_it_matters": "Builders evaluating local serving gain a concrete stack to inspect for combining large-model loading, prefix persistence and existing agent-client interfaces."
+      },
+      "proposal": {
+        "actor_type": "model",
+        "cycle_id": "cycle-2026-10-03-staged-001",
+        "model_id": null,
+        "model_version": null,
+        "provider": "OpenAI",
+        "role": "daily_synthesis",
+        "run_id": null
+      },
+      "proposed_by": "ChatGPT daily synthesis",
+      "record_id": "sig-ds4-local-inference-stack-2026-10-03",
+      "record_type": "signal",
+      "recorded_at": "2026-10-03T08:40:17.981259Z"
+    },
+    {
+      "acceptance": {
+        "accepted_at": "2026-10-03T08:39:48Z",
+        "actor": "Owner-authorized dot operator",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/388#issuecomment-5967263694",
+        "scope": "publication"
+      },
+      "evidence": [
+        {
+          "lineage_id": "lineage-dogbench-heldout-documentation-evaluation-2026",
+          "published_at": null,
+          "publisher": "DoGBench",
+          "retrieved_at": "2026-10-03T01:54:37.445081Z",
+          "role": "benchmark_author_report",
+          "title": "DoGBench: Can Agents Meet Expert Standards for User-Facing Documentation?",
+          "url": "https://dogbench.ai/"
+        }
+      ],
+      "expected_version": 0,
+      "id": "evt-signal-dogbench-documentation-evaluation-2026-10-03",
+      "kind": "register",
+      "note": "Register this bounded source-reported finding with its stated evidence and availability limits. No independent execution, replicated performance or broader frontier superiority is established.",
+      "payload": {
+        "evidence_since": "2026-10",
+        "falsifiers": [
+          "Revise the reported comparison if corrected splits, rubrics or verified runs materially change the scores or reveal contamination."
+        ],
+        "id": "sig-dogbench-documentation-evaluation-2026-10-03",
+        "limitations": [
+          "Scores describe model-and-harness systems against these rubrics, not percentages of human-expert performance or isolated model ability.",
+          "Internet abstention was verified for Promptless but not all cloud agents. The paper, released trajectories and scoring implementation were linked but not independently audited.",
+          "The seven paper lanes peak at 47.3, while the expanded ten-system page reports 54.8. These task-completion results must not be generalized to all documentation workloads."
+        ],
+        "registered_at": "2026-10-03",
+        "second_order_effect": "Documentation tooling may need separate controls for deciding whether to edit and for checking the usability of an edit; this benchmark offers one concrete evaluation design.",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "sources": [
+          {
+            "lineage_id": "lineage-dogbench-heldout-documentation-evaluation-2026",
+            "published_at": null,
+            "publisher": "DoGBench",
+            "retrieved_at": "2026-10-03T01:54:37.445081Z",
+            "role": "benchmark_author_report",
+            "title": "DoGBench: Can Agents Meet Expert Standards for User-Facing Documentation?",
+            "url": "https://dogbench.ai/"
+          }
+        ],
+        "status": "emerging",
+        "summary": "DoGBench presents a maintainer-informed evaluation of repository documentation work. Its 117-item held-out set includes tasks requiring changes and tasks requiring no edit. The current page reports a highest composite score of 54.8 across ten systems.",
+        "title": "DoGBench separates documentation quality from knowing when to abstain",
+        "type": "capability_delta",
+        "watch_next": "Independent audits of the task split, scoring and agent traces, including abstention behavior and possible training or internet-access contamination.",
+        "why_it_matters": "Documentation-agent evaluation needs to test whether an edit is warranted as well as whether the resulting guidance lets users complete a task. This benchmark makes that distinction explicit."
+      },
+      "proposal": {
+        "actor_type": "model",
+        "cycle_id": "cycle-2026-10-03-staged-001",
+        "model_id": null,
+        "model_version": null,
+        "provider": "OpenAI",
+        "role": "daily_synthesis",
+        "run_id": null
+      },
+      "proposed_by": "ChatGPT daily synthesis",
+      "record_id": "sig-dogbench-documentation-evaluation-2026-10-03",
+      "record_type": "signal",
+      "recorded_at": "2026-10-03T08:40:17.981259Z"
+    },
+    {
+      "acceptance": {
+        "accepted_at": "2026-10-03T08:39:48Z",
+        "actor": "Owner-authorized dot operator",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/388#issuecomment-5967263694",
+        "scope": "publication"
+      },
+      "evidence": [
+        {
+          "lineage_id": "lineage-tavus-griffin-preview-20261001",
+          "published_at": null,
+          "publisher": "Tavus",
+          "retrieved_at": "2026-10-03T01:54:34.589343Z",
+          "role": "primary_preview_report",
+          "title": "Griffin: The First Human Interaction Model | Tavus",
+          "url": "https://www.tavus.io/griffin"
+        }
+      ],
+      "expected_version": 0,
+      "id": "evt-signal-griffin-gated-duplex-preview-2026-10-03",
+      "kind": "register",
+      "note": "Register this bounded source-reported finding with its stated evidence and availability limits. No independent execution, replicated performance or broader frontier superiority is established.",
+      "payload": {
+        "evidence_since": "2026-10",
+        "falsifiers": [
+          "Narrow the preview claim if its accessible implementation does not maintain concurrent perception and generation or the described trusted-tester preview is withdrawn."
+        ],
+        "id": "sig-griffin-gated-duplex-preview-2026-10-03",
+        "limitations": [
+          "Availability and architecture are first-party reports. The preview, videos and upstream NVIDIA evaluation were not independently tested or opened.",
+          "No universal Turing-test pass, human equivalence, benchmark leadership, production readiness or public commercial availability is asserted.",
+          "The vendor’s one-minute study and component-latency figures do not establish unrestricted conversational reliability or end-to-end latency. Disclosure safeguards remain in development."
+        ],
+        "registered_at": "2026-10-03",
+        "second_order_effect": "Continuously processing audiovisual input could change how real-time interfaces handle interruption and timing, but this preview does not establish reliable deployment outcomes.",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "sources": [
+          {
+            "lineage_id": "lineage-tavus-griffin-preview-20261001",
+            "published_at": null,
+            "publisher": "Tavus",
+            "retrieved_at": "2026-10-03T01:54:34.589343Z",
+            "role": "primary_preview_report",
+            "title": "Griffin: The First Human Interaction Model | Tavus",
+            "url": "https://www.tavus.io/griffin"
+          }
+        ],
+        "status": "emerging",
+        "summary": "Tavus announced Griffin-Lite on October 1 as a research preview for selected trusted testers. It describes a continuously listening and watching conversational controller that directs streaming speech and video while the interaction is underway.",
+        "title": "Tavus previews concurrent audiovisual interaction in Griffin-Lite",
+        "type": "capability_delta",
+        "watch_next": "Broader documented access and independent testing of conversational reliability, interruption handling, disclosure safeguards and full end-to-end latency.",
+        "why_it_matters": "The preview presents a concrete audiovisual interaction architecture where response timing and nonverbal controls can change during speech, a relevant design option for real-time interface research."
+      },
+      "proposal": {
+        "actor_type": "model",
+        "cycle_id": "cycle-2026-10-03-staged-001",
+        "model_id": null,
+        "model_version": null,
+        "provider": "OpenAI",
+        "role": "daily_synthesis",
+        "run_id": null
+      },
+      "proposed_by": "ChatGPT daily synthesis",
+      "record_id": "sig-griffin-gated-duplex-preview-2026-10-03",
+      "record_type": "signal",
+      "recorded_at": "2026-10-03T08:40:17.981259Z"
+    },
+    {
+      "acceptance": {
+        "accepted_at": "2026-10-03T08:39:48Z",
+        "actor": "Owner-authorized dot operator",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/388#issuecomment-5967263694",
+        "scope": "publication"
+      },
+      "evidence": [
+        {
+          "lineage_id": "lineage-ai2-astabrief-release-20261002",
+          "published_at": null,
+          "publisher": "Ai2",
+          "retrieved_at": "2026-10-03T01:50:52.659430Z",
+          "role": "primary_release_report",
+          "title": "Open-sourcing AstaBrief, the fast report-generation model in Asta  | Ai2",
+          "url": "https://allenai.org/blog/astabrief"
+        }
+      ],
+      "expected_version": 6,
+      "id": "evt-thread-agent-harness-economics-astabrief-2026-10-03",
+      "kind": "relate",
+      "note": "Ai2 reports deploying AstaBrief in Asta with a specialized model that produces a cited report in one pass, removing intermediate processing used by its other mode. Its reported full-workflow averages are 51.1 seconds and 178.5 seconds. This adds a concrete specialization-and-workflow example. Both the model and pipeline differ, most comparison work dates to 2025, and dollar savings are unreported; the result does not isolate a model-independent harness gain. The existing thesis and assessment are retained.",
+      "payload": {
+        "relationship": "supports",
+        "target_id": "sig-astabrief-open-report-workflow-2026-10-03",
+        "target_version": 1
+      },
+      "proposal": {
+        "actor_type": "model",
+        "cycle_id": "cycle-2026-10-03-staged-001",
+        "model_id": null,
+        "model_version": null,
+        "provider": "OpenAI",
+        "role": "daily_synthesis",
+        "run_id": null
+      },
+      "proposed_by": "ChatGPT daily synthesis",
+      "record_id": "thread-agent-harness-economics",
+      "record_type": "thread",
+      "recorded_at": "2026-10-03T08:40:17.981259Z"
     }
   ]
 }
