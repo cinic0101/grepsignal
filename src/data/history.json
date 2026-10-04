@@ -4297,6 +4297,161 @@
       "record_id": "thread-agent-harness-economics",
       "record_type": "thread",
       "recorded_at": "2026-10-03T08:40:17.981259Z"
+    },
+    {
+      "acceptance": {
+        "accepted_at": "2026-10-04T06:05:01Z",
+        "actor": "Owner-authorized dot operator",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/435#issuecomment-5977162852",
+        "scope": "publication"
+      },
+      "evidence": [
+        {
+          "lineage_id": "aleph-alpha-kolibri-launch-20261003",
+          "published_at": "2026-10-03",
+          "publisher": "Aleph Alpha",
+          "retrieved_at": "2026-10-04T02:39:57.204931Z",
+          "role": "primary_product_announcement",
+          "title": "Kolibri Has Landed: A Sovereign Open-Weight Model — Aleph Alpha",
+          "url": "https://aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model/"
+        }
+      ],
+      "expected_version": 0,
+      "id": "evt-signal-kolibri-bilingual-self-hosting-2026-10-04",
+      "kind": "register",
+      "note": "Record the content of Aleph Alpha’s release announcement with its stated deployment limits. Actual availability, independent benchmark performance, cost per task and compliance are not established by this entry.",
+      "payload": {
+        "evidence_since": "2026-10",
+        "falsifiers": [
+          "The deployment proposition would need revision if the released weights or supported serving implementation do not provide the announced capabilities, or representative bilingual workloads cannot use them within practical memory and latency budgets."
+        ],
+        "id": "sig-kolibri-bilingual-self-hosting-2026-10-04",
+        "limitations": [
+          "This is a vendor announcement; the weights, linked license and serving package were not independently inspected or executed.",
+          "No independently measured cost-per-task advantage, general benchmark lead or legal-compliance guarantee is established.",
+          "No conclusion relies on comparative benchmark graphics; the announcement is not independent validation of the serving configuration."
+        ],
+        "registered_at": "2026-10-04",
+        "second_order_effect": "The announcement leaves model availability, memory needs and context configuration as separate checks before a team can establish whether Kolibri is a practical self-hosted option.",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "sources": [
+          {
+            "lineage_id": "aleph-alpha-kolibri-launch-20261003",
+            "published_at": "2026-10-03",
+            "publisher": "Aleph Alpha",
+            "retrieved_at": "2026-10-04T02:39:57.204931Z",
+            "role": "primary_product_announcement",
+            "title": "Kolibri Has Landed: A Sovereign Open-Weight Model — Aleph Alpha",
+            "url": "https://aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model/"
+          }
+        ],
+        "status": "emerging",
+        "summary": "Aleph Alpha reports releasing Kolibri under Apache 2.0: an English-German model with 78 billion total parameters, roughly 3 billion active, and support for up to one million context tokens. Deployment uses its vLLM plugin. The vendor describes a two-H100 serving example at 256k context; that example does not establish the hardware needed at the maximum context length.",
+        "title": "Aleph Alpha announces Kolibri for bilingual self-hosting",
+        "type": "capability_delta",
+        "watch_next": "Whether independent deployment tests reproduce the announced context support and characterize memory, latency and bilingual task quality on specified hardware.",
+        "why_it_matters": "The announcement identifies an English-German model and a vLLM deployment path for teams to investigate. It does not establish whether the release meets a particular workload’s requirements."
+      },
+      "proposal": {
+        "actor_type": "model",
+        "cycle_id": "cycle-2026-10-04-staged-001",
+        "model_id": null,
+        "model_version": null,
+        "provider": "OpenAI",
+        "role": "daily_synthesis",
+        "run_id": null
+      },
+      "proposed_by": "ChatGPT daily synthesis",
+      "record_id": "sig-kolibri-bilingual-self-hosting-2026-10-04",
+      "record_type": "signal",
+      "recorded_at": "2026-10-04T06:06:20.020798Z"
+    },
+    {
+      "acceptance": {
+        "accepted_at": "2026-10-04T06:05:01Z",
+        "actor": "Owner-authorized dot operator",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/435#issuecomment-5977162852",
+        "scope": "publication"
+      },
+      "evidence": [
+        {
+          "lineage_id": "apple-fda-consent-plans-20261002",
+          "published_at": "2026-10-02",
+          "publisher": "Apple",
+          "retrieved_at": "2026-10-04T02:43:31.720027Z",
+          "role": "primary_product_announcement",
+          "title": "Updates to Full Disk Access in macOS - Latest News - Apple Developer",
+          "url": "https://developer.apple.com/news/?id=p6zjojqw"
+        }
+      ],
+      "expected_version": 13,
+      "id": "evt-thread-agent-runtime-containment-apple-consent-2026-10-04",
+      "kind": "revise",
+      "note": "Apple says it plans additional controls requiring explicit user action before apps obtain Full Disk Access, and identifies increasingly autonomous AI agents as a reason for the change. The announcement does not identify a release version, rollout date, enforcement design or measured security result. This entry records the announced plan; the existing Thread thesis and assessment are retained.",
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "proposal": {
+        "actor_type": "model",
+        "cycle_id": "cycle-2026-10-04-staged-001",
+        "model_id": null,
+        "model_version": null,
+        "provider": "OpenAI",
+        "role": "daily_synthesis",
+        "run_id": null
+      },
+      "proposed_by": "ChatGPT daily synthesis",
+      "record_id": "thread-agent-runtime-containment",
+      "record_type": "thread",
+      "recorded_at": "2026-10-04T06:06:20.020798Z"
+    },
+    {
+      "acceptance": {
+        "accepted_at": "2026-10-04T06:05:01Z",
+        "actor": "Owner-authorized dot operator",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/435#issuecomment-5977162852",
+        "scope": "publication"
+      },
+      "evidence": [
+        {
+          "lineage_id": "apple-fda-consent-plans-20261002",
+          "published_at": "2026-10-02",
+          "publisher": "Apple",
+          "retrieved_at": "2026-10-04T02:43:31.720027Z",
+          "role": "primary_product_announcement",
+          "title": "Updates to Full Disk Access in macOS - Latest News - Apple Developer",
+          "url": "https://developer.apple.com/news/?id=p6zjojqw"
+        }
+      ],
+      "expected_version": 4,
+      "id": "evt-pred-runtime-authorization-apple-review-2026-10-04",
+      "kind": "forecast_review",
+      "note": "Apple’s October 2 announcement adds context about planned consent controls for Full Disk Access. Apple is outside this Prediction’s four named providers, and the announcement does not establish a shipped control, rollout date, or runtime enforcement design. It therefore provides no qualifying success evidence for this forecast and does not establish failure. This review covers the Apple-related Thread change only; it is not a new survey of the four eligible providers. The Prediction remains open with its original 70% probability, deadline, and resolution rules unchanged.",
+      "payload": {
+        "assessment": "neutral",
+        "counterevidence_checked": [
+          "Compared the Apple announcement with the immutable provider list, creation cutoff, deadline and originally allowed resolution sources. Apple is not one of OpenAI, Anthropic, Google or Microsoft, and this source is not on the fixed resolution-source list.",
+          "Checked the announcement’s future-tense consent plan against the requirement for a newly shipped or materially expanded runtime control. The notice gives no release version, rollout date, enforcement design or measured security result.",
+          "Checked the narrow inference in both directions: an ineligible-provider announcement establishes neither success nor failure by the four eligible providers. No new four-provider release survey was performed."
+        ],
+        "next_review_at": "2026-10-08T06:30:00Z",
+        "review_completion": "complete",
+        "thread_snapshot_version": 14
+      },
+      "proposal": {
+        "actor_type": "model",
+        "cycle_id": "cycle-2026-10-04-staged-001",
+        "model_id": null,
+        "model_version": null,
+        "provider": "OpenAI",
+        "role": "bounded_forecast_impact_review",
+        "run_id": null
+      },
+      "proposed_by": "ChatGPT bounded Apple impact review",
+      "record_id": "pred-runtime-exact-authorization-2026-10-30",
+      "record_type": "prediction",
+      "recorded_at": "2026-10-04T06:06:20.020798Z"
     }
   ]
 }
