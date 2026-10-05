@@ -4452,6 +4452,45 @@
       "record_id": "pred-runtime-exact-authorization-2026-10-30",
       "record_type": "prediction",
       "recorded_at": "2026-10-04T06:06:20.020798Z"
+    },
+    {
+      "acceptance": {
+        "accepted_at": "2026-10-05T03:58:26Z",
+        "actor": "ChatGPT editorial operator under owner draft authorization",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/481#issuecomment-5987838756",
+        "scope": "publication"
+      },
+      "evidence": [
+        {
+          "lineage_id": "jetbrains-code-retrieval-design-202609",
+          "published_at": "2026-09-17",
+          "publisher": "JetBrains",
+          "retrieved_at": "2026-10-05T01:27:46.595680Z",
+          "role": "primary_implementation_report",
+          "title": "Building a RAG Pipeline for Semantic Code Search: A Developer Diary and Field Notes - The JetBrains Blog",
+          "url": "https://blog.jetbrains.com/ai/2026/09/building-a-rag-pipeline-for-semantic-code-search-a-developer-diary-and-field-notes/"
+        }
+      ],
+      "expected_version": 7,
+      "id": "evt-thread-agent-harness-economics-jetbrains-retrieval-2026-10-05",
+      "kind": "revise",
+      "note": "JetBrains describes a deployed code-retrieval system that uses binary embeddings when an agent can inspect several matches, but retains higher-precision vectors for features that need relevance thresholds. This adds a concrete example of context-interface trade-offs. No controlled end-to-end task-cost comparison is supplied, so the existing thesis and assessment are retained.",
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "proposal": {
+        "actor_type": "model",
+        "cycle_id": "cycle-2026-10-05-staged-001",
+        "model_id": null,
+        "model_version": null,
+        "provider": "OpenAI",
+        "role": "daily_synthesis",
+        "run_id": null
+      },
+      "proposed_by": "ChatGPT daily synthesis",
+      "record_id": "thread-agent-harness-economics",
+      "record_type": "thread",
+      "recorded_at": "2026-10-05T04:00:29.558086Z"
     }
   ]
 }
