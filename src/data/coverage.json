@@ -1,25 +1,25 @@
 {
-  "coverage_status": "reviewed",
-  "cycle_id": "cycle-2026-10-04-staged-001",
-  "exact_sources_materialized": 19,
-  "generated_at": "2026-10-04T03:43:39.403711Z",
-  "note": "Coverage describes the October 4 frozen intake: all 93 selected items have recorded dispositions and 23 Research targets were processed. The overall cycle remains partial, with 10 unresolved items including 5 defers. Reviewed counts mean recorded dispositions, not complete source reading or complete coverage of AI news. Public intelligence is separately approved.",
-  "research_targets_reviewed": 23,
   "schema_version": 3,
+  "cycle_id": "cycle-2026-10-07-markdown-001",
+  "coverage_status": "reviewed",
+  "generated_at": "2026-10-07T01:46:01Z",
   "sources": [
     {
-      "intake_count": 30,
+      "source_id": "simon-willison",
       "name": "Simon Willison’s Weblog",
-      "reviewed_count": 30,
-      "scope": "Unresolved observations in the retained feed backlog; unchanged watches wait for revisit_at; selected up to 30",
-      "source_id": "simon-willison"
+      "scope": "Three bounded new public-HTML observations plus thirty retained backlog identities; six exact Simon permalinks were read today. Retained clocks are not refreshed by triage.",
+      "intake_count": 33,
+      "reviewed_count": 33
     },
     {
-      "intake_count": 63,
+      "source_id": "hacker-news",
       "name": "Hacker News",
-      "reviewed_count": 63,
-      "scope": "Latest Top 100 IDs; first 60 eligible stories plus rising, configured primary-source recall candidates, and up to 5 due deferred carryover items; unchanged watches wait for revisit_at",
-      "source_id": "hacker-news"
+      "scope": "Top 100 API-ranked identities matched to non-atomic public HTML metadata; first 60 eligible, seven supported rising candidates and five due carryovers; no extra primary recall.",
+      "intake_count": 72,
+      "reviewed_count": 72
     }
-  ]
+  ],
+  "research_targets_reviewed": 56,
+  "exact_sources_materialized": 0,
+  "note": "October 7 bounded intake: all 105 selected identities have recorded dispositions; 56 Research identities include explicit defers, retained-state accountability and primary supplements. The cycle remains partial. Twenty inherited obligations are preserved, with newly supplied source-read components tracked separately pending gap closure review. BestBlogs shadow was unavailable after technical failures. Reviewed means recorded decisions, not complete source reading, resolved research, or complete AI-news coverage. Public intelligence is separately approved."
 }
