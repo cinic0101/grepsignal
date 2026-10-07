@@ -54,3 +54,13 @@ test('reviewed requires every configured intake item reviewed',()=>{
   for (const source of d.sources) source.reviewed_count=source.intake_count;
   assert.equal(validateCoverage(d).coverage_status,'reviewed');
 });
+
+// Homepage dates describe distinct clocks, never implied deployment or completed research.
+test('homepage labels distinguish content and coverage clocks',()=>{
+  const home=readFileSync(new URL('../src/pages/index.astro',import.meta.url),'utf8');
+  assert.match(home,/isPublished \? 'Content updated' : 'Preview date'/);
+  assert.match(home,/<span>Coverage snapshot<\/span><strong>\{lastReviewed\}<\/strong>/);
+  assert.match(home,/new Date\(intelligence\.generated_at\)/);
+  assert.match(home,/new Date\(coverage\.generated_at\)/);
+  assert.doesNotMatch(home,/<span>Last reviewed<\/span>/);
+});

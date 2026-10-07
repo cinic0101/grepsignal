@@ -4641,6 +4641,221 @@
       "record_id": "sig-nieman-generated-cartoon-attribution-2026-10-06",
       "record_type": "signal",
       "recorded_at": "2026-10-06T14:37:57.172Z"
+    },
+    {
+      "id": "evt-signal-decisions-documented-probabilities-2026-10-07",
+      "kind": "revise",
+      "record_type": "signal",
+      "record_id": "sig-openai-decisions-api-bounded-decision-runtime-2026-09-29",
+      "expected_version": 1,
+      "payload": {
+        "limitations": [
+          "The current source is first-party product documentation; public beta is not general availability.",
+          "Documented probabilities and confidence fields are not independent evidence of calibration, task quality, production adoption or economic advantage.",
+          "The current guide has no verified publication date here; October 7 is the observation date, not an asserted feature-release date."
+        ],
+        "sources": [
+          {
+            "publisher": "OpenAI",
+            "title": "DevDay 2026 Recap",
+            "url": "https://openai.com/index/devday-2026-recap/",
+            "role": "primary_product_announcement",
+            "published_at": "2026-09-29",
+            "retrieved_at": "2026-09-30T06:59:22Z",
+            "archive_url": null,
+            "lineage_id": "openai-devday-decisions-api-20260929"
+          },
+          {
+            "publisher": "OpenAI",
+            "title": "Decisions",
+            "url": "https://developers.openai.com/api/docs/guides/decisions",
+            "role": "primary_product_documentation",
+            "published_at": null,
+            "retrieved_at": "2026-10-07T01:29:44Z",
+            "archive_url": null,
+            "lineage_id": "openai-decisions-guide-observed-20261007"
+          }
+        ],
+        "source_count": 2,
+        "source_organization_count": 1,
+        "summary": "OpenAI’s current Decisions documentation labels the interface public beta and limits it to GPT-6 Luna. Its bounded question types expose a probability for predicates and probability distributions for choice and score answers. This develops the dedicated classification and routing contract announced at DevDay; the documentation reviewed on October 7 does not establish when each feature first became available.",
+        "our_read": "Documented probability outputs supersede the September 30 documentation gap. They do not establish that the probabilities are calibrated. The broader interface thesis still holds: bounded decisions can be an application contract implemented by a general-purpose model, without requiring a separate model class.",
+        "watch_next": "Look for independent calibration and task-quality evaluations, deployment comparisons against ordinary structured outputs, and comparable interfaces from other providers."
+      },
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-07-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "Decisions",
+          "url": "https://developers.openai.com/api/docs/guides/decisions",
+          "role": "primary_product_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-10-07T01:29:44Z",
+          "archive_url": null,
+          "lineage_id": "openai-decisions-guide-observed-20261007"
+        }
+      ],
+      "note": "Update the existing Decisions Signal for the currently documented public-beta probability interface. Preserve its September 30 history and distinguish documented output fields from verified calibration or economic advantage.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/491#issuecomment-6029321738",
+        "accepted_at": "2026-10-07T02:02:51Z"
+      },
+      "recorded_at": "2026-10-07T02:04:22.318Z"
+    },
+    {
+      "id": "evt-thread-decision-native-documented-probabilities-2026-10-07",
+      "kind": "revise",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 9,
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-07-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "Decisions",
+          "url": "https://developers.openai.com/api/docs/guides/decisions",
+          "role": "primary_product_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-10-07T01:29:44Z",
+          "archive_url": null,
+          "lineage_id": "openai-decisions-guide-observed-20261007"
+        }
+      ],
+      "note": "OpenAI’s current Decisions guide documents predicate probabilities and choice/score distributions in a public beta limited to GPT-6 Luna. This supersedes the September 30 documentation gap while retaining the broader bounded-decision interface thesis. A documented output contract does not establish calibrated probabilities, independent cost or latency advantages, broad adoption, or satisfaction of the separate open-implementation forecast. The source’s publication date is unverified; this is a current-documentation observation, not a claim that those features launched today.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/491#issuecomment-6029321738",
+        "accepted_at": "2026-10-07T02:02:51Z"
+      },
+      "recorded_at": "2026-10-07T02:04:22.318Z"
+    },
+    {
+      "id": "evt-thread-configuration-portability-docs-review-2026-10-07",
+      "kind": "review",
+      "record_type": "thread",
+      "record_id": "thread-agent-configuration-portability",
+      "expected_version": 0,
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-07-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "Custom instructions with AGENTS.md",
+          "url": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+          "role": "primary_product_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-10-07T01:28:32Z",
+          "archive_url": null,
+          "lineage_id": "codex-agents-md-docs-observed-20261007"
+        },
+        {
+          "publisher": "Google / Gemini CLI",
+          "title": "Provide context with GEMINI.md files",
+          "url": "https://geminicli.com/docs/cli/gemini-md/",
+          "role": "primary_product_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-10-07T01:28:32Z",
+          "archive_url": null,
+          "lineage_id": "gemini-cli-context-docs-observed-20261007"
+        }
+      ],
+      "payload": {
+        "outcome": "inconclusive",
+        "counterevidence_checked": [
+          "Compared documented discovery timing, directory scope, filename configuration and override behavior. Shared Markdown instruction files do not establish equivalent runtime loading, precedence or compliance; no cross-runtime execution test was performed."
+        ],
+        "next_review_at": "2026-10-11T03:30:00Z"
+      },
+      "note": "Codex and Gemini CLI document different ways to discover repository guidance. Codex builds a directory-based instruction chain at startup, while Gemini can discover additional context during tool access and supports configurable context filenames. Shared files can carry instructions, but this comparison does not test equivalent loading or compliance. The portability review remains inconclusive.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/491#issuecomment-6029321738",
+        "accepted_at": "2026-10-07T02:02:51Z"
+      },
+      "recorded_at": "2026-10-07T02:04:22.318Z"
+    },
+    {
+      "id": "evt-thread-research-automation-math-verification-2026-10-07",
+      "kind": "revise",
+      "record_type": "thread",
+      "record_id": "thread-research-automation-bottlenecks",
+      "expected_version": 9,
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-07-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "Sharing AI progress in mathematics",
+          "url": "https://openai.com/index/sharing-ai-progress-in-mathematics/",
+          "role": "primary_research_release",
+          "published_at": "2026-10-06",
+          "retrieved_at": "2026-10-07T01:29:38Z",
+          "archive_url": null,
+          "lineage_id": "openai-mathematics-corpus-20261006"
+        },
+        {
+          "publisher": "OpenAI",
+          "title": "openai/math repository README",
+          "url": "https://github.com/openai/math",
+          "role": "primary_repository_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-10-07T01:30:08Z",
+          "archive_url": null,
+          "lineage_id": "openai-mathematics-corpus-20261006"
+        }
+      ],
+      "note": "OpenAI published a corpus of AI-assisted mathematical manuscripts whose repository describes differing verification stages, incomplete formalization and a correction process. GrepSignal reads this as a concrete example of manuscript output expanding while validation remains separate work, without changing the existing thesis. The announcement and repository are one first-party release lineage. No independent correctness or novelty review, formal-proof execution, useful-results rate or end-to-end research-cost comparison was performed here; this does not establish autonomous end-to-end research.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/491#issuecomment-6029321738",
+        "accepted_at": "2026-10-07T02:02:51Z"
+      },
+      "recorded_at": "2026-10-07T02:04:22.318Z"
     }
   ]
 }

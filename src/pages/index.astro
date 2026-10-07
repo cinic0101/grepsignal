@@ -61,8 +61,8 @@ const homepageThreads = [...intelligence.threads.filter(x => x.lifecycle === 'ac
         <p>{homepageDescription}</p>
       </div>
       <div class="hero-meta" aria-label="Publication statistics">
-        <div class="meta-row"><span>{isPublished ? 'Published' : 'Preview date'}</span><strong>{updated}</strong></div>
-        <div class="meta-row"><span>Last reviewed</span><strong>{lastReviewed}</strong></div>
+        <div class="meta-row"><span>{isPublished ? 'Content updated' : 'Preview date'}</span><strong>{updated}</strong></div>
+        <div class="meta-row"><span>Coverage snapshot</span><strong>{lastReviewed}</strong></div>
         <div class="meta-row"><span>Material signals</span><strong>{intelligence.stats.material_signals}</strong></div>
         <div class="meta-row"><span>Active threads</span><strong>{intelligence.stats.active_threads}</strong></div>
         <div class="meta-row"><span>Open predictions</span><strong>{intelligence.stats.open_predictions}</strong></div>
