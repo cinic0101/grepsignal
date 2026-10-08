@@ -4856,6 +4856,216 @@
         "accepted_at": "2026-10-07T02:02:51Z"
       },
       "recorded_at": "2026-10-07T02:04:22.318Z"
+    },
+    {
+      "id": "evt-signal-haiku-55-tiered-pricing-migration-2026-10-08",
+      "record_type": "signal",
+      "record_id": "sig-haiku-55-tiered-pricing-migration-2026-10-07",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "daily_synthesis",
+        "run_id": null,
+        "cycle_id": "cycle-2026-10-08-markdown-001"
+      },
+      "evidence": [
+        {
+          "publisher": "Anthropic",
+          "title": "Claude Haiku 5.5",
+          "url": "https://www.anthropic.com/claude-haiku-5-5",
+          "role": "primary_model_pricing_announcement",
+          "published_at": "2026-10-07",
+          "retrieved_at": "2026-10-08T00:57:54.029Z",
+          "archive_url": null,
+          "lineage_id": "anthropic-haiku-55-20261007"
+        },
+        {
+          "publisher": "Anthropic",
+          "title": "Claude Haiku 5.5 migration guide",
+          "url": "https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide",
+          "role": "primary_migration_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-10-08T00:58:03.243Z",
+          "archive_url": null,
+          "lineage_id": "anthropic-haiku-55-20261007"
+        }
+      ],
+      "payload": {
+        "id": "sig-haiku-55-tiered-pricing-migration-2026-10-07",
+        "type": "cost_intelligence",
+        "status": "emerging",
+        "source_count": 2,
+        "source_organization_count": 1,
+        "registered_at": "2026-10-08",
+        "evidence_since": "2026-10-07",
+        "first_observed_at": "2026-10-08T00:57:31.552Z",
+        "falsifiers": [
+          "A provider correction showing that the stated price tiers or tokenizer migration warning do not apply would undermine this documented-contract observation.",
+          "Verified inability to use the announced model at the stated pricing under the documented conditions would narrow the availability claim."
+        ],
+        "limitations": [
+          "Both supporting documents are Anthropic publications from one release lineage; two URLs are not two independent organizations or corroborating evaluations.",
+          "Bounded text observations only; no canonical HTTP revision, full-page or image review, API execution, billing test, migration or token-count replication.",
+          "Vendor benchmark, average-cost and customer claims are not adopted as independently established performance.",
+          "Prompt length, tokenization, reasoning, caching, regional or service-tier conditions and retries can affect actual cost. No universal task-cost saving or open-weight comparison is established.",
+          "This Signal makes no change to existing Thread thesis, assessment, review warnings, original due-since, retry dates or any forecast."
+        ],
+        "sources": [
+          {
+            "publisher": "Anthropic",
+            "title": "Claude Haiku 5.5",
+            "url": "https://www.anthropic.com/claude-haiku-5-5",
+            "role": "primary_model_pricing_announcement",
+            "published_at": "2026-10-07",
+            "retrieved_at": "2026-10-08T00:57:54.029Z",
+            "archive_url": null,
+            "lineage_id": "anthropic-haiku-55-20261007"
+          },
+          {
+            "publisher": "Anthropic",
+            "title": "Claude Haiku 5.5 migration guide",
+            "url": "https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide",
+            "role": "primary_migration_documentation",
+            "published_at": null,
+            "retrieved_at": "2026-10-08T00:58:03.243Z",
+            "archive_url": null,
+            "lineage_id": "anthropic-haiku-55-20261007"
+          }
+        ],
+        "title": "Haiku 5.5 launches with tiered pricing and a tokenizer migration caveat",
+        "summary": "Anthropic's October 7 Haiku 5.5 release lists USD 0.10/M input and 0.50/M output for prompts up to 100,000 tokens, rising to 0.50/2.50 above that threshold. Its migration guide warns that the same input text generally consumes more tokens than Haiku 4.5.",
+        "why_it_matters": "A model migration changes both the price schedule and what is counted as a token. Evaluating the new offering requires repricing actual prompts rather than applying its headline rate to the predecessor's token counts.",
+        "our_read": "This is a new provider-documented pricing option. It does not yet establish lower cost per successful workload, equivalent task quality or an advantage over an open-weight deployment.",
+        "second_order_effect": "Prompt-length distribution and migration settings may affect routing choices even when headline token rates appear similar; this is a hypothesis for workload testing, not an observed routing outcome.",
+        "watch_next": "Check the published pricing contract and availability, then seek matched-workload measurements with actual token counts, reasoning settings, quality, latency and retries."
+      },
+      "note": "Register the new Haiku 5.5 release's bounded pricing and migration contract. This does not revise an existing Thread or establish a measured capability-cost advantage.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/493#issuecomment-6050231037",
+        "accepted_at": "2026-10-08T01:21:14Z"
+      },
+      "recorded_at": "2026-10-08T01:24:03.132Z"
+    },
+    {
+      "id": "evt-thread-research-automation-semantic-fidelity-2026-10-08",
+      "record_type": "thread",
+      "record_id": "thread-research-automation-bottlenecks",
+      "expected_version": 10,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-08-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Alexander Bastounis, Fabian Circelli and Anders C. Hansen / arXiv",
+          "title": "Navier-Stokes lost in translation: Why Lean verification of AI autoformalisation does not guarantee correct natural language proofs",
+          "url": "https://arxiv.org/abs/2610.08144",
+          "role": "primary_research_preprint",
+          "published_at": "2026-10-06",
+          "retrieved_at": "2026-10-08T00:58:57Z",
+          "archive_url": null,
+          "lineage_id": "bastounis-circelli-hansen-semantic-fidelity-20261006"
+        }
+      ],
+      "note": "Bastounis, Circelli and Hansen's October 6 preprint reports derivative-order and pressure-flux mismatches between a natural-language Navier–Stokes argument and its Lean translation. The authors do not conclude that the original proof is incorrect. This adds specific translation concerns to the Thread's earlier problem-definition and corpus-validation caveats: formal checking and checking correspondence to the intended argument are separate tasks. The reported mismatches were not independently reproduced here; no underlying proof execution or corpus-wide error rate is established. The thesis and assessment remain unchanged.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/493#issuecomment-6050231037",
+        "accepted_at": "2026-10-08T01:21:14Z"
+      },
+      "recorded_at": "2026-10-08T01:24:03.132Z"
+    },
+    {
+      "id": "evt-signal-gpt6-intelligent-ui-chat-rollout-2026-10-08",
+      "record_type": "signal",
+      "record_id": "sig-gpt6-intelligent-ui-chat-rollout-2026-10-07",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "daily_synthesis",
+        "run_id": null,
+        "cycle_id": "cycle-2026-10-08-markdown-001"
+      },
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "GPT-6 and Intelligent UI for everyone",
+          "url": "https://openai.com/index/gpt-6-for-everyone/",
+          "role": "primary_product_rollout_announcement",
+          "published_at": "2026-10-07",
+          "retrieved_at": "2026-10-08T00:58:57Z",
+          "archive_url": null,
+          "lineage_id": "openai-gpt6-intelligent-ui-20261007"
+        }
+      ],
+      "payload": {
+        "id": "sig-gpt6-intelligent-ui-chat-rollout-2026-10-07",
+        "type": "platform_shift",
+        "status": "emerging",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "registered_at": "2026-10-08",
+        "evidence_since": "2026-10-07",
+        "falsifiers": [
+          "A provider correction that the described native-component composition or progressive rendering is unavailable would narrow this documented platform-change claim.",
+          "Reproducible account checks showing materially different rollout scope would require updating its availability qualification."
+        ],
+        "limitations": [
+          "One first-party product announcement; no independent product execution, account-access test, component-code inspection or usability evaluation.",
+          "The rollout is staged, with Enterprise subject to admin settings; announcement does not establish completed availability for every user.",
+          "No API contract change, Work or Codex model change, measured speed or safety improvement is claimed.",
+          "Bounded text observation only; canonical source hash unavailable and images not reviewed."
+        ],
+        "sources": [
+          {
+            "publisher": "OpenAI",
+            "title": "GPT-6 and Intelligent UI for everyone",
+            "url": "https://openai.com/index/gpt-6-for-everyone/",
+            "role": "primary_product_rollout_announcement",
+            "published_at": "2026-10-07",
+            "retrieved_at": "2026-10-08T00:58:57Z",
+            "archive_url": null,
+            "lineage_id": "openai-gpt6-intelligent-ui-20261007"
+          }
+        ],
+        "title": "OpenAI starts a staged Chat rollout of model-composed, progressively rendered interfaces",
+        "summary": "OpenAI's October 7 announcement describes GPT-6 composing native, streamable interface components while a compiler renders them progressively. Paid Chat tiers start first, with Free and Go expansion announced for the following day; Enterprise access depends on admin settings. Work and Codex are outside this release.",
+        "why_it_matters": "The model can select an interaction format as part of answering. This is a documented change to response delivery, distinct from the execution-harness mechanisms already tracked by GrepSignal.",
+        "our_read": "The announcement establishes product direction and intended rollout scope. Whether interactive responses improve task outcomes remains an open empirical question.",
+        "second_order_effect": "Generated interfaces may shift some work from reading instructions to manipulating task-specific controls; this is an inference to test, not an observed productivity result.",
+        "watch_next": "Verify actual account availability and seek independent usability, accessibility, correctness and task-completion tests across generated interface types."
+      },
+      "note": "Register a bounded response-interface change. This does not revise an existing Thread or establish improved agent execution.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/493#issuecomment-6050231037",
+        "accepted_at": "2026-10-08T01:21:14Z"
+      },
+      "recorded_at": "2026-10-08T01:24:03.132Z"
     }
   ]
 }
