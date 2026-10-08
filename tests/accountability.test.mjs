@@ -28,24 +28,41 @@ test('Thread can record material evidence while thesis stays unchanged',()=>{
   assert.equal(data.threads[0].updates.length,2);
   assert.equal(data.threads[0].updates[1].effect_on_thesis,'unchanged');
 });
-test('material Thread revision satisfies the current review cadence',()=>{
+test('ordinary Thread revision preserves original review cadence and does not invent review completion',()=>{
   const e=event({record_type:'thread',record_id:'thread-example',recorded_at:'2026-09-30T00:00:00Z',payload:{status:'strengthening'}});
-  const threadRecord=run([e]).data.threads[0];
-  assert.equal(threadRecord.last_reviewed_at,e.recorded_at);
-  assert.equal(threadRecord.last_review_outcome,'revised');
-  assert.equal(threadRecord.review_required,false);
-  assert.equal(threadRecord.next_review_at,'2026-10-07T00:00:00.000Z');
-  assert.equal(threadRecord.review_due_since,'2026-10-07T00:00:00.000Z');
+  const before=run([]).data.threads[0];const after=run([e]).data.threads[0];
+  for (const key of ['last_reviewed_at','last_review_outcome','review_required','next_review_at','review_due_since'])
+    assert.deepEqual(after[key],before[key]);
+  assert.equal(after.last_changed_at,e.recorded_at);
 });
-test('material Thread revision clears an earlier inconclusive review warning',()=>{
+test('ordinary Thread revision preserves earlier inconclusive review warning and retry',()=>{
   const review=event({id:'evt-review-first',kind:'review',record_type:'thread',record_id:'thread-example',recorded_at:'2026-09-21T00:00:00Z',payload:{outcome:'inconclusive',counterevidence_checked:['Primary data unavailable'],next_review_at:'2026-09-22T00:00:00Z'}});
-  const revise=event({id:'evt-revise-after-review',record_type:'thread',record_id:'thread-example',expected_version:1,recorded_at:'2026-09-23T00:00:00Z',note:'New evidence resolves the open review and materially strengthens the thesis.',payload:{status:'strengthening',effect_on_thesis:'strengthened'}});
-  const threadRecord=run([review,revise]).data.threads[0];
-  assert.equal(threadRecord.review_required,false);
-  assert.equal(threadRecord.last_reviewed_at,revise.recorded_at);
-  assert.equal(threadRecord.last_review_outcome,'revised');
-  assert.equal(threadRecord.next_review_at,'2026-09-30T00:00:00.000Z');
-  assert.equal(threadRecord.review_due_since,'2026-09-30T00:00:00.000Z');
+  const revise=event({id:'evt-revise-after-review',record_type:'thread',record_id:'thread-example',expected_version:1,recorded_at:'2026-09-23T00:00:00Z',note:'A focused update does not complete unrelated work.',payload:{status:'strengthening',effect_on_thesis:'strengthened'}});
+  const before=run([review]).data.threads[0];const after=run([review,revise]).data.threads[0];
+  for (const key of ['last_reviewed_at','last_review_outcome','review_required','next_review_at','review_due_since'])
+    assert.deepEqual(after[key],before[key]);
+  assert.equal(after.review_required,true);
+});
+test('revision cannot erase a linked Signal warning, even at the same timestamp',()=>{
+  const revise=event({id:'evt-thread-after-signal',record_type:'thread',record_id:thread.id,payload:{effect_on_thesis:'unchanged'}});
+  const before=run([event()]).data.threads[0];const after=run([event(),revise]).data.threads[0];
+  assert.equal(after.review_required,true);assert.equal(after.review_due_since,before.review_due_since);
+});
+test('explicit complete full-scope review can clear after revision; partial review cannot',()=>{
+  const revise=event({id:'evt-thread-focused',record_type:'thread',record_id:thread.id,payload:{effect_on_thesis:'unchanged'}});
+  for (const outcome of ['unchanged','inconclusive']) {
+    const review=event({id:'evt-explicit-scope-review',kind:'review',record_type:'thread',record_id:thread.id,expected_version:1,
+      payload:{outcome,counterevidence_checked:[outcome==='unchanged'?'All outstanding source gaps and dependency changes checked; revised current judgment stands.':'One independent source gap remains.'],next_review_at:'2026-09-28T00:00:00Z'}});
+    const es=[event(),revise];const before=run(es).data.threads[0];const after=run([...es,review]).data.threads[0];
+    assert.equal(after.review_required,outcome==='inconclusive');
+    assert.equal(after.review_due_since,outcome==='unchanged'?review.payload.next_review_at:before.review_due_since);
+  }
+});
+test('new Thread revision cannot opt into invented clearance fields',()=>{
+  for(const field of ['review_completion','review_required','next_review_at','review_due_since']) {
+    const e=event({record_type:'thread',record_id:thread.id,payload:{summary:'Focused change',[field]:'complete'}});
+    assert.throws(()=>run([e]),/unknown fields/);
+  }
 });
 test('Signal revision may add an earned our_read without padding other fields',()=>{
   const e=event({payload:{our_read:'This is the interpretation GrepSignal adds beyond the source summary.'}});

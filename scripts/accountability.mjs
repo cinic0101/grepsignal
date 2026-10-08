@@ -7,6 +7,51 @@ const TYPES = {signal:'signals', thread:'threads', prediction:'predictions'};
 const ASSESSMENTS = ['emerging','strengthening','stable','weakening','falsified'];
 const THESIS_EFFECTS = ['unchanged','strengthened','weakened','revised','falsified'];
 const THREAD_REVIEW_INTERVAL_MS = 7*24*60*60*1000;
+// Frozen compatibility boundary: exact accepted event prefixes at public 7b688e3.
+// Never extend/regenerate this list for new events. It preserves published snapshots,
+// not permission to clear future warnings. Prefix binding rejects copied IDs, changed
+// payloads, inserted events and timestamp-based attempts to claim legacy behavior.
+const LEGACY_THREAD_REVIEW_PREFIXES = new Map([
+  [2,'037c996bd9608b6dffb779c798b9a18ca9e677ede114f659cc98b4b5a9e86129'], // evt-thread-decision-native-runtimes-2026-09-20
+  [3,'d09e009456ace7653c6df24f1782f53caf8b15b4e1107a7207c62db34801c92b'], // evt-thread-research-automation-bottlenecks-2026-09-21
+  [4,'4f10187d7b6b2f65844232541abd724f64cc508bed53a06a2df208b64f69f19b'], // evt-thread-research-automation-analysis-2026-09-21
+  [7,'2430deb867ff09e4a6913d59736d23253931ad8f1a3caec35d877f7b9d95c365'], // evt-thread-agent-runtime-containment-2026-09-22
+  [8,'075f0dba89ca095c24d3aa39a1c95c39b2b9df5d6774ca7de04ce5f8086276db'], // evt-thread-research-automation-bottlenecks-2026-09-22
+  [11,'a7b7bce431d58a81fbd8606d48e08617449ab40e2e3a8bd21a6a8060f528cbfc'], // evt-thread-decision-native-runtimes-2026-09-23
+  [12,'fa7da2c4f2e3c963f2fee7e782b2a2011a0da9f3c692a57a7b9d899bc8e4e961'], // evt-thread-open-weight-capability-cost-frontier-2026-09-23
+  [13,'b7abb103cf85313508983c9449b33cb2932c139a132eeb249e7226f051d56f4e'], // evt-thread-open-weight-capability-cost-frontier-boundary-2026-09-23
+  [14,'957ee7c91e43e231b4fa31d96a7321a9d4d70ff2fb9afb1ba35340bb765d3469'], // evt-thread-research-automation-bottlenecks-challenge-readiness-2026-09-23
+  [15,'35be81a99bcaf30772b921066b4308baadd999715487589fecaefbbdf9fa73d1'], // evt-thread-agent-runtime-containment-challenge-readiness-2026-09-23
+  [17,'7dbbcc820470dcd7d62fa965e279697c5207c4c9b2612c63a316cd0e025d9484'], // evt-thread-research-automation-bottlenecks-self-improvement-2026-09-23
+  [20,'d539253e0aff6151b5cd78aa015c929e6504b15f164b68aeff451eefc03bf27e'], // evt-thread-agent-runtime-containment-plugin-supply-chain-2026-09-23
+  [24,'519fcd22395eebcc85696e61233fbbffdec9cce81a29a12c8dbd149b88800c51'], // evt-thread-decision-native-runtimes-boundary-economics-2026-09-24
+  [25,'177c34e942b513a83c2542a845cbca4910c195062b8b129ba6e95765e6853e85'], // evt-thread-research-automation-bottlenecks-enzyme-search-2026-09-24
+  [26,'720576cea3f4ccf1dda1bf8ab81f21b3c8f9f91e69ae0faa029b62b416eeb5b5'], // evt-thread-agent-runtime-containment-agent-probing-2026-09-25
+  [27,'21db31e77ed7ae77c8e7d3e15c689416ed87821e51a67458fb1d7f4fddedf0bd'], // evt-thread-decision-native-runtimes-workflow-adoption-2026-09-25
+  [28,'f104b40f90cefc53c6ee290f816ef9e6100c95eecc07c92d7b9524f6a862f27d'], // evt-thread-research-automation-bottlenecks-security-auditing-2026-09-25
+  [29,'212069d36a378d6bcd604aad404ccd95dd5e21890c06086dca067fbf3d5200dd'], // evt-thread-agent-runtime-containment-loopjacking-2026-09-26
+  [30,'c59510bc6f47ede1c8a0a7bf4b4bf4dcc2aebccbccdd7a8dd2fc27b10b356df7'], // evt-thread-agent-runtime-containment-dns-escape-2026-09-27
+  [31,'daa897893d15fcc8c71e382a38c13dbc8103a1ea2ccd5e8a9fc97d9faba3aa4f'], // evt-thread-decision-native-runtimes-glm-interface-2026-09-27
+  [32,'1ed12448c28df904d468b7756122766b4d67c814c285ea4a9c9c23cd23e8b7d4'], // evt-thread-agent-harness-economics-agent-native-interfaces-2026-09-29
+  [33,'8c7df27930b63fccc52bf45a843fa4363e626db7d6e709ceab1457fd08585f16'], // evt-thread-agent-runtime-containment-productization-2026-09-29
+  [34,'90833c174a969b436f1287f898545993a5888a78d21313fd979f5856978c4102'], // evt-thread-open-weight-capability-cost-frontier-closed-efficiency-2026-09-29
+  [38,'068cb0dea001d39ab4b89c6204360f71390e6ba6a9cc7edff9aff9e8f94fa6da'], // evt-thread-agent-runtime-containment-semantic-authorization-2026-09-29
+  [39,'2111a9d3f0599799fb67fade4e97b76f244b9c6c7b2764795dd0c9e4466ee1b5'], // evt-thread-decision-native-runtimes-jev-27b-2026-09-29
+  [52,'c47dda4fe8b261d2c0c3f6b64af8630e540d5ebee705dc2014c4181e41d62e9b'], // evt-thread-decision-native-runtimes-decisions-api-2026-09-30
+  [54,'92138d0d3e9cffc9cb511c6768ff55fdca3f1777cc71779d158a2603ba870f85'], // evt-thread-agent-harness-economics-managed-agents-api-2026-09-30
+  [55,'846d089849d8b5de0500af726527e6d8b8c5392188ce24be8cd24065e0f29e13'], // evt-thread-agent-runtime-containment-egress-semantics-2026-09-30
+  [57,'12f4b979fcbd0e2743ee81a5659b3458ec2e0effc6aafee5c82d5fd961aef207'], // evt-thread-agent-runtime-containment-argon-controls-2026-10-01
+  [58,'1822f4db58e8433a0e3752ba6624b9ba5a8d8228cc70654fb7e6a8c9f2f8e6bc'], // evt-thread-decision-native-runtimes-pi-jev-codemode-2026-10-01
+  [59,'7b358e2a2d55482f4553b34b5052804e0346c64f62a10d47fcda08d40fb696bf'], // evt-thread-research-automation-bottlenecks-argon-engineering-2026-10-01
+  [60,'64c1b0ebcc39e24e47a33566d942bf3cebc0eb48614a871b7713e81c2efc3e10'], // evt-thread-offensive-cyber-economics-glm53-supplement-2026-10-01
+  [61,'7ce9bb72e266710fe5f698d2d5a297e1f4ec1374f9d36c75269c2f89728879d1'], // evt-thread-agent-harness-economics-pi-codemode-2026-10-01
+  [71,'8636ab053e4a85ca480ff048c91a76cad471416feaa8f6e008142b79a5cc6c33'], // evt-thread-agent-runtime-containment-apple-consent-2026-10-04
+  [73,'ff57ffda4d8b563d8cef47d92a7d9acabb3e3e8feecf955deae8acc6e3d9982d'], // evt-thread-agent-harness-economics-jetbrains-retrieval-2026-10-05
+  [74,'0959bedd5adf21d4a974abf0f77890c19f6a5c34873633a2bd26cf9c1d37d692'], // evt-thread-agent-harness-economics-cloudflare-search-2026-10-06
+  [78,'376e01f42963186f7481daa18b5745d2e4dfe4b5a3ecc5a7638f58d744ffe6a0'], // evt-thread-decision-native-documented-probabilities-2026-10-07
+  [80,'02745065e6262afbc12ffa346ab35fdacd4dca857d74d8b6944308c7e6e74505'], // evt-thread-research-automation-math-verification-2026-10-07
+  [82,'25e9985d56d55806df1a249c9559a3a801538bf85761a14ff79164464522e363'], // evt-thread-research-automation-semantic-fidelity-2026-10-08
+]);
 const KINDS = ['register','revise','review','supersede','retract','resolve','publication','relate','forecast_basis','forecast_review'];
 const ID = /^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,95}$/;
 const FORBIDDEN = /^(raw_html|raw_text|source_text|source_body|image_bytes|screenshot|prompt|private_notes|cache_file|secret|token|__proto__|constructor|prototype)$/;
@@ -236,14 +281,17 @@ export function replay(baseline,journal,baselineLinks=null) {
             : 'unchanged');
         r.last_updated=e.recorded_at.slice(0,10);
         r.updates.push({id:e.id,date:r.last_updated,assessment:r.status,effect_on_thesis:inferredThreadEffect,change:e.note,signal_ids:[],sources:structuredClone(e.evidence)});
-        // A material Thread revision is a stronger accountability act than an unchanged review:
-        // evidence was reviewed and the public judgment was explicitly accepted. Satisfy the
-        // current review obligation and start a fresh cadence from this accepted revision.
-        r.last_reviewed_at=e.recorded_at;
-        r.last_review_outcome='revised';
-        r.next_review_at=new Date(timestamp(e.recorded_at)+THREAD_REVIEW_INTERVAL_MS).toISOString();
-        r.review_due_since=r.next_review_at;
-        r.review_required=false;
+        // Ordinary revisions do not attest that all outstanding counterevidence and
+        // dependency work is complete. Preserve review metadata, warnings and due origin.
+        // Only exact historical prefixes keep their already-published legacy projection.
+        const legacyPrefix=LEGACY_THREAD_REVIEW_PREFIXES.get(changes.length+1);
+        if (legacyPrefix && sha256(journal.events.slice(0,changes.length+1)) === legacyPrefix) {
+          r.last_reviewed_at=e.recorded_at;
+          r.last_review_outcome='revised';
+          r.next_review_at=new Date(timestamp(e.recorded_at)+THREAD_REVIEW_INTERVAL_MS).toISOString();
+          r.review_due_since=r.next_review_at;
+          r.review_required=false;
+        }
       }
     } else if (e.kind === 'review') {
       assert(e.record_type !== 'prediction','predictions use forecast_review');
