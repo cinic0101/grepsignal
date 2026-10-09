@@ -5066,6 +5066,261 @@
         "accepted_at": "2026-10-08T01:21:14Z"
       },
       "recorded_at": "2026-10-08T01:24:03.132Z"
+    },
+    {
+      "id": "evt-thread-runtime-codex-sandbox-hardening-2026-10-09",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 14,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-09-markdown-001",
+        "run_id": null,
+        "role": "daily_accountability"
+      },
+      "payload": {
+        "effect_on_thesis": "strengthened"
+      },
+      "evidence": [
+        {
+          "publisher": "OpenAI / Codex",
+          "title": "Codex 0.162.0 release notes",
+          "url": "https://github.com/openai/codex/releases/tag/rust-v0.162.0",
+          "role": "primary_product_release_notes",
+          "published_at": "2026-10-08",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "codex-0162-sandbox-hardening-20261008"
+        },
+        {
+          "publisher": "OpenAI / Codex",
+          "title": "Reject sandbox-writable bubblewrap executables from PATH",
+          "url": "https://github.com/openai/codex/pull/51211",
+          "role": "primary_implementation_change_description",
+          "published_at": "2026-10-06",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "codex-0162-sandbox-hardening-20261008"
+        },
+        {
+          "publisher": "OpenAI / Codex",
+          "title": "Ignore ripgrep configuration when expanding sandbox deny globs",
+          "url": "https://github.com/openai/codex/pull/51527",
+          "role": "primary_implementation_change_description",
+          "published_at": "2026-10-07",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "codex-0162-sandbox-hardening-20261008"
+        }
+      ],
+      "note": "Codex 0.162.0, released October 8, tightens the machinery that constructs its Linux sandbox. OpenAI describes rejecting sandbox-launcher executables in locations the agent could replace, and preventing user search-tool settings from omitting files that the sandbox must deny access to. These checks address a concrete weakness: an agent's restrictions can fail if the programs or file lists used to build those restrictions are themselves alterable. This strengthens the Thread's implementation evidence that containment depends on execution-layer enforcement, while retaining its existing thesis and assessment. The release notes and linked change descriptions come from one provider; GrepSignal did not execute the changes or reproduce their tests. They establish documented hardening, not measured attack prevention or a guarantee that all sandbox escapes are blocked.",
+      "recorded_at": "2026-10-09T01:37:51.805Z",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/497#issuecomment-6072450996",
+        "accepted_at": "2026-10-09T01:32:58Z"
+      }
+    },
+    {
+      "id": "evt-thread-cyber-microsoft-report-2026-10-09",
+      "record_type": "thread",
+      "record_id": "thread-offensive-cyber-economics",
+      "expected_version": 1,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-09-markdown-001",
+        "run_id": null,
+        "role": "daily_accountability"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Microsoft / Tanmay Ganacharya and Wes Malaby",
+          "title": "AI is changing the physics of cybersecurity; Defense has to change with it",
+          "url": "https://www.microsoft.com/en-us/security/security-insider/threat-landscape/2026-digital-defense-report",
+          "role": "primary_threat_landscape_summary",
+          "published_at": "2026-10-01",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "microsoft-digital-defense-report-20261001"
+        }
+      ],
+      "note": "The Thread tracks whether AI reduces the specialist labor needed to sustain offensive cyber operations. Microsoft's October 1 threat-landscape summary adds another provider's report of AI-orchestrated activity in real intrusions, while emphasizing that complex attacks still commonly depend on human direction. Its 32-stage demonstration was a controlled evaluation, not a measured real-world campaign. This broadens the reporting behind the existing thesis without independently validating Anthropic's earlier cost example or establishing total campaign savings. The thesis and assessment remain unchanged. The next useful evidence is incident-level accounting of operator-hours, failed attempts and full costs; greater automation alone does not quantify the economic gain.",
+      "recorded_at": "2026-10-09T01:37:51.805Z",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/497#issuecomment-6072450996",
+        "accepted_at": "2026-10-09T01:32:58Z"
+      }
+    },
+    {
+      "id": "evt-signal-whistle-local-speech-tool-path-2026-10-09",
+      "record_type": "signal",
+      "record_id": "sig-whistle-local-speech-tool-path-2026-10-09",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "daily_synthesis",
+        "run_id": null,
+        "cycle_id": "cycle-2026-10-09-markdown-001"
+      },
+      "evidence": [
+        {
+          "publisher": "Cactus Compute",
+          "title": "Whistle: Speech to Text in 16.9 MB",
+          "url": "https://cactuscompute.com/blog/whistle",
+          "role": "primary_model_announcement",
+          "published_at": "2026-10-02",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "cactus-whistle-release-20261002"
+        },
+        {
+          "publisher": "Cactus Compute",
+          "title": "Whistle model card",
+          "url": "https://huggingface.co/Cactus-Compute/whistle",
+          "role": "primary_model_documentation",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "cactus-whistle-release-20261002"
+        }
+      ],
+      "payload": {
+        "id": "sig-whistle-local-speech-tool-path-2026-10-09",
+        "type": "capability_delta",
+        "status": "emerging",
+        "source_count": 2,
+        "source_organization_count": 1,
+        "registered_at": "2026-10-09",
+        "evidence_since": "2026-10-02",
+        "first_observed_at": null,
+        "falsifiers": [
+          "A provider correction or reproducible implementation test contradicting the documented speech-to-tool interface would undermine this deployment-path observation."
+        ],
+        "limitations": [
+          "Both sources belong to one Cactus release lineage; two URLs are not independent validation.",
+          "Bounded text observations only; canonical source hash unavailable and image_reviewed false. No weights, code or installation were executed or independently audited.",
+          "The 16.9 MB figure describes the speech-model file, not combined model size, installed package size or runtime memory.",
+          "The model card displays an Apache 2.0 license label; no broader rights clearance or artifact-level license audit is claimed.",
+          "Vendor speed and accuracy comparisons are not adopted as independently established superiority; published comparator figures and different runtimes or precision limit direct comparison.",
+          "Structured tool-call output does not establish correct intent, authorization or safe execution. The application remains responsible for those checks."
+        ],
+        "sources": [
+          {
+            "publisher": "Cactus Compute",
+            "title": "Whistle: Speech to Text in 16.9 MB",
+            "url": "https://cactuscompute.com/blog/whistle",
+            "role": "primary_model_announcement",
+            "published_at": "2026-10-02",
+            "retrieved_at": null,
+            "archive_url": null,
+            "lineage_id": "cactus-whistle-release-20261002"
+          },
+          {
+            "publisher": "Cactus Compute",
+            "title": "Whistle model card",
+            "url": "https://huggingface.co/Cactus-Compute/whistle",
+            "role": "primary_model_documentation",
+            "published_at": null,
+            "retrieved_at": null,
+            "archive_url": null,
+            "lineage_id": "cactus-whistle-release-20261002"
+          }
+        ],
+        "title": "Whistle documents a shared local runtime for speech and tool-call proposals",
+        "summary": "Cactus Compute's October 2 release describes Whistle as a 16.9 MB speech-model file for CPU transcription in seven languages, with up to 30 seconds of audio per pass. Loaded alongside its Needle tool-calling model, the shared engine can return a transcript and proposed tool calls in one JSON response.",
+        "why_it_matters": "This gives developers a documented way to connect local speech recognition to a narrow tool-calling model without managing a separate transcription handoff. The integration is a concrete deployment option, while its practical memory needs, accuracy and latency still require testing on the intended device.",
+        "second_order_effect": "If this shared-runtime design works reliably on target hardware, small voice interfaces could propose application actions locally. Speech recognition and structured output still leave the application responsible for checking intent and permission before executing anything.",
+        "watch_next": "Independent tests of combined memory use, noisy or accented speech, latency and incorrect tool-call proposals on specified devices, including how applications handle uncertain or unauthorized actions."
+      },
+      "note": "This proposal records the documented shared-runtime speech-to-tool interface as a bounded deployment option. It does not establish device-level performance, independent benchmark superiority, safe action execution or a qualifying new Decision-Native model organization. The announcement is by Jakub Mroz and Henry Ndubuaku; the model card is published by Cactus Compute on Hugging Face.",
+      "recorded_at": "2026-10-09T01:37:51.805Z",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/497#issuecomment-6072450996",
+        "accepted_at": "2026-10-09T01:32:58Z"
+      }
+    },
+    {
+      "id": "evt-thread-research-automation-correction-dependencies-2026-10-09",
+      "record_type": "thread",
+      "record_id": "thread-research-automation-bottlenecks",
+      "expected_version": 11,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-09-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "Mathematics release history",
+          "url": "https://github.com/openai/math/blob/main/history.md",
+          "role": "primary_correction_history",
+          "published_at": "2026-10-07",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "openai-mathematics-corpus-20261006"
+        },
+        {
+          "publisher": "OpenAI",
+          "title": "Algebraicity of Weil classes on split abelian eightfolds withdrawal notice",
+          "url": "https://github.com/openai/math/blob/main/preprints/Algebraicity-of-Weil-classes-on-split-abelian-eightfolds-September-18-2026/README.md",
+          "role": "primary_manuscript_withdrawal_notice",
+          "published_at": "2026-10-06",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "openai-mathematics-corpus-20261006"
+        },
+        {
+          "publisher": "OpenAI",
+          "title": "Algebraicity of Kuga-Satake correspondences for K3 surfaces withdrawal notice",
+          "url": "https://github.com/openai/math/blob/main/preprints/Algebraicity-of-Kuga-Satake-Correspondences-for-K3-Surfaces-October-3-2026/README.md",
+          "role": "primary_dependent_manuscript_withdrawal_notice",
+          "published_at": "2026-10-06",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "openai-mathematics-corpus-20261006"
+        }
+      ],
+      "note": "This Thread argues that producing more research does not remove the work of checking it. OpenAI's mathematical release history now provides a concrete example: it records three related manuscript withdrawals. One inspected notice says a sign error prevents a required proof step; another says its argument depends on that flawed construction. Both notices withdraw the proofs without asserting that the theorem statements are false. The practical implication is dependency-aware review: a correction can require rechecking papers that build on the affected argument. This adds documented correction propagation to the earlier translation-fidelity concern, while leaving the thesis and assessment unchanged. The history groups these changes under October 7, but the two notices date withdrawal to October 6; these are newly inspected records, not a claim that the withdrawals happened today. The sources are one publisher's reports. GrepSignal did not verify the mathematics or establish a corpus-wide error rate.",
+      "recorded_at": "2026-10-09T01:37:51.805Z",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/497#issuecomment-6072450996",
+        "accepted_at": "2026-10-09T01:32:58Z"
+      }
     }
   ]
 }
