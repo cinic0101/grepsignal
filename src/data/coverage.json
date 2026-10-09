@@ -1,25 +1,25 @@
 {
   "schema_version": 3,
-  "cycle_id": "cycle-2026-10-08-markdown-001",
+  "cycle_id": "cycle-2026-10-09-markdown-001",
   "coverage_status": "reviewed",
-  "generated_at": "2026-10-08T01:11:33Z",
+  "generated_at": "2026-10-09T01:26:12Z",
   "sources": [
     {
       "source_id": "simon-willison",
       "name": "Simon Willison’s Weblog",
-      "scope": "Three new bounded public-HTML observations and thirty retained backlog identities; three exact Simon permalinks read today. Retained clocks are not renewed by triage.",
+      "scope": "Three new bounded public-HTML observations and thirty retained backlog identities; three exact current permalinks read. Retained clocks are not renewed by triage.",
       "intake_count": 33,
       "reviewed_count": 33
     },
     {
       "source_id": "hacker-news",
       "name": "Hacker News",
-      "scope": "Top100 API-ranked identities with later non-atomic HTML metadata; first60 eligible, two supported rising and five retained due carryovers. Six comparable identities; zero extra primary recall.",
-      "intake_count": 67,
-      "reviewed_count": 67
+      "scope": "Top 100 API-ranked identities with later non-atomic HTML metadata; first 60 provisional front, one configured-primary recall and five retained due carryovers. No supported outside-front rising addition.",
+      "intake_count": 66,
+      "reviewed_count": 66
     }
   ],
-  "research_targets_reviewed": 49,
+  "research_targets_reviewed": 55,
   "exact_sources_materialized": 0,
-  "note": "October8 bounded intake: all100 selected identities have recorded dispositions;49 Research identities include explicit defers, retained-state accountability and primary supplements. The cycle remains partial. Historical20 obligations and subsequent component progress remain separately preserved, without a new aggregate closure count. BestBlogs shadow was unavailable after technical failures. Reviewed means recorded decisions, not complete source reading, resolved research, or comprehensive AI-news coverage. Public intelligence requires separate owner approval."
+  "note": "October 9 bounded intake: all 99 selected identities have recorded dispositions; 55 Research identities include explicit defers, retained-state accountability and primary supplements. The cycle remains partial. Historical 20 obligations remain without an unaudited closure count. BestBlogs shadow was unavailable after technical failures. Reviewed means recorded decisions, not complete source reading, resolved research or comprehensive AI-news coverage. Coverage is distinct from intelligence publication."
 }
