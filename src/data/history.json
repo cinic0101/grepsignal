@@ -5321,6 +5321,232 @@
         "reference": "https://github.com/cinic0101/grepsignal-engine/pull/497#issuecomment-6072450996",
         "accepted_at": "2026-10-09T01:32:58Z"
       }
+    },
+    {
+      "id": "evt-thread-decision-native-strands-decider-2026-10-09",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 10,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "supplement-2026-10-09-strands-refresh-001",
+        "run_id": null,
+        "role": "supplemental_recall_review"
+      },
+      "payload": {
+        "effect_on_thesis": "strengthened"
+      },
+      "evidence": [
+        {
+          "publisher": "Strands Agents / Marc Brooker, Mike Chambers and Fabio Nonato de Paula",
+          "title": "Introducing Strands Decider 2B: a small, open source, decision model",
+          "url": "https://strandsagents.com/blog/introducing-strands-decider/",
+          "role": "primary_model_announcement",
+          "published_at": "2026-10-01",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "strands-decider-release-20261001"
+        },
+        {
+          "publisher": "Strands Labs",
+          "title": "Strands Decider release architecture",
+          "url": "https://github.com/strands-labs/strands-decider/blob/fe39fad9ec8ec355993f76b977348d915ec9cb65/docs/architecture.md",
+          "role": "primary_implementation_documentation",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "strands-decider-release-20261001"
+        },
+        {
+          "publisher": "Strands Labs",
+          "title": "Strands Decider decision response schema",
+          "url": "https://github.com/strands-labs/strands-decider/blob/fe39fad9ec8ec355993f76b977348d915ec9cb65/src/strands_decider/schema.py",
+          "role": "primary_implementation",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "strands-decider-release-20261001"
+        },
+        {
+          "publisher": "Strands Agents / Hugging Face",
+          "title": "Strands Decider 2B hobson v19 model card",
+          "url": "https://huggingface.co/StrandsAgents/strands-decider-2B-hobson-v19",
+          "role": "primary_model_documentation",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "strands-decider-release-20261001"
+        }
+      ],
+      "note": "Strands' October 1 announcement introduces Decider 2B for bounded decisions inside agent workflows, such as routing a request or choosing a tool. Applications supply context and predefined answers; the model returns choices or scores with probability distributions. Its implementation adapts a Qwen language-model backbone with a trained option-scoring head in place of free-form text generation. This adds a concrete implementation of the Thread's central idea: frequent, limited decisions can use a dedicated interface alongside models that handle open-ended work. It strengthens the implementation evidence while retaining the existing thesis and assessment. The announcement, repository and model card describe one release lineage, not independent performance validation. The model card warns that unfamiliar tasks and confidence thresholds need testing on the intended traffic. Source inspection establishes the documented design, not production reliability, independent calibration or cost savings. This update does not resolve the separate open-implementation forecast.",
+      "recorded_at": "2026-10-09T02:33:40Z",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/499#issuecomment-6073076039",
+        "accepted_at": "2026-10-09T02:32:07Z"
+      }
+    },
+    {
+      "id": "evt-signal-osc7501-terminal-agent-status-2026-10-09",
+      "record_type": "signal",
+      "record_id": "sig-osc7501-terminal-agent-status-2026-10-09",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "postcycle_recall_review",
+        "run_id": null,
+        "cycle_id": "cycle-2026-10-09-markdown-001"
+      },
+      "evidence": [
+        {
+          "publisher": "Mitchell Hashimoto",
+          "title": "A Terminal Protocol for Program Status (OSC 7501)",
+          "url": "https://mitchellh.com/writing/program-status-osc7501",
+          "role": "primary_protocol_announcement",
+          "published_at": "2026-10-06",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "hashimoto-osc7501-proposal-20261006"
+        }
+      ],
+      "payload": {
+        "id": "sig-osc7501-terminal-agent-status-2026-10-09",
+        "type": "capability_delta",
+        "status": "emerging",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "registered_at": "2026-10-09",
+        "evidence_since": "2026-10-06",
+        "first_observed_at": null,
+        "falsifiers": [
+          "A correction to the source or an implementation test contradicting the documented status-reporting contract would undermine this interface observation."
+        ],
+        "limitations": [
+          "One author and proposal lineage, without independent adoption or effectiveness evidence.",
+          "Bounded article-text observations only; canonical source hash unavailable and image_reviewed false. The linked specification, implementation code and demonstrations were not independently reviewed or tested.",
+          "The author reports terminal implementations and proof-of-concept agent integrations; this does not establish official support in the named coding agents or broad adoption.",
+          "Reported program status is not authorization, proof of correct work or independent verification of completion.",
+          "No measured time or cost saving, interoperability result or security improvement is established."
+        ],
+        "sources": [
+          {
+            "publisher": "Mitchell Hashimoto",
+            "title": "A Terminal Protocol for Program Status (OSC 7501)",
+            "url": "https://mitchellh.com/writing/program-status-osc7501",
+            "role": "primary_protocol_announcement",
+            "published_at": "2026-10-06",
+            "retrieved_at": null,
+            "archive_url": null,
+            "lineage_id": "hashimoto-osc7501-proposal-20261006"
+          }
+        ],
+        "title": "OSC 7501 proposes a shared status interface for terminal agents",
+        "summary": "Mitchell Hashimoto's October 6 OSC 7501 proposal lets a terminal program report whether it is working, waiting for a person, finished or failed through its existing terminal connection. A blocked record can distinguish a permission request from a question or authentication step. Hierarchical records let one task report progress while another waits.",
+        "why_it_matters": "The mechanism gives agent dashboards an alternative to guessing status from spinner characters, screen text or process activity. It also proposes a common interface instead of a separate integration for every dashboard.",
+        "second_order_effect": "If independently implemented across programs and terminals, a shared status interface could make supervision less dependent on each agent's changing visual interface. Applications would still need to decide whether reported status is trustworthy and whether requested actions are allowed.",
+        "watch_next": "Independent interoperability testing, official implementation availability and demonstrated reduction in missed or mistaken status notifications."
+      },
+      "note": "This proposal records a documented supervision interface, not an authorization or result-verification mechanism. Hashimoto reports terminal implementations and proof-of-concept integrations; this does not establish official support in the named coding agents or broad adoption. No measured productivity, cost or security improvement is asserted, and no automatic Thread relation or forecast change is proposed.",
+      "recorded_at": "2026-10-09T02:33:40Z",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/499#issuecomment-6073076039",
+        "accepted_at": "2026-10-09T02:32:07Z"
+      }
+    },
+    {
+      "id": "evt-thread-cyber-formal-review-2026-10-09",
+      "record_type": "thread",
+      "record_id": "thread-offensive-cyber-economics",
+      "expected_version": 2,
+      "kind": "review",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "postcycle_counterevidence_review",
+        "cycle_id": null,
+        "run_id": null
+      },
+      "payload": {
+        "outcome": "inconclusive",
+        "counterevidence_checked": [
+          "Microsoft distinguishes a controlled 32-stage evaluation from observed intrusions and says complex attacks still commonly require human direction; its summary does not account for all campaign labor or failed attempts. The linked full report could not be retrieved and was not reviewed.",
+          "Anthropic’s GLM example measures a directed known-vulnerability exercise rather than full campaign economics; CAISI’s benchmark methods include supplied bugs, scaffolding and repeated attempts, not an independent replication of that cost estimate.",
+          "Google identifies unpredictability, exposure of valuable access and differing incentives as limits on delegation, while acknowledging limited concrete threat intelligence. This August commentary does not measure whether defensive adaptation erases savings.",
+          "Anthropic’s June Navigator study selects sufficiently documented banned accounts, notes possible detection effects, and says its risk score is not an attack-success prediction. Technique breadth and risk-score changes cannot establish realized savings or campaigns per operator."
+        ],
+        "next_review_at": "2026-10-16T02:10:00Z"
+      },
+      "evidence": [
+        {
+          "publisher": "Microsoft / Tanmay Ganacharya and Wes Malaby",
+          "title": "AI is changing the physics of cybersecurity; Defense has to change with it",
+          "url": "https://www.microsoft.com/en-us/security/security-insider/threat-landscape/2026-digital-defense-report",
+          "role": "primary_text_counterevidence_review",
+          "published_at": "2026-10-01",
+          "retrieved_at": null,
+          "archive_url": null
+        },
+        {
+          "publisher": "Anthropic / Andrew Fasano, Marius Fleischer, Cole McFaul, Robert Xiao and Tripp Gallagher",
+          "title": "GLM-5.3 and the spread of advanced cyber capabilities",
+          "url": "https://www.anthropic.com/research/glm-5-3-and-the-spread-of-advanced-cyber-capabilities",
+          "role": "primary_text_counterevidence_review",
+          "published_at": "2026-09-29",
+          "retrieved_at": null,
+          "archive_url": null
+        },
+        {
+          "publisher": "NIST / CAISI",
+          "title": "CAISI’s Assessment of Z.ai’s GLM-5.3 Cyber Capabilities",
+          "url": "https://www.nist.gov/news-events/news/2026/09/caisis-assessment-zais-glm-53-cyber-capabilities",
+          "role": "primary_text_counterevidence_review",
+          "published_at": "2026-09-17",
+          "retrieved_at": null,
+          "archive_url": null
+        },
+        {
+          "publisher": "Google / Daniel Fabian",
+          "title": "The Evolving Role of the Red Team in the Era of Agentic Security",
+          "url": "https://blog.google/security/the-evolving-role-of-the-red-team-in-the-era-of-agentic-security/",
+          "role": "primary_text_counterevidence_review",
+          "published_at": "2026-08-13",
+          "retrieved_at": null,
+          "archive_url": null
+        },
+        {
+          "publisher": "Anthropic / Kyla Guru, Alex Moix and Jacob Klein",
+          "title": "Mapping AI-enabled cyber threats: Insights from the LLM ATT&CK Navigator",
+          "url": "https://www.anthropic.com/research/attack-navigator",
+          "role": "primary_text_counterevidence_review",
+          "published_at": "2026-06-03",
+          "retrieved_at": null,
+          "archive_url": null
+        }
+      ],
+      "note": "This review tests the Thread’s claim that AI reduces the specialist labor needed to sustain offensive cyber campaigns. The checked sources support some task delegation, but do not settle whether failed attempts, human oversight and defensive responses cancel the claimed savings across complete campaigns. Methodological limits and continued human direction constrain extrapolation; they do not demonstrate that savings disappear. The outcome is inconclusive, rather than an unchanged judgment that would clear the overdue review. The existing thesis and strengthening assessment are retained without a fresh endorsement. Independent incident-level operator-hours, unsuccessful work and full costs remain needed. The proposed October 16 retry follows the seven-day cadence; the original October 8 overdue-since date remains visible and review is still required.",
+      "recorded_at": "2026-10-09T02:33:40Z",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/499#issuecomment-6073076039",
+        "accepted_at": "2026-10-09T02:32:07Z"
+      }
     }
   ]
 }
