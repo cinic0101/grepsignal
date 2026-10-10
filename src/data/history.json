@@ -5547,6 +5547,169 @@
         "reference": "https://github.com/cinic0101/grepsignal-engine/pull/499#issuecomment-6073076039",
         "accepted_at": "2026-10-09T02:32:07Z"
       }
+    },
+    {
+      "id": "evt-thread-decision-native-microsoft-decision1-2026-10-10",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 11,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-10-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "strengthened"
+      },
+      "evidence": [
+        {
+          "publisher": "Microsoft",
+          "title": "Introducing Microsoft-Decision-1, our model for fast decision-making",
+          "url": "https://commandline.microsoft.com/microsoft-decision-1-model-foundry/",
+          "role": "primary_model_announcement",
+          "published_at": "2026-10-09",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "microsoft-decision1-release-20261009"
+        }
+      ],
+      "note": "This Thread tracks interfaces for frequent, bounded decisions, such as routing a request or grading an agent's proposed action. Microsoft's October 9 announcement describes Decision-1, a Qwen3.5-9B-derived model post-trained to score predefined answers in a single pass. Its structured API returns probabilities for choices, ratings or rubric judgments; Microsoft reports availability through Foundry and OpenRouter. This adds a provider's documented decision-scoring contract beyond the already recorded Strands release, strengthening the interface evidence while retaining the thesis and assessment. The announcement is one vendor's account: its claims about calibration, comparative speed, quality and cost were not independently tested here. Developers still need to evaluate confidence thresholds on their intended traffic before using scores to trigger actions. This observation does not establish released open code, weights or a qualifying open runtime, and does not resolve the separate open-implementation forecast.",
+      "recorded_at": "2026-10-10T01:31:31.043Z",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/501#issuecomment-6092201030",
+        "accepted_at": "2026-10-10T01:28:36.905438Z"
+      }
+    },
+    {
+      "id": "evt-thread-research-automation-verifiers-innovation-2026-10-10",
+      "record_type": "thread",
+      "record_id": "thread-research-automation-bottlenecks",
+      "expected_version": 12,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-10-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Epoch AI",
+          "title": "Can AI automate AI R&D yet?",
+          "url": "https://epoch.ai/publications/innovationeval",
+          "role": "primary_evaluation_report",
+          "published_at": "2026-10-07",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "epoch-innovationeval-20261007"
+        },
+        {
+          "publisher": "Prime Intellect",
+          "title": "Rewriting Prime Agent in Rust",
+          "url": "https://www.primeintellect.ai/blog/prime-agent-rust",
+          "role": "primary_implementation_report",
+          "published_at": "2026-10-09",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "prime-agent-rust-rewrite-20261009"
+        }
+      ],
+      "note": "This Thread asks which constraints remain as agents automate more research coding. Epoch's October 7 InnovationEval report tested whether agents could devise and implement a post-training method matching a held-out human innovation. Its principal runs with Claude Fable 5 and GPT-5.6 Sol fell short, and human review rejected some claimed gains as outside the task's rules. One task and few runs limit generalization; newer models knew details of the reference method, complicating tests of independent discovery. Prime Intellect's October 9 account supplies complementary engineering evidence: agents ported Prime Agent to Rust and optimized its performance using checks against the existing implementation. Humans designed verification, directed subsequent fixes and reviewed results; internal use exposed behavior the checks missed. These are different tasks, not a head-to-head comparison. Together they support distinguishing automation of well-measured implementation from invention and validation of a useful new method, while retaining the existing thesis and assessment. For evaluating research agents, executable checks and examination of the submitted results remain important alongside the final report. Neither evaluation nor implementation was independently reproduced here. Prime's runtime benchmarks exclude inference; neither source establishes a general research-cost advantage or a universal limit on autonomous research.",
+      "recorded_at": "2026-10-10T01:31:31.043Z",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/501#issuecomment-6092201030",
+        "accepted_at": "2026-10-10T01:28:36.905438Z"
+      }
+    },
+    {
+      "id": "evt-signal-deno-agent-platform-lifecycle-2026-10-10",
+      "record_type": "signal",
+      "record_id": "sig-deno-agent-platform-lifecycle-2026-10-10",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "daily_editorial",
+        "run_id": null,
+        "cycle_id": "cycle-2026-10-10-markdown-001"
+      },
+      "evidence": [
+        {
+          "publisher": "Deno",
+          "title": "Deno is joining Cloudflare",
+          "url": "https://deno.com/blog/cloudflare",
+          "role": "primary_platform_announcement",
+          "published_at": "2026-10-09",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "deno-cloudflare-announcement-20261009"
+        }
+      ],
+      "payload": {
+        "id": "sig-deno-agent-platform-lifecycle-2026-10-10",
+        "type": "platform_shift",
+        "status": "emerging",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "registered_at": "2026-10-10",
+        "evidence_since": "2026-10-09",
+        "first_observed_at": null,
+        "falsifiers": [
+          "A later Deno correction or revised support schedule would change the lifecycle observation."
+        ],
+        "limitations": [
+          "One primary announcement, not independently verified execution of the transition or future shutdowns.",
+          "Bounded article-text observation; canonical source hash unavailable and image_reviewed false.",
+          "No migration test, cost comparison, runtime-enforcement validation or broad agent adoption established.",
+          "Cloudflare website sources remain held and were not read; this Deno source does not clear that hold."
+        ],
+        "sources": [
+          {
+            "publisher": "Deno",
+            "title": "Deno is joining Cloudflare",
+            "url": "https://deno.com/blog/cloudflare",
+            "role": "primary_platform_announcement",
+            "published_at": "2026-10-09",
+            "retrieved_at": null,
+            "archive_url": null,
+            "lineage_id": "deno-cloudflare-announcement-20261009"
+          }
+        ],
+        "title": "Deno sets runtime and hosting wind-down plans as its team joins Cloudflare",
+        "summary": "Deno's October 9 announcement says its team is joining Cloudflare and redirecting development toward a shared application platform. It plans another year of monthly runtime bug-fix and security releases before ending its own runtime development, while the open-source project remains available for others to continue. Deno Deploy is scheduled to close after six months; paying customers are promised migration support to Cloudflare Workers. JSR, the package registry, is to keep operating.",
+        "why_it_matters": "For teams running agent services on Deno Deploy, platform continuity now requires a migration decision. The announcement links the new direction to persistent application state and serverless execution through Cloudflare's Durable Objects model. This is a change in support and deployment plans, not evidence of better agent performance.",
+        "second_order_effect": "Moving toward a combined execution-and-state platform could change the deployment assumptions of agent harnesses. Portability, operational effort and costs need testing on actual workloads before treating that direction as an improvement.",
+        "watch_next": "Published migration details, confirmed service deadlines, continued runtime maintenance and independently tested deployment paths."
+      },
+      "note": "Ryan Dahl authored Deno's announcement. The support periods are relative commitments in an October 9 announcement, not independently established calendar shutdown dates. No Cloudflare website read, security conclusion, production migration result or automatic Thread relation is implied.",
+      "recorded_at": "2026-10-10T01:31:31.043Z",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/501#issuecomment-6092201030",
+        "accepted_at": "2026-10-10T01:28:36.905438Z"
+      }
     }
   ]
 }

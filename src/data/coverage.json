@@ -1,25 +1,25 @@
 {
   "schema_version": 3,
-  "cycle_id": "cycle-2026-10-09-markdown-001",
+  "cycle_id": "cycle-2026-10-10-markdown-001",
   "coverage_status": "reviewed",
-  "generated_at": "2026-10-09T01:26:12Z",
+  "generated_at": "2026-10-10T01:31:31.043Z",
   "sources": [
     {
       "source_id": "simon-willison",
       "name": "Simon Willison’s Weblog",
-      "scope": "Three new bounded public-HTML observations and thirty retained backlog identities; three exact current permalinks read. Retained clocks are not renewed by triage.",
+      "scope": "Three new bounded public-HTML observations and thirty retained backlog identities; three current exact pages read. Retained clocks remain unchanged; three backlog research checks are deferred.",
       "intake_count": 33,
       "reviewed_count": 33
     },
     {
       "source_id": "hacker-news",
       "name": "Hacker News",
-      "scope": "Top 100 API-ranked identities with later non-atomic HTML metadata; first 60 provisional front, one configured-primary recall and five retained due carryovers. No supported outside-front rising addition.",
-      "intake_count": 66,
-      "reviewed_count": 66
+      "scope": "Top 100 API-ranked identities with later non-atomic HTML metadata; first 60 provisional front selections and five retained due carryovers. No supported within-24-hour rising addition or configured-primary recall.",
+      "intake_count": 65,
+      "reviewed_count": 65
     }
   ],
-  "research_targets_reviewed": 55,
+  "research_targets_reviewed": 45,
   "exact_sources_materialized": 0,
-  "note": "October 9 bounded intake: all 99 selected identities have recorded dispositions; 55 Research identities include explicit defers, retained-state accountability and primary supplements. The cycle remains partial. Historical 20 obligations remain without an unaudited closure count. BestBlogs shadow was unavailable after technical failures. Reviewed means recorded decisions, not complete source reading, resolved research or comprehensive AI-news coverage. Coverage is distinct from intelligence publication."
+  "note": "October 10 bounded intake: all 98 selected identities have recorded dispositions; 45 Research records include 39 required intake identities, five accountability targets and one primary-source corroboration supplement. Explicit defers and retained-state checks are not completed investigations. The cycle remains partial; historical residual obligations remain without an unaudited closure count. BestBlogs was technically unavailable, not empty. Reviewed means recorded decisions, not comprehensive source reading, resolved research or AI-news coverage. Coverage is distinct from publication and source freshness."
 }
