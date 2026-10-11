@@ -5710,6 +5710,86 @@
         "reference": "https://github.com/cinic0101/grepsignal-engine/pull/501#issuecomment-6092201030",
         "accepted_at": "2026-10-10T01:28:36.905438Z"
       }
+    },
+    {
+      "id": "evt-thread-agent-harness-economics-molt-sinai-2026-10-11",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 9,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-11-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Cockroach Labs / Adam Storm and Rafi Shamim",
+          "title": "Five months treating bugs like patients and coding agents like a medical team",
+          "url": "https://www.cockroachlabs.com/blog/experiment-running-hospital-code/",
+          "role": "primary_practitioner_workflow_report",
+          "published_at": "2026-10-09",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "cockroach-molt-sinai-workflow-report-20261009"
+        }
+      ],
+      "note": "This Thread tracks how the software coordinating agents changes whole-task cost and reliability. Cockroach Labs' five-month MOLT Sinai report adds a concrete review-cost failure: in one reporting window, three repeatedly revised issues consumed about $631 of $1,046 in token spending. The team describes adding escalation limits for reviews that fail to converge, but says it lacks good evidence of the new limits' effectiveness. It also enabled human approval for every merge after the first week and is still checking the initial autonomous Db2 implementation's correctness. These observations make review loops and human verification explicit costs to measure alongside code generation. They do not establish that this workflow is cheaper or safer than alternatives: the report is provider-authored, configurations changed, and no matched comparison isolates the harness. The existing thesis and assessment remain unchanged; evaluate total review effort and independently checked outcomes before treating generation speed as a productivity gain.",
+      "recorded_at": "2026-10-11T02:08:47Z",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/503#issuecomment-6104477610",
+        "accepted_at": "2026-10-11T02:06:58.446351Z"
+      }
+    },
+    {
+      "id": "evt-thread-runtime-mxc-policy-modes-2026-10-11",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 15,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-11-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "strengthened"
+      },
+      "evidence": [
+        {
+          "publisher": "Microsoft / Logan Iyer",
+          "title": "Microsoft Execution Containers: Policy-driven containment for AI agents",
+          "url": "https://blogs.windows.com/windowsdeveloper/2026/10/07/microsoft-execution-containers-policy-driven-containment-for-ai-agents/",
+          "role": "primary_product_announcement",
+          "published_at": "2026-10-07",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "microsoft-mxc-containment-announcement-20261007"
+        }
+      ],
+      "note": "Agent Runtime Containment tracks restrictions enforced outside a model's own judgment. Microsoft's October 7 announcement describes generally available Microsoft Execution Containers, which map developer-defined file, network and interface permissions onto operating-system containment backends. The documented policy remains outside the contained workload's control. For Windows process containers, the documented reporting modes differ: Learning blocks and records ungranted access, while Permissive records that access but allows it, subject to other operating-system and organizational restrictions. Merely collecting an activity report therefore does not establish that the configured boundary was enforced. This adds provider-documented implementation evidence and strengthens the Thread while retaining its thesis and assessment. Microsoft describes different security properties across backends; GrepSignal has not tested them or independently measured attack prevention. Developers should verify the selected backend, mode and denied operations before relying on containment. This announcement does not resolve the separate Runtime forecast or alter its original terms.",
+      "recorded_at": "2026-10-11T02:08:47Z",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/503#issuecomment-6104477610",
+        "accepted_at": "2026-10-11T02:06:58.446351Z"
+      }
     }
   ]
 }

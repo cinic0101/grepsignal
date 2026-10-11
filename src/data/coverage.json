@@ -1,25 +1,25 @@
 {
   "schema_version": 3,
-  "cycle_id": "cycle-2026-10-10-markdown-001",
+  "cycle_id": "cycle-2026-10-11-markdown-001",
   "coverage_status": "reviewed",
-  "generated_at": "2026-10-10T01:31:31.043Z",
+  "generated_at": "2026-10-11T02:08:47Z",
   "sources": [
     {
       "source_id": "simon-willison",
       "name": "Simon Willison’s Weblog",
-      "scope": "Three new bounded public-HTML observations and thirty retained backlog identities; three current exact pages read. Retained clocks remain unchanged; three backlog research checks are deferred.",
+      "scope": "Three current bounded public-HTML observations (two new identities and one repeated already-adopted Deno identity), plus thirty retained backlog identities. Three exact pages read; three backlog Research checks remain deferred. Original clocks are unchanged.",
       "intake_count": 33,
       "reviewed_count": 33
     },
     {
       "source_id": "hacker-news",
       "name": "Hacker News",
-      "scope": "Top 100 API-ranked identities with later non-atomic HTML metadata; first 60 provisional front selections and five retained due carryovers. No supported within-24-hour rising addition or configured-primary recall.",
-      "intake_count": 65,
-      "reviewed_count": 65
+      "scope": "Top 100 API-ranked identities with later non-atomic HTML metadata; first 60 provisional front selections, two supported within-24-hour rising additions, one configured-primary recall and five retained due carryovers. Current metadata resolved for 92 of 100 API identities; missing fields remain unavailable.",
+      "intake_count": 68,
+      "reviewed_count": 68
     }
   ],
-  "research_targets_reviewed": 45,
+  "research_targets_reviewed": 35,
   "exact_sources_materialized": 0,
-  "note": "October 10 bounded intake: all 98 selected identities have recorded dispositions; 45 Research records include 39 required intake identities, five accountability targets and one primary-source corroboration supplement. Explicit defers and retained-state checks are not completed investigations. The cycle remains partial; historical residual obligations remain without an unaudited closure count. BestBlogs was technically unavailable, not empty. Reviewed means recorded decisions, not comprehensive source reading, resolved research or AI-news coverage. Coverage is distinct from publication and source freshness."
+  "note": "October 11 bounded intake: all 101 selected identities from 138 inventory identities have recorded dispositions. The 35 Research records comprise 24 HN, six Simon and five coalesced accountability targets; retained inspections and explicit defers are not completed investigations. The cycle remains partial. FT article body was paywalled, BestBlogs was technically unavailable rather than empty, and historical gaps and source holds remain. Reviewed means recorded decisions, not comprehensive source reading, resolved research or AI-news coverage. Coverage is distinct from publication and source freshness."
 }
