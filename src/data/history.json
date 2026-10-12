@@ -5790,6 +5790,86 @@
         "reference": "https://github.com/cinic0101/grepsignal-engine/pull/503#issuecomment-6104477610",
         "accepted_at": "2026-10-11T02:06:58.446351Z"
       }
+    },
+    {
+      "id": "evt-mass-research-feedback-2026-10-12",
+      "record_type": "thread",
+      "record_id": "thread-research-automation-bottlenecks",
+      "expected_version": 13,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-12-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Sakana AI and UC Berkeley collaborators",
+          "title": "MASS: Recursive Self-Improvement through Multi-Agent Self-Supervision",
+          "url": "https://pub.sakana.ai/mass/",
+          "role": "primary_research_report",
+          "published_at": null,
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "sakana-mass-202610"
+        }
+      ],
+      "note": "As agents automate research coding, judgment and validation remain constraints. Sakana AI and UC Berkeley’s Multi-Agent Self-Supervision (MASS) study adds a bounded self-improvement result: one model searches team workflows, judges their outputs and learns from selected records of team execution. After two rounds starting from Qwen3.6-27B, external model judges preferred its work over the base model in 69.9% of comparisons on three synthetic tasks held out from post-training. Reported score per output token was higher on four research benchmarks but lower on Terminal-Bench 2.0 and SWE-bench Verified. This adds evidence for improving research workflows without establishing autonomous discovery; the Thread’s thesis and assessment remain unchanged. Evaluation is model-judged, and the held-out task set is small. A separate training-token efficiency comparison excludes search and data-generation costs. Independent task-level validation and total-cost comparisons are needed before treating this as an economic gain.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/505#issuecomment-6116036854",
+        "accepted_at": "2026-10-12T01:15:54.561894Z"
+      },
+      "recorded_at": "2026-10-12T01:18:25Z"
+    },
+    {
+      "id": "evt-decompilation-verifier-integrity-2026-10-12",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 10,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-12-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Maurice Heumann / Maurice’s Blog",
+          "title": "500+ Billion Tokens Later: Letting AI Agents Decompile A First-Person Shooter",
+          "url": "https://momo5502.com/posts/2026-10-09-game-decompilation/",
+          "role": "primary_practitioner_workflow_report",
+          "published_at": "2026-10-09",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "maurice-game-decompilation-20261009"
+        }
+      ],
+      "note": "Agent Harness Economics tracks how coordination software changes whole-task cost and reliability. Maurice Heumann’s October 9 decompilation account adds a verification mechanism: comparing rebuilt functions against the original binary gave agents a strict acceptance test, while CI checked that the verifier had not been altered. He reports that this made cheaper models usable. The practical implication is to measure the cost of reaching testable acceptance, including protecting the checker. Byte matching is specific to reproducing the original program, including its bugs; it is not a general correctness test. This remains one practitioner’s account with private code, incomplete token logs and no matched cost comparison. It adds a workflow example; the Thread’s thesis and assessment stay unchanged.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/505#issuecomment-6116036854",
+        "accepted_at": "2026-10-12T01:15:54.561894Z"
+      },
+      "recorded_at": "2026-10-12T01:18:25Z"
     }
   ]
 }
