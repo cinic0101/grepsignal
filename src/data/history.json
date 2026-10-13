@@ -5870,6 +5870,156 @@
         "accepted_at": "2026-10-12T01:15:54.561894Z"
       },
       "recorded_at": "2026-10-12T01:18:25Z"
+    },
+    {
+      "id": "evt-glm-legal-model-harness-2026-10-13",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 11,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-13-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Z.ai",
+          "title": "GLM-Legal: Advancing Agentic Legal Intelligence",
+          "url": "https://z.ai/blog/glm-legal",
+          "role": "primary_research_report",
+          "published_at": "2026-10-12",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "zai-glm-legal-20261012"
+        }
+      ],
+      "note": "Agent Harness Economics tracks how coordination software changes the cost and reliability of completing tasks. Z.ai's October 12 GLM-Legal announcement adds a training connection: the company says failures during legal-task training guide changes to its harness, while harness improvements shape subsequent training. It reports a 19.2% all-pass rate on Harvey LAB, 12.5 percentage points above its base model. The practical implication is to evaluate the resulting model-and-harness pair together before attributing gains to either component. The announcement supplies no matched comparison separating their contributions or complete workflow-cost measurement. Its benchmark result does not establish reliable autonomous legal practice, reduced lawyer review or an inference-cost advantage. This adds a provider-described optimization mechanism while leaving the Thread's thesis and assessment unchanged. Independent tests that hold the model or harness fixed, including human review costs, remain needed.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/507#issuecomment-6136433361",
+        "accepted_at": "2026-10-13T01:40:38.269006Z"
+      },
+      "recorded_at": "2026-10-13T01:46:09Z"
+    },
+    {
+      "id": "evt-qgis-contribution-review-capacity-2026-10-13",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 12,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-13-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "QGIS Enhancement Proposals",
+          "title": "Add QEP428: No ai contributions permitted",
+          "url": "https://github.com/qgis/QGIS-Enhancement-Proposals/pull/387",
+          "role": "primary_project_policy",
+          "published_at": "2026-09-24",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "qgis-ai-contribution-policy-20260924"
+        },
+        {
+          "publisher": "QGIS Enhancement Proposals",
+          "title": "Adopted AI tool policy for qgis/qgis",
+          "url": "https://github.com/qgis/QGIS-Enhancement-Proposals/blob/167fde21fa071df8aa93b70b763b71a9793dbc80/qep-408-ai-tool-policy.md",
+          "role": "primary_adopted_policy",
+          "published_at": "2026-10-07",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "qgis-ai-contribution-policy-20260924"
+        },
+        {
+          "publisher": "QGIS Enhancement Proposals / haubourg",
+          "title": "Reviewer-capacity comment on PR387",
+          "url": "https://github.com/qgis/QGIS-Enhancement-Proposals/pull/387#issuecomment-5810412757",
+          "role": "attributed_project_member_report",
+          "published_at": "2026-09-24",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "qgis-ai-contribution-policy-20260924"
+        },
+        {
+          "publisher": "QGIS Enhancement Proposals / nyalldawson",
+          "title": "Policy revisability comment on PR387",
+          "url": "https://github.com/qgis/QGIS-Enhancement-Proposals/pull/387#issuecomment-5823378501",
+          "role": "primary_policy_proposer_explanation",
+          "published_at": "2026-09-24",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "qgis-ai-contribution-policy-20260924"
+        }
+      ],
+      "note": "Agent Harness Economics tracks how coordinating software changes the total cost and reliability of agent work, including human review. QGIS, an open-source mapping project, adds a concrete limit on usable output: on October 7 it approved and merged a policy barring AI-, LLM- or agent-assisted code contributions to its main code repository, replacing an earlier human-review policy. During the policy discussion, QGIS organization member haubourg reported submission volume exceeding reviewer capacity; this is a participant's account, not a measured cost comparison. The adopted policy allows code reversion and contributor-rights sanctions. Its proposer describes possible later relaxation, but the policy sets no expiry. The practical implication is to check a receiving project's contribution rules and reviewer capacity before treating generated code as delivered value. This is one project's governance response, with no measured enforcement outcome or matched harness comparison. It adds a constraint to track while leaving the Thread's thesis and assessment unchanged.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/507#issuecomment-6136433361",
+        "accepted_at": "2026-10-13T01:40:38.269006Z"
+      },
+      "recorded_at": "2026-10-13T01:46:09Z"
+    },
+    {
+      "id": "evt-jellyfish-agent-output-review-2026-10-13",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 13,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-13-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Fiona Chen and James Stratton",
+          "title": "Artificial Intelligence in the Firm: Bottlenecks in Software Production",
+          "url": "https://fion.ac/jellyfish.pdf",
+          "role": "primary_observational_research",
+          "published_at": "2026-08-04",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "chen-stratton-jellyfish-software-production-20260804"
+        }
+      ],
+      "note": "Agent Harness Economics asks whether faster generation improves the cost and reliability of completed work. Fiona Chen and James Stratton's study of 718 consenting firms using Jellyfish data through March 2026 adds multi-firm evidence of a downstream bottleneck. Its estimates for coding-agent adoption, incremental to prior assistant use, associate agents with 30% more added lines and 23% more pull requests per worker-month, but no statistically significant increase in completed issues or epics. Submission-to-merge duration rises 49%; that is elapsed time, not measured reviewer labor. Small positive completion estimates do not prove zero benefit. The observational comparison assumes comparable untreated trends and relies on imperfect adoption indicators and workflow proxies. It does not establish effects for today's agents or every organization. The practical implication is to measure completed work and review delay alongside generated activity. This broadens the evidence beyond individual practitioner accounts while leaving the Thread's thesis and assessment unchanged.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/507#issuecomment-6136433361",
+        "accepted_at": "2026-10-13T01:40:38.269006Z"
+      },
+      "recorded_at": "2026-10-13T01:46:09Z"
     }
   ]
 }

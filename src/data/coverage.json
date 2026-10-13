@@ -1,25 +1,25 @@
 {
   "schema_version": 3,
-  "cycle_id": "cycle-2026-10-12-markdown-001",
+  "cycle_id": "cycle-2026-10-13-markdown-001",
   "coverage_status": "reviewed",
-  "generated_at": "2026-10-12T01:18:25Z",
+  "generated_at": "2026-10-13T01:46:09Z",
   "sources": [
     {
       "source_id": "simon-willison",
       "name": "Simon Willison’s Weblog",
-      "scope": "Three current bounded public-HTML observations (two new identities and one repeated Python Actions note), plus thirty retained backlog identities. Three exact current pages read; three backlog Research checks remain deferred. Original clocks are unchanged.",
+      "scope": "Three current exact public-HTML pages read, plus thirty separate retained backlog identities. Three backlog investigations remain deferred. Original source clocks and the denied Atom route remain unchanged.",
       "intake_count": 33,
       "reviewed_count": 33
     },
     {
       "source_id": "hacker-news",
       "name": "Hacker News",
-      "scope": "Top 100 API-ranked identities with later non-atomic metadata; 59 selected among the first 60 positions after excluding a hiring listing, six supported within-24-hour rising additions, zero configured-primary additions and five retained due carryovers. Current metadata covers 98 of 100 API identities; item-status flags and missing fields remain unavailable.",
-      "intake_count": 70,
-      "reviewed_count": 70
+      "scope": "First100 ordered IDs supplied by the owner after the configured topstories API was client-blocked; original fetch time unverified. All100 matched through separately permitted later non-atomic HN HTML metadata. First60 selected on visible metadata, with no visibly ineligible entry; five retained carryovers. API type/deleted/dead flags unavailable; prior metadata older than24hours prevents rising comparisons. No primary-host additions outside front.",
+      "intake_count": 65,
+      "reviewed_count": 65
     }
   ],
   "research_targets_reviewed": 27,
   "exact_sources_materialized": 0,
-  "note": "October 12 bounded intake: all 103 selected identities from 138 inventory identities have recorded dispositions. The 27 Research records comprise 17 HN, six Simon and four coalesced accountability targets; retained inspections and explicit defers are not completed investigations. Six HN identities received substantive bounded source-text research. Four current source routes failed technically, one selected identity lacks resolved metadata, and historical carryover/source gaps remain. BestBlogs was technically unavailable rather than empty. The cycle remains partial. Reviewed means recorded decisions, not comprehensive source reading, resolved research or AI-news coverage. Coverage is distinct from publication and source freshness."
+  "note": "October13 bounded intake: all98 selected identities from138 inventory identities have recorded dispositions. The27 Research records comprise17 HN,6 Simon and4 coalesced accountability targets. Twelve current HN identities and3 Simon pages received bounded text research;8 retained source investigations remain deferred. Research includes qualification limits and incomplete accountability, not27 completed investigations. BestBlogs was client-blocked rather than empty. Direct HN API access was not recovered; user-supplied snapshot and later HTML metadata have distinct provenance. Reviewed means recorded decisions, not comprehensive reading, resolved research or complete AI-news coverage. Coverage remains partial and distinct from editorial adoption, publication and source freshness."
 }
