@@ -6020,6 +6020,86 @@
         "accepted_at": "2026-10-13T01:40:38.269006Z"
       },
       "recorded_at": "2026-10-13T01:46:09Z"
+    },
+    {
+      "id": "evt-scion-infrastructure-verification-2026-10-14",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 14,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-14-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Anthropic / Nick G. and the source control team",
+          "title": "Redesigning source control at Anthropic",
+          "url": "https://www.anthropic.com/engineering/redesigning-source-control",
+          "role": "primary_practitioner_workflow_report",
+          "published_at": "2026-10-13",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "anthropic-scion-source-control-20261013"
+        }
+      ],
+      "note": "Agent Harness Economics examines whether harness and tool-interface design can change task cost and efficiency independently of model choice. Anthropic's October 13 engineering report supplies an infrastructure and testing example relevant to that question: the company says daily merged changes rose from about 2,500 in May to more than 30,000 in September, and that it moved its large monorepo to its own Scion system in five months. Scion performs version queries and merges on servers while clients fetch files on demand, reducing repeated local repository maintenance for agents and tests.\n\nThe verification arrangement is particularly relevant. Anthropic says a merge queue holding a global lock could not effectively support its scale, so it strengthened automated testing after merge and before deployment, while acknowledging that concurrent changes can conflict. Engineers still review every change's intent and maintain system constraints. Teams increasing generated code and merge volume should therefore measure validated work, conflict-repair time and total cost together. This is one company's internal account, with no independently verified outcome or complete cost comparison separating the effects of its changes. Anthropic also cautions that Scion targets exceptionally large repositories and that its internal token budget far exceeds what ordinary companies are willing to spend. The case adds infrastructure and verification costs to track while leaving the existing thesis and assessment unchanged. It is not a general recommendation to adopt Scion or remove pre-merge checks.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/509#issuecomment-6158915234",
+        "accepted_at": "2026-10-14T01:33:05.540492Z"
+      },
+      "recorded_at": "2026-10-14T01:35:56.935764Z"
+    },
+    {
+      "id": "evt-xbow-bounded-cyber-cost-2026-10-14",
+      "record_type": "thread",
+      "record_id": "thread-offensive-cyber-economics",
+      "expected_version": 3,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-14-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "XBOW / Brendan Dolan-Gavitt",
+          "title": "Zero to Calc in Six Days: Inside XBOW’s Chrome Full Chain",
+          "url": "https://xbow.com/labs/research/zero-to-calc-in-six-days-inside-xbow-chrome-full-chain",
+          "role": "primary_vendor_research_report",
+          "published_at": "2026-10-13",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "xbow-chrome-full-chain-20261013"
+        }
+      ],
+      "note": "Offensive Cyber Economics tracks whether AI reduces the specialist labor and total cost of offensive work. XBOW's October 13 report adds a bounded example: it says researchers and agents assembled a Chrome exploit chain crossing browser isolation boundaries in six days, August 2–7. It estimates roughly US$40,000 in API charges from archived logs. Researchers still chose targets, supplied context, challenged results and integrated components. The report describes duplicate discoveries and replacement work, including an earlier chain that collided with a previously known bug. This successful case provides partial cost and workflow evidence; it does not measure typical project costs or total campaign savings. Researcher-hours, complete unsuccessful effort and other costs remain unquantified. The reported US$250,000 bounty is an award, not a cost measure; both the award and linked Google confirmation are attributed to XBOW and were not independently verified here. The practical implication is to require human labor and failed-attempt accounting before converting a fast success into a reusable cost estimate. The existing thesis and strengthening assessment remain unchanged. This source update does not resolve the inconclusive review: review remains required, with the October 8 overdue-since date and October 16 retry retained.",
+      "acceptance": {
+        "actor": "cinic0101 (owner editorial adoption)",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal-engine/pull/509#issuecomment-6158915234",
+        "accepted_at": "2026-10-14T01:33:05.540492Z"
+      },
+      "recorded_at": "2026-10-14T01:35:56.935764Z"
     }
   ]
 }

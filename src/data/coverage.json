@@ -1,25 +1,25 @@
 {
   "schema_version": 3,
-  "cycle_id": "cycle-2026-10-13-markdown-001",
+  "cycle_id": "cycle-2026-10-14-markdown-001",
   "coverage_status": "reviewed",
-  "generated_at": "2026-10-13T01:46:09Z",
+  "generated_at": "2026-10-14T01:54:17.728491Z",
   "sources": [
     {
       "source_id": "simon-willison",
       "name": "Simon Willison’s Weblog",
-      "scope": "Three current exact public-HTML pages read, plus thirty separate retained backlog identities. Three backlog investigations remain deferred. Original source clocks and the denied Atom route remain unchanged.",
+      "scope": "Three current bounded public-HTML text reads plus thirty separately retained backlog identities. All 33 selected identities have recorded dispositions; three backlog investigations remain deferred. Original source clocks and the denied Atom route remain unchanged.",
       "intake_count": 33,
       "reviewed_count": 33
     },
     {
       "source_id": "hacker-news",
       "name": "Hacker News",
-      "scope": "First100 ordered IDs supplied by the owner after the configured topstories API was client-blocked; original fetch time unverified. All100 matched through separately permitted later non-atomic HN HTML metadata. First60 selected on visible metadata, with no visibly ineligible entry; five retained carryovers. API type/deleted/dead flags unavailable; prior metadata older than24hours prevents rising comparisons. No primary-host additions outside front.",
-      "intake_count": 65,
-      "reviewed_count": 65
+      "scope": "First 100 ordered IDs supplied by the owner after a fresh normal topstories request was client-blocked; original snapshot fetch time unknown. All 100 matched independently permitted, later non-atomic HTML metadata. Selected 75: 60 eligible front, 9 additional same-ID rising comparisons within 24 hours, 1 additional configured-primary recall and 5 retained carryovers. A visible hiring entry was excluded from front selection. API type/deleted/dead flags remain unavailable.",
+      "intake_count": 75,
+      "reviewed_count": 75
     }
   ],
-  "research_targets_reviewed": 27,
+  "research_targets_reviewed": 41,
   "exact_sources_materialized": 0,
-  "note": "October13 bounded intake: all98 selected identities from138 inventory identities have recorded dispositions. The27 Research records comprise17 HN,6 Simon and4 coalesced accountability targets. Twelve current HN identities and3 Simon pages received bounded text research;8 retained source investigations remain deferred. Research includes qualification limits and incomplete accountability, not27 completed investigations. BestBlogs was client-blocked rather than empty. Direct HN API access was not recovered; user-supplied snapshot and later HTML metadata have distinct provenance. Reviewed means recorded decisions, not comprehensive reading, resolved research or complete AI-news coverage. Coverage remains partial and distinct from editorial adoption, publication and source freshness."
+  "note": "October 14 bounded intake: all 108 selected identities from 138 inventory identities have recorded dispositions. The 41 Research records comprise 30 HN, 6 Simon and 5 combined accountability families. Nineteen new bounded text/abstract reads were completed: 16 HN and 3 Simon. Other records retain earlier observations, explicit defers or incomplete accountability comparisons; this is not 41 completed source investigations. Three new HN targets, 5 older HN investigations and 3 Simon investigations remain deferred. BestBlogs remains unavailable, not empty. User-supplied HN ranks and later HTML counters have separate provenance; direct API access was not recovered. Reviewed means recorded decisions for selected intake, not comprehensive reading, resolved research or full AI-news coverage. No exact source revision was materialized. Coverage remains separate from editorial adoption, publication and original source-freshness limits."
 }
