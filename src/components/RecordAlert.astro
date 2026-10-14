@@ -1,18 +1,15 @@
 ---
-import intelligence from '../data/intelligence';
+import intelligence, { changes } from '../data/intelligence';
+import { reviewContext } from '../data/review-context.mjs';
 
 const id = Astro.url.pathname.split('/').filter(Boolean).at(-1);
 const record = [...intelligence.signals, ...intelligence.threads, ...intelligence.predictions].find((item) => item.id === id);
 const builtAt = new Date().toISOString();
-const overdue = record?.lifecycle === 'active' && record.review_due_since && Date.parse(record.review_due_since) <= Date.parse(builtAt);
-const hasAlert = record && (
-  record.lifecycle !== 'active' ||
-  record.status === 'falsified' ||
-  record.review_required ||
-  overdue
-);
+const context = reviewContext(record, changes, builtAt);
+const hasAlert = record && (record.lifecycle !== 'active' || record.status === 'falsified' || context.pending);
 const base = import.meta.env.BASE_URL;
 const targetUrl = (target) => `${base}${intelligence.threads.some(r => r.id === target) ? 'threads' : intelligence.predictions.some(r => r.id === target) ? 'predictions' : 'signals'}/${target}/`;
+const formatDate = (value) => new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(new Date(value));
 ---
 {hasAlert && record && (
   <aside class="wrap record-alerts" aria-label="Record status alerts">
@@ -28,26 +25,65 @@ const targetUrl = (target) => `${base}${intelligence.threads.some(r => r.id === 
         <strong>THESIS FALSIFIED.</strong> Read the revision and evidence before reusing the original judgment.
       </p>
     )}
-    {record.review_required && (
-      <p class="record-alert" role="note">
-        <strong>Re-review needed.</strong> Linked judgments changed or the last review was inconclusive. This is not an automatic reversal.
-      </p>
-    )}
-    {overdue && (
-      <p class="record-alert" role="note">
-        <strong>Review due / overdue.</strong> As of build {builtAt.slice(0, 10)}. Unfinished work is not a fresh endorsement.
-      </p>
+    {context.pending && (
+      <section class="review-context" aria-labelledby="review-context-title">
+        <div class="review-heading">
+          <span class="review-kicker">READING THIS RECORD</span>
+          <h2 id="review-context-title">{context.title}</h2>
+        </div>
+        <div class="review-body">
+          <p class="review-explanation">{context.explanation}</p>
+          {context.overdue && <p class="review-schedule">Overdue since <time datetime={record.review_due_since} title={record.review_due_since}>{formatDate(record.review_due_since)}</time>{record.next_review_at && <> · Next planned check <time datetime={record.next_review_at} title={record.next_review_at}>{formatDate(record.next_review_at)}</time></>}</p>}
+          <details>
+            <summary>Review context and dates</summary>
+            <div class="review-details">
+              <dl class="review-dates">
+                <div><dt>Last reviewed</dt><dd>{record.last_reviewed_at ? <time datetime={record.last_reviewed_at} title={record.last_reviewed_at}>{formatDate(record.last_reviewed_at)}</time> : 'Not recorded'}</dd></div>
+                <div><dt>{context.nextLabel}</dt><dd>{record.next_review_at ? <time datetime={record.next_review_at} title={record.next_review_at}>{formatDate(record.next_review_at)}</time> : 'Not recorded'}</dd></div>
+                {context.overdue && <div><dt>Original review due</dt><dd><time datetime={record.review_due_since} title={record.review_due_since}>{formatDate(record.review_due_since)}</time> · overdue</dd></div>}
+              </dl>
+              <p class="review-timing">Dates are UTC; overdue status is checked at site build ({builtAt.slice(0, 10)}). A planned check is not a completed review{context.overdue ? ' and does not reset the original overdue date' : ''}.</p>
+              {context.review ? (
+                <div class="review-rationale">
+                  <h3>Recorded review rationale</h3>
+                  <p>{context.review.note}</p>
+                  <a href={`${base}changes/#${context.review.id}`}>Read this review and its evidence →</a>
+                </div>
+              ) : (
+                <p class="review-rationale">No matching review rationale is recorded here. <a href="#record-history">See record history and linked judgments →</a></p>
+              )}
+            </div>
+          </details>
+        </div>
+      </section>
     )}
   </aside>
 )}
 <style>
-  .record-alerts { padding-top: 18px; }
-  .record-alert {
-    margin: 0 0 10px;
-    border: 2px solid var(--ink);
-    padding: 14px 16px;
-    font-size: 16px;
-    line-height: 1.55;
+  .record-alerts { padding-top: 22px; }
+  .record-alert { margin: 0 0 12px; border: 2px solid var(--ink); padding: 14px 18px; font-size: 16px; line-height: 1.55; }
+  .record-alert a, .review-context a { color: var(--accent); font-weight: 700; text-underline-offset: 3px; }
+  .review-context { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(0, 2.6fr); gap: 16px 28px; border: 1px solid #c2b38e; border-left: 4px solid var(--accent-warm); background: #f2eee3; padding: 22px 24px; }
+  .review-heading, .review-body { min-width: 0; }
+  .review-kicker { color: #67501d; font: 800 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; }
+  h2 { margin: 7px 0 0; font: 650 22px/1.2 Georgia, 'Times New Roman', serif; }
+  .review-explanation { margin: 0; font-size: 15px; line-height: 1.65; }
+  .review-schedule { margin: 10px 0 0; color: #67501d; font-size: 12px; line-height: 1.65; font-weight: 650; }
+  summary { width: fit-content; min-height: 44px; padding: 12px 0 6px; cursor: pointer; color: var(--accent); font-size: 14px; font-weight: 750; }
+  summary:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .review-details { margin-top: 12px; border-top: 1px solid #c2b38e; padding-top: 16px; }
+  .review-dates { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; }
+  .review-dates div { min-width: 0; }
+  dt { font: 750 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; color: #67501d; letter-spacing: .04em; }
+  dd { margin: 5px 0 0; font-size: 14px; font-weight: 650; }
+  .review-timing { font-size: 12px; line-height: 1.6; color: #625c4f; }
+  .review-rationale { font-size: 14px; line-height: 1.65; overflow-wrap: anywhere; }
+  .review-rationale h3 { margin: 20px 0 8px; font-size: 14px; }
+  .review-rationale p { margin: 0 0 12px; }
+  @media (max-width: 680px) {
+    .review-context { grid-template-columns: 1fr; padding: 18px; gap: 12px; }
+    .review-dates { grid-template-columns: 1fr; gap: 12px; }
+    .review-dates div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+    dd { margin: 0; }
   }
-  .record-alert a { color: var(--accent); font-weight: 700; }
 </style>
