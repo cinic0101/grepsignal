@@ -102,17 +102,18 @@ const threadJsonLd = {
 
     <header class="thread-header">
       <div class="status-row">
-        <span class={`status status-${thread.status}`}>{statusMark[thread.status] ?? '·'} {thread.status.toUpperCase()}</span>
+        <span class={`status status-${thread.status}`}>THESIS DIRECTION · {statusMark[thread.status] ?? '·'} {thread.status.toUpperCase()}</span>
         <ShareButton title={`${thread.title} — GrepSignal`} url={canonicalUrl} />
       </div>
       {retrieval.entity_label && <p class="entity-subtitle">{retrieval.entity_label}</p>}
       <h1>{thread.title}</h1>
       <p class="lead">{thread.summary}</p>
+      <p class="assessment-note">Direction describes the evidence’s effect on the thesis, not a confidence score or a completed review.</p>
       <dl class="thread-meta">
         <div><dt>Evidence since</dt><dd>{thread.evidence_since}</dd></div>
         <div><dt>Revisions</dt><dd>{updates.length}</dd></div>
         <div><dt>Linked signals</dt><dd>{linkedSignalCount}</dd></div>
-        <div><dt>Last updated</dt><dd>{formatDate(thread.last_updated)}</dd></div>
+        <div><dt>Latest revision</dt><dd>{formatDate(thread.last_updated)}</dd></div>
       </dl>
     </header>
 
@@ -324,9 +325,9 @@ const threadJsonLd = {
 
       <aside class="sidebar">
         <div><span>Thread ID</span><code>{thread.id}</code></div>
-        <div><span>Status</span><strong>{statusMark[thread.status] ?? '·'} {thread.status}</strong></div>
+        <div><span>Thesis direction</span><strong>{statusMark[thread.status] ?? '·'} {thread.status}</strong></div>
         <div><span>Created</span><strong>{formatDate(thread.created_at)}</strong></div>
-        <div><span>Last updated</span><strong>{formatDate(thread.last_updated)}</strong></div>
+        <div><span>Latest revision</span><strong>{formatDate(thread.last_updated)}</strong></div>
         <div><span>Evidence since</span><strong>{thread.evidence_since}</strong></div>
         <div><span>Signals</span><strong>{linkedSignalCount}</strong></div>
         <div><span>Revisions</span><strong>{updates.length}</strong></div>
@@ -341,7 +342,7 @@ const threadJsonLd = {
 <style>
   .thread-detail { padding-top: 34px; padding-bottom: 100px; }
   .back-link { display: inline-flex; gap: 8px; color: var(--muted); font: 750 12px ui-monospace, SFMono-Regular, Menlo, monospace; text-decoration: none; }
-  .thread-header { max-width: 1040px; padding: 54px 0 42px; border-bottom: 1px solid var(--ink); }
+  .thread-header { max-width: 1040px; padding: 34px 0 32px; border-bottom: 1px solid var(--ink); }
   .status-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
   .status { color: var(--accent); font: 800 12px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .06em; }
   .entity-subtitle {
@@ -352,6 +353,7 @@ const threadJsonLd = {
   }
   .thread-header h1 { margin: 16px 0 20px; font-size: clamp(48px, 7vw, 78px); line-height: .98; }
   .lead { max-width: 900px; margin: 0; color: #383733; font-size: 21px; line-height: 1.55; }
+  .assessment-note { max-width: 780px; margin: 16px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
   .thread-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 32px 0 0; border-top: 1px solid var(--line); }
   .thread-meta div { padding: 15px 18px 0 0; }
   .thread-meta dt, .sidebar span { color: var(--muted); font: 800 11px ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; letter-spacing: .07em; }
@@ -475,12 +477,18 @@ const threadJsonLd = {
     .evidence-dimension + .evidence-dimension { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
   }
   @media (max-width: 680px) {
-    .thread-header { padding-top: 40px; }
+    .thread-header { padding-top: 28px; }
+    .thread-header h1 { font-size: clamp(36px, 10vw, 54px); line-height: 1.05; overflow-wrap: anywhere; }
+    .lead { font-size: 18px; }
+    .status { font-size: 10px; line-height: 1.7; }
     .status-row { align-items: flex-start; }
-    .thread-meta, .sidebar, .view-tests, .interpretation-strip { grid-template-columns: 1fr; }
-    .thread-meta { gap: 0; }
+    .sidebar, .view-tests, .interpretation-strip { grid-template-columns: 1fr; }
+    .thread-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+    .thread-meta div { min-width: 0; padding-right: 0; }
+    .thread-meta dd { overflow-wrap: anywhere; font-size: 14px; }
     .thesis-callout { grid-template-columns: 1fr; gap: 8px; }
-    .thread-section-nav { margin-left: -18px; margin-right: -18px; padding-left: 18px; padding-right: 18px; }
+    .thread-section-nav { position: static; flex-wrap: wrap; gap: 0 18px; overflow: visible; }
+    .thread-section-nav a { display: inline-flex; align-items: center; min-height: 44px; }
     .section-heading-row, .latest-change-head { align-items: flex-start; flex-direction: column; gap: 8px; }
     .latest-stamp { text-align: left; min-width: 0; }
     .interpretation-strip div { padding-top: 12px; }

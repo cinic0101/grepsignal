@@ -22,7 +22,7 @@ if (record) {
 }
 ---
 {record && (
-  <aside class="wrap record-history" aria-label="Record revision history">
+  <aside class="wrap record-history" id="record-history" aria-label="Record revision history">
     <details>
       <summary>Record history · revision {record.version} · {events.length} post-migration event{events.length === 1 ? '' : 's'}</summary>
 
@@ -71,6 +71,7 @@ if (record) {
 )}
 <style>
   .record-history {
+    scroll-margin-top: 130px;
     padding-top: 18px;
     padding-bottom: 34px;
     font-size: 14px;
