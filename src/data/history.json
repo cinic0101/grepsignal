@@ -6100,6 +6100,86 @@
         "accepted_at": "2026-10-14T01:33:05.540492Z"
       },
       "recorded_at": "2026-10-14T01:35:56.935764Z"
+    },
+    {
+      "id": "evt-opencode2-tool-composition-2026-10-15",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 15,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-15-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Anomaly / OpenCode",
+          "title": "OpenCode 2.0",
+          "url": "https://anoma.ly/notes/opencode-2-0/",
+          "role": "primary_product_announcement",
+          "published_at": null,
+          "retrieved_at": "2026-10-15T01:02:46.536Z",
+          "archive_url": null,
+          "lineage_id": "opencode-2-release-observed-20261015"
+        }
+      ],
+      "note": "Agent Harness Economics asks whether coordination software can change task cost and efficiency independently of model choice. Anomaly's OpenCode 2.0 announcement adds another implementation of code-based tool composition: agents can combine tool calls in scripts, and Model Context Protocol (MCP) integrations use this mode by default. It also describes background work that lets the main interaction continue. These mechanisms change how tools and concurrent tasks are coordinated, adding implementation evidence beyond the existing example from Pi, another agent harness. The announcement supplies no matched task-cost or completion comparison, so no measured savings follow. Teams evaluating it should compare completed work and total resource use with the same model and workload. The existing thesis and strengthening assessment remain unchanged. The source's publication date is unavailable; this is an October 15 text observation, not a verified launch date.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/issues/98",
+        "accepted_at": "2026-10-15T01:20:01Z"
+      },
+      "recorded_at": "2026-10-15T01:38:55.606Z"
+    },
+    {
+      "id": "evt-decision-strands-encoder-boundary-2026-10-15",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 12,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-15-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Marc Brooker / Marc’s Blog",
+          "title": "Strands Decider: Why Not an Encoder?",
+          "url": "https://brooker.co.za/blog/2026/10/04/encoders.html",
+          "role": "primary_practitioner_experiment",
+          "published_at": "2026-10-04",
+          "retrieved_at": "2026-10-15T01:03:20.056Z",
+          "archive_url": null,
+          "lineage_id": "strands-decider-release-20261001"
+        }
+      ],
+      "note": "Decision-Native AI Runtimes tracks interfaces that choose among predefined options or return constrained scores, rather than generate open-ended text. Marc Brooker's October 4 Strands experiment adds a workload- and model-dependent limit: his T5Gemma encoder candidate had lower median latency than the released Qwen3.5-derived design, but scaled worse with longer prompts; accuracy and calibration results were mixed. An unmasked encoder variant also did worse on JevBench and JF100 despite stronger results on most of his evaluation tasks. Brooker explicitly describes the comparison as confounded by architecture, base-model and training differences; the experimental code remains outside mainline Strands Decider. The practical implication is to test realistic prompt lengths, calibration and generalization rather than infer performance from the decision-interface label. This is the existing Strands lineage, not independent validation or another organization toward the separate forecast. The text-only inspection did not verify chart data or production outcomes. The Thread's thesis and strengthening assessment remain unchanged.\n\nAdapted from Marc Brooker under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/), shortened and modified by GrepSignal. No endorsement is implied.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/issues/98",
+        "accepted_at": "2026-10-15T01:20:01Z"
+      },
+      "recorded_at": "2026-10-15T01:38:55.606Z"
     }
   ]
 }
