@@ -1,25 +1,25 @@
 {
   "schema_version": 3,
-  "cycle_id": "cycle-2026-10-15-markdown-001",
+  "cycle_id": "cycle-2026-10-16-markdown-001",
   "coverage_status": "reviewed",
-  "generated_at": "2026-10-15T01:27:32.739Z",
+  "generated_at": "2026-10-16T01:49:19Z",
   "sources": [
     {
       "source_id": "simon-willison",
       "name": "Simon Willison’s Weblog",
-      "scope": "Three current bounded public-HTML text reads, including one already accepted item, plus thirty separately retained backlog identities. All 33 selected identities have recorded dispositions; three backlog investigations remain deferred. Original source clocks and the denied Atom route remain unchanged.",
+      "scope": "Three current homepage identities plus thirty separately retained backlog identities. All 33 selected identities have recorded dispositions. Two current identities received new bounded exact-page text reads; the third was homepage-only. Three backlog investigations remain deferred. Original source clocks and the denied Atom route remain unchanged.",
       "intake_count": 33,
       "reviewed_count": 33
     },
     {
       "source_id": "hacker-news",
       "name": "Hacker News",
-      "scope": "Official HTML pages 1–4 collected sequentially from 2026-10-15T01:01:05.337Z to 01:02:44.563Z after one normal topstories request was client-blocked. This non-atomic collection yielded 100 unique displayed ranks 1–100, without rank gaps; it is not an instantaneous API top 100. Selected 66: 60 front, zero qualifying same-ID rising comparisons within 24 hours, one additional configured-primary recall and five retained carryovers. API type/deleted/dead flags remain unavailable.",
+      "scope": "Official HTML pages 1–4 collected sequentially from 2026-10-16T01:02:29.989Z to 01:04:00.652Z, with at least five seconds between page observations. The previously client-blocked API route was not retried. This non-atomic collection yielded 120 listed rows and 100 unique displayed ranks 1–100, with no gaps, duplicate IDs or rank conflicts; twenty beyond-cap rows were excluded. It is not an instantaneous API top 100. Selected 66: 60 front, zero qualifying same-ID rising comparisons within 24 hours, one additional configured-primary recall and five retained carryovers. API type/deleted/dead flags, origin/cache freshness and posting timezone remain unavailable.",
       "intake_count": 66,
       "reviewed_count": 66
     }
   ],
-  "research_targets_reviewed": 33,
+  "research_targets_reviewed": 30,
   "exact_sources_materialized": 0,
-  "note": "October 15 bounded intake: all 99 selected identities from 138 inventory identities have recorded dispositions. The 33 Research records comprise 22 HN, 6 Simon and 5 combined accountability families. Eleven new bounded text/abstract reads were completed: 8 HN and 3 Simon. Other records retain earlier observations, expired-source holds, explicit defers or incomplete accountability comparisons; this is not 33 completed source investigations. Six new HN targets, one older never-read HN target, five retained HN carryovers and three Simon investigations remain deferred. BestBlogs remains unavailable, not empty. HN HTML metadata was collected across a documented interval, not an atomic API snapshot; direct API access was not recovered. Reviewed means recorded decisions for selected intake, not comprehensive reading, resolved research or full AI-news coverage. No exact source revision was materialized. Coverage remains separate from editorial adoption, publication and original source-freshness limits. Post-cycle candidate research is outside these frozen daily counts."
+  "note": "October 16 bounded intake: all 99 selected identities from 138 inventory identities have recorded dispositions. The 30 Research records comprise 19 HN, 6 Simon and 5 combined accountability families. Nine daily identities received new bounded exact-page text reads across 10 distinct pages: 7 HN identities across 8 pages and 2 Simon identities across 2 pages. The remaining Research identities comprise 12 deferrals, 3 retained HN inspections, 1 Simon homepage-only observation and 5 incomplete accountability families. Failed attempts, homepage-only observations, retained inspections, explicit deferrals and incomplete accountability comparisons are not completed new reads; this is not 30 completed source investigations. Twelve investigations remain explicitly deferred: four selected current HN investigations, five inherited HN gaps and three Simon backlog investigations. BestBlogs remains unavailable, not empty. HN HTML metadata was collected across a documented interval, not an atomic API snapshot; direct API access was not recovered. Reviewed means recorded decisions for selected intake, not comprehensive reading, resolved research or full AI-news coverage. No exact source revision was materialized. Coverage remains separate from editorial adoption, publication and original source-freshness limits. Separate prior-bundle revalidation and independent proposal-review rereads do not increase these frozen daily counts."
 }
