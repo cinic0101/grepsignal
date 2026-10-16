@@ -6180,6 +6180,293 @@
         "accepted_at": "2026-10-15T01:20:01Z"
       },
       "recorded_at": "2026-10-15T01:38:55.606Z"
+    },
+    {
+      "id": "evt-jellyfish-agent-output-delivery-gap-2026-10-15",
+      "record_type": "signal",
+      "record_id": "sig-jellyfish-agent-output-delivery-gap-2026-10-15",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-15-markdown-001",
+        "run_id": null,
+        "role": "new_thread_companion_signal"
+      },
+      "evidence": [
+        {
+          "publisher": "Fiona Chen and James Stratton",
+          "title": "Artificial Intelligence in the Firm: Bottlenecks in Software Production",
+          "url": "https://fion.ac/jellyfish.pdf",
+          "role": "primary_observational_study",
+          "published_at": "2026-08-04",
+          "retrieved_at": "2026-10-15T01:21:36Z",
+          "archive_url": null,
+          "lineage_id": "chen-stratton-jellyfish-software-production-20260804"
+        }
+      ],
+      "payload": {
+        "id": "sig-jellyfish-agent-output-delivery-gap-2026-10-15",
+        "type": "second_order_effect",
+        "status": "emerging",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "registered_at": "2026-10-15",
+        "evidence_since": "2026-08-04",
+        "first_observed_at": null,
+        "falsifiers": [
+          "Credible reanalysis or correction removes the reported activity/completion mismatch or its association with adoption.",
+          "Independent current-agent studies show robust quality-adjusted completion gains without downstream constraints; that would weaken generalization beyond the original sample rather than erase its historical observation."
+        ],
+        "limitations": [
+          "Nonrandom adoption requires counterfactual-trend assumptions and relies on imperfect adoption indicators; the sample is consenting analytics-platform clients and ends before newer systems.",
+          "Submission-to-merge measures elapsed delay, not reviewer-hours. Issue/epic completion is an output proxy, not direct customer value or a complete defect measure.",
+          "No independent reproduction or randomized verification-capacity intervention was performed here. One study is one measurement lineage; its 718 firms are not 718 independent study replications."
+        ],
+        "sources": [
+          {
+            "publisher": "Fiona Chen and James Stratton",
+            "title": "Artificial Intelligence in the Firm: Bottlenecks in Software Production",
+            "url": "https://fion.ac/jellyfish.pdf",
+            "role": "primary_observational_study",
+            "published_at": "2026-08-04",
+            "retrieved_at": "2026-10-15T01:21:36Z",
+            "archive_url": null,
+            "lineage_id": "chen-stratton-jellyfish-software-production-20260804"
+          }
+        ],
+        "title": "Jellyfish study finds a gap between agent coding activity and completion",
+        "summary": "Chen and Stratton analyze 718 consenting firms using the Jellyfish engineering-analytics platform through March 2026. Their observational estimates for coding-agent adoption, incremental to prior assistant use, associate agents with more coding activity and longer elapsed time from a submitted change to its merge. Estimates for completed issues and epics, proxies for finished tasks and larger work packages, are small positive but statistically insignificant.",
+        "why_it_matters": "Evaluating software automation requires tracking what reaches usable completion alongside what is generated. This observation makes the distinction material at the firm-workflow level rather than treating more code as delivered value.",
+        "our_read": "The finding motivates testing downstream constraints. It does not establish zero productivity benefit or isolate review as the cause of the completion gap.",
+        "second_order_effect": "If generation grows faster than a workflow can check, repair and accept changes, investment may need to shift toward that downstream capacity. Whether this improves dependable delivery is a testable interpretation, not the study's demonstrated intervention result.",
+        "watch_next": "Look for comparable current-agent studies and targeted capacity interventions that track accepted output, human effort, escaped defects and downstream rework, with task mix and model/harness conditions accounted for."
+      },
+      "note": "Opening Signal proposal: a bounded multi-firm observation distinguishes coding activity from completion. Its support for a downstream software-delivery hypothesis remains conditional; no universal bottleneck or zero-benefit result is claimed.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/issues/100",
+        "accepted_at": "2026-10-15T01:51:53Z"
+      },
+      "recorded_at": "2026-10-15T01:55:19.463Z"
+    },
+    {
+      "id": "evt-software-verification-acceptance-opening-2026-10-15",
+      "record_type": "thread",
+      "record_id": "thread-software-verification-acceptance",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-15-markdown-001",
+        "run_id": null,
+        "role": "new_thread_candidate"
+      },
+      "payload": {
+        "id": "thread-software-verification-acceptance",
+        "status": "emerging",
+        "created_at": "2026-10-15",
+        "last_updated": "2026-10-15",
+        "evidence_since": "2026-08-04",
+        "signal_count": 1,
+        "first_observed_at": null,
+        "signal_relations": {
+          "supporting": [
+            "sig-jellyfish-agent-output-delivery-gap-2026-10-15"
+          ],
+          "contradicting": []
+        },
+        "updates": [
+          {
+            "id": "threadrev-software-verification-acceptance-opening-2026-10-15",
+            "date": "2026-10-15",
+            "assessment": "emerging",
+            "change": "Opening assessment: distinguish software-generation activity from dependable accepted delivery and test whether downstream checking, review/repair or recipient acceptance is the limiting stage.",
+            "signal_ids": [
+              "sig-jellyfish-agent-output-delivery-gap-2026-10-15"
+            ],
+            "sources": [
+              {
+                "publisher": "Fiona Chen and James Stratton",
+                "title": "Artificial Intelligence in the Firm: Bottlenecks in Software Production",
+                "url": "https://fion.ac/jellyfish.pdf",
+                "role": "primary_observational_study",
+                "published_at": "2026-08-04",
+                "retrieved_at": "2026-10-15T01:21:36Z",
+                "archive_url": null,
+                "lineage_id": "chen-stratton-jellyfish-software-production-20260804"
+              },
+              {
+                "publisher": "QGIS project contributors",
+                "title": "QGIS Enhancement: AI tool use policy, version 2.0",
+                "url": "https://github.com/qgis/QGIS-Enhancement-Proposals/blob/167fde21fa071df8aa93b70b763b71a9793dbc80/qep-408-ai-tool-policy.md",
+                "role": "primary_project_policy",
+                "published_at": "2026-09-24",
+                "retrieved_at": "2026-10-15T01:21:41Z",
+                "archive_url": null,
+                "lineage_id": "qgis-ai-contribution-policy-20260924"
+              },
+              {
+                "publisher": "QGIS / haubourg",
+                "title": "QGIS policy PR 387: participant explanation of review pressure",
+                "url": "https://github.com/qgis/QGIS-Enhancement-Proposals/pull/387#issuecomment-5810412757",
+                "role": "primary_participant_comment",
+                "published_at": "2026-09-24",
+                "retrieved_at": "2026-10-15T01:21:52Z",
+                "archive_url": null,
+                "lineage_id": "qgis-ai-contribution-policy-20260924"
+              },
+              {
+                "publisher": "Cockroach Labs / Adam Storm and Rafi Shamim",
+                "title": "Five months treating bugs like patients and coding agents like a medical team",
+                "url": "https://www.cockroachlabs.com/blog/experiment-running-hospital-code/",
+                "role": "primary_practitioner_case_study",
+                "published_at": "2026-10-09",
+                "retrieved_at": "2026-10-15T01:21:41Z",
+                "archive_url": null,
+                "lineage_id": "cockroach-molt-sinai-workflow-report-20261009"
+              },
+              {
+                "publisher": "Geoffrey Huntley",
+                "title": "a new model for open source: closed to pull requests, open to remix.",
+                "url": "https://ghuntley.com/remix/",
+                "role": "primary_practitioner_policy_proposal",
+                "published_at": "2026-10-15",
+                "retrieved_at": "2026-10-15T01:03:28Z",
+                "archive_url": null,
+                "lineage_id": "huntley-remix-policy-20261015"
+              },
+              {
+                "publisher": "QA Wolf / Jaden Lemmon",
+                "title": "E2exe: How we solved Windows desktop automation for enterprise scale",
+                "url": "https://www.qawolf.com/blog/how-we-solved-windows-desktop-automation",
+                "role": "primary_vendor_architecture_report",
+                "published_at": "2026-10-14",
+                "retrieved_at": "2026-10-15T01:04:00Z",
+                "archive_url": null,
+                "lineage_id": "qawolf-windows-e2exe-20261014"
+              }
+            ],
+            "pattern_scope": "cross_actor",
+            "event_independence": "independent_events",
+            "mechanism_coherence": "partial"
+          }
+        ],
+        "analysis": {
+          "evidence_map": [
+            {
+              "id": "generation-to-delivery-gap",
+              "title": "A measured activity-to-completion mismatch",
+              "summary": "The linked Jellyfish Signal reports that, among 718 firms through March 2026, agent adoption relative to prior assistant use is associated with more coding activity and longer elapsed submission-to-merge time, alongside small positive but statistically insignificant issue/epic completion estimates. Elapsed delay is not reviewer-hours. The observational design and completion proxies constrain interpretation. It supports investigating the conditional thesis; it does not demonstrate a universal review bottleneck, recipient-policy enforcement or the effect of a capacity intervention.",
+              "signal_ids": [
+                "sig-jellyfish-agent-output-delivery-gap-2026-10-15"
+              ]
+            }
+          ],
+          "boundaries": [
+            "The unit is a software change that meets requirements and its recipient's acceptance rules. A generated patch, a merged change, a completed issue and dependable deployed behavior are different outcomes. Separate checker coverage and tamper resistance, human effort, elapsed queues, rework and permission to contribute.",
+            "Complementary direct-source context: QGIS, an open-source mapping project, adopted a policy prohibiting AI-assisted code contributions to its main repository; a participant attributes it to review overload, without a measured comparison. Cockroach's MOLT Sinai account reports costly review loops, waiting for human approval and throttled proposals alongside useful work. Changing models, task mix and process prevent an isolated causal conclusion. These cases are not additional Signal registrations.",
+            "The study, project governance and practitioner case are different evidence types, not replications of one causal effect. Policy can express community norms; queues can reflect complexity, staffing, prioritization or governance.",
+            "Huntley proposes moving local adaptations to remixers while keeping upstream incorporation discretionary. This makes acceptance authority visible; actual rollout and total maintenance burden are unverified. QA Wolf describes disposable Windows test environments and a separate runner, a possible route to scalable checking; it supplies no matched delivery, coverage, checker-integrity or reviewer-effort result. Neither establishes bottleneck relief.",
+            "Counterevidence deserves equal weight: Cockroach also reports shipping useful work, and repeated reviews can catch defects rather than merely waste effort. Automated checks may scale with generation. A recipient can legitimately reject a technically correct change. Faster acceptance that raises escaped defects or moves work downstream is not a productivity gain.",
+            "Agent Harness Economics tests orchestration/interface effects separately from model choice. Research Automation Bottlenecks concerns frontier AI R&D. This Thread instead tests the conversion of proposed software into dependable accepted delivery, including unchanged-harness workflows. Runtime Containment concerns permitted actions, which do not by themselves establish correct or wanted results.",
+            "Source quantity alone does not establish a common bottleneck. Generalization requires comparable outcomes across independent workflows, rather than repeated reporting of the same case."
+          ],
+          "view_tests": {
+            "strengthen": [
+              "In matched tasks or a credible rollout comparison, generation grows faster than independently checked accepted output while measured review/repair load, verification capacity or rejection rules explain the gap. Hold task complexity, staffing, model/harness and quality targets sufficiently comparable.",
+              "A targeted increase in the identified checking or acceptance capacity improves dependable accepted output more than a comparable generation-side investment, including human hours, infrastructure cost, escaped defects and downstream rework. A shorter queue alone is insufficient."
+            ],
+            "weaken": [
+              "Across independent comparable workflows, accepted output scales with generation while reviewer-hours per accepted change, queues, escaped defects and downstream rework remain flat or improve under credible checks.",
+              "Matched analysis explains the apparent gap by work selection, complexity, staffing or unrelated governance, or a targeted verification/acceptance intervention fails to improve delivery despite adequate implementation. Repeated current-agent results with robust quality-adjusted completion gains would narrow generalization from the older sample.",
+              "If evidence remains implementation anecdotes without measured outcomes, keep the assessment emerging. More publishers or repeated descriptions of the same case are not grounds to strengthen it."
+            ]
+          }
+        },
+        "title": "Software Verification and Acceptance Bottlenecks",
+        "summary": "Generating more code does not by itself increase dependable software delivery. When proposed changes grow faster than trustworthy checks, review and repair capacity, or a receiving project's willingness to accept them, those downstream stages can limit what ships. This emerging Thread asks when that happens, and whether improving verification and acceptance yields more useful output than adding generation capacity.",
+        "thesis": "In software workflows where agent-generated changes expand faster than trusted verification, review and repair capacity, or recipient acceptance, downstream constraints will limit the gain in dependable delivered output. Relieving the identified constraint should improve quality-adjusted accepted output more than a comparable increase in generation capacity. This is conditional, not a claim that review dominates every workflow or must remain human."
+      },
+      "evidence": [
+        {
+          "publisher": "Fiona Chen and James Stratton",
+          "title": "Artificial Intelligence in the Firm: Bottlenecks in Software Production",
+          "url": "https://fion.ac/jellyfish.pdf",
+          "role": "primary_observational_study",
+          "published_at": "2026-08-04",
+          "retrieved_at": "2026-10-15T01:21:36Z",
+          "archive_url": null,
+          "lineage_id": "chen-stratton-jellyfish-software-production-20260804"
+        },
+        {
+          "publisher": "QGIS project contributors",
+          "title": "QGIS Enhancement: AI tool use policy, version 2.0",
+          "url": "https://github.com/qgis/QGIS-Enhancement-Proposals/blob/167fde21fa071df8aa93b70b763b71a9793dbc80/qep-408-ai-tool-policy.md",
+          "role": "primary_project_policy",
+          "published_at": "2026-09-24",
+          "retrieved_at": "2026-10-15T01:21:41Z",
+          "archive_url": null,
+          "lineage_id": "qgis-ai-contribution-policy-20260924"
+        },
+        {
+          "publisher": "QGIS / haubourg",
+          "title": "QGIS policy PR 387: participant explanation of review pressure",
+          "url": "https://github.com/qgis/QGIS-Enhancement-Proposals/pull/387#issuecomment-5810412757",
+          "role": "primary_participant_comment",
+          "published_at": "2026-09-24",
+          "retrieved_at": "2026-10-15T01:21:52Z",
+          "archive_url": null,
+          "lineage_id": "qgis-ai-contribution-policy-20260924"
+        },
+        {
+          "publisher": "Cockroach Labs / Adam Storm and Rafi Shamim",
+          "title": "Five months treating bugs like patients and coding agents like a medical team",
+          "url": "https://www.cockroachlabs.com/blog/experiment-running-hospital-code/",
+          "role": "primary_practitioner_case_study",
+          "published_at": "2026-10-09",
+          "retrieved_at": "2026-10-15T01:21:41Z",
+          "archive_url": null,
+          "lineage_id": "cockroach-molt-sinai-workflow-report-20261009"
+        },
+        {
+          "publisher": "Geoffrey Huntley",
+          "title": "a new model for open source: closed to pull requests, open to remix.",
+          "url": "https://ghuntley.com/remix/",
+          "role": "primary_practitioner_policy_proposal",
+          "published_at": "2026-10-15",
+          "retrieved_at": "2026-10-15T01:03:28Z",
+          "archive_url": null,
+          "lineage_id": "huntley-remix-policy-20261015"
+        },
+        {
+          "publisher": "QA Wolf / Jaden Lemmon",
+          "title": "E2exe: How we solved Windows desktop automation for enterprise scale",
+          "url": "https://www.qawolf.com/blog/how-we-solved-windows-desktop-automation",
+          "role": "primary_vendor_architecture_report",
+          "published_at": "2026-10-14",
+          "retrieved_at": "2026-10-15T01:04:00Z",
+          "archive_url": null,
+          "lineage_id": "qawolf-windows-e2exe-20261014"
+        }
+      ],
+      "note": "Opening assessment for a distinct software-delivery question. Measure accepted, independently checked output and downstream effort before expanding generation. Different actors supply evidence about different stages; they do not establish a universally binding or permanently human bottleneck.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/issues/100",
+        "accepted_at": "2026-10-15T01:51:53Z"
+      },
+      "recorded_at": "2026-10-15T01:55:19.463Z"
     }
   ]
 }
