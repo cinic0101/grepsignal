@@ -6507,6 +6507,250 @@
         "accepted_at": "2026-10-16T01:44:52Z"
       },
       "recorded_at": "2026-10-16T01:49:19Z"
+    },
+    {
+      "record_type": "thread",
+      "kind": "review",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "daily_bounded_counterevidence_review",
+        "cycle_id": "cycle-2026-10-17-markdown-001",
+        "run_id": null
+      },
+      "id": "evt-thread-cyber-bounded-review-2026-10-17",
+      "record_id": "thread-offensive-cyber-economics",
+      "expected_version": 4,
+      "payload": {
+        "outcome": "inconclusive",
+        "counterevidence_checked": [
+          "XBOW's October 13 account reports a successful six-day exploit-chain project and estimated API charges, but also researcher direction, prior expertise, duplicate discoveries and replacement work. It does not quantify complete researcher-hours or all unsuccessful effort, and the text inspection did not independently verify the linked affected-party confirmation."
+        ],
+        "next_review_at": "2026-10-24T02:10:00Z"
+      },
+      "evidence": [
+        {
+          "publisher": "XBOW / Brendan Dolan-Gavitt",
+          "title": "Zero to Calc in Six Days: Inside XBOW’s Chrome Full Chain",
+          "url": "https://xbow.com/labs/research/zero-to-calc-in-six-days-inside-xbow-chrome-full-chain",
+          "role": "primary_text_counterevidence_review",
+          "published_at": "2026-10-13",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "xbow-chrome-full-chain-20261013"
+        }
+      ],
+      "note": "Offensive Cyber Economics asks whether AI reduces the specialist labor and total cost of offensive campaigns. This bounded retry checks whether XBOW's already-recorded success supplies the missing whole-campaign accounting. It does not establish representative costs or whether human work, failed attempts and defensive adaptation erase savings across incidents. Nor does that gap prove savings disappear. The outcome is inconclusive: the thesis and strengthening assessment are retained without a fresh endorsement, and the wider review remains outstanding. The original October 8 overdue origin survives the elapsed October 16 retry. Independent incident-level labor, unsuccessful work and total costs remain the useful discriminators. October 24 at 02:10 UTC is the next planned check; it does not reset the original October 8 overdue origin or complete the review.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/bc28a9fd65a8701c82e1b5dcedff8a952e621a42/docs/editorial-adoptions/2026-10-17-bounded-reviews.md",
+        "accepted_at": "2026-10-17T01:38:47Z"
+      },
+      "recorded_at": "2026-10-17T01:42:40.263Z"
+    },
+    {
+      "record_type": "thread",
+      "kind": "review",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "daily_bounded_counterevidence_review",
+        "cycle_id": "cycle-2026-10-17-markdown-001",
+        "run_id": null
+      },
+      "id": "evt-thread-decision-bounded-review-2026-10-17",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 13,
+      "payload": {
+        "outcome": "inconclusive",
+        "counterevidence_checked": [
+          "Marc Brooker's encoder comparison has workload-dependent latency and mixed accuracy/calibration results; architecture, base model and training differ together. Its experiment remains outside mainline Strands Decider. This same release lineage neither independently validates production outcomes nor adds a qualifying organization to the separate forecast. Chart images and raw evaluation results were not inspected."
+        ],
+        "next_review_at": "2026-10-24T02:10:00Z"
+      },
+      "evidence": [
+        {
+          "publisher": "Marc Brooker / Marc’s Blog",
+          "title": "Strands Decider: Why Not an Encoder?",
+          "url": "https://brooker.co.za/blog/2026/10/04/encoders.html",
+          "role": "primary_text_counterevidence_review",
+          "published_at": "2026-10-04",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "strands-decider-release-20261001"
+        }
+      ],
+      "note": "Decision-Native AI Runtimes tracks dedicated interfaces for bounded choices and scores, including implementations on general-purpose backbones. This overdue review tests whether the existing Strands comparison establishes a durable specialized-model advantage or reliable production economics. It does not settle those questions. The outcome is inconclusive, with the current thesis and strengthening assessment retained without a fresh endorsement. Independent matched-workload calibration, reliability and full-cost measurements are still needed; older implementation and source gaps were not comprehensively refreshed in this bounded attempt. The original October 14 overdue origin remains. October 24 at 02:10 UTC is the next planned check; it does not reset the original October 14 overdue origin or complete the review. The separate 55% forecast and its two-new-organization rules are unchanged.\n\nAdapted from Marc Brooker under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/), shortened and modified by GrepSignal. No endorsement is implied.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/bc28a9fd65a8701c82e1b5dcedff8a952e621a42/docs/editorial-adoptions/2026-10-17-bounded-reviews.md",
+        "accepted_at": "2026-10-17T01:38:47Z"
+      },
+      "recorded_at": "2026-10-17T01:42:40.263Z"
+    },
+    {
+      "record_type": "thread",
+      "kind": "review",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "daily_bounded_counterevidence_review",
+        "cycle_id": "cycle-2026-10-17-markdown-001",
+        "run_id": null
+      },
+      "id": "evt-thread-research-automation-bounded-review-2026-10-17",
+      "record_id": "thread-research-automation-bottlenecks",
+      "expected_version": 14,
+      "payload": {
+        "outcome": "inconclusive",
+        "counterevidence_checked": [
+          "Anthropic reports evaluator-guided quantum-circuit design with limited human input, including occasional prompts to broaden search. This challenges a fixed human-only judgment bottleneck, but humans supplied tasks and evaluation infrastructure. The paper, proofs, code and numerical results were not independently reproduced here.",
+          "Anthropic's ECDSA-origin account describes a prompted internal model producing testable hypotheses; some seed and base-point origins remain unexplained. It supplies no total-cost or frontier-AI-R&D productivity measurement.",
+          "Epoch's October 7 InnovationEval report retains a contrasting bounded result: principal runs fell short of its held-out human innovation, with human review excluding out-of-scope gains. Few runs, one task and successor-model memorization constrain extrapolation."
+        ],
+        "next_review_at": "2026-10-24T02:10:00Z"
+      },
+      "evidence": [
+        {
+          "publisher": "Anthropic / Andi Gu and collaborators",
+          "title": "Designing more efficient quantum circuits with Claude",
+          "url": "https://www.anthropic.com/research/designing-efficient-quantum-circuits",
+          "role": "primary_text_counterevidence_review",
+          "published_at": "2026-10-16",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "anthropic-quantum-circuit-design-20261016"
+        },
+        {
+          "publisher": "Anthropic / John Wood and collaborators",
+          "title": "Claude reveals ECDSA curve origins",
+          "url": "https://www.anthropic.com/research/ecdsa-curve-origins",
+          "role": "primary_text_counterevidence_review",
+          "published_at": "2026-10-16",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "anthropic-ecdsa-origins-20261016"
+        },
+        {
+          "publisher": "Epoch AI / David Owen",
+          "title": "Can AI automate AI R&D yet?",
+          "url": "https://epoch.ai/publications/innovationeval",
+          "role": "primary_text_counterevidence_review",
+          "published_at": "2026-10-07",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "epoch-innovationeval-20261007"
+        }
+      ],
+      "note": "Research Automation Bottlenecks concerns frontier AI R&D: whether cheaper implementation leaves steering, experimental judgment, compute and safety as binding constraints. Anthropic's scientific-design examples are relevant counterevidence to treating judgment as permanently human-only, but they do not directly measure that narrower thesis. The outcome is inconclusive. The current thesis and strengthening assessment remain without a fresh endorsement; the original October 15 overdue origin is retained. Both Anthropic reports come from the same organization, and coauthors are not independent replication. To discriminate, measure expert steering and validation time, failed attempts, compute and useful reproducible results across independent frontier-AI research teams. Keep broader machine-checkable scientific search as a watch rather than silently widening this Thread. October 24 at 02:10 UTC is the next planned check; it does not reset the original October 15 overdue origin or complete the review. Prior unrefreshed review gaps remain open.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/bc28a9fd65a8701c82e1b5dcedff8a952e621a42/docs/editorial-adoptions/2026-10-17-bounded-reviews.md",
+        "accepted_at": "2026-10-17T01:38:47Z"
+      },
+      "recorded_at": "2026-10-17T01:42:40.263Z"
+    },
+    {
+      "id": "evt-verification-review-repair-2026-10-17",
+      "record_type": "thread",
+      "record_id": "thread-software-verification-acceptance",
+      "expected_version": 1,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "daily_synthesis",
+        "cycle_id": "cycle-2026-10-17-markdown-001",
+        "run_id": null
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Anthropic / Addy Osmani, Morgan Westlee Lunt and Qing Wang",
+          "title": "How the Claude Code team does code review",
+          "url": "https://claude.dev/blog/solving-code-review-at-anthropic/",
+          "role": "primary_practitioner_workflow_report",
+          "published_at": "2026-10-15",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "anthropic-claude-code-review-20261015"
+        },
+        {
+          "publisher": "Peter Eisentraut",
+          "title": "The reverts will continue until morale improves",
+          "url": "https://peter.eisentraut.org/blog/2026/10/09/the-reverts-will-continue-until-morale-improves",
+          "role": "primary_practitioner_account",
+          "published_at": "2026-10-09",
+          "retrieved_at": null,
+          "archive_url": null,
+          "lineage_id": "eisentraut-postgresql19-reverts-20261009"
+        }
+      ],
+      "note": "Software Verification and Acceptance asks when checking, repair or recipient acceptance limits dependable software delivery. Two contrasting accounts show why the limiting stage must be measured rather than assumed.\n\nAnthropic reports that Claude Code merged pull requests more than doubled from June to September while the share reverted fell by over 40%, alongside layered automated checks, risk-based human approval and rollback. It also describes runaway agent-review loops and changes to limit them. This is an interested vendor’s before-and-after account, without a matched control or complete review-labor and cost measurements; it does not isolate which intervention helped.\n\nPostgreSQL committer Peter Eisentraut describes faster LLM-assisted defect discovery exposing repair overhead during beta. He also names architectural defects, security workload and system complexity, and expects adjustment if review capability stabilizes. This legacy-code case is an adjacent comparison, not evidence that agent-generated changes caused the problem or that AI alone delayed the release.\n\nThe practical test is quality-adjusted accepted output alongside defect escapes, repair queues, human effort and total cost. Automating review may relieve one constraint while exposing another. Neither account establishes a permanent human bottleneck. The conditional thesis and emerging assessment remain unchanged.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/bc28a9fd65a8701c82e1b5dcedff8a952e621a42/docs/editorial-adoptions/2026-10-17-bounded-reviews.md",
+        "accepted_at": "2026-10-17T01:34:55Z"
+      },
+      "recorded_at": "2026-10-17T01:42:40.263Z"
+    },
+    {
+      "id": "evt-harness-cache-energy-2026-10-17",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 16,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-17-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Neuralwatt / Chad Gibson",
+          "title": "Why harnesses matter for energy efficiency",
+          "url": "https://neuralwatt.com/news/why-harnesses-matter-for-energy-efficiency",
+          "role": "primary_provider_measurement_report",
+          "published_at": "2026-10-16",
+          "retrieved_at": "2026-10-17T01:04:16.966Z",
+          "archive_url": null,
+          "lineage_id": "neuralwatt-harness-cache-energy-20261016"
+        }
+      ],
+      "note": "Agent Harness Economics asks how coordination software changes task cost and efficiency independently of model choice. Neuralwatt's October 16 report adds a specific mechanism: editing an earlier part of a conversation can invalidate the prompt cache, which reuses computation for an unchanged prefix. The inference provider reports that mostly uncached requests used roughly twice the GPU energy of cached requests when compared on the same model at similar prompt and output lengths. Its scripted tests reproduced cache breaks caused by harness edits to earlier messages and settings.\n\nThe production result is more qualified. Neuralwatt says OpenCode 2.x fixed most cache breaks found in its 1.x lab tests, yet the versions had about the same production cache rate on the same model; it does not explain the discrepancy. Production misses also include cache eviction, and workload differences affect aggregate rates. This is one provider's report of request-level GPU energy, not an independent comparison of total cost or successful task quality. It adds a mechanism to test while leaving the thesis and assessment unchanged. Compare energy and latency alongside completed-work quality under matched workloads before treating cache improvements as task-level savings.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/bc28a9fd65a8701c82e1b5dcedff8a952e621a42/docs/editorial-adoptions/2026-10-17-bounded-reviews.md",
+        "accepted_at": "2026-10-17T01:34:55Z"
+      },
+      "recorded_at": "2026-10-17T01:42:40.263Z"
     }
   ]
 }

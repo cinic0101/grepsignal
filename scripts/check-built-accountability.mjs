@@ -22,7 +22,9 @@ assert.ok(readFileSync('dist/atom.xml','utf8').includes('http://www.w3.org/2005/
 console.log('Built A/B/C endpoints, migration invariants and base-path discovery passed.');
 // Validate rendered reader warnings against the same accepted projection. This
 // runs for both root and GitHub Pages builds in CI, without a browser or JS.
-const escape = value => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+// Astro escapes both quote characters in interpolated text as well as &, < and >.
+const escape = value => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;').replaceAll("'", '&#39;');
 for (const kind of ['signals','threads','predictions']) for (const record of data[kind]) {
   const html=readFileSync(`dist/${kind}/${record.id}/index.html`,'utf8');
   const context=reviewContext(record,feed.events);

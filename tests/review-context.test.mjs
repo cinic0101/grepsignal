@@ -1,8 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {load} from '../scripts/accountability.mjs';
+import {replay} from '../scripts/accountability.mjs';
 import {reviewContext} from '../src/data/review-context.mjs';
+const read=name=>JSON.parse(readFileSync(new URL(`../src/data/${name}.json`,import.meta.url),'utf8'));
+const baseline=read('intelligence'), links=read('thread-links'), journal=read('history');
+const replayPrefix=count=>replay(baseline,{...journal,events:journal.events.slice(0,count)},links);
+const eventIndex=id=>{
+  const index=journal.events.findIndex(event=>event.id===id);
+  assert.notEqual(index,-1,`Missing historical boundary: ${id}`);
+  return index;
+};
 const now='2026-10-14T05:00:00Z';
 const record={id:'thread-example',lifecycle:'active',review_required:false,review_due_since:null,last_reviewed_at:null};
 test('absent record and missing review metadata do not invent a review',()=>{
@@ -40,7 +48,7 @@ test('same-time reviews respect journal append order',()=>{
   assert.equal(reviewContext(input,events,now).review.id,'review-2');
 });
 test('Cyber retains its real inconclusive review and original overdue date after October 14 revision',()=>{
-  const projection=load(), before=JSON.stringify(projection);
+  const projection=replayPrefix(eventIndex('evt-xbow-bounded-cyber-cost-2026-10-14')+1), before=JSON.stringify(projection);
   const cyber=projection.data.threads.find(r=>r.id==='thread-offensive-cyber-economics');
   const result=reviewContext(cyber,projection.changes,now);
   assert.equal(result.title,'Last review inconclusive');assert.equal(result.overdue,true);
@@ -50,6 +58,28 @@ test('Cyber retains its real inconclusive review and original overdue date after
   assert.match(cyber.review_due_since,/^2026-10-08/);
   assert.match(result.review.note,/operator-hours/);assert.match(result.review.note,/full costs/);
   assert.equal(JSON.stringify(projection),before);
+});
+for(const [name,eventId,recordId,dueSince] of [
+  ['Cyber','evt-thread-cyber-bounded-review-2026-10-17','thread-offensive-cyber-economics','2026-10-08T09:19:09.824Z'],
+  ['Decision','evt-thread-decision-bounded-review-2026-10-17','thread-decision-native-runtimes','2026-10-14T02:04:22.318Z'],
+  ['Research','evt-thread-research-automation-bounded-review-2026-10-17','thread-research-automation-bottlenecks','2026-10-15T01:24:03.132Z'],
+]) test(`${name}'s October 17 inconclusive review retains its overdue origin despite the future retry`,()=>{
+  const index=eventIndex(eventId), event=journal.events[index];
+  const previous=replayPrefix(index), projection=replayPrefix(index+1);
+  const before=previous.data.threads.find(r=>r.id===recordId);
+  const after=projection.data.threads.find(r=>r.id===recordId);
+  const result=reviewContext(after,projection.changes,event.recorded_at);
+  assert.equal(event.kind,'review');assert.equal(event.record_id,recordId);
+  assert.equal(event.payload.outcome,'inconclusive');assert.ok(event.payload.counterevidence_checked.length>0);
+  assert.equal(before.review_due_since,dueSince);assert.equal(after.review_due_since,dueSince);
+  assert.equal(after.review_required,true);assert.equal(after.last_review_outcome,'inconclusive');
+  assert.equal(after.last_reviewed_at,event.recorded_at);assert.equal(result.review.id,eventId);
+  assert.equal(after.next_review_at,'2026-10-24T02:10:00Z');
+  assert.ok(Date.parse(after.next_review_at)>Date.parse(event.recorded_at));
+  assert.equal(result.pending,true);assert.equal(result.overdue,true);
+  assert.equal(result.title,'Last review inconclusive');assert.equal(result.nextLabel,'Next planned check');
+  assert.equal(after.last_changed_at,before.last_changed_at);
+  assert.equal(projection.data.generated_at,previous.data.generated_at);
 });
 test('native accessible disclosure preserves explicit lifecycle and falsification warnings',()=>{
   const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8');
