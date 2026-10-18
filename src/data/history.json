@@ -6751,6 +6751,78 @@
         "accepted_at": "2026-10-17T01:34:55Z"
       },
       "recorded_at": "2026-10-17T01:42:40.263Z"
+    },
+    {
+      "id": "evt-signal-deepseek-flash-1017-2026-10-18",
+      "record_type": "signal",
+      "record_id": "sig-deepseek-flash-1017-coding-update-2026-10-18",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-18-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "DeepSeek-AI",
+          "title": "DeepSeek-V4.1-Flash-1017",
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+          "role": "primary_model_card",
+          "published_at": null,
+          "retrieved_at": "2026-10-18T01:05:26Z",
+          "archive_url": null,
+          "lineage_id": "deepseek-v4.1-flash-1017-model-card"
+        }
+      ],
+      "payload": {
+        "id": "sig-deepseek-flash-1017-coding-update-2026-10-18",
+        "type": "capability_delta",
+        "status": "emerging",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "evidence_since": "2026-10-18",
+        "registered_at": "2026-10-18",
+        "sources": [
+          {
+            "publisher": "DeepSeek-AI",
+            "title": "DeepSeek-V4.1-Flash-1017",
+            "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+            "role": "primary_model_card",
+            "published_at": null,
+            "retrieved_at": "2026-10-18T01:05:26Z",
+            "archive_url": null,
+            "lineage_id": "deepseek-v4.1-flash-1017-model-card"
+          }
+        ],
+        "limitations": [
+          "One interested publisher's model card is the sole source. We did not reproduce benchmarks, inspect underlying data, download weights or run code.",
+          "The exact release date was not established. October 18 is this observation/proposed-registration date; 1017 is part of the model name.",
+          "The card's MIT statement is reported attribution, not a full license or rights audit. Images and linked technical material were not inspected.",
+          "No comparable Artificial Analysis index or simultaneous API prices were checked. This Signal does not qualify or resolve the existing Open-weight forecast."
+        ],
+        "falsifiers": [
+          "Narrow the reported predecessor-improvement claim if corrected card results remove the stated deltas; reject a deployment advantage if matched tests fail to preserve accepted-work quality or lower complete task cost."
+        ],
+        "title": "DeepSeek Flash-1017 reports a coding-agent improvement over its predecessor",
+        "summary": "DeepSeek's V4.1-Flash-1017 model card reports Terminal-Bench 4.0 rising from 31.2 to 42.3 versus V4.1-Flash, using Claude Code, and DeepSWE v1.1 rising from 74.2 to 77.0, using Mini-SWE-V2. These are two coding-agent evaluations with different harnesses, not independent replications. DeepSeek also claims shorter outputs and faster task completion, and states that the repository and weights use the MIT license. Peer-model comparisons remain mixed.",
+        "why_it_matters": "The named update gives teams using open-weight coding models a concrete candidate to test against the preceding Flash version. The publisher's results justify a matched evaluation; they do not establish a general capability-cost lead or a reason to change routing without checking task quality, retries, latency and total cost.",
+        "second_order_effect": "If the predecessor gains survive matched independent tests, teams may be able to improve completed coding work without moving to another model family. Whether that reduces end-to-end cost remains unmeasured here.",
+        "watch_next": "Independent predecessor comparisons on the same tasks, harness, settings and hardware; exact release metadata; output-token, latency and full-task cost accounting alongside accepted-work quality."
+      },
+      "note": "Propose a bounded publisher-reported model update. No independent performance, frontier shift, accepted registration or forecast outcome is claimed.",
+      "acceptance": {
+        "actor": "Owner-authorized dot operator",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/7bdc8711d457310d3a36c69b75ddc72588ccb423/docs/editorial-adoptions/2026-10-18-deepseek-flash-1017.md",
+        "accepted_at": "2026-10-18T01:47:42Z"
+      },
+      "recorded_at": "2026-10-18T01:50:06.229472Z"
     }
   ]
 }
