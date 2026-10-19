@@ -6823,6 +6823,195 @@
         "accepted_at": "2026-10-18T01:47:42Z"
       },
       "recorded_at": "2026-10-18T01:50:06.229472Z"
+    },
+    {
+      "id": "evt-signal-deepseek-search-fetch-pricing-2026-10-19",
+      "record_type": "signal",
+      "record_id": "sig-deepseek-search-fetch-pricing-2026-10-19",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-19-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "DeepSeek",
+          "title": "Search & Fetch",
+          "url": "https://api-docs.deepseek.com/guides/search/",
+          "role": "primary_product_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-10-19T01:05:09Z",
+          "archive_url": null,
+          "lineage_id": "deepseek-search-fetch-api-documentation"
+        }
+      ],
+      "payload": {
+        "id": "sig-deepseek-search-fetch-pricing-2026-10-19",
+        "type": "cost_intelligence",
+        "status": "emerging",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "evidence_since": "2026-10-19",
+        "registered_at": "2026-10-19",
+        "sources": [
+          {
+            "publisher": "DeepSeek",
+            "title": "Search & Fetch",
+            "url": "https://api-docs.deepseek.com/guides/search/",
+            "role": "primary_product_documentation",
+            "published_at": null,
+            "retrieved_at": "2026-10-19T01:05:09Z",
+            "archive_url": null,
+            "lineage_id": "deepseek-search-fetch-api-documentation"
+          }
+        ],
+        "limitations": [
+          "One vendor documentation page supplies the stated price and billing date. No API request, invoice, search-quality evaluation or matched task-cost comparison was performed.",
+          "The free-period statement applies to the described server-side calls when using the DeepSeek API through DeepSeek Harness, Claude Code or Codex. It does not establish that every direct API request or every use of those harnesses is currently free.",
+          "The source publication or update date is unavailable. October 19 is the observation and proposed registration date, not a verified launch date.",
+          "Evidence is an operator-authored text observation. Canonical source hashes and HTTP bytes are unavailable; images and linked API reference pages were not inspected.",
+          "Result quality, coverage, reliability, latency and complete task economics remain unverified. This does not establish a model-capability result or change an existing Thread assessment."
+        ],
+        "falsifiers": [
+          "Correct the pricing or effective-date claim if DeepSeek changes the documentation or verified billing contradicts the stated unit, successful-request condition or integration start time.",
+          "Do not infer cheaper completed work if quality-adjusted task comparisons show offsetting model, tool, retry or verification costs."
+        ],
+        "title": "DeepSeek prices successful web-tool requests and sets November 1 billing for integrations",
+        "summary": "DeepSeek's [Search & Fetch guide](https://api-docs.deepseek.com/guides/search/) lists a separate web-tool charge: Search returns web results and Fetch retrieves a page as Markdown, with each listed at $0.75 per 1,000 successful requests. Failed requests, empty searches and timeouts are unbilled. The guide says server-side calls made through DeepSeek Harness, Claude Code or Codex when using the DeepSeek API are currently free, with per-request billing starting at 00:00 Beijing time on November 1, 2026. Teams using those integrations should count successful search and fetch calls alongside model usage before that change. This is first-party documentation observed October 19; its publication date was unavailable. Search quality, retrieval reliability and total task savings have not been independently tested.",
+        "why_it_matters": "A model-token budget alone can miss tool-request charges. The stated billing change gives users of the named DeepSeek integrations a concrete reason to measure their successful Search and Fetch calls before estimating future workflow cost.",
+        "second_order_effect": "How an agent searches, batches results and fetches pages can affect the tool portion of its bill. That creates another quantity to measure alongside output quality and full task cost; the listed fee alone does not establish an economic advantage over another workflow.",
+        "watch_next": "Whether the stated November 1 billing takes effect as documented; successful-request counts and actual charges for the named integrations; matched search quality, retrieval reliability, latency and total cost per completed task."
+      },
+      "note": "Propose a bounded official pricing and billing-date observation. No accepted registration, independent service validation, forecast outcome or broader source permission is claimed.",
+      "recorded_at": "2026-10-19T01:26:11.367883Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/04da9a485cdeaccaac2b0609c40c884814c31e31/docs/editorial-adoptions/2026-10-19-pricing-verification.md",
+        "accepted_at": "2026-10-19T01:22:45Z"
+      }
+    },
+    {
+      "id": "evt-verification-vllm-kernel-validation-2026-10-19",
+      "record_type": "thread",
+      "record_id": "thread-software-verification-acceptance",
+      "expected_version": 2,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-19-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "vLLM / Benjamin Chislett (NVIDIA)",
+          "title": "Hyper Optimizing Kimi K3 in vLLM: Moving Fast and Responsibly",
+          "url": "https://vllm.ai/blog/2026-10-16-kimi-k3-megakernel",
+          "role": "primary_practitioner_optimization_report",
+          "published_at": "2026-10-16",
+          "retrieved_at": "2026-10-19T01:04:43Z",
+          "archive_url": null,
+          "lineage_id": "vllm-kimi-k3-optimization-validation-20261016"
+        }
+      ],
+      "note": "Software Verification and Acceptance asks when checking and repair limit dependable software delivery. In an [October 16 vLLM account](https://vllm.ai/blog/2026-10-16-kimi-k3-megakernel), NVIDIA contributor Benjamin Chislett reports that agent-assisted Kimi K3 optimization is outrunning review and maintenance capacity. The team found a synchronization defect during audit and numerical issues in long-context and long-generation evaluations that standalone kernel tests missed. It proposes isolating optimized paths and requiring reproducible correctness and performance evidence across supported configurations before maintainer review. This is a concrete verification design, not a measured reduction in reviewer effort or escaped defects. The account also reports useful workload- and hardware-specific speed gains, so it does not show that checking prevents progress. Its AgentX comparison uses 16 versus 8 GB300 GPUs and cannot establish equal-resource gains. The practical test is whether broader automated validation increases dependable accepted improvements after its compute and human costs are counted. The conditional thesis and emerging assessment remain unchanged.",
+      "recorded_at": "2026-10-19T01:26:11.367883Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/04da9a485cdeaccaac2b0609c40c884814c31e31/docs/editorial-adoptions/2026-10-19-pricing-verification.md",
+        "accepted_at": "2026-10-19T01:22:45Z"
+      }
+    },
+    {
+      "id": "evt-signal-lean-multikernel-checking-2026-10-19",
+      "record_type": "signal",
+      "record_id": "sig-lean-multikernel-checking-2026-10-19",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-19-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Leonardo de Moura / Lean FRO",
+          "title": "Lean Now Ships with Verified Kernels",
+          "url": "https://leodemoura.github.io/blog/2026-10-15-lean-now-ships-with-verified-kernels/",
+          "role": "primary_maintainer_release_report",
+          "published_at": "2026-10-15",
+          "retrieved_at": "2026-10-19T01:08:14Z",
+          "archive_url": null,
+          "lineage_id": "lean-multikernel-checking-20261015"
+        }
+      ],
+      "payload": {
+        "id": "sig-lean-multikernel-checking-2026-10-19",
+        "type": "capability_delta",
+        "status": "emerging",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "evidence_since": "2026-10-15",
+        "registered_at": "2026-10-19",
+        "sources": [
+          {
+            "publisher": "Leonardo de Moura / Lean FRO",
+            "title": "Lean Now Ships with Verified Kernels",
+            "url": "https://leodemoura.github.io/blog/2026-10-15-lean-now-ships-with-verified-kernels/",
+            "role": "primary_maintainer_release_report",
+            "published_at": "2026-10-15",
+            "retrieved_at": "2026-10-19T01:08:14Z",
+            "archive_url": null,
+            "lineage_id": "lean-multikernel-checking-20261015"
+          }
+        ],
+        "limitations": [
+          "One maintainer account supplies the release claims. Linked implementation, proofs, benchmarks and release notes were not inspected, and no checker was executed.",
+          "Checker assurance does not establish that formal statements faithfully translate intended natural-language mathematics, that assumptions are appropriate, or that results are novel or useful.",
+          "Multiple implementations within one project are not independent organizational replication. No measured reduction in defects, total expert effort or research cost is established here.",
+          "Evidence is an operator-authored bounded text observation, not canonical source bytes. Canonical source hash is unavailable; images were not reviewed.",
+          "October 19 is the observation and proposed registration date. The source is dated October 15; no exact release timestamp is independently verified.",
+          "The reported con-leche proof is checked by the official Lean kernel; con-ron's refinement proof concerns the checking algorithm. Compiler/runtime trust and the stated set-theory consistency assumption remain."
+        ],
+        "falsifiers": [
+          "Correct or withdraw the release-mechanism claim if versioned release contents contradict the maintainer's description of the available checking modes or verification status.",
+          "Narrow practical assurance claims if common-mode defects defeat the supposed implementation diversity or independent checks fail to validate the advertised proof obligations."
+        ],
+        "title": "Lean adds verified checker implementations and multi-kernel proof rechecking",
+        "summary": "Lean 4.35.0 adds multi-kernel proof rechecking, according to [Leonardo de Moura's October 15 announcement](https://leodemoura.github.io/blog/2026-10-15-lean-now-ships-with-verified-kernels/). Its new checking command can use con-leche, whose consistency proof is checked by the official Lean kernel and assumes the consistency of its underlying set theory, and con-ron, a Rust implementation proved to refine con-leche's checking algorithm. The maintainer describes substantial human supervision and remaining compiler, runtime and scaling limits. This offers an additional assurance layer for machine-generated formal proofs; it does not establish that a formal statement faithfully represents the intended mathematics. Teams should distinguish checker reliability from specification review. GrepSignal did not run the checkers or inspect their proofs; this is one project's report, without independent reproduction here.",
+        "why_it_matters": "A formally accepted proof depends on the correctness of the checker as well as the chosen statement and assumptions. Improving one layer should not be mistaken for validating all the others.",
+        "second_order_effect": "As generated proofs grow, verification infrastructure can become its own engineering workload. Whether additional checking reduces total expert effort or simply shifts it remains an empirical question.",
+        "watch_next": "Independent reproduction of the advertised assurance properties, disagreements between checkers, shared failure modes and practical checking costs on large developments, alongside separate review of what the formal statements mean."
+      },
+      "note": "Propose a bounded checker-assurance release observation. This is unaccepted and does not register a new Thread, change an existing thesis or resolve a forecast.",
+      "recorded_at": "2026-10-19T01:26:11.367883Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/04da9a485cdeaccaac2b0609c40c884814c31e31/docs/editorial-adoptions/2026-10-19-pricing-verification.md",
+        "accepted_at": "2026-10-19T01:22:45Z"
+      }
     }
   ]
 }
