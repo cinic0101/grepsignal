@@ -7012,6 +7012,160 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/04da9a485cdeaccaac2b0609c40c884814c31e31/docs/editorial-adoptions/2026-10-19-pricing-verification.md",
         "accepted_at": "2026-10-19T01:22:45Z"
       }
+    },
+    {
+      "id": "evt-runtime-model-backdoor-2026-10-20",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 17,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-20-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "ProjectDiscovery / Prince Chaddha",
+          "title": "How abliterated models can get you pwned",
+          "url": "https://projectdiscovery.io/research/how-abliterated-models-can-get-you-pwned",
+          "role": "primary_practitioner_report",
+          "published_at": "2026-10-06",
+          "retrieved_at": "2026-10-20T01:05:50.226Z",
+          "archive_url": null,
+          "lineage_id": "projectdiscovery-controlled-model-backdoor-20261006"
+        }
+      ],
+      "note": "Runtime Containment asks which controls limit an agent's permitted actions when its model cannot be trusted. [ProjectDiscovery's October 6 account](https://projectdiscovery.io/research/how-abliterated-models-can-get-you-pwned) reports a deliberately modified model inducing credential exfiltration in a Codex CLI demonstration using dummy secrets. Clean tool-call tests still passed. This is one team's controlled demonstration, not a compromise of OpenAI's hosted model or proof that Codex's default sandbox was bypassed; the effective permission settings were not independently verified here. It motivates checking file, execution and outbound-network permissions together. Model provenance and ordinary capability tests alone cannot establish containment. The existing thesis remains unchanged; no mitigation effectiveness or forecast outcome is established.",
+      "recorded_at": "2026-10-20T01:22:15.589172Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/7f3d4c973d7958cd03611c7d4723d01a7e947b8f/docs/editorial-adoptions/2026-10-20-specialist-forecasting-checking-boundaries.md",
+        "accepted_at": "2026-10-20T01:19:46Z"
+      }
+    },
+    {
+      "id": "evt-verification-trace-analysis-2026-10-20",
+      "record_type": "thread",
+      "record_id": "thread-software-verification-acceptance",
+      "expected_version": 3,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-20-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "evidence": [
+        {
+          "publisher": "Laminar / Robert Kim",
+          "title": "flow-1: Frontier trace intelligence at 1/20th of the cost",
+          "url": "https://laminar.sh/blog/flow-1",
+          "role": "primary_practitioner_report",
+          "published_at": "2026-10-02",
+          "retrieved_at": "2026-10-20T01:05:59.406Z",
+          "archive_url": null,
+          "lineage_id": "laminar-flow1-trace-analysis-20261002"
+        }
+      ],
+      "note": "Software Verification and Acceptance asks whether checking capacity constrains dependable delivered work. [Laminar's October 2 flow-1 report](https://laminar.sh/blog/flow-1) describes a specialized model that searches agent execution traces and returns structured failure findings. Its vendor-run evaluation covers 523 traces, with cost comparisons restricted to traces below 100,000 total LLM tokens. The report also shows a missed requirement, so cheap analysis is not a reliable acceptance gate by itself. This is a potential way to expand checking capacity, not evidence of fewer escaped defects or more accepted production output. Teams would need workload-specific false-negative, false-positive and review-effort measurements before relying on it. The conditional thesis and emerging assessment remain unchanged.",
+      "recorded_at": "2026-10-20T01:22:15.589172Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/7f3d4c973d7958cd03611c7d4723d01a7e947b8f/docs/editorial-adoptions/2026-10-20-specialist-forecasting-checking-boundaries.md",
+        "accepted_at": "2026-10-20T01:19:46Z"
+      }
+    },
+    {
+      "id": "evt-signal-timestral-specialist-cpu-forecasting-2026-10-20",
+      "record_type": "signal",
+      "record_id": "sig-timestral-specialist-cpu-forecasting-2026-10-20",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-20-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Mistral",
+          "title": "Introducing Timestral",
+          "url": "https://mistral.ai/news/timestral/",
+          "role": "primary_vendor_release_report",
+          "published_at": "2026-10-15",
+          "retrieved_at": "2026-10-20T01:05:56Z",
+          "archive_url": null,
+          "lineage_id": "mistral-timestral-20261015"
+        }
+      ],
+      "payload": {
+        "id": "sig-timestral-specialist-cpu-forecasting-2026-10-20",
+        "type": "capability_delta",
+        "status": "emerging",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "evidence_since": "2026-10-15",
+        "registered_at": "2026-10-20",
+        "sources": [
+          {
+            "publisher": "Mistral",
+            "title": "Introducing Timestral",
+            "url": "https://mistral.ai/news/timestral/",
+            "role": "primary_vendor_release_report",
+            "published_at": "2026-10-15",
+            "retrieved_at": "2026-10-20T01:05:56Z",
+            "archive_url": null,
+            "lineage_id": "mistral-timestral-20261015"
+          }
+        ],
+        "limitations": [
+          "All capability and availability claims here come from one vendor announcement; no independent replication was inspected.",
+          "Linked code, weights, benchmark artifacts and licence terms were not inspected; no unrestricted open-source claim is made.",
+          "No universal latency, total deployment cost, production adoption or general-purpose model leadership is established.",
+          "Evidence is a bounded operator-authored text observation; canonical source hash is unavailable and image_reviewed is false.",
+          "October 20 is the observation and proposed registration date; the source publication date is October 15, with no exact publication time established."
+        ],
+        "falsifiers": [
+          "Correct the release description if inspected release artifacts contradict the reported supported inputs or CPU execution.",
+          "Narrow the practical interpretation if independent domain tests find unusable forecast calibration or integration costs."
+        ],
+        "title": "Mistral introduces CPU-scale specialist forecasting with Timestral",
+        "summary": "[Mistral’s October 15 announcement](https://mistral.ai/news/timestral/) describes Timestral, four numerical forecasting models ranging from 5M to 209M parameters. The vendor reports CPU inference, probabilistic multivariate forecasts and support for historical and known-future covariates. This is a specialist time-series release rather than evidence about general-purpose language-model capability. For teams considering automated forecasting, the useful question is whether a compact pretrained model works on their own changing data. Mistral itself notes that production distributions can differ from public benchmarks. GrepSignal inspected the announcement’s text, not the linked implementation or benchmark artifacts, and did not run the models. Deployment suitability and independent performance remain unverified.",
+        "why_it_matters": "Specialist forecasting could add a separately testable numerical component to automated workflows. Parameter count alone does not establish operational value.",
+        "second_order_effect": "Separating numerical forecasts from language-based explanations may make component-level evaluation more important; integration quality remains a separate question.",
+        "watch_next": "Independent tests on shifted production data, calibration, actual CPU workloads and integration overhead."
+      },
+      "note": "Unaccepted bounded release proposal. No Thread thesis, forecast, review outcome or publication acceptance is changed.",
+      "recorded_at": "2026-10-20T01:22:15.589172Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/7f3d4c973d7958cd03611c7d4723d01a7e947b8f/docs/editorial-adoptions/2026-10-20-specialist-forecasting-checking-boundaries.md",
+        "accepted_at": "2026-10-20T01:19:46Z"
+      }
     }
   ]
 }
