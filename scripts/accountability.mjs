@@ -444,7 +444,8 @@ export function replay(baseline,journal,baselineLinks=null) {
     assert(ASSESSMENTS.includes(s.status),'invalid Signal assessment');evidence(s.sources);
     assert(['capability_delta','cost_intelligence','ecosystem_momentum','platform_shift','second_order_effect'].includes(s.type),'invalid Signal type');
     assert(s.sources.length > 0 && s.source_count === s.sources.length && s.source_organization_count === new Set(s.sources.map(x => x.publisher)).size,'source counts inconsistent');
-    for (const key of ['id','type','title','summary','why_it_matters','second_order_effect','watch_next','registered_at','evidence_since']) assert(text(s[key]),`missing Signal ${key}`);
+    for (const key of ['id','type','title','summary','why_it_matters','registered_at','evidence_since']) assert(text(s[key]),`missing Signal ${key}`);
+    for (const key of ['second_order_effect','watch_next']) if (Object.hasOwn(s,key)) assert(text(s[key]),`invalid optional Signal ${key}`);
     for (const key of ['limitations','falsifiers']) assert(Array.isArray(s[key]) && s[key].length > 0 && s[key].every(text),`missing ${key}`);
   }
   for (const t of data.threads) {

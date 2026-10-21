@@ -1,4 +1,5 @@
 ---
+import { formatEvidencePeriod } from '../data/evidence-period.mjs';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CoveragePanel from '../components/CoveragePanel.astro';
 import PredictionLedger from '../components/PredictionLedger.astro';
@@ -28,11 +29,6 @@ const updated = new Intl.DateTimeFormat('en', {
 const lastReviewed = new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
 }).format(new Date(coverage.generated_at));
-const formatMonth = (value: string) => {
-  const [year, month] = value.split('-').map(Number);
-  return new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', timeZone: 'UTC' })
-    .format(new Date(Date.UTC(year, month - 1, 1)));
-};
 const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
 }).format(new Date(`${value}T00:00:00Z`));
@@ -95,7 +91,7 @@ const homepageThreads = [...intelligence.threads.filter(x => x.lifecycle === 'ac
               </h3>
               <p class="lead-summary">{leadSignal.summary}</p>
               <div class="source-line">
-                {leadSignal.source_count} linked sources · registered {formatDate(leadSignal.registered_at)} · evidence since {formatMonth(leadSignal.evidence_since)}
+                {leadSignal.source_count} linked sources · registered {formatDate(leadSignal.registered_at)} · evidence since {formatEvidencePeriod(leadSignal.evidence_since)}
               </div>
               <a class="signal-link" href={`${base}signals/${leadSignal.id}/`}>
                 View signal <span aria-hidden="true">→</span>
