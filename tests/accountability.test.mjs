@@ -462,3 +462,24 @@ test('nonmaterial parent review metadata alone does not reflag completed Predict
   const p=run([...forecastPrelude(),changedParent(),completedForecastReview(),parentReview]).data.predictions[0];
   assert.equal(p.review_required,false);
 });
+
+
+test('Signal registration does not manufacture optional interpretation or watch fields', () => {
+  const payload = {...signal, id: 'sig-optional'};
+  delete payload.second_order_effect;
+  delete payload.watch_next;
+  const result = run([event({kind: 'register', record_id: payload.id, payload})]);
+  const registered = result.data.signals.find(row => row.id === payload.id);
+  assert.ok(registered);
+  assert.equal(Object.hasOwn(registered, 'second_order_effect'), false);
+  assert.equal(Object.hasOwn(registered, 'watch_next'), false);
+});
+
+test('present optional Signal fields still require nonempty text', () => {
+  for (const key of ['second_order_effect', 'watch_next']) {
+    for (const value of ['', '   ', null, 0]) {
+      const payload = {...signal, id: 'sig-optional-invalid', [key]: value};
+      assert.throws(() => run([event({kind: 'register', record_id: payload.id, payload})]), /invalid optional Signal/);
+    }
+  }
+});

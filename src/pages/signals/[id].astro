@@ -1,4 +1,5 @@
 ---
+import { formatEvidencePeriod } from '../../data/evidence-period.mjs';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ShareButton from '../../components/ShareButton.astro';
 import RecordHistory from '../../components/RecordHistory.astro';
@@ -47,11 +48,6 @@ const roleLabels: Record<string, string> = {
   primary_historical_baseline: 'Historical baseline',
   primary_research_report: 'Research report',
   affected_party: 'Affected party',
-};
-const formatMonth = (value: string) => {
-  const [year, month] = value.split('-').map(Number);
-  return new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', timeZone: 'UTC' })
-    .format(new Date(Date.UTC(year, month - 1, 1)));
 };
 const formatDate = (value: string) => new Intl.DateTimeFormat('en', {
   year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
@@ -125,7 +121,7 @@ const articleJsonLd = {
         </div>
         <div>
           <dt>Evidence since</dt>
-          <dd>{formatMonth(signal.evidence_since)}</dd>
+          <dd>{formatEvidencePeriod(signal.evidence_since)}</dd>
         </div>
         <div>
           <dt>Linked sources</dt>

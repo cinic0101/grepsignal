@@ -7166,6 +7166,158 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/7f3d4c973d7958cd03611c7d4723d01a7e947b8f/docs/editorial-adoptions/2026-10-20-specialist-forecasting-checking-boundaries.md",
         "accepted_at": "2026-10-20T01:19:46Z"
       }
+    },
+    {
+      "id": "evt-signal-deepinfer-serving-stack-boundary-2026-10-21",
+      "record_type": "signal",
+      "record_id": "sig-deepinfer-serving-stack-boundary-2026-10-21",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-21-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "DeepSeek-AI",
+          "title": "DeepInfer README",
+          "url": "https://github.com/deepseek-ai/DeepInfer/blob/774ce244b87cc0eb8d4b94ab9f5de2ab22049f01/README.md",
+          "role": "primary_repository_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-10-21T01:10:06.284Z",
+          "lineage_id": "deepseek-deepinfer-release",
+          "archive_url": null
+        }
+      ],
+      "payload": {
+        "type": "platform_shift",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "limitations": [
+          "One interested publisher's README is the claim source; this is not independent implementation or benchmark verification.",
+          "Only NVIDIA SM100 and Huawei Ascend 950 are named. The exact release date was not established; the pinned commit date is a revision timestamp.",
+          "README license attribution is not a full license audit. Linked code, benchmark images and license text were not inspected; no code or weights were run.",
+          "No current API-price comparison or matched deployed-cost result was checked. The existing open-weight Thread, forecast and review obligations are unchanged.",
+          "October 21 is the observation/proposed registration date, not an established release date. Evidence is bounded operator-authored text; canonical source hash unavailable and images unreviewed."
+        ],
+        "falsifiers": [
+          "Narrow the release description if an authorized inspection shows the pinned README's stated engine or hardware support is absent; reject a deployment-cost advantage unless matched end-to-end measurements establish it."
+        ],
+        "id": "sig-deepinfer-serving-stack-boundary-2026-10-21",
+        "status": "emerging",
+        "evidence_since": "2026",
+        "registered_at": "2026-10-21",
+        "sources": [
+          {
+            "publisher": "DeepSeek-AI",
+            "title": "DeepInfer README",
+            "url": "https://github.com/deepseek-ai/DeepInfer/blob/774ce244b87cc0eb8d4b94ab9f5de2ab22049f01/README.md",
+            "role": "primary_repository_documentation",
+            "published_at": null,
+            "retrieved_at": "2026-10-21T01:10:06.284Z",
+            "lineage_id": "deepseek-deepinfer-release",
+            "archive_url": null
+          }
+        ],
+        "title": "DeepInfer exposes a serving engine, not the complete production stack",
+        "summary": "DeepSeek's DeepInfer repository describes an offline inference engine for V4.1-Flash on NVIDIA SM100 GPUs and Huawei Ascend 950 NPUs. Its README lists structured generation and scheduling optimizations, but excludes the cache service, separated processing stages and replica load balancing needed for a complete service. Compatibility, performance and production behavior were not tested here.",
+        "why_it_matters": "The material change is access to the model publisher's serving implementation, not another Flash-1017 capability claim. Teams evaluating self-hosting still need to budget and validate the missing infrastructure before comparing total cost with an API.",
+        "watch_next": "Independent matched tests on the named hardware, including correctness, latency, workload throughput and the cost of integrating caching, stage separation and load balancing."
+      },
+      "note": "Owner-adopted inference-engine release candidate for a public draft PR only. No Thread thesis, forecast or review outcome is changed; merge, deployment and verified first publication remain separate.",
+      "recorded_at": "2026-10-21T01:59:46.129661Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/54d5ac23a4ebe3d3e2066da197c6d163b8540b22/docs/editorial-adoptions/2026-10-21-serving-acceptance-cost.md",
+        "accepted_at": "2026-10-21T01:51:50Z"
+      }
+    },
+    {
+      "id": "evt-verification-user-acceptance-2026-10-21",
+      "record_type": "thread",
+      "record_id": "thread-software-verification-acceptance",
+      "expected_version": 4,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-21-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Simon Willison's Weblog / Simon Willison",
+          "title": "Battle Drones",
+          "url": "https://simonwillison.net/2026/Oct/20/battledrones/",
+          "role": "primary_practitioner_account",
+          "published_at": "2026-10-20",
+          "retrieved_at": "2026-10-21T01:08:07.341Z",
+          "archive_url": null,
+          "lineage_id": "simon-battledrones-20261020"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Software Verification and Acceptance asks when checking, repair or recipient acceptance limits dependable software delivery. [Simon Willison's Battle Drones account](https://simonwillison.net/2026/Oct/20/battledrones/) illustrates why checks must match the outcome users need. He reports building a browser strategy game through repeated agent iterations, reviewing little code but playtesting extensively. Agent-authored release notes reproduced in the article describe simulated matches used to improve game balance. Later human multiplayer testing exposed a different problem: the high-pitched audio used to connect nearby devices caused a headache. Willison reports adding a warning and an online relay alternative.\n\nGame-balance metrics and comfortable real-world use are different acceptance requirements. This single first-person account does not show that verification was the binding production constraint or that human checking must remain the solution. The reported simulations, code and remedies were not independently inspected, and the author also describes useful improvements and enjoyment. No matched delivery, effort or total-cost result is supplied. The practical test is whether checks covering actual user-facing requirements reduce escaped problems and rework without simply shifting the burden elsewhere. The conditional thesis and emerging assessment remain unchanged.",
+      "recorded_at": "2026-10-21T01:59:46.129661Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/54d5ac23a4ebe3d3e2066da197c6d163b8540b22/docs/editorial-adoptions/2026-10-21-serving-acceptance-cost.md",
+        "accepted_at": "2026-10-21T01:51:50Z"
+      }
+    },
+    {
+      "id": "evt-harness-effort-regression-cost-2026-10-21",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 17,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-21-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "HumanLayer / Dex Horthy with Gabe Orlanski",
+          "title": "SlopCodeBench update 10/2026",
+          "url": "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/benchmarking-new-models-on-slop-code-bench.md",
+          "role": "primary_practitioner_benchmark_report",
+          "published_at": "2026-10-15",
+          "retrieved_at": "2026-10-21T01:09:27.216Z",
+          "archive_url": null,
+          "lineage_id": "humanlayer-slopcodebench-20261015"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Harness Economics asks how orchestration and tool design change useful-task cost independently of model choice. [Dex Horthy's October SlopCodeBench report](https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/benchmarking-new-models-on-slop-code-bench.md) supplies a related limit on buying additional inference effort, not an isolated harness comparison. Agents repeatedly modify programs as requirements arrive; a strict checkpoint pass includes regression tests, while a core pass can leave earlier behavior broken.\n\nAcross three completed same-model effort pairs, the author reports 2.11–4.22 times the estimated cost at the higher setting. Strict checkpoint counts fell in two pairs and rose in one. Each setting was run only once, checkpoints depend on earlier work, and longer problems receive more weight. These results do not establish that extra reasoning causes harm or rank production systems reliably. The source's earlier smaller subsets are not comparable longitudinal evidence; code-quality heuristics are not delivered maintainability.\n\nThe practical test is repeated matched work that measures preserved requirements and total accepted-task cost, not tokens spent or one headline score. More effort can help some outcomes, but this snapshot does not show a dependable return across settings. The thesis, strengthening assessment and overdue review obligation remain unchanged.",
+      "recorded_at": "2026-10-21T01:59:46.129661Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/54d5ac23a4ebe3d3e2066da197c6d163b8540b22/docs/editorial-adoptions/2026-10-21-serving-acceptance-cost.md",
+        "accepted_at": "2026-10-21T01:51:50Z"
+      }
     }
   ]
 }
