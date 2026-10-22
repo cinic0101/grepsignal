@@ -1,25 +1,25 @@
 {
   "schema_version": 3,
-  "cycle_id": "cycle-2026-10-21-markdown-001",
+  "cycle_id": "cycle-2026-10-22-markdown-001",
   "coverage_status": "reviewed",
-  "generated_at": "2026-10-21T01:59:46.129661Z",
+  "generated_at": "2026-10-22T01:38:40Z",
   "sources": [
     {
       "source_id": "simon-willison",
       "name": "Simon Willison’s Weblog",
-      "scope": "Three current homepage identities plus thirty retained backlog identities; all 33 selected identities have dispositions. All three authorized HTML observations were used: homepage October 21 01:07:35.576Z–01:07:44.193Z and two exact permalinks at 01:08:02.316Z–01:08:02.633Z and 01:08:07.341Z–01:08:08.127Z. One current assessment is homepage-only, not an exact-article reread. Three backlog investigations remain deferred. The denied Atom route was not retried, mirrored or substituted. Original source clocks remain unchanged; the conservative current-use ceiling is October 22 01:07:35.576Z, not a renewal of older exact-article evidence.",
+      "scope": "Three current homepage identities plus thirty retained backlog identities: 33 inventory identities and 33 selected dispositions, with 6 Research assessments. The three authorized HTML observations comprised the homepage and two exact permalinks; one current assessment is homepage-only. Three backlog investigations remain deferred. The denied Atom route was not retried, mirrored or substituted. Original source clocks and retained-evidence limitations remain unchanged.",
       "intake_count": 33,
       "reviewed_count": 33
     },
     {
       "source_id": "hacker-news",
       "name": "Hacker News",
-      "scope": "Official HTML pages 1–4 were observed sequentially during October 21 01:07:06.796Z–01:09:43.763Z, with at least five seconds between observations. The 120 displayed rows contain 100 in-cap occurrences and 100 unique identities, with no missing displayed ranks/pages, duplicates or conflicts. A visible job at rank 32 is excluded, so rank 61 enters the 60 eligible front identities. Selected 66: 60 front, one retained Timestral primary recall and five retained carries. All 19 prior same-ID comparisons exceed 24 hours; no rising lane qualifies. An initial API ID-list read and failed metadata requests preceded discovery of the retained API denial. That route was stopped and its restriction remains; the separately authorized HTML route supplies this collection. Origin/cache freshness and API-specific fields remain unknown. This bounded non-atomic collection is not an atomic API top-100 snapshot.",
-      "intake_count": 66,
-      "reviewed_count": 66
+      "scope": "Four authorized official HTML pages yielded 100 unique observed identities, without declared missing displayed ranks/pages, duplicates or conflicts. Inventory 105 includes five retained identities. There are 70 selected dispositions and 22 Research assessments. This sequential non-atomic collection is not an atomic API top-100 snapshot. Origin/cache freshness and API-specific fields remain unknown; the retained API denial was not retried.",
+      "intake_count": 70,
+      "reviewed_count": 70
     }
   ],
-  "research_targets_reviewed": 35,
+  "research_targets_reviewed": 33,
   "exact_sources_materialized": 0,
-  "note": "October 21: 138 inventory identities, 99 selected identities with recorded dispositions and 35 Research assessment identities: 25 HN, 6 Simon and 4 incomplete accountability families, not 35 completed investigations. Ten new source identities received bounded substantive text: 8 HN and 2 exact Simon permalinks. README and commit responses from one repository count as one source identity, not independent corroboration. Five HN exact-URL reads failed and MicroAGI returned an empty representation; these remain deferred, with no invented HTTP status or bypass. Three front investigations remain unattempted/unresolved, WhatsApp retains its prior access failure, and two accepted records received retained comparison only. Five HN carry and three Simon backlog deferrals remain. One current Simon assessment is homepage-only; all 30 backlog records preserve original clocks. BestBlogs is unavailable with unknown item count, not an empty feed. Four accountability families remain incomplete and selected-source evidence is counted once. Reviewed means recorded dispositions, not full-source reading or comprehensive coverage. No canonical original-source bytes or images were materialized. Existing access restrictions and rights holds remain. Proposed-event new-use ceilings are October 22 01:07:35.576Z, 01:09:27.216Z and 01:09:55.113Z; preparation and reviewer rereads do not renew them. Original forecast terms, overdue origins and October 24 planned retries remain unchanged; Verification remains due October 22. Coverage, editorial adoption, public merge, deployment and verified first publication are distinct."
+  "note": "October 22: 138 inventory identities, 103 selected identities with recorded dispositions and 33 Research assessment identities: 22 HN, 6 Simon and 5 incomplete accountability families, not 33 completed investigations. Thirteen new source identities received bounded substantive text: 11 HN and 2 exact Simon permalinks. One further Simon identity received a homepage-only metadata/text assessment. Continuation reads and reports sharing one incident lineage do not become independent corroboration. Four new exact-URL HN source attempts failed and remain deferred, without invented HTTP status, bypass or substitution by accessible related pages. Two current HN identities received retained assessments only. Earlier access failures, five HN carry and three Simon backlog investigations remain unresolved; all 30 Simon backlog records preserve original clocks. BestBlogs remains unavailable with unknown item count, not an empty feed. Five accountability assessments remain incomplete; a separate scope/clock inventory is not a completed review. Reviewed means recorded dispositions within the configured intake, not full-source reading or comprehensive coverage. Evidence remains bounded operator-authored text, with canonical source hashes unavailable and images unreviewed; no exact original-source revisions were materialized. Existing access restrictions, rights holds and evidence ceilings remain unchanged. Preparation does not renew source clocks. Original forecast terms and outstanding review obligations remain unchanged. Coverage, editorial adoption, public merge, deployment and verified first publication are distinct."
 }
