@@ -7318,6 +7318,118 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/54d5ac23a4ebe3d3e2066da197c6d163b8540b22/docs/editorial-adoptions/2026-10-21-serving-acceptance-cost.md",
         "accepted_at": "2026-10-21T01:51:50Z"
       }
+    },
+    {
+      "id": "evt-verification-regression-checks-2026-10-22",
+      "record_type": "thread",
+      "record_id": "thread-software-verification-acceptance",
+      "expected_version": 5,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-22-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Trail of Bits / Anish Naik and Marcelo Morales",
+          "title": "Your AI agent fixed the bug, but what else did it change?",
+          "url": "https://blog.trailofbits.com/2026/10/21/your-ai-agent-fixed-the-bug-but-what-else-did-it-change/",
+          "role": "primary_practitioner_evaluation",
+          "published_at": "2026-10-21",
+          "retrieved_at": "2026-10-22T01:08:11.014Z",
+          "archive_url": null,
+          "lineage_id": "trailofbits-regression-hunt-20261021"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Software Verification and Acceptance asks when checking, repair or recipient acceptance limits dependable software delivery. [Trail of Bits reports 21 confirmed regressions in more than 130 merged pull requests](https://blog.trailofbits.com/2026/10/21/your-ai-agent-fixed-the-bug-but-what-else-did-it-change/). A regression is an unintended change to existing behavior, performance or build/test operation; checking only the target fix can miss it. The authors describe engineer review and before/after execution checks. Their preliminary regression-hunt plugin evaluation reports fewer false-positive findings than a prompted Codex baseline, but some known regressions remain borderline because the evidence is insufficient.\n\nThis is a concrete attempt to check beyond a patch's stated objective, not proof of reliable acceptance or lower delivery cost. The evaluation uses the authors' own 21 known cases; code, runs and patches were not independently inspected here. Fewer false alarms do not establish sensitivity to unseen regressions, and total reviewer effort and inference cost were not measured in this review. Useful automated checking could relieve rather than permanently move the constraint onto humans. The next test is whether held-out checks reduce escaped regressions and complete review/rework cost without rejecting valid fixes. The conditional thesis and emerging assessment remain unchanged; this note does not complete or reschedule the pending review.",
+      "recorded_at": "2026-10-22T01:41:34Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/fb35e9497bf94e5776265412bc9c7c688733721b/docs/editorial-adoptions/2026-10-22-regression-checking-attack-surface.md",
+        "accepted_at": "2026-10-22T01:34:57Z"
+      }
+    },
+    {
+      "id": "evt-signal-trace-guided-attack-surface-reduction-2026-10-22",
+      "record_type": "signal",
+      "record_id": "sig-trace-guided-attack-surface-reduction-2026-10-22",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-22-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Anthropic Frontier Red Team / Chris Rohlf",
+          "title": "Using Claude to reduce the attack surface of code",
+          "url": "https://www.anthropic.com/research/attack-surface-reduction",
+          "role": "primary_research_report",
+          "published_at": "2026-10-20",
+          "retrieved_at": "2026-10-22T01:08:41.100Z",
+          "archive_url": null,
+          "lineage_id": "anthropic-attack-surface-reduction-20261020"
+        }
+      ],
+      "payload": {
+        "id": "sig-trace-guided-attack-surface-reduction-2026-10-22",
+        "type": "capability_delta",
+        "status": "emerging",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "evidence_since": "2026-10-20",
+        "registered_at": "2026-10-22",
+        "sources": [
+          {
+            "publisher": "Anthropic Frontier Red Team / Chris Rohlf",
+            "title": "Using Claude to reduce the attack surface of code",
+            "url": "https://www.anthropic.com/research/attack-surface-reduction",
+            "role": "primary_research_report",
+            "published_at": "2026-10-20",
+            "retrieved_at": "2026-10-22T01:08:41.100Z",
+            "archive_url": null,
+            "lineage_id": "anthropic-attack-surface-reduction-20261020"
+          }
+        ],
+        "limitations": [
+          "The publisher reports 493 issues across 25 projects; these are not 493 confirmed exploitable vulnerabilities or independent replications.",
+          "Execution traces and tests cover observed uses, not every legitimate configuration. Changes affecting non-default behavior remain a human judgment in the reported workflow.",
+          "Code, tests, maintainer releases and claimed accepted changes were not independently inspected or executed here. No all-project deployment or complete compatibility result is established.",
+          "No measured reduction in real attacks, complete review labor or total operating cost was established. Reducing exposure is not eliminating unknown vulnerabilities.",
+          "Evidence is bounded operator-authored text, with canonical source hash unavailable and images unreviewed. The report date is distinct from today's observation and proposed registration."
+        ],
+        "falsifiers": [
+          "Narrow the mechanism claim if independent checks show the proposed changes do not reduce unnecessary reachable behavior or fail required legitimate uses; withhold a security or economic outcome claim absent measured risk and complete-cost evidence."
+        ],
+        "title": "Anthropic reports trace-guided reduction of software attack surface",
+        "summary": "Anthropic describes using Claude with execution traces and before/after tests to reduce code that attackers can reach but the intended workload does not need. Its October 20 report covers 493 issues across 25 projects and leaves changes affecting non-default behavior to human judgment. The aim is to reduce exposure; it does not establish that unknown vulnerabilities have been removed or real attacks prevented.",
+        "why_it_matters": "This targets unnecessary reachable behavior rather than waiting to identify and repair each underlying flaw. The useful question is whether a narrower program still supports its legitimate users, so compatibility and acceptance checks are part of the security method, not an optional final step.",
+        "watch_next": "Independently verified accepted changes that preserve required behavior, reduce reachable attack paths and report review effort, maintenance cost and observed security outcomes. Do not treat an issue count as that evidence."
+      },
+      "note": "Unaccepted defensive-method proposal. No Thread is registered, broadened or linked, and no forecast or existing review clock is changed. A distinct defensive-hardening Thread remains discussion-only pending independent evidence and owner adoption.",
+      "recorded_at": "2026-10-22T01:41:34Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/fb35e9497bf94e5776265412bc9c7c688733721b/docs/editorial-adoptions/2026-10-22-regression-checking-attack-surface.md",
+        "accepted_at": "2026-10-22T01:34:57Z"
+      }
     }
   ]
 }
