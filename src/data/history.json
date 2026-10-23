@@ -7430,6 +7430,86 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/fb35e9497bf94e5776265412bc9c7c688733721b/docs/editorial-adoptions/2026-10-22-regression-checking-attack-surface.md",
         "accepted_at": "2026-10-22T01:34:57Z"
       }
+    },
+    {
+      "id": "evt-verification-small-change-eligibility-2026-10-23",
+      "record_type": "thread",
+      "record_id": "thread-software-verification-acceptance",
+      "expected_version": 6,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-23-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Will Larson",
+          "title": "Speeding up code review with `small-change`",
+          "url": "https://lethain.com/small-changes/",
+          "role": "primary_practitioner_report",
+          "published_at": "2026-10-17",
+          "retrieved_at": "2026-10-23T01:00:58.018Z",
+          "archive_url": null,
+          "lineage_id": "will-larson-small-changes-20261017"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Software Verification and Acceptance asks when downstream checking, repair or recipient approval limits dependable software delivery. [Will Larson reports that his organization's median code-review time rose from 33 to 77 minutes](https://lethain.com/small-changes/) and describes a narrowly scoped path for automated approval of eligible changes. Eligibility is decided by a CI check rather than a self-applied label; shared libraries and sensitive paths are excluded. He estimates that roughly 10% of changes qualify, and explicitly says it is too early to report useful results from the new policy.\n\nThe relevant distinction is between deciding which changes need human review and proving that the resulting delivery is safe and efficient. The reported review-time metric is not established here as measured active reviewer labor, and this single-organization account does not isolate AI's causal contribution. Nor does the proposed routing establish fewer defects, less rework or lower complete delivery cost. Narrow automated acceptance could relieve the bottleneck rather than make human review an unavoidable constraint. The next test is to compare eligible and excluded changes on escaped defects, rollback/rework and complete review effort after rollout. This adds a concrete acceptance-policy experiment while leaving the conditional thesis, emerging assessment and overdue review clock unchanged.",
+      "recorded_at": "2026-10-23T02:03:35Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/530eeb27952a356214fbdfefbb9cbf3164159c20/docs/editorial-adoptions/2026-10-23-approval-routing-runtime-controls.md",
+        "accepted_at": "2026-10-23T01:59:30Z"
+      }
+    },
+    {
+      "id": "evt-runtime-openshell-policy-change-gate-2026-10-23",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 18,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-23-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "NVIDIA / OpenShell maintainers",
+          "title": "OpenShell README",
+          "url": "https://github.com/NVIDIA/OpenShell",
+          "role": "primary_repository_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-10-23T01:00:17.361Z",
+          "archive_url": null,
+          "lineage_id": "nvidia-openshell-runtime"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Runtime Containment tracks restrictions enforced outside a model's own judgment. [NVIDIA's OpenShell README](https://github.com/NVIDIA/OpenShell) describes operating-system controls over files, system calls and network access, alongside credential injection only for approved destinations. It also describes checking proposed policy changes before they are applied. A policy change can itself enlarge what an agent may do, so guarding that change is a distinct part of the execution boundary, not merely another instruction asking the model to behave.\n\nThis supplies implementation detail beyond the earlier Nvidia platform-level account, not evidence of a newly launched control or measured protection. The README's formal-checking description does not prove that every policy change is safe, that implementation matches the stated policy, or that all credential leaks are prevented. The mutable documentation was read without pinning a repository revision; code, proofs, tests and deployed configurations were not independently examined. Useful next evidence would show exactly which policy properties are checked, what is rejected and how the mechanism behaves under adversarial changes. The existing thesis and strengthening assessment remain unchanged. NVIDIA is outside the separate Runtime forecast's four named providers, and this repository is not an allowed resolution source; no forecast result or review-clock reset follows.",
+      "recorded_at": "2026-10-23T02:03:35Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/530eeb27952a356214fbdfefbb9cbf3164159c20/docs/editorial-adoptions/2026-10-23-approval-routing-runtime-controls.md",
+        "accepted_at": "2026-10-23T01:59:30Z"
+      }
     }
   ]
 }
