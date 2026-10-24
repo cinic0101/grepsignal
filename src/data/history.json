@@ -7510,6 +7510,46 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/530eeb27952a356214fbdfefbb9cbf3164159c20/docs/editorial-adoptions/2026-10-23-approval-routing-runtime-controls.md",
         "accepted_at": "2026-10-23T01:59:30Z"
       }
+    },
+    {
+      "id": "evt-runtime-training-boundary-tests-2026-10-24",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 19,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-24-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "Securing our frontier model training environment",
+          "url": "https://openai.com/index/securing-our-frontier-model-training-environment/",
+          "role": "primary_security_research_report",
+          "published_at": "2026-10-23",
+          "retrieved_at": "2026-10-24T01:05:09.092Z",
+          "archive_url": null,
+          "lineage_id": "openai-internal-training-security-20261023"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Runtime Containment asks what still restricts an agent when its judgment or an inner safeguard fails. [OpenAI reports testing its internal frontier-model training infrastructure](https://openai.com/index/securing-our-frontier-model-training-environment/) under assumed compromise of inner defenses, alongside cached, offline web access for frontier reinforcement-learning training. Its red teams found sandbox escapes, routes to the internet and communication across isolation boundaries, prompting repairs. This makes the next boundary’s behavior after a prior layer fails a concrete testing question, not a guarantee supplied by having several controls.\n\nThese were guided exercises: teams received infrastructure details and, in many communication tests, channel or protocol hints. They were not unaided capability measurements. The vendor report is not an independent audit, proof of complete containment or evidence that more compute caused better security. We did not inspect infrastructure or reproduce results. Useful next evidence would independently test specific boundaries and attacker assumptions, including remaining gaps and operational costs.\n\nThe account concerns internal research infrastructure, not verified customer-product controls. It adds a scoped example without changing the Thread’s thesis, strengthening assessment or overdue review clock. The article is outside the separate Runtime forecast’s allowed resolution sources; no forecast outcome follows.",
+      "recorded_at": "2026-10-24T01:27:13.495504Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/9cfe4c1a29d43c2cc5672ccd6fe491a19f9194aa/docs/editorial-adoptions/2026-10-24-training-boundaries.md",
+        "accepted_at": "2026-10-24T01:25:38Z"
+      }
     }
   ]
 }
