@@ -1,25 +1,25 @@
 {
   "schema_version": 3,
-  "cycle_id": "cycle-2026-10-24-markdown-001",
+  "cycle_id": "cycle-2026-10-26-markdown-001",
   "coverage_status": "reviewed",
-  "generated_at": "2026-10-24T01:26:47.274434Z",
+  "generated_at": "2026-10-26T01:41:09.307073Z",
   "sources": [
     {
       "source_id": "simon-willison",
       "name": "Simon Willison’s Weblog",
-      "scope": "Three current identities plus thirty retained backlog identities: 33 inventory and 33 selected dispositions, with 6 Research assessments. Two exact permalink observations and one homepage-only observation do not complete the three deferred backlog investigations. Original clocks remain unchanged. The denied Atom route was not retried or substituted.",
+      "scope": "Three current identities plus thirty retained backlog identities: 33 inventory and 33 selected dispositions, with 6 Research assessments. Two exact permalink observations and one homepage-only assessment are distinct from three deferred backlog investigations. The two permalink requests were bundled, so compliance with the one-second minimum interval is unverified; homepage timing is only a coarse bracket. No Simon-only public proposal uses these observations. Original source clocks remain unchanged. The denied Atom route was not retried or substituted.",
       "intake_count": 33,
       "reviewed_count": 33
     },
     {
       "source_id": "hacker-news",
       "name": "Hacker News",
-      "scope": "Four sequential authorized official HTML pages yielded 120 rows, with 100 in-cap unique candidates and no missing ranks or pages. Inventory 105 includes five retained carries. There are 66 selected dispositions: 60 front, zero rising, one primary recall and five carryovers, with 19 Research assessments. Comparable momentum within 24 hours is unavailable. The sequential observation window is non-atomic, not an API snapshot. API-specific fields and origin/cache freshness remain unknown; the denied API route was not retried.",
-      "intake_count": 66,
-      "reviewed_count": 66
+      "scope": "Four sequential official HTML pages yielded 120 rendered rows, 100 displayed-rank-1–100 occurrences and 99 unique candidate IDs; one ID repeated at ranks 60 and 61. There are 60 selected front-lane dispositions and 11 Research assessments, with zero comparable rising selections and zero outside-front primary-recall matches. The non-atomic observation window was October 26, 01:04:57–01:06:47.420 UTC; the first start is a whole-second bound. No ranks above 100 filled the duplicate. API type/dead/deleted fields, comparable momentum and origin/cache freshness remain unknown. The denied API route was not retried. Five historical HN carry investigations remain unresolved, outside today’s intake.",
+      "intake_count": 60,
+      "reviewed_count": 60
     }
   ],
-  "research_targets_reviewed": 30,
+  "research_targets_reviewed": 22,
   "exact_sources_materialized": 0,
-  "note": "October 24: 138 inventory identities, 99 selected dispositions and 30 Research assessment identities: 19 HN, 6 Simon and 5 incomplete accountability families, not 30 completed investigations. Nine new source identities received bounded text: 7 HN and 2 Simon permalinks; one further Simon identity received homepage-only assessment. Three new exact-URL HN attempts failed, three current identities retain earlier failed reads, and one token-like source query was withheld without opening or retaining its value. Five HN carryovers and three Simon backlog investigations remain unresolved; thirty Simon backlog records preserve original clocks. BestBlogs remains unavailable with unknown count, not an empty feed. Vendor material and its relay are one evidence lineage. All eight Thread scopes were checked, not eight completed reviews. Reviewed means recorded dispositions within configured intake, not complete reading or comprehensive coverage. Canonical source hashes remain unavailable, images unreviewed and exact original-source revisions materialized zero. Original forecast conditions, overdue warnings, incomplete obligations, access denials, rights holds and original source ceilings remain unchanged. Coverage preparation and owner adoption do not renew source clocks or establish publication, deployment or verified first publication."
+  "note": "October 26: 132 inventory identities, 93 selected dispositions and 22 Research assessment identities: 11 HN, 6 Simon and 5 incomplete accountability families, not 22 completed investigations. HN includes six content-bearing text/abstract/search observations, four unavailable-source defers and one retained research record. Simon includes two exact-page observations, one homepage-only assessment and three deferred historical investigations; its collection-timing deviation remains explicit. Thirty Simon backlog entries and five unresolved historical HN carry investigations are not fresh reads. BestBlogs remains unavailable with unknown current count, not an empty feed. All eight Thread scopes were checked, not eight completed substantive reviews; existing candidate watches remain unadopted. Reviewed means recorded dispositions within configured intake, not comprehensive source coverage. Canonical source hashes remain unavailable, images unreviewed and exact original-source revisions materialized zero. Original forecast conditions, overdue warnings, incomplete obligations, source-access denials, rights holds and original evidence ceilings remain unchanged. This coverage preparation timestamp is not an acquisition time, a renewed source clock, a publication receipt or deployment verification."
 }

@@ -7550,6 +7550,156 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/9cfe4c1a29d43c2cc5672ccd6fe491a19f9194aa/docs/editorial-adoptions/2026-10-24-training-boundaries.md",
         "accepted_at": "2026-10-24T01:25:38Z"
       }
+    },
+    {
+      "id": "evt-decision-calibration-coverage-2026-10-26",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 14,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-26-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "alilibx / System One Bench",
+          "title": "System One Bench — October 25 round",
+          "url": "https://github.com/alilibx/system-one-bench",
+          "role": "primary_benchmark_report",
+          "published_at": "2026-10-25",
+          "retrieved_at": "2026-10-26T01:06:38.529Z",
+          "archive_url": null,
+          "lineage_id": "alilibx-system-one-bench"
+        },
+        {
+          "publisher": "LAXIMA Team",
+          "title": "Decision Models vs LLM Classification: A 60-Item Calibration Test",
+          "url": "https://laxima.tech/blog/decision-models-calibration-test-d1-3b-clef-flash",
+          "role": "primary_practitioner_evaluation",
+          "published_at": "2026-10-10",
+          "retrieved_at": "2026-10-26T01:06:38.529Z",
+          "archive_url": null,
+          "lineage_id": "laxima-decision-calibration-60-items"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Decision-Native Runtimes tracks interfaces that return bounded choices and probabilities instead of generated prose. Two author-reported evaluations clarify why a useful confidence score is not sufficient evidence of dependable automation. [System One Bench's October 25 round](https://github.com/alilibx/system-one-bench) uses 3,250 frozen text cases through a shared gateway. It warns that pooling datasets can make calibration look better than individual-task results, and records Classify-1 rejecting most request shapes rather than silently dropping those failures. API cost and latency for that model cover only its answered subset.\n\n[LAXIMA's separate 60-item test](https://laxima.tech/blog/decision-models-calibration-test-d1-3b-clef-flash) reports lower overall accuracy but fewer high-confidence mistakes for d1-3B than its JSON-prompted Qwen baseline. Deferring uncertain items to that baseline matched, rather than improved on, the baseline's overall accuracy. One annotator, a small constructed set and an untested direct-logprob baseline limit the comparison. Neither evaluation was reproduced here, the mutable repository was not revision-pinned, and raw results were not audited. These are distinct author reports, not replications of one production workload.\n\nThe useful deployment test is task-level calibration together with supported-input coverage and the quality and full cost of the fallback path. These results add empirical checks beyond the existing architecture comparison, without proving durable production savings or a distinct model-class advantage. The thesis, strengthening assessment, inconclusive review and original overdue clocks remain unchanged. No organization is added to the separate proliferation forecast.\n\n[System One Bench results](https://systemonebench.dev/) are attributed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/); this is a shortened original interpretation, not an endorsed reproduction.",
+      "recorded_at": "2026-10-26T01:40:22.139826Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/9b6670692b27d361bd31a04d0b9f9c040890a431/docs/editorial-adoptions/2026-10-26-runtime-decision-harness.md",
+        "accepted_at": "2026-10-26T01:38:01Z"
+      }
+    },
+    {
+      "id": "evt-harness-spec-workspaces-2026-10-26",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 18,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-26-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "JetBrains / ThinkRail",
+          "title": "ThinkRail README",
+          "url": "https://github.com/JetBrains/thinkrail/blob/main/README.md",
+          "role": "primary_implementation_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-10-26T01:06:47Z",
+          "archive_url": null,
+          "lineage_id": "jetbrains-thinkrail-implementation-observed-20261026"
+        },
+        {
+          "publisher": "JetBrains / ThinkRail",
+          "title": "ThinkRail architecture",
+          "url": "https://github.com/JetBrains/thinkrail/blob/main/architecture.md",
+          "role": "primary_implementation_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-10-26T01:07:38.835Z",
+          "archive_url": null,
+          "lineage_id": "jetbrains-thinkrail-implementation-observed-20261026"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Harness Economics asks whether orchestration and tool design improve the cost of useful work independently of model choice. [ThinkRail's implementation documentation](https://github.com/JetBrains/thinkrail/blob/main/README.md) offers a concrete design to test: an in-process pi agent works with a connected graph of SPEC.md documents that preserves project intent alongside code. Dedicated tools let the agent read and maintain that graph. Review comments can become structured context for subsequent work.\n\nThinkRail also offers git-worktree workspaces: separate checkouts and branches let concurrent tasks keep their code changes apart. Its [architecture document](https://github.com/JetBrains/thinkrail/blob/main/architecture.md) permits a default project folder or an existing external worktree too, so isolation is not an automatic property of every session. Worktrees coordinate files and changes; they are not a security sandbox. The in-process design explicitly provides no crash isolation.\n\nThese are documented mechanisms, not demonstrated economic gains. Neither document supplies a matched comparison of accepted-task cost, stale specifications or conflicting edits, and this review did not run the software. A useful test would hold model and task set constant, measure completed work and total cost, and check whether the document graph stays correct as requirements change. The thesis, strengthening assessment and overdue review obligation remain unchanged; this observation does not establish that a richer harness is cheaper or more reliable.",
+      "recorded_at": "2026-10-26T01:40:22.139826Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/9b6670692b27d361bd31a04d0b9f9c040890a431/docs/editorial-adoptions/2026-10-26-runtime-decision-harness.md",
+        "accepted_at": "2026-10-26T01:38:01Z"
+      }
+    },
+    {
+      "id": "evt-runtime-escalated-retry-authorization-2026-10-26",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 20,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-26-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "OpenAI / Codex maintainers",
+          "title": "Codex 0.164.0 release notes",
+          "url": "https://github.com/openai/codex/releases/tag/rust-v0.164.0",
+          "role": "primary_release_documentation",
+          "published_at": "2026-10-23",
+          "retrieved_at": "2026-10-26T01:07:32.186Z",
+          "archive_url": null,
+          "lineage_id": "openai-codex-01640-runtime-hardening"
+        },
+        {
+          "publisher": "OpenAI / Codex maintainers",
+          "title": "Require fresh Guardian approval for escalated tool retries",
+          "url": "https://github.com/openai/codex/pull/54263",
+          "role": "primary_implementation_description",
+          "published_at": "2026-10-15",
+          "retrieved_at": "2026-10-26T01:06:58.902Z",
+          "archive_url": null,
+          "lineage_id": "openai-codex-01640-runtime-hardening"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Runtime Containment tracks controls that constrain execution outside the acting model's own refusal. [Codex 0.164.0's release notes](https://github.com/openai/codex/releases/tag/rust-v0.164.0) include a [change to escalated retries](https://github.com/openai/codex/pull/54263): approval by Guardian, a separate review mechanism, for a sandboxed action no longer preapproves retrying it with broader permissions. The maintainers describe tracking the approval source and sending the retry's actual expanded permissions for fresh review, while preserving existing user and hook approval behavior.\n\nThe practical distinction is that permission attaches to the reviewed execution scope, not simply to an unchanged command. A failed restricted attempt is not itself authority to remove restrictions. This is a documented product change, not an independent test of its implementation or a claim that the reviewer always decides correctly. We did not inspect the full patch, execute adversarial tests or verify deployed configurations. A useful next check would confirm that broader-permission retries cannot reuse narrower approvals across the supported execution paths. The existing thesis, strengthening assessment and overdue review clock remain unchanged. This is relevant evidence for the separate Runtime forecast, but this note neither adjudicates its novelty/material-expansion criterion nor resolves or alters that forecast's original terms.",
+      "recorded_at": "2026-10-26T01:40:22.139826Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/9b6670692b27d361bd31a04d0b9f9c040890a431/docs/editorial-adoptions/2026-10-26-runtime-decision-harness.md",
+        "accepted_at": "2026-10-26T01:38:01Z"
+      }
     }
   ]
 }
