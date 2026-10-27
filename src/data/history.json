@@ -7700,6 +7700,96 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/9b6670692b27d361bd31a04d0b9f9c040890a431/docs/editorial-adoptions/2026-10-26-runtime-decision-harness.md",
         "accepted_at": "2026-10-26T01:38:01Z"
       }
+    },
+    {
+      "id": "evt-runtime-untrusted-workspace-settings-2026-10-27",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 21,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-27-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Google / Gemini CLI maintainers",
+          "title": "Gemini CLI release notes, v0.65.0",
+          "url": "https://github.com/google-gemini/gemini-cli/blob/main/docs/changelogs/index.md",
+          "role": "primary_release_documentation",
+          "published_at": "2026-10-20",
+          "retrieved_at": "2026-10-27T01:19:39Z",
+          "archive_url": null,
+          "lineage_id": "gemini-cli-untrusted-workspace-settings-29583"
+        },
+        {
+          "publisher": "Google / Gemini CLI maintainers",
+          "title": "fix(cli): enforce read-only workspace settings in untrusted folders",
+          "url": "https://github.com/google-gemini/gemini-cli/pull/29583",
+          "role": "primary_implementation_description",
+          "published_at": "2026-09-30",
+          "retrieved_at": "2026-10-27T01:19:57.872Z",
+          "archive_url": null,
+          "lineage_id": "gemini-cli-untrusted-workspace-settings-29583"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Runtime Containment asks which controls constrain operations independently of an agent's model-level refusal. [Gemini CLI's v0.65.0 release notes](https://github.com/google-gemini/gemini-cli/blob/main/docs/changelogs/index.md) describe enforcing read-only workspace settings in untrusted folders. The linked [implementation description](https://github.com/google-gemini/gemini-cli/pull/29583) makes the boundary concrete: workspace-scoped configuration writes are rejected until trust is established. The maintainers explain that an empty in-memory representation of untrusted settings previously allowed configuration commands to erase existing keys from the on-disk settings file.\n\nThe reported change marks that workspace representation read-only and blocks workspace-scoped MCP add/remove commands before configuration mutation. User-scoped configuration remains operational, and establishing trust restores workspace writability. This is a narrow configuration-persistence boundary, not a claim that every file or tool action becomes read-only, that untrusted code cannot execute, or that prompt injection is solved.\n\nThis documented mechanism is distinct from approving a retry with broader execution permissions: it checks whether a particular configuration scope is writable at all. We read the release note and merged PR description but did not inspect the full patch or run its reported tests. A useful verification would exercise both configuration commands across trust transitions and confirm preservation of the original file, including failure paths. The thesis, strengthening assessment and overdue review clock remain unchanged. This note does not adjudicate the separate forecast's novelty or material-expansion test, and does not resolve or modify its original terms.",
+      "recorded_at": "2026-10-27T01:34:40.969906Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-10-27/docs/editorial-adoptions/2026-10-27-runtime-harness.md",
+        "accepted_at": "2026-10-27T01:32:36Z"
+      }
+    },
+    {
+      "id": "evt-harness-serving-schema-2026-10-27",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 19,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-27-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Ubicloud / Jesse Donkervliet and Junhao Li",
+          "title": "Fixing Tool-Call Accuracy in vLLM",
+          "url": "https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm",
+          "role": "primary_operator_report",
+          "published_at": "2026-10-20",
+          "retrieved_at": "2026-10-27T01:19:18.902Z",
+          "archive_url": null,
+          "lineage_id": "ubicloud-vllm-tool-schema-20261020"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Harness Economics asks whether the machinery around a model changes useful-task cost. [Ubicloud reports](https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm) improving Kimi and DeepSeek tool-call schema accuracy from 92% to 100% on K2VV ToolCall after enabling constrained decoding, which restricts generated tokens to the permitted structure. Serving defaults therefore belong in a reproducible agent evaluation, not just the model name.\n\nThe report also describes model-specific grammar and feature-interaction problems that make one default unsuitable for every deployment. These are operator-reported results, not an independent reproduction. Schema compliance does not establish correct arguments, appropriate tool selection, authorization or successful end-to-end work. A matched test should retain serving settings and measure those outcomes alongside retries and total cost. This narrow observation leaves the thesis, assessment and outstanding review obligation unchanged.",
+      "recorded_at": "2026-10-27T01:34:40.969906Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-10-27/docs/editorial-adoptions/2026-10-27-runtime-harness.md",
+        "accepted_at": "2026-10-27T01:32:36Z"
+      }
     }
   ]
 }
