@@ -7790,6 +7790,56 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-10-27/docs/editorial-adoptions/2026-10-27-runtime-harness.md",
         "accepted_at": "2026-10-27T01:32:36Z"
       }
+    },
+    {
+      "id": "evt-runtime-marketplace-host-consistency-2026-10-28",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 22,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-28-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "OpenAI / Codex maintainers",
+          "title": "Codex 0.165.0 release notes",
+          "url": "https://github.com/openai/codex/releases/tag/rust-v0.165.0",
+          "role": "primary_release_documentation",
+          "published_at": "2026-10-27",
+          "retrieved_at": "2026-10-28T01:07:36.296Z",
+          "archive_url": null,
+          "lineage_id": "openai-codex-marketplace-host-consistency-56263"
+        },
+        {
+          "publisher": "OpenAI / Codex maintainers",
+          "title": "Reject backslashes in HTTP(S) marketplace URL userinfo",
+          "url": "https://github.com/openai/codex/pull/56263",
+          "role": "primary_implementation_description",
+          "published_at": "2026-10-22",
+          "retrieved_at": "2026-10-28T01:07:54.319Z",
+          "archive_url": null,
+          "lineage_id": "openai-codex-marketplace-host-consistency-56263"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Runtime Containment tracks enforcement outside the acting model’s own refusal. [Codex 0.165.0](https://github.com/openai/codex/releases/tag/rust-v0.165.0) documents a marketplace URL validation repair: a host check could accept one interpretation of an address while Git connected to a different host. The linked [change description](https://github.com/openai/codex/pull/56263) attributes this to different handling of backslashes by the validator and Git/libcurl. Its narrow guard rejects literal backslashes in the user-information portion of HTTP(S) marketplace URLs, rather than prohibiting every backslash everywhere.\n\nThe practical lesson is that an allowlist is only as reliable as the agreement between the component checking a destination and the component using it. The maintainers report regression coverage for rejecting the address before cloning, creating the installation directory or writing configuration. That ordering matters: rejecting a result after those side effects would not enforce the same boundary.\n\nThis is a documented repair, not an independently reproduced exploit or a measure of attack frequency. We read the release and merged PR description, not the full patch, and did not run the tests. A useful next verification would compare accepted and rejected address forms across the validator and actual Git execution path, including absence of side effects on rejection. The thesis, strengthening assessment and overdue review clock remain unchanged. This note does not decide whether repairing an existing host policy satisfies the separate forecast’s new-or-materially-expanded-control criterion, and changes none of its original terms.",
+      "recorded_at": "2026-10-28T01:23:46.530808Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-10-28/docs/editorial-adoptions/2026-10-28-runtime-marketplace.md",
+        "accepted_at": "2026-10-28T01:22:35Z"
+      }
     }
   ]
 }
