@@ -7840,6 +7840,56 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-10-28/docs/editorial-adoptions/2026-10-28-runtime-marketplace.md",
         "accepted_at": "2026-10-28T01:22:35Z"
       }
+    },
+    {
+      "id": "evt-runtime-private-mcp-optin-2026-10-29",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 23,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-29-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Google / Gemini CLI maintainers",
+          "title": "Gemini CLI release notes — v0.66.0",
+          "url": "https://github.com/google-gemini/gemini-cli/blob/main/docs/changelogs/index.md",
+          "role": "primary_release_documentation",
+          "published_at": "2026-10-27",
+          "retrieved_at": "2026-10-29T01:09:53.830Z",
+          "archive_url": null,
+          "lineage_id": "gemini-private-mcp-oauth-29844"
+        },
+        {
+          "publisher": "Google / Gemini CLI maintainers",
+          "title": "fix(core): support opt-in private network endpoints for MCP OAuth flows",
+          "url": "https://github.com/google-gemini/gemini-cli/pull/29844",
+          "role": "primary_implementation_description",
+          "published_at": "2026-10-20",
+          "retrieved_at": "2026-10-29T01:10:03.062Z",
+          "archive_url": null,
+          "lineage_id": "gemini-private-mcp-oauth-29844"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Runtime Containment asks how software constrains an agent independently of its own refusal. [Gemini CLI v0.66.0](https://github.com/google-gemini/gemini-cli/blob/main/docs/changelogs/index.md) documents an explicit exception for private-network authentication endpoints. MCP connects an agent to tools; OAuth obtains permission to use those services. Enterprises may host both on internal networks that the default endpoint checks reject.\n\nThe [merged change description](https://github.com/google-gemini/gemini-cli/pull/29844) introduces a per-server `oauth.allowPrivateNetwork` setting. The maintainers describe preserving default validation while allowing designated enterprise-private address ranges when enabled; link-local and other excluded address classes remain outside that exception. They also describe carrying the setting through discovery, registration, authorization, token exchange and refresh. This is not a general permission to reach every internal destination or perform every tool action.\n\nThe useful distinction is between removing a boundary and defining a scoped exception consistently across an authentication lifecycle. More permitted connectivity is not automatically stronger confinement. A practical check would exercise the same allowed and rejected endpoints during initial login and later token refresh, including mixed DNS answers. The release and PR are one implementation lineage, not independent validation; we read their descriptions, not the full patch, and ran no tests. The thesis, strengthening assessment and overdue review remain unchanged. This note neither adjudicates the separate forecast’s novelty/material-expansion requirement nor changes its original terms.",
+      "recorded_at": "2026-10-29T03:43:30.436601Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-10-29/docs/editorial-adoptions/2026-10-29-private-mcp-oauth.md",
+        "accepted_at": "2026-10-29T03:39:58Z"
+      }
     }
   ]
 }
