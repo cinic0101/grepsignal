@@ -7890,6 +7890,56 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-10-29/docs/editorial-adoptions/2026-10-29-private-mcp-oauth.md",
         "accepted_at": "2026-10-29T03:39:58Z"
       }
+    },
+    {
+      "id": "evt-runtime-permission-continuity-2026-10-30",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 24,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-10-30-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "OpenAI / Codex maintainers",
+          "title": "Codex 0.166.0 release notes",
+          "url": "https://github.com/openai/codex/releases",
+          "role": "primary_release_documentation",
+          "published_at": "2026-10-29",
+          "retrieved_at": "2026-10-30T01:01:11Z",
+          "archive_url": null,
+          "lineage_id": "codex-permission-continuity-57227"
+        },
+        {
+          "publisher": "OpenAI / Codex maintainers",
+          "title": "Preserve acknowledged permissions when resuming and forking threads",
+          "url": "https://github.com/openai/codex/pull/57227",
+          "role": "primary_implementation_description",
+          "published_at": "2026-10-26",
+          "retrieved_at": "2026-10-30T01:01:20Z",
+          "archive_url": null,
+          "lineage_id": "codex-permission-continuity-57227"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Runtime Containment asks how software constrains an agent independently of model refusal. [Codex 0.166.0](https://github.com/openai/codex/releases) documents preserving acknowledged approval and permission settings when a conversation resumes or forks into another thread. A recorded turn can otherwise carry older settings than the thread has accepted.\n\nThe [merged implementation description](https://github.com/openai/codex/pull/57227) favors settings attributable to the source thread over stale turn context, honors explicit request overrides, and avoids restoring raw historical grants without an identifiable owner. This makes permission provenance part of continuity: restoring conversation history should not mean importing every permission mentioned in it.\n\nThe practical check is whether later restrictions, explicit overrides and ownership boundaries survive resume and fork, including old-history formats. This is our verification recommendation, not a reported security result. The release and PR are one implementation lineage; we read descriptions, not the full patch, and ran no implementation tests. Preserving settings is not a guarantee against unauthorized actions. The thesis, strengthening assessment and overdue review remain unchanged; the separate forecast's original terms and novelty/material-expansion question are not adjudicated here.",
+      "recorded_at": "2026-10-30T01:16:55.317493Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-10-30/docs/editorial-adoptions/2026-10-30-permission-continuity.md",
+        "accepted_at": "2026-10-30T01:15:09Z"
+      }
     }
   ]
 }

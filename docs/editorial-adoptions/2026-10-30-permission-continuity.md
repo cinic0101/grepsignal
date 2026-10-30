@@ -1,0 +1,9 @@
+# October 30: permission continuity across resume and fork
+
+Editor cinic0101 adopted the exact reviewed Runtime update for a public draft at 2026-10-30T01:15:09Z. This operator-recorded editorial attestation is not approval to merge or deploy, nor proof of publication or independently tested source claims.
+
+Only event `evt-runtime-permission-continuity-2026-10-30` is adopted: Agent Runtime Containment version 24 → 25, with unchanged thesis effect. Codex 0.166.0 and merged PR 57227 describe preserving attributable acknowledged permission settings across resume/fork, honoring explicit overrides, and avoiding unattributed historical grants. The practical verification recommendation is ours, not an independently observed security result. The release and PR are one implementation lineage; descriptions were read, not the full patch, and no upstream implementation tests were run.
+
+Original observation windows remain 2026-10-30T01:01:11Z–01:01:20Z for the release index and 01:01:20Z–01:01:29Z for the PR. Evidence expires at 2026-10-31T01:01:11Z; preparation and review do not renew it. Bounded operator-authored text observations are not original HTTP bytes; canonical source hashes are unavailable and images unreviewed. Link-first original synthesis does not transfer third-party rights. No raw source body, image or private discussion is exported.
+
+No new Signal, Thread, relation, completed broad review or forecast outcome is adopted. The Runtime forecast's novelty/material-expansion question remains unadjudicated; its deadline remains 2026-10-30T23:59:59Z. Original probabilities, criteria, allowed sources, creation-time baselines, overdue origins and unresolved obligations persist. Scientific verification/provenance remains watch-only. Coverage records incomplete work, not full source coverage.
