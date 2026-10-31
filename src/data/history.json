@@ -7980,6 +7980,57 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-10-31/docs/editorial-adoptions/2026-10-31-spinf-scoring.md",
         "accepted_at": "2026-10-31T05:43:19Z"
       }
+    },
+    {
+      "id": "evt-pred-runtime-exact-authorization-resolve-2026-10-31",
+      "record_type": "prediction",
+      "record_id": "pred-runtime-exact-authorization-2026-10-30",
+      "expected_version": 5,
+      "kind": "resolve",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "role": "owner_authorized_forecast_resolution",
+        "cycle_id": "cycle-2026-10-31-markdown-001",
+        "run_id": null
+      },
+      "evidence": [
+        {
+          "publisher": "Google / Gemini CLI",
+          "title": "Gemini CLI release notes: v0.65.0",
+          "url": "https://github.com/google-gemini/gemini-cli/blob/main/docs/changelogs/index.md",
+          "role": "primary_allowed_resolution_source",
+          "published_at": "2026-10-20",
+          "retrieved_at": "2026-10-31T01:05:30Z",
+          "archive_url": null,
+          "lineage_id": "gemini-cli-untrusted-workspace-write-29583"
+        },
+        {
+          "publisher": "Google Gemini CLI / jvargassanchez-dot",
+          "title": "Enforce read-only workspace settings in untrusted folders, PR29583",
+          "url": "https://github.com/google-gemini/gemini-cli/pull/29583",
+          "role": "supporting_implementation_description",
+          "published_at": "2026-09-30",
+          "retrieved_at": "2026-10-31T01:05:46Z",
+          "archive_url": null,
+          "lineage_id": "gemini-cli-untrusted-workspace-write-29583"
+        }
+      ],
+      "payload": {
+        "outcome": "true",
+        "supersedes_resolution": null
+      },
+      "note": "Resolve the Runtime forecast as success under its original terms. Google's allowed Gemini CLI release index dates v0.65.0 to October 20 and documents enforced read-only workspace settings in untrusted folders, within the September 29 creation and October 30 deadline window. Linked PR29583 describes a new deterministic check that rejects workspace configuration mutations until trust is established; it corroborates the change but is not an additional allowed resolution source. This materially expands action/permission enforcement independently of model refusal; preexisting workspace trust alone does not qualify. The interpretation is narrow: configuration-write integrity counts under the original action/permission criterion, without proving interception of model-issued tool calls or universal runtime containment. Release and PR are one lineage. No patch execution, exhaustive historical archive inspection or independent security reproduction was performed. One qualifying provider satisfies the existential claim despite remaining provider-source gaps. Original 70% probability, deadline, criteria and sources remain unchanged; overdue review warnings and unrelated obligations are not cleared. This single outcome does not establish forecast calibration.",
+      "recorded_at": "2026-10-31T05:55:21.894834Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-10-31/docs/editorial-adoptions/2026-10-31-runtime-resolution.md",
+        "accepted_at": "2026-10-31T05:53:33Z"
+      }
     }
   ]
 }
