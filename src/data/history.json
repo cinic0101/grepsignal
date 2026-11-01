@@ -8031,6 +8031,46 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-10-31/docs/editorial-adoptions/2026-10-31-runtime-resolution.md",
         "accepted_at": "2026-10-31T05:53:33Z"
       }
+    },
+    {
+      "id": "evt-runtime-cross-feature-messages-2026-11-01",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 25,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-01-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Parameter / Mukul Goyal",
+          "title": "Do the Math: How We Took Over ChatGPT Accounts",
+          "url": "https://www.parameter.ai/labs/we-found-a-gap-at-openai",
+          "role": "primary_researcher_disclosure",
+          "published_at": "2026-10-28",
+          "retrieved_at": "2026-11-01T01:05:11Z",
+          "archive_url": null,
+          "lineage_id": "parameter-chatgpt-preview-message-boundary"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Runtime Containment tracks enforcement outside a model's own refusal behavior. Parameter's researchers report that a shared ChatGPT conversation could combine an isolated HTML preview with a privileged receiver for another feature's cross-frame messages, enabling access to private conversations under the recipient's authenticated session. Their account does not say that separate-origin isolation itself failed; the problem was the authority available through the receiving component.\n\nThe researchers report that OpenAI completed a fix on October 26. We read their disclosure, not a fresh vendor confirmation, and did not reproduce the exploit or assess current accounts. The practical implication is to test privileged message receivers and authority transfers across features, not only whether each isolated component has its own boundary. This is our interpretation of one reported incident, not proof of universal sandbox failure or a currently exploitable issue.\n\nThe incident fits the existing Runtime thesis rather than establishing a new distribution-trust Thread: the described failure is in communication between running components, not verification of an extension's publisher before installation. It does not reverse the separately resolved prediction that a named provider added a qualifying enforcement control; that existential success is not a guarantee of end-to-end security. Existing assessment, review warnings and unresolved obligations remain unchanged.",
+      "recorded_at": "2026-11-01T02:16:01.016095Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-01/docs/editorial-adoptions/2026-11-01-runtime-messages.md",
+        "accepted_at": "2026-11-01T02:14:44Z"
+      }
     }
   ]
 }

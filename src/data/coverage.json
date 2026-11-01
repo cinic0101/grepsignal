@@ -1,8 +1,8 @@
 {
   "schema_version": 3,
-  "cycle_id": "cycle-2026-10-31-markdown-001",
+  "cycle_id": "cycle-2026-11-01-markdown-001",
   "coverage_status": "reviewed",
-  "generated_at": "2026-10-31T05:44:55.628399Z",
+  "generated_at": "2026-11-01T02:16:01.016095Z",
   "sources": [
     {
       "source_id": "simon-willison",
@@ -14,12 +14,12 @@
     {
       "source_id": "hacker-news",
       "name": "Hacker News",
-      "scope": "Four sequential official HTML pages supplied 100 unique displayed ranks 1–100 and 60 eligible front selections, excluding one visible job. These are non-atomic October 31 observations, not an atomic API snapshot. Eleven assessments include six primary text identities, two inaccessible sources and three retained gaps. Linked incident corroboration is not another independent incident. No comparable rising lane is claimed. API type/dead/deleted and origin/cache freshness remain unknown.",
+      "scope": "Four sequential official HTML pages supplied 100 unique displayed ranks 1–100 and 60 eligible front selections, excluding one visible job. These are non-atomic November 1 observations, not an atomic API snapshot. Nine assessments include three successful bounded primary reads, five inaccessible exact-source attempts and one retained Mistral gap. No comparable rising lane is claimed. API ID-list success did not supply item metadata; type/dead/deleted and origin/cache freshness remain unknown.",
       "intake_count": 60,
       "reviewed_count": 60
     }
   ],
-  "research_targets_reviewed": 22,
+  "research_targets_reviewed": 20,
   "exact_sources_materialized": 0,
-  "note": "October 31: 133 inventory identities, 93 selected dispositions and 22 bounded assessments: eleven HN, six Simon and five accountability families, not 22 full investigations. Linode and Bunny were inaccessible; Mistral, YC and Simantic investigations remain incomplete. Simon backlog and historical defers are not new full reads. BestBlogs remains held with unknown current count. Bounded recall sampled five watches and one cross-day cluster without adding intake or research counts. All eight existing Thread scopes were checked, not eight completed substantive reviews. No new Thread is adopted; scientific verification remains watch-only. Twenty residual obligations, original forecast terms and overdue warnings remain. After the daily cycle, a separately authorized formal review adopts Runtime success in this draft under the original criterion; original probability and deadline remain unchanged. This is not a merge or deployment receipt. Exact original-source revisions materialized zero, canonical source hashes unavailable and images unreviewed. Reviewed means recorded dispositions within bounded selected intake, not complete source coverage or comprehensive reading. Source-access limitations, rights holds, original acquisition clocks and evidence expiry remain unchanged. This preparation timestamp is not a source read, renewed clock, publication receipt or deployment verification."
+  "note": "November 1: 133 inventory identities, 93 selected dispositions and 20 bounded assessments: nine HN, six Simon and five accountability families, not 20 full investigations. Simon backlog and three historical defers are not new full reads. BestBlogs remains held with unknown current count. Five-minute recall sampled five watches and one cross-day cluster without adding intake or research identities. All eight Thread scopes were checked, not eight completed substantive reviews. Distribution trust, science provenance and expertise maintenance remain watches; no new Thread is adopted. Twenty residual obligations, original forecast terms and overdue warnings remain. The Runtime prediction remains resolved true under its previously accepted original terms; this focused Thread revision does not reverse that existential outcome or imply universal containment. The owner adopted one cross-feature message-receiver note for this public draft, not merge or deployment. Exact original-source revisions materialized zero, canonical source hashes unavailable and images unreviewed. Reviewed means recorded dispositions within bounded selected intake, not complete source coverage or comprehensive reading. Source-access limitations, rights holds, original acquisition clocks and evidence expiry remain unchanged. This preparation timestamp is not a source read, renewed clock, publication receipt or deployment verification."
 }
