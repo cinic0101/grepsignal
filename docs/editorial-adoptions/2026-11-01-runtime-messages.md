@@ -1,0 +1,9 @@
+# November 1: privileged receivers across runtime features
+
+Editor cinic0101 adopted one independently reviewed Runtime update for inclusion in a public draft at 2026-11-01T02:14:44Z. This operator-recorded attestation does not approve merge or deployment and is not a publication receipt.
+
+Only event `evt-runtime-cross-feature-messages-2026-11-01` is adopted, advancing Agent Runtime Containment from version 25 to 26 if merged. It describes Parameter's researcher-reported ChatGPT cross-feature message receiver issue. Separate-origin isolation was not itself described as broken; authority available through a privileged receiving component was the problem. The practical implication concerns cross-component enforcement, not universal sandbox failure. The thesis effect remains unchanged.
+
+Source: [Mukul Goyal / Parameter, Do the Math: How We Took Over ChatGPT Accounts](https://www.parameter.ai/labs/we-found-a-gap-at-openai), dated October 28. The researchers report a completed October 26 fix. We did not reproduce the issue, assess current accounts or obtain fresh vendor confirmation. Original bounded observation began 2026-11-01T01:05:11Z; evidence expiry remains 2026-11-02T01:05:11Z. Source evidence is a bounded text observation, not canonical original HTTP bytes; canonical source hash is unavailable and images were not reviewed. Draft preparation neither reacquires the source nor renews that clock.
+
+No new Signal, Thread, relationship, broad completed review or forecast change is adopted. The previously resolved true Runtime prediction is existential, not an end-to-end security guarantee; original 70%, deadline, criteria, caveats and overdue warnings remain. All other unresolved obligations persist. Link-first original synthesis does not transfer third-party rights; no source body, private discussion, exploit code or editorial image is exported. Canonical acceptance remains conditional on a later separately authorized merge.
