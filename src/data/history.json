@@ -8071,6 +8071,86 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-01/docs/editorial-adoptions/2026-11-01-runtime-messages.md",
         "accepted_at": "2026-11-01T02:14:44Z"
       }
+    },
+    {
+      "id": "evt-verification-postgres-repair-queue-2026-11-02",
+      "record_type": "thread",
+      "record_id": "thread-software-verification-acceptance",
+      "expected_version": 7,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-02-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Robert Haas",
+          "title": "Postgres 19 is late, and it's AI's fault",
+          "url": "https://rhaas.blogspot.com/2026/10/postgres-19-is-late-and-its-ais-fault.html",
+          "role": "primary_maintainer_account",
+          "published_at": "2026-10-30",
+          "retrieved_at": "2026-11-02T01:01:14Z",
+          "archive_url": null,
+          "lineage_id": "haas-postgres19-ai-bug-repair-20261030"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Software Verification and Acceptance asks what limits dependable delivery when code becomes easier to generate or defects easier to discover. PostgreSQL committer Robert Haas attributes part of the delayed version 19 release to LLM-assisted bug discovery outpacing trusted repair and review. His comparisons of fixes applied to supported older releases are supporting observations, not a controlled causal test or verified count of AI-found defects.\n\nThe practical distinction is between discovering more problems and clearing the repair queue. Track accepted fixes and reviewer capacity alongside report volume. This account supports that existing distinction without proving AI's overall benefit is negative. Independent attribution and complete repair-cost measurements remain missing; assessment and overdue review obligations are unchanged.",
+      "recorded_at": "2026-11-02T01:22:04.719736Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-02/docs/editorial-adoptions/2026-11-02-repair-queue-framework-costs.md",
+        "accepted_at": "2026-11-02T01:20:38Z"
+      }
+    },
+    {
+      "id": "evt-harness-framework-accounting-2026-11-02",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 20,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-02-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Nolan Lawson",
+          "title": "The AI cost of JavaScript frameworks",
+          "url": "https://nolanlawson.com/2026/10/28/the-ai-cost-of-javascript-frameworks/",
+          "role": "primary_practitioner_experiment",
+          "published_at": "2026-10-28",
+          "retrieved_at": "2026-11-02T01:01:14Z",
+          "archive_url": null,
+          "lineage_id": "lawson-framework-agent-cost-20261028"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Harness Economics tracks how an agent’s tools and orchestration affect the cost of obtaining usable results, not model capability alone. Nolan Lawson reports different agent-build costs across JavaScript frameworks for one small content-browsing application and one model setting. Five attempts per framework expose variability; two Angular failures count toward cost but are excluded from code-size and performance measurements. Reported dollars are API-price estimates, not his subscription spending.\n\nThis is a bounded experiment, not a portable framework ranking or measured lifetime maintenance saving. Changing application frameworks does not isolate the contribution of the agent’s orchestration. Compare failure-inclusive outcomes and accounting definitions before transferring the result to another workload. We did not reproduce the runs. The existing assessment remains unchanged; broader production evidence and unresolved review obligations still stand.",
+      "recorded_at": "2026-11-02T01:22:04.719736Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-02/docs/editorial-adoptions/2026-11-02-repair-queue-framework-costs.md",
+        "accepted_at": "2026-11-02T01:20:38Z"
+      }
     }
   ]
 }
