@@ -1,0 +1,9 @@
+# November 3: maintainer-controlled triage
+
+Editor cinic0101 adopted one independently reviewed existing-Thread update for public draft preparation at 2026-11-03T01:19:45Z. This operator-recorded attestation does not approve merge or deployment and is not a publication receipt.
+
+`evt-verification-maintainer-triage-2026-11-03` advances Software Verification and Acceptance from version 8 to 9 if merged. Simon Willison reports manageable AI-assisted contributions with model-assisted triage and sometimes supplying his own repair instead of merging submitted code. This single maintainer account is not a controlled comparison, proof of general productivity or an independent quality measurement. It does not refute PostgreSQL's different repair-congestion experience. The existing assessment remains unchanged.
+
+Source: [Simon Willison, Release: llm 0.37](https://simonwillison.net/2026/Nov/2/llm/), November 2, 2026. Bounded observation November 3 01:07:11.844–01:07:12.772 UTC; original new-use ceiling November 4 01:07:11.844 UTC. Source evidence is operator-authored bounded text observation, not canonical original HTTP bytes; canonical source hash unavailable and images unreviewed. No repository audit, controlled comparison or experiment was independently reproduced. Preparation does not reacquire the source or renew its clock.
+
+No new Signal, Thread, relationship, broad completed review or forecast change is adopted. Runtime remains resolved true under its accepted original 70%, deadline, criteria and caveats. All twenty residual obligations and overdue warnings persist. Training-data integrity and other mechanism discussions remain watches, not additional adopted Threads. Link-first original synthesis transfers no third-party rights; no raw source body, private discussion, code or editorial image is exported. Canonical acceptance remains conditional on a later separately authorized merge.
