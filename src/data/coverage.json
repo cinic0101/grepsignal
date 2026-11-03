@@ -1,25 +1,25 @@
 {
   "schema_version": 3,
-  "cycle_id": "cycle-2026-11-02-markdown-001",
+  "cycle_id": "cycle-2026-11-03-markdown-001",
   "coverage_status": "reviewed",
-  "generated_at": "2026-11-02T01:22:04.719736Z",
+  "generated_at": "2026-11-03T01:20:55.462864Z",
   "sources": [
     {
       "source_id": "simon-willison",
       "name": "Simon Willison’s Weblog",
-      "scope": "Three bounded current assessments and thirty retained backlog identities: 33 selected dispositions and six Research assessments, including three historical defers. Three authorized HTML requests covered two URLs after first-output truncation. Backlog is not new source reading; original clocks and the Atom hold remain unchanged.",
+      "scope": "Three current bounded assessments and thirty retained backlog identities: 33 selected dispositions and six Research assessments, including three historical defers. Three authorized HTML requests covered the homepage and two permalinks. Backlog is not new source reading; the homepage quotation does not renew an expired exact-page read. Original clocks and the Atom hold remain unchanged.",
       "intake_count": 33,
       "reviewed_count": 33
     },
     {
       "source_id": "hacker-news",
       "name": "Hacker News",
-      "scope": "Four sequential official HTML pages supplied 100 unique displayed ranks 1–100 and 63 selected identities: 60 front and three rising with comparable same-ID metadata. These are non-atomic November 2 observations, not an atomic API snapshot. Ten assessments include four bounded source-text or abstract observations, two new inaccessible attempts and four retained-record assessments. API ID-list success did not supply item metadata; type/dead/deleted and origin/cache freshness remain unknown. Listing movement does not renew article evidence.",
-      "intake_count": 63,
-      "reviewed_count": 63
+      "scope": "Four sequential official HTML pages supplied 100 unique displayed ranks 1–100 and 60 eligible front selections, excluding one visible job. These are non-atomic November 3 observations, not an atomic API snapshot. No rising lane is claimed because prior comparable observations were outside 24 hours. Ten assessments include five bounded source-text or abstract observations, three inaccessible or unreadable attempts and two retained-record assessments. API ID-list success did not supply item metadata; type/dead/deleted and origin/cache freshness remain unknown. Listing movement does not renew article evidence.",
+      "intake_count": 60,
+      "reviewed_count": 60
     }
   ],
   "research_targets_reviewed": 21,
   "exact_sources_materialized": 0,
-  "note": "November 2: 133 inventory identities, 96 selected dispositions and 21 bounded assessments: ten HN, six Simon and five accountability families, not 21 full investigations. Simon backlog and three historical defers are not fresh full reads. BestBlogs remains held with unknown current count. Tao and the court-report sources were inaccessible; Jepsen, Memdoor and Scholar remain retained gaps. A 5.115-minute recall sampled five watches and one cross-day cluster without adding intake or Research identities. All eight Thread scopes were checked, not eight completed substantive reviews. Distribution trust, science provenance and expertise maintenance remain distinct watches; no new Thread is adopted. Twenty residual obligations, original forecast terms and overdue warnings remain. Runtime remains resolved true under its previously accepted original terms; these focused revisions do not alter forecasts. The owner adopted two existing-Thread notes for this public draft, not merge or deployment. Exact original-source revisions materialized zero, canonical source hashes unavailable and images unreviewed. Reviewed means recorded dispositions within bounded selected intake, not complete source coverage or comprehensive reading. Source-access limitations, rights holds, original acquisition clocks and evidence expiry remain unchanged. This preparation timestamp is not a source read, renewed clock, publication receipt or deployment verification."
+  "note": "November 3: 133 inventory identities, 93 selected dispositions and 21 bounded assessments: ten HN, six Simon and five accountability families, not 21 full investigations. Simon backlog and three historical defers are not fresh full reads. BestBlogs remains held with unknown current count. The weight-space critique and Momentic were inaccessible, LongCat unreadable; Jepsen, Memdoor and Scholar remain retained gaps. A 5.138-minute recall sampled five watches and one cross-day maintainer cluster without adding intake or Research identities. All eight Thread scopes were checked, not eight completed substantive reviews. Training-data integrity, distribution trust, science provenance and expertise maintenance remain distinct watches; no new Thread is adopted. Twenty residual obligations, original forecast terms and overdue warnings remain. Runtime remains resolved true under its previously accepted original terms; this focused revision does not alter forecasts. The owner adopted one existing-Thread note for this public draft, not merge or deployment. Exact original-source revisions materialized zero, canonical source hashes unavailable and images unreviewed. Reviewed means recorded dispositions within bounded selected intake, not complete source coverage or comprehensive reading. Source-access limitations, rights holds, original acquisition clocks and evidence expiry remain unchanged. This preparation timestamp is not a source read, renewed clock, publication receipt or deployment verification."
 }
