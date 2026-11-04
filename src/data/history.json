@@ -8191,6 +8191,46 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-03/docs/editorial-adoptions/2026-11-03-maintainer-triage.md",
         "accepted_at": "2026-11-03T01:19:45Z"
       }
+    },
+    {
+      "id": "evt-harness-figma-native-edits-2026-11-04",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 21,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-04-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Figma / Josh Clemm",
+          "title": "How we’re training a Figma-fluent editing model",
+          "url": "https://www.figma.com/blog/training-a-figma-fluent-editing-model/",
+          "role": "primary_vendor_engineering_account",
+          "published_at": "2026-10-29",
+          "retrieved_at": "2026-11-04T00:59:31.474Z",
+          "archive_url": null,
+          "lineage_id": "figma-native-editing-model-20261029"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Harness Economics asks how an agent's tools and orchestration affect the cost of useful work. Figma describes training a specialized model to edit designs in its native document format, combining automated checks of edit structure with visual assessment calibrated by designers. Its system routes work between specialized and third-party models rather than treating one model as best for every task.\n\nThis is a vendor engineering account, not an independently reproduced comparison. Figma attributes product improvements to changes in models, tools and the harness together, so the account does not isolate a gain from orchestration or training alone. The useful test is whether the complete system delivers more acceptable edits after counting failed attempts, checking effort, latency and total cost. Those matched measurements were not independently verified here. The thesis, assessment and outstanding review obligation remain unchanged.",
+      "recorded_at": "2026-11-04T01:50:08.467370Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-04/docs/editorial-adoptions/2026-11-04-figma-native-edits.md",
+        "accepted_at": "2026-11-04T01:47:04.853248Z"
+      }
     }
   ]
 }
