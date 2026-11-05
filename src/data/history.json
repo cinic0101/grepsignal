@@ -8231,6 +8231,86 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-04/docs/editorial-adoptions/2026-11-04-figma-native-edits.md",
         "accepted_at": "2026-11-04T01:47:04.853248Z"
       }
+    },
+    {
+      "id": "evt-runtime-query-capability-grants-2026-11-05",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 26,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-05-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Simon Willison",
+          "title": "Datasette Apps 0.3a0",
+          "url": "https://simonwillison.net/2026/Nov/4/datasette-apps/",
+          "role": "primary_maintainer_release_account",
+          "published_at": "2026-11-04",
+          "retrieved_at": "2026-11-05T00:59:13.484Z",
+          "archive_url": null,
+          "lineage_id": "datasette-apps-0-3a0-20261104"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Runtime Containment asks how software limits an agent's authority outside the model's own refusal. Simon Willison's Datasette Apps 0.3a0 release note describes a gate on the database queries a generated app may call: granting write-query access requires user approval. App creation checks that requested queries exist and that the user can view them, then requests approval for write queries before creating the app.\n\nThis adds a concrete capability-grant boundary to test, not proof of effective containment. The report does not establish whether alternate execution paths enforce the same limits or how later permission changes are handled. We read the maintainer's release note, not the implementation, and ran no security tests. Verify that denied grants leave no write capability and that execution remains within the approved query set. The thesis, assessment and unresolved review obligations remain unchanged; the separately resolved Runtime forecast is not reopened.",
+      "recorded_at": "2026-11-05T01:29:02.304858Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-05/docs/editorial-adoptions/2026-11-05-query-grants-finding-identity.md",
+        "accepted_at": "2026-11-05T01:26:27.603668Z"
+      }
+    },
+    {
+      "id": "evt-verification-finding-identity-2026-11-05",
+      "record_type": "thread",
+      "record_id": "thread-software-verification-acceptance",
+      "expected_version": 9,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-05-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "A thousand fewer paths to root",
+          "url": "https://openai.com/index/a-thousand-fewer-paths-to-root/",
+          "role": "primary_vendor_research_account",
+          "published_at": "2026-11-04",
+          "retrieved_at": "2026-11-05T01:01:56.592Z",
+          "archive_url": null,
+          "lineage_id": "openai-linux-privilege-escalation-20261104"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Software Verification and Acceptance asks whether easier defect discovery translates into dependable repairs. OpenAI's November 4 Linux study adds a concrete warning: in an early run, 20 of 200 apparently successful privilege-escalation exploits used a different vulnerability from the assigned one. The team reports adding an independent check that the exploit used the claimed vulnerability.\n\nA successful result therefore need not validate the intended finding. The later campaign's 948 distinct candidate patches are also not 948 accepted fixes. In a separate status check during the scan and analysis, OpenAI reports that 61 vulnerabilities already had upstream fixes, 43 had staging patches and 299 were being reported and discussed publicly. The report does not give these figures a common denominator; they are not one repair total.\n\nThis vendor account supports checking finding identity and revalidating against current code before consuming maintainer attention. It does not establish net risk reduction or complete repair costs, and we did not independently inspect maintainer records or reproduce the study. Watch accepted fixes, rejected or obsolete reports, and maintainer effort. The thesis, assessment and outstanding review obligation remain unchanged.",
+      "recorded_at": "2026-11-05T01:29:02.304858Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-05/docs/editorial-adoptions/2026-11-05-query-grants-finding-identity.md",
+        "accepted_at": "2026-11-05T01:26:27.603668Z"
+      }
     }
   ]
 }
