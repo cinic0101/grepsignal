@@ -8351,6 +8351,56 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-06/docs/editorial-adoptions/2026-11-06-safety-task-progress.md",
         "accepted_at": "2026-11-06T01:28:37.982430Z"
       }
+    },
+    {
+      "id": "evt-runtime-microvm-privileges-2026-11-07",
+      "record_type": "thread",
+      "record_id": "thread-agent-runtime-containment",
+      "expected_version": 27,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-07-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Replit / Luis Héctor Chávez, Jason Dellaluce and Adnan Abdulhussein",
+          "title": "Inside Replit’s New Sandbox Engine, Part 1: The Path to MicroVMs",
+          "url": "https://frontier.replit.com/sandbox-engine-microvms-part-1/",
+          "role": "primary_engineering_account",
+          "published_at": "2026-11-04",
+          "retrieved_at": "2026-11-07T01:05:36.673Z",
+          "archive_url": null,
+          "lineage_id": "replit-sandbox-microvm-202611"
+        },
+        {
+          "publisher": "PWN Research / Paulos Yibelo",
+          "title": "Firecracker VM Escape: PwnEscape Part 2.",
+          "url": "https://pwn.ai/blog/firecracker-escape",
+          "role": "primary_researcher_disclosure",
+          "published_at": null,
+          "retrieved_at": "2026-11-07T01:05:36.673Z",
+          "archive_url": null,
+          "lineage_id": "pwn-firecracker-escape-202611"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Runtime Containment tracks controls that constrain an agent's actions independently of the model's refusal behavior. Two accounts sharpen a practical question for virtual-machine sandboxes: what authority remains in the host process that runs the guest? Replit describes a completed migration to microVMs, small virtual machines with their own guest kernels, using KVM and Cloud Hypervisor. Its engineering account says the virtual-machine monitor (VMM), the host process managing each guest, runs without root privileges or Linux capabilities.\n\nSeparately, PWN Research reports obtaining host-root execution in a Firecracker setup after gaining a way to access selected host memory from inside the guest. That target ran Firecracker v1.16.1 as root without the production jailer. The researchers explicitly distinguish deployments that use privilege dropping, namespaces and seccomp, which need a separate assessment. This is not a demonstrated flaw in Replit, and the different hypervisors and privilege configurations cannot be treated as equivalent tests.\n\nOur interpretation is that a microVM label alone does not establish the authority left after a boundary failure. Check the VMM's actual user, residual privileges and surrounding isolation, then test the consequences of compromise in that deployment. Replit's design and PWN's exploit account are reported evidence, not an independent audit or a reproduction by GrepSignal. Neither account establishes authorization for every agent action, universal sandbox failure or current production exploitability.\n\nThe existing Runtime thesis and assessment remain unchanged. This is deployment-specific containment evidence, not a new Thread. It also does not reverse the already resolved prediction that a named provider shipped a qualifying enforcement control: that narrow success never guaranteed end-to-end security. Original review warnings, unresolved obligations and forecast terms remain.",
+      "recorded_at": "2026-11-07T01:21:35.679831Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "accepted_at": "2026-11-07T01:18:40.167950Z",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-07/docs/editorial-adoptions/2026-11-07-runtime-microvm-privileges.md"
+      }
     }
   ]
 }
