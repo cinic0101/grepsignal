@@ -8401,6 +8401,46 @@
         "accepted_at": "2026-11-07T01:18:40.167950Z",
         "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-07/docs/editorial-adoptions/2026-11-07-runtime-microvm-privileges.md"
       }
+    },
+    {
+      "id": "evt-harness-memory-upkeep-2026-11-08",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 22,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-08-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Anthropic / Lance Martin",
+          "title": "The components of agent memory",
+          "url": "https://www.anthropic.com/research/components-of-agent-memory",
+          "role": "primary_provider_experiment_account",
+          "published_at": "2026-11-06",
+          "retrieved_at": "2026-11-08T01:07:35.822Z",
+          "archive_url": null,
+          "lineage_id": "anthropic-agent-memory-20261106"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Agent Harness Economics tracks how the software around a model changes useful completion and total cost. Anthropic's November 6 memory study adds a bounded example: an evaluation of 25 questions about an internal company-document corpus, using a wiki built by Opus 5. After additional wiki-building, wiki plus search met 61% of graded criteria, compared with 53% for search alone and 48% for the wiki alone. These are criteria scores in a small provider-run evaluation, not production success rates. The prose does not separately specify the query-time model, so we cannot infer a controlled same-model effect.\n\nThe same account describes legal-document tasks with no clear wiki advantage, and a wiki larger than its source documents. Query-time token savings therefore do not establish net savings: creating, correcting and updating memory also consumes compute. This read establishes neither independent replication nor a complete amortized cost comparison.\n\nThe useful next test is a same-model comparison over repeated, changing workloads, charging both retrieval and upkeep while measuring answer quality and stale-memory errors. This adds a memory-design example; the existing Harness thesis and assessment, overdue review warning and other unresolved obligations remain unchanged.",
+      "recorded_at": "2026-11-08T01:28:20.017408Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-08/docs/editorial-adoptions/2026-11-08-harness-memory-upkeep.md",
+        "accepted_at": "2026-11-08T01:25:09.655756Z"
+      }
     }
   ]
 }
