@@ -8441,6 +8441,56 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-08/docs/editorial-adoptions/2026-11-08-harness-memory-upkeep.md",
         "accepted_at": "2026-11-08T01:25:09.655756Z"
       }
+    },
+    {
+      "id": "evt-open-weight-local-runtime-2026-11-09",
+      "record_type": "thread",
+      "record_id": "thread-open-weight-capability-cost-frontier",
+      "expected_version": 5,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-09-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "synchopate / llama-modchip project",
+          "title": "llama-modchip README (v2.4.0)",
+          "url": "https://github.com/synchopate/llama-modchip/blob/main/README.md",
+          "role": "primary_project_self_report",
+          "published_at": null,
+          "retrieved_at": "2026-11-09T01:06:26.820Z",
+          "archive_url": null,
+          "lineage_id": "synchopate-llama-modchip-local-runtime"
+        },
+        {
+          "publisher": "synchopate / llama-modchip project",
+          "title": "DeepSeek-V4-Flash 284B (13.17B Active) — Deep-Dive Mathematical & Kernel Guide",
+          "url": "https://github.com/synchopate/llama-modchip/blob/main/docs/DEEPSEEK_V4_OPTIMIZATIONS.md",
+          "role": "same_lineage_technical_guide",
+          "published_at": null,
+          "retrieved_at": "2026-11-09T01:06:50.449Z",
+          "archive_url": null,
+          "lineage_id": "synchopate-llama-modchip-local-runtime"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Open-Weight Capability–Cost Frontier follows whether openly available models deliver useful capability at lower complete cost, while closed models also improve. A new self-reported local-runtime example narrows the hardware question: the llama-modchip project describes running a 56.56 GiB compressed DeepSeek-V4-Flash checkpoint on a 64 GB Linux machine, using a 16-core AMD Ryzen 9 9955HX CPU without a GPU.\n\nThe project reports roughly 9–10 generated tokens per second in its default configuration. Its custom model format requires a modified runtime. Crucially, its reported equivalence checks compare the patched and unpatched runtime on the same compressed checkpoint, not the compressed model against original full-precision weights. A configured 256K-token capacity is also not a demonstrated filled-context speed: the accompanying measurements use much shorter contexts.\n\nThis is a concrete deployment possibility to test, not independently reproduced performance, preserved task quality or lower total ownership cost. Before comparing it with hosted alternatives, measure representative task success, latency, memory and operating cost together. It adds a qualified implementation example without changing the Thread's two-sided assessment or overdue review warning. It does not satisfy the separate forecast's allowed-source capability and API-price requirements; original probability, deadline and conditions remain unchanged.",
+      "recorded_at": "2026-11-09T03:00:45.173893Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/daily/2026-11-09/docs/editorial-adoptions/2026-11-09-open-weight-local-runtime.md",
+        "accepted_at": "2026-11-09T02:59:07.240196Z"
+      }
     }
   ]
 }
