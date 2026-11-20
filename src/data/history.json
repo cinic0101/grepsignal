@@ -8752,6 +8752,81 @@
         "accepted_at": "2026-11-18T02:41:36.678180Z"
       },
       "recorded_at": "2026-11-18T02:44:06.867533Z"
+    },
+    {
+      "id": "evt-chip-design-validation-stages-2026-11-19",
+      "record_type": "signal",
+      "record_id": "sig-chip-design-validation-stages-2026-11-19",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-19-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "OpenAI",
+          "title": "Advancing chip design with OpenAI models",
+          "url": "https://openai.com/index/advancing-chip-design-with-our-models/",
+          "role": "primary_vendor_research_report",
+          "published_at": "2026-11-18",
+          "retrieved_at": "2026-11-19T01:08:21.655Z",
+          "archive_url": null,
+          "lineage_id": "openai-chip-design-20261118"
+        }
+      ],
+      "payload": {
+        "id": "sig-chip-design-validation-stages-2026-11-19",
+        "type": "second_order_effect",
+        "status": "emerging",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "registered_at": "2026-11-19",
+        "evidence_since": "2026-11-18",
+        "first_observed_at": null,
+        "falsifiers": [
+          "A correction showing that the reported area savings or bring-up results were not achieved would weaken the specific silicon claim.",
+          "Matched full-feature designs with comparable area, measured post-fabrication performance and reduced total verification effort would weaken the proposed downstream-validation bottleneck."
+        ],
+        "limitations": [
+          "One OpenAI report; partner statements are attributed through it, not independently read or reproduced.",
+          "Standard-cell area savings are estimates for named blocks, not complete chip area or end-to-end engineering-cost savings.",
+          "The separate simulated benchmark permits up to 16 times baseline area; its specification-built task can omit features. The area allowance is not measured actual use.",
+          "Bounded attributed text observation, canonical source hash unavailable and image_reviewed false; linked artifacts and experiments not independently inspected."
+        ],
+        "sources": [
+          {
+            "publisher": "OpenAI",
+            "title": "Advancing chip design with OpenAI models",
+            "url": "https://openai.com/index/advancing-chip-design-with-our-models/",
+            "role": "primary_vendor_research_report",
+            "published_at": "2026-11-18",
+            "retrieved_at": "2026-11-19T01:08:21.655Z",
+            "archive_url": null,
+            "lineage_id": "openai-chip-design-20261118"
+          }
+        ],
+        "title": "OpenAI reports silicon-proven chip optimizations, separately from a more permissive design benchmark",
+        "summary": "OpenAI estimates that its models helped reduce standard-cell area, the area of the small logic cells making up a block, by about 13% for a vector block and 10% for a matrix block in its Jalapeño project, and says those optimizations were silicon-proven during bring-up, the initial testing of fabricated chips. The same report describes AMD changes at different stages: some incorporated in a design sent for manufacturing, others in files for future versions. These are claims in OpenAI's account, not independently verified partner results.",
+        "why_it_matters": "A design that works in fabricated silicon has crossed a different verification step from one that passes simulation. Keeping those stages attached to each result makes it possible to recognize concrete progress without treating every design improvement as production-ready.",
+        "our_read": "The report also presents a separate RISC-V design benchmark using simulation and synthesis-based estimates. The benchmark allows up to 16 times baseline area, while its specification-built task can omit features; this is an allowance, not a claim that every design used that much area. Those conditions prevent reading its benchmark gains as equivalent full-feature production-chip gains. The named block savings also do not establish whole-chip savings or lower complete engineering cost.",
+        "second_order_effect": "If generating useful design variants becomes cheaper, the effort needed to establish which variants meet physical, feature and production constraints could become a larger share of delivered engineering work. This is a hypothesis to test, not a bottleneck shift measured by the reported results.",
+        "watch_next": "Look for independent partner evidence, preserved feature sets and comparable area constraints, measured performance after physical implementation and fabrication, complete failed-attempt records, and human verification time. A matched workflow that reduces both design and validation effort would weaken the proposed downstream-bottleneck interpretation."
+      },
+      "note": "Owner separately approved publication of this exact chip-design validation-stages Signal on November 20 after editorial adoption on November 19. One vendor lineage, with no independent replication and no change to any Thread, forecast or outstanding review. Original bounded source observation was November 19 at 01:08:21.655 UTC and expired November 20 at 01:08:21.655 UTC. A separate claim-relevant text revalidation supports this publication; it does not renew the earlier clock. Registration is not a verified first-publication receipt.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/publish/2026-11-20-chip-validation/docs/editorial-adoptions/2026-11-20-chip-design.md",
+        "accepted_at": "2026-11-20T01:26:49.825933Z"
+      },
+      "recorded_at": "2026-11-20T01:28:04.210119Z"
     }
   ]
 }
