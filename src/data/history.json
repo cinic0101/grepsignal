@@ -8827,6 +8827,138 @@
         "accepted_at": "2026-11-20T01:26:49.825933Z"
       },
       "recorded_at": "2026-11-20T01:28:04.210119Z"
+    },
+    {
+      "id": "evt-qwen4-max-preview-retirement-2026-11-21",
+      "record_type": "signal",
+      "record_id": "sig-qwen4-max-preview-retirement-2026-11-21",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-21-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Alibaba Cloud Model Studio",
+          "title": "qwen4-max-preview",
+          "url": "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/qwen4-max-preview",
+          "role": "primary_service_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-11-21T01:03:25.230Z",
+          "archive_url": null,
+          "lineage_id": "alibaba-qwen4-max-service-20261116"
+        },
+        {
+          "publisher": "Alibaba Cloud Model Studio",
+          "title": "qwen4-max (latest model)",
+          "url": "https://www.alibabacloud.com/help/en/model-studio/qwen4-max",
+          "role": "primary_service_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-11-21T01:04:08.619Z",
+          "archive_url": null,
+          "lineage_id": "alibaba-qwen4-max-service-20261116"
+        }
+      ],
+      "payload": {
+        "id": "sig-qwen4-max-preview-retirement-2026-11-21",
+        "type": "second_order_effect",
+        "status": "emerging",
+        "source_count": 2,
+        "source_organization_count": 1,
+        "registered_at": "2026-11-21",
+        "evidence_since": "2026-11-16",
+        "first_observed_at": null,
+        "falsifiers": [
+          "An official extension or correction to the preview service window would change the stated deadline."
+        ],
+        "limitations": [
+          "Provider documentation only; no production or preview API calls and no verified account entitlement.",
+          "Production listings do not establish compatibility across plans, equivalent behavior, or downloadable Max weights."
+        ],
+        "sources": [
+          {
+            "publisher": "Alibaba Cloud Model Studio",
+            "title": "qwen4-max-preview",
+            "url": "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/qwen4-max-preview",
+            "role": "primary_service_documentation",
+            "published_at": null,
+            "retrieved_at": "2026-11-21T01:03:25.230Z",
+            "archive_url": null,
+            "lineage_id": "alibaba-qwen4-max-service-20261116"
+          },
+          {
+            "publisher": "Alibaba Cloud Model Studio",
+            "title": "qwen4-max (latest model)",
+            "url": "https://www.alibabacloud.com/help/en/model-studio/qwen4-max",
+            "role": "primary_service_documentation",
+            "published_at": null,
+            "retrieved_at": "2026-11-21T01:04:08.619Z",
+            "archive_url": null,
+            "lineage_id": "alibaba-qwen4-max-service-20261116"
+          }
+        ],
+        "title": "Alibaba sets a November 25 end date for the Qwen4-Max preview model ID",
+        "summary": "Alibaba Cloud says the exact model ID `qwen4-max-preview` is available only through its Token Plan and will retire at the end of November 25 in UTC+8, or 16:00 UTC that day. Model Studio lists a separate production ID, `qwen4-max`, with region-specific service scopes. This is an announced service cutoff, not an observed outage or a retirement of the production model.",
+        "why_it_matters": "Applications that specify the preview ID have a concrete migration deadline. Teams using the distinct production ID should not treat the announcement as a shutdown notice for that ID.",
+        "our_read": "If an application uses the preview ID, check that production access is available under the intended plan and region, and verify the API settings and representative outputs before changing the application. The listings do not establish automatic migration, identical behavior or open model weights.",
+        "second_order_effect": "Even when a preview and production model have similar names, the API identifier and its plan and regional scope are deployment dependencies worth recording separately.",
+        "watch_next": "Watch for an official deadline change and verify the replacement under the intended account before the cutoff. This report does not invoke either API."
+      },
+      "note": "Owner-adopted for a public draft only. This Signal describes the announced preview cutoff, not an observed service outage. Two service pages are from one provider. No API validation or authorization to merge or deploy.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-21-jarvis-qwen-preview/docs/editorial-adoptions/2026-11-21-jarvis-qwen-preview.md",
+        "accepted_at": "2026-11-21T02:10:34.717398Z"
+      },
+      "recorded_at": "2026-11-21T02:11:57.926026Z"
+    },
+    {
+      "id": "evt-physical-world-jarvis-bench-2026-11-21",
+      "record_type": "thread",
+      "record_id": "thread-physical-world-design-validation",
+      "expected_version": 1,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-21-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "University of Georgia researchers / Zhou et al.",
+          "title": "JARVIS - An Agent That Designs, Builds, and Tests Circuit Boards on Its Own",
+          "url": "https://arxiv.org/html/2611.26503v1",
+          "role": "primary_author_preprint",
+          "published_at": "2026-11-19",
+          "retrieved_at": "2026-11-21T01:03:25.230Z",
+          "archive_url": null,
+          "lineage_id": "uga-jarvis-20261119"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Physical-World Design Validation asks whether faster AI-assisted design leaves fabrication, testing and qualification as a larger share of the work. A University of Georgia preprint gives a case that cuts both ways. After a person approved the plan, the authors report that the system fabricated and electrically tested one circuit board in a 2-hour, 39-minute run, with a person stationed at the emergency stop. The board cut the unwanted 60 Hz signal by 50.6 dB, exceeding the 40 dB target, but it also weakened a 1 Hz signal that it was supposed to preserve: gain was −1.29 dB, outside the ±0.6 dB limit. The simulation had predicted a pass on that check.\n\nThe authors report 93 minutes of heating and cooling within this run. The agent used the measurements to propose and rehearse a revision, but the paper does not report building or measuring that revised board. This is one author-reported bench demonstration, not independent replication, repeated qualification or a comparison with a matched human workflow.\n\nKeep the assessment emerging and the thesis unchanged. A physical test of the revised board against the same limits would check the proposed correction. To see whether automation shifts the overall bottleneck, compare designs of equivalent quality across repeated workflows and count human effort, equipment time, failed attempts and total cost through qualification. This evidence update does not discharge the overdue review.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-21-jarvis-qwen-preview/docs/editorial-adoptions/2026-11-21-jarvis-qwen-preview.md",
+        "accepted_at": "2026-11-21T02:10:34.717398Z"
+      },
+      "recorded_at": "2026-11-21T02:11:57.926026Z"
     }
   ]
 }

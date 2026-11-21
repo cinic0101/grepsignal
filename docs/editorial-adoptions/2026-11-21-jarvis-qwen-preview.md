@@ -1,0 +1,10 @@
+# November 21 editorial adoption for draft review
+
+GrepSignal owner cinic0101 adopted these two specific items for preparation of a public draft at 2026-11-21T02:10:34.717398Z. The journal's publication-scope field is the schema's classification for material editorial content. This approval covers the draft only, not marking the PR ready, merging, deploying or attesting an actual publication. The draft events were recorded at 2026-11-21T02:11:57.926026Z.
+
+- **Qwen4-Max preview Signal:** Alibaba Cloud's [preview documentation](https://docs.modelstudio.console.alibabacloud.com/en/model-studio/qwen4-max-preview) gives the Token Plan-only preview cutoff (November 25 at 16:00 UTC). The [production documentation](https://www.alibabacloud.com/help/en/model-studio/qwen4-max) lists a distinct ID and regional service scopes, not entitlement, API equivalence or automatic migration. Two pages from one provider, no API calls.
+- **Physical-World Design Validation, existing Thread:** The University of Georgia [JARVIS preprint](https://arxiv.org/html/2611.26503v1) describes one physical board under human safety oversight. It passed the 60 Hz suppression target but missed the 1 Hz gain target despite a predicted pass. The proposed revision was not demonstrated in hardware. The thesis is unchanged; no overdue review is closed.
+
+Independent exact-text source and editorial review completed on November 21 before adoption. The original evidence observations and conservative use ceilings (November 21 14:36:01 UTC for JARVIS; November 22 00:36:01 UTC for Qwen) are not renewed by draft preparation. Only original attributed synthesis is included, with no source text blocks, images or linked artifacts.
+
+This draft appends two events to the 152-event prefix. It projects 40 Signals, nine Threads and three unchanged Predictions. No new Thread, relation, coverage cycle, forecast or first-publication receipt is included. Published coverage still describes its original bounded November 18 cycle, not the November 21 draft.
