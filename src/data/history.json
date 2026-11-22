@@ -8959,6 +8959,250 @@
         "accepted_at": "2026-11-21T02:10:34.717398Z"
       },
       "recorded_at": "2026-11-21T02:11:57.926026Z"
+    },
+    {
+      "id": "evt-verification-maintainer-handoff-rechecked-2026-11-22",
+      "record_type": "thread",
+      "record_id": "thread-software-verification-acceptance",
+      "expected_version": 10,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-22-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "HAProxy / Willy Tarreau",
+          "title": "On the Use of AI-Based Tools to Find Bugs in Open Source Software",
+          "url": "https://www.haproxy.com/blog/on-the-use-of-ai-based-tools-to-find-bugs-in-open-source-software",
+          "role": "primary_maintainer_account",
+          "published_at": "2026-11-19",
+          "retrieved_at": "2026-11-22T01:01:26.118Z",
+          "archive_url": null,
+          "lineage_id": "haproxy-tarreau-maintainer-handoff-20261119"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "This Thread asks whether easier defect discovery translates into dependable repairs. HAProxy maintainer Willy Tarreau describes a trusted colleague who validated findings and supplied patches. In a separate workflow for incomplete incoming reports, he says the maintainers merged about one-third of proposed fixes after reworking them. This is not an estimate of how often a report was correct or how often a colleague's patches were accepted.\n\nThe practical measure is accepted repairs and maintainer effort, not report volume alone. This is one maintainer's account, with no independent measurement of effort, reproduction of defects or inspection of the linked patches. The Thread thesis and assessment stay unchanged; no outstanding review is closed.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-22-verification-inkling-qwen/docs/editorial-adoptions/2026-11-22-verification-inkling-qwen.md",
+        "accepted_at": "2026-11-22T01:20:51.084580Z"
+      },
+      "recorded_at": "2026-11-22T01:23:21.700620Z"
+    },
+    {
+      "id": "evt-qwen4-max-preview-alias-2026-11-22",
+      "record_type": "signal",
+      "record_id": "sig-qwen4-max-preview-retirement-2026-11-21",
+      "expected_version": 1,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-22-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Alibaba Cloud Model Studio",
+          "title": "Token Plan (Team Edition)",
+          "url": "https://www.alibabacloud.com/help/en/model-studio/token-plan-team-overview",
+          "role": "primary_service_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-11-22T01:01:26.118Z",
+          "archive_url": null,
+          "lineage_id": "alibaba-qwen4-max-service-20261116"
+        },
+        {
+          "publisher": "Alibaba Cloud Model Studio",
+          "title": "Token Plan (Personal Edition)",
+          "url": "https://www.alibabacloud.com/help/en/model-studio/token-plan-personal-overview",
+          "role": "primary_service_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-11-22T01:01:26.118Z",
+          "archive_url": null,
+          "lineage_id": "alibaba-qwen4-max-service-20261116"
+        }
+      ],
+      "payload": {
+        "watch_next": "Check deployment configuration for both `qwen4-max-preview` and its alias `qwen4.0-max-preview`. Alibaba's Personal and Team Token Plan guides say bills list either ID as `qwen4.0-max-preview`. Verify replacement access under the intended plan and region before the announced cutoff; no endpoint or billing test was run.",
+        "sources": [
+          {
+            "publisher": "Alibaba Cloud Model Studio",
+            "title": "qwen4-max-preview",
+            "url": "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/qwen4-max-preview",
+            "role": "primary_service_documentation",
+            "published_at": null,
+            "retrieved_at": "2026-11-21T01:03:25.230Z",
+            "archive_url": null,
+            "lineage_id": "alibaba-qwen4-max-service-20261116"
+          },
+          {
+            "publisher": "Alibaba Cloud Model Studio",
+            "title": "qwen4-max (latest model)",
+            "url": "https://www.alibabacloud.com/help/en/model-studio/qwen4-max",
+            "role": "primary_service_documentation",
+            "published_at": null,
+            "retrieved_at": "2026-11-21T01:04:08.619Z",
+            "archive_url": null,
+            "lineage_id": "alibaba-qwen4-max-service-20261116"
+          },
+          {
+            "publisher": "Alibaba Cloud Model Studio",
+            "title": "Token Plan (Team Edition)",
+            "url": "https://www.alibabacloud.com/help/en/model-studio/token-plan-team-overview",
+            "role": "primary_service_documentation",
+            "published_at": null,
+            "retrieved_at": "2026-11-22T01:01:26.118Z",
+            "archive_url": null,
+            "lineage_id": "alibaba-qwen4-max-service-20261116"
+          },
+          {
+            "publisher": "Alibaba Cloud Model Studio",
+            "title": "Token Plan (Personal Edition)",
+            "url": "https://www.alibabacloud.com/help/en/model-studio/token-plan-personal-overview",
+            "role": "primary_service_documentation",
+            "published_at": null,
+            "retrieved_at": "2026-11-22T01:01:26.118Z",
+            "archive_url": null,
+            "lineage_id": "alibaba-qwen4-max-service-20261116"
+          }
+        ],
+        "source_count": 4,
+        "source_organization_count": 1
+      },
+      "note": "A narrow migration-check clarification to the existing Qwen4-Max preview retirement Signal. The alias and common billing label are documented by one provider; neither is a different endpoint. The announced cutoff and separate production ID are unchanged. No outage, automatic migration or account-level access is claimed.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-22-verification-inkling-qwen/docs/editorial-adoptions/2026-11-22-verification-inkling-qwen.md",
+        "accepted_at": "2026-11-22T01:20:51.084580Z"
+      },
+      "recorded_at": "2026-11-22T01:23:21.700620Z"
+    },
+    {
+      "id": "evt-inkling2-mini-native-derivative-2026-11-22",
+      "record_type": "signal",
+      "record_id": "sig-inkling2-mini-native-derivative-2026-11-22",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-22-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Thinking Machines Lab",
+          "title": "Introducing Inkling 2 Mini",
+          "url": "https://thinkingmachines.ai/news/inkling-2-mini/",
+          "role": "primary_model_announcement",
+          "published_at": "2026-11-20",
+          "retrieved_at": "2026-11-22T00:59:59.812Z",
+          "archive_url": null,
+          "lineage_id": "thinking-machines-inkling2-mini-20261120"
+        },
+        {
+          "publisher": "Thinking Machines Lab",
+          "title": "Inkling 2 Mini model card",
+          "url": "https://huggingface.co/thinkingmachines/Inkling-2-Mini",
+          "role": "primary_model_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-11-22T01:01:49.669Z",
+          "archive_url": null,
+          "lineage_id": "thinking-machines-inkling2-mini-20261120"
+        },
+        {
+          "publisher": "ShinMegamiBoson",
+          "title": "LookAtMyQuant",
+          "url": "https://github.com/ShinMegamiBoson/lookatmyquant",
+          "role": "primary_derivative_implementation",
+          "published_at": null,
+          "retrieved_at": "2026-11-22T00:59:59.813Z",
+          "archive_url": null,
+          "lineage_id": "lookatmyquant-inkling2-mini-20261121"
+        }
+      ],
+      "payload": {
+        "id": "sig-inkling2-mini-native-derivative-2026-11-22",
+        "type": "second_order_effect",
+        "status": "emerging",
+        "source_count": 3,
+        "source_organization_count": 2,
+        "registered_at": "2026-11-22",
+        "evidence_since": "2026-11-20",
+        "falsifiers": [
+          "A matched deployment test shows that the compressed files do not fit the intended runtime budget, or that the target workload loses too much quality."
+        ],
+        "limitations": [
+          "The native checkpoint and third-party text-only compressed artifact are not interchangeable. Weight file size is not peak runtime memory. No local benchmark, performance parity, or weights-license recommendation is claimed."
+        ],
+        "sources": [
+          {
+            "publisher": "Thinking Machines Lab",
+            "title": "Introducing Inkling 2 Mini",
+            "url": "https://thinkingmachines.ai/news/inkling-2-mini/",
+            "role": "primary_model_announcement",
+            "published_at": "2026-11-20",
+            "retrieved_at": "2026-11-22T00:59:59.812Z",
+            "archive_url": null,
+            "lineage_id": "thinking-machines-inkling2-mini-20261120"
+          },
+          {
+            "publisher": "Thinking Machines Lab",
+            "title": "Inkling 2 Mini model card",
+            "url": "https://huggingface.co/thinkingmachines/Inkling-2-Mini",
+            "role": "primary_model_documentation",
+            "published_at": null,
+            "retrieved_at": "2026-11-22T01:01:49.669Z",
+            "archive_url": null,
+            "lineage_id": "thinking-machines-inkling2-mini-20261120"
+          },
+          {
+            "publisher": "ShinMegamiBoson",
+            "title": "LookAtMyQuant",
+            "url": "https://github.com/ShinMegamiBoson/lookatmyquant",
+            "role": "primary_derivative_implementation",
+            "published_at": null,
+            "retrieved_at": "2026-11-22T00:59:59.813Z",
+            "archive_url": null,
+            "lineage_id": "lookatmyquant-inkling2-mini-20261121"
+          }
+        ],
+        "title": "Inkling 2 Mini launches at about 20 GB; a separate text-weight build is smaller",
+        "summary": "Thinking Machines Lab released Inkling 2 Mini, an open-weight model that repeats its middle layers three times per token. The publisher describes a roughly 20 GB native mixed-precision checkpoint. A separate LookAtMyQuant project reports a 5.38 GB compressed text-weight artifact derived from it. The smaller number describes text weights, not the full multimodal model or the memory needed for a running process.",
+        "why_it_matters": "A compact download can make experimentation possible on smaller machines, but it is not a deployment sizing result or evidence that the compressed model preserves the original model's quality.",
+        "our_read": "For a local evaluation, pin the exact artifact and runtime, then measure peak memory with the intended context and compare task quality with the native checkpoint. Do not transfer vendor benchmark scores to the smaller artifact.",
+        "second_order_effect": "The same model name can refer to substantially different weight formats and deployment envelopes; measure the artifact you intend to use.",
+        "watch_next": "Look for an independent, matched test of the exact checkpoint and derivative on the same hardware and tasks, including actual memory use and any vision support."
+      },
+      "note": "An original model release and a separately authored derivative. These are two sources for different claims, not two independent confirmations of one performance claim. No benchmark, inference, download, full-model memory or comparability to the Open-Weight forecast established.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-22-verification-inkling-qwen/docs/editorial-adoptions/2026-11-22-verification-inkling-qwen.md",
+        "accepted_at": "2026-11-22T01:20:51.084580Z"
+      },
+      "recorded_at": "2026-11-22T01:23:21.700620Z"
     }
   ]
 }
