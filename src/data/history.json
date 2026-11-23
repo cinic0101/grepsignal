@@ -9203,6 +9203,66 @@
         "accepted_at": "2026-11-22T01:20:51.084580Z"
       },
       "recorded_at": "2026-11-22T01:23:21.700620Z"
+    },
+    {
+      "id": "evt-decision-native-baseten-strands-operation-2026-11-23",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 16,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-23-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Baseten / Base Labs",
+          "title": "The best decision models in the world: mammoth-1 and elephant-1",
+          "url": "https://www.baseten.co/blog/the-best-decision-models-in-the-world-mammoth-1-and-elephant-1/",
+          "role": "primary_release_announcement",
+          "published_at": "2026-10-21",
+          "retrieved_at": "2026-11-23T01:02:16.093Z",
+          "archive_url": null,
+          "lineage_id": "baseten-base-labs-elephant-20261021"
+        },
+        {
+          "publisher": "Baseten / Base Labs",
+          "title": "elephant-1 model card",
+          "url": "https://huggingface.co/baselabs/elephant-1",
+          "role": "primary_model_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-11-23T01:02:16.093Z",
+          "archive_url": null,
+          "lineage_id": "baseten-base-labs-elephant-20261021"
+        },
+        {
+          "publisher": "Amazon / Strands Agents",
+          "title": "Amazon saves millions by replacing Sonnet 4.6 with Strands Decider",
+          "url": "https://strandsagents.com/blog/amazon-saves-millions-replacing-sonnet-with-strands-decider/",
+          "role": "primary_operator_account",
+          "published_at": "2026-11-09",
+          "retrieved_at": "2026-11-23T01:02:16.093Z",
+          "archive_url": null,
+          "lineage_id": "amazon-strands-decider-ticket-labeling-20261109"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "This Thread asks when fixed semantic choices are better served by a decision interface than by generating text. Baseten's Base Labs released elephant-1, a Qwen-derived decision model whose interface returns probabilities for supplied choices and ordered scores without decoding a text response. That is a separate implementation example, not evidence that every probability is calibrated.\n\nAmazon separately reports moving one internal 20-category ticket-labeling workload from Sonnet 4.6 on Bedrock to Strands Decider E4B on SageMaker. It reports an average call time of 897 ms after the switch, versus 4,215 ms before. The team also shortened the label descriptions and removed older comments from long tickets. It did not publish a numerical quality result in the case study, so this is not a matched model comparison or proof of transfer to other workloads.\n\nFor a similar fixed-label task, run both paths on the same cases before switching. Keep option order and request formatting fixed, then test them separately: Amazon reports that changing only JSON object key order moved probabilities by up to 0.19 in its setup. Compare wrong labels and abstentions as well as speed. This note does not change the thesis or assessment, close a due review, or resolve the separate prediction.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-23-decision-native/docs/editorial-adoptions/2026-11-23-decision-native.md",
+        "accepted_at": "2026-11-23T01:13:22.242931Z"
+      },
+      "recorded_at": "2026-11-23T01:14:22.155Z"
     }
   ]
 }
