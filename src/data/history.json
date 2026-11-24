@@ -9263,6 +9263,86 @@
         "accepted_at": "2026-11-23T01:13:22.242931Z"
       },
       "recorded_at": "2026-11-23T01:14:22.155Z"
+    },
+    {
+      "id": "evt-harness-greptile-accessibility-2026-11-24",
+      "record_type": "thread",
+      "record_id": "thread-agent-harness-economics",
+      "expected_version": 23,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-24-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Greptile / Ruban SK",
+          "title": "How Should an LLM See a Computer?",
+          "url": "https://www.greptile.com/blog/trex-computer-use",
+          "role": "primary_practitioner_report",
+          "published_at": "2026-11-19",
+          "retrieved_at": "2026-11-24T01:05:00.547Z",
+          "archive_url": null,
+          "lineage_id": "greptile-trex-osworld-20261119"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "This Thread tracks how the interface around a model changes task performance. In Greptile's experiment on 172 OSWorld desktop tasks, an accessibility tree gave the model labeled controls beside the screenshot. Assigning each control an ID also let the model name a target rather than estimate its pixel coordinates.\n\nFor GPT-5.2, Greptile reports 15.8% for screenshots alone, 36.2% when the tree was added while keeping coordinate clicks, and 52.8% after switching to ID clicks. GPT-6.1 Sol scored 83.8%, 82.7%, and 82.1% in the same three setups. These are one team's results on its task subset, with one attempt per task, low reasoning effort and a 50-step limit. They do not establish an operating-cost improvement or a universal model ranking.\n\nBefore adding an interface layer, compare it with screenshots alone on the same tasks and model. Keep screenshots for visual content not represented by the tree, such as a drawing canvas, and measure task success, latency and cost separately. The Thread thesis and assessment remain unchanged.",
+      "recorded_at": "2026-11-24T01:50:19.374Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-24-harness-verification/docs/editorial-adoptions/2026-11-24-harness-verification.md",
+        "accepted_at": "2026-11-24T01:48:41.018542Z"
+      }
+    },
+    {
+      "id": "evt-verification-antithesis-raft-2026-11-24",
+      "record_type": "thread",
+      "record_id": "thread-software-verification-acceptance",
+      "expected_version": 11,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-24-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Antithesis / Rohan Padhye and Hillel Wayne",
+          "title": "Verifying formal models of Raft implementations",
+          "url": "https://antithesis.com/blog/2026/verifying-formal-models/",
+          "role": "primary_practitioner_report",
+          "published_at": "2026-11-19",
+          "retrieved_at": "2026-11-24T01:05:00.548Z",
+          "archive_url": null,
+          "lineage_id": "antithesis-raft-formal-models-20261119"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "This Thread asks what evidence makes a software change safe to accept. Antithesis reports using Claude Fable 5.2 to draft formal models of two Raft consensus libraries. The team reviewed the safety properties, checked execution traces against the models under simulated faults, and then proved the chosen safety properties on the resulting models.\n\nThe distinction is that a proof about a model is not a proof about the production code. A trace check asks whether a tested execution is consistent with that model; it does not cover unobserved executions or excluded features. The team reports under US$1,200 in model tokens and roughly 2,000 simulation compute-hours per library, not the total cost of a production assurance program. It also reports excluding some library features.\n\nFor an acceptance review, ask separately which properties were proved, which implementation traces conformed, and what remains outside the model. These are results from one team's demonstration. No independent rerun, code-wide safety finding, change in Thread assessment, or completed outstanding review is claimed.",
+      "recorded_at": "2026-11-24T01:50:19.374Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-24-harness-verification/docs/editorial-adoptions/2026-11-24-harness-verification.md",
+        "accepted_at": "2026-11-24T01:48:41.018542Z"
+      }
     }
   ]
 }
