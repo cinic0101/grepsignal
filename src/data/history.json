@@ -9343,6 +9343,97 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-24-harness-verification/docs/editorial-adoptions/2026-11-24-harness-verification.md",
         "accepted_at": "2026-11-24T01:48:41.018542Z"
       }
+    },
+    {
+      "id": "evt-bonsai-25-27b-ternary-deployment-2026-11-25",
+      "record_type": "signal",
+      "record_id": "sig-bonsai-25-27b-ternary-deployment-2026-11-25",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-25-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "PrismML",
+          "title": "Introducing Ternary Bonsai 2.5 27B: Powering Agentic Coding and Private Knowledge Work",
+          "url": "https://prismml.com/news/bonsai-2-5-27b",
+          "role": "primary_model_announcement",
+          "published_at": "2026-11-24",
+          "retrieved_at": "2026-11-25T01:04:44.902Z",
+          "archive_url": null,
+          "lineage_id": "prismml-bonsai-25-27b-20261124"
+        },
+        {
+          "publisher": "PrismML",
+          "title": "Ternary Bonsai 2.5 27B GGUF model card",
+          "url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2.5-27B-GGUF",
+          "role": "primary_model_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-11-25T01:05:19.870Z",
+          "archive_url": null,
+          "lineage_id": "prismml-bonsai-25-27b-20261124"
+        }
+      ],
+      "payload": {
+        "id": "sig-bonsai-25-27b-ternary-deployment-2026-11-25",
+        "type": "second_order_effect",
+        "status": "emerging",
+        "source_count": 2,
+        "source_organization_count": 1,
+        "registered_at": "2026-11-25",
+        "evidence_since": "2026-11-24",
+        "sources": [
+          {
+            "publisher": "PrismML",
+            "title": "Introducing Ternary Bonsai 2.5 27B: Powering Agentic Coding and Private Knowledge Work",
+            "url": "https://prismml.com/news/bonsai-2-5-27b",
+            "role": "primary_model_announcement",
+            "published_at": "2026-11-24",
+            "retrieved_at": "2026-11-25T01:04:44.902Z",
+            "archive_url": null,
+            "lineage_id": "prismml-bonsai-25-27b-20261124"
+          },
+          {
+            "publisher": "PrismML",
+            "title": "Ternary Bonsai 2.5 27B GGUF model card",
+            "url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2.5-27B-GGUF",
+            "role": "primary_model_documentation",
+            "published_at": null,
+            "retrieved_at": "2026-11-25T01:05:19.870Z",
+            "archive_url": null,
+            "lineage_id": "prismml-bonsai-25-27b-20261124"
+          }
+        ],
+        "title": "Bonsai 2.5 improves on earlier low-bit coding scores at the same weight size",
+        "summary": "PrismML released Ternary Bonsai 2.5 27B, a Qwen3.8-27B derivative that keeps its predecessor's roughly 5.9 GB weight file. In PrismML's evaluation, SWE-bench Verified rises from 60.8 to 75.6, versus 80.6 for the full-precision base. Terminal-Bench 2.1 rises from 52.8 to 60.1 and still trails the base at 70.8. These are publisher-run comparisons, not independent tests.",
+        "why_it_matters": "The same download size can hide a meaningful difference in task performance. It is still not a memory estimate. The 5.93 GB PTQ1_0 file needs PrismML's llama.cpp fork; the card lists a different format for upstream llama.cpp.",
+        "our_read": "Evaluate the exact file and backend you plan to run. Compare task success and memory use at the intended context length, instead of assuming the smallest file preserves full-precision quality or runs unchanged in an existing stack.",
+        "second_order_effect": "Artifact size can narrow a shortlist, but backend compatibility and completed-task quality determine which compact model is useful.",
+        "watch_next": "Look for an independent same-hardware run comparing the published builds, measuring completed tasks, peak memory and time per successful task at realistic context sizes.",
+        "limitations": [
+          "Both sources are from PrismML. No independent replication, filled-context runtime memory, general quality parity, or comparable Artificial Analysis price and capability tuple is established.",
+          "The weight card lists Apache 2.0. No commercial-use conclusion is made about other artifacts or the deployment stack."
+        ],
+        "falsifiers": [
+          "A matched rerun of the exact formats finds no meaningful task improvement over Bonsai 2, or finds that the necessary backend and memory footprint rule out the target deployment."
+        ]
+      },
+      "note": "A vendor-reported release comparison and its artifact-specific operating constraint. Capacity and benchmark numbers are not independently verified. No Thread assessment, review warning or forecast is changed.",
+      "recorded_at": "2026-11-25T01:19:09.685Z",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-25-bonsai/docs/editorial-adoptions/2026-11-25-bonsai.md",
+        "accepted_at": "2026-11-25T01:18:09.294680Z"
+      }
     }
   ]
 }
