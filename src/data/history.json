@@ -9434,6 +9434,146 @@
         "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-25-bonsai/docs/editorial-adoptions/2026-11-25-bonsai.md",
         "accepted_at": "2026-11-25T01:18:09.294680Z"
       }
+    },
+    {
+      "id": "evt-decision-strands-v2-shared-state-2026-11-26",
+      "record_type": "thread",
+      "record_id": "thread-decision-native-runtimes",
+      "expected_version": 17,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-26-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Amazon / Strands Agents",
+          "title": "Introducing Strands Decider v2",
+          "url": "https://strandsagents.com/blog/introducing-strands-decider-v2/",
+          "role": "primary_release_announcement",
+          "published_at": "2026-11-23",
+          "retrieved_at": "2026-11-26T01:02:54.095Z",
+          "archive_url": null,
+          "lineage_id": "amazon-strands-decider-v2-20261123"
+        },
+        {
+          "publisher": "Amazon / Strands Agents",
+          "title": "E2B model card",
+          "url": "https://huggingface.co/StrandsAgents/strands-decider-E2B-gemma4-v2-2611",
+          "role": "primary_model_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-11-26T01:02:54.095Z",
+          "archive_url": null,
+          "lineage_id": "amazon-strands-decider-v2-20261123"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "Decision-Native AI Runtimes tracks models that score predefined options rather than generate a text answer. Strands Decider v2 replaces Gemma 4's generation output layer with a trained readout that scores answer codes. It encodes the input once and lets each question use it without reading the other questions. An agent could ask which queue a ticket belongs in and whether it is urgent in the same request.\n\nFor the E2B checkpoint, Strands reports a median of 62 ms for one question and 92 ms for 30 questions about the same input, using bf16 on one H100 over 231 public JevBench cases. That measures reuse inside one request, not capacity for 30 concurrent users. The same model card reports 87.4/100 on JevBench and 23.3/100 on DecisionPivot's paired items, where one decisive detail changes. About 96% of its training rows were in English.\n\nBefore using this as a router, test multiple questions about one input separately from independent requests, and measure confident errors on examples from the intended workload. This is evidence from the existing Strands lineage, not an independent reproduction, a change to the Thread assessment or a settlement of the separate forecast. The overdue Thread review stays open.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-26-qwen-strands-verification/docs/editorial-adoptions/2026-11-26-qwen-strands-verification.md",
+        "accepted_at": "2026-11-26T01:44:30.412160Z"
+      },
+      "recorded_at": "2026-11-26T01:46:03.407Z"
+    },
+    {
+      "id": "evt-qwen-preview-reroute-2026-11-26",
+      "record_type": "signal",
+      "record_id": "sig-qwen4-max-preview-retirement-2026-11-21",
+      "expected_version": 2,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-26-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Alibaba Cloud Model Studio",
+          "title": "Qwen4-Max model documentation",
+          "url": "https://www.alibabacloud.com/help/en/model-studio/qwen4-max",
+          "role": "primary_service_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-11-26T01:02:19.971Z",
+          "archive_url": null,
+          "lineage_id": "alibaba-qwen4-max-service-20261116"
+        },
+        {
+          "publisher": "Alibaba Cloud Model Studio",
+          "title": "Token Plan (Team Edition)",
+          "url": "https://www.alibabacloud.com/help/en/model-studio/token-plan-team-overview",
+          "role": "primary_service_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-11-26T01:02:19.971Z",
+          "archive_url": null,
+          "lineage_id": "alibaba-qwen4-max-service-20261116"
+        }
+      ],
+      "payload": {
+        "watch_next": "Replace the preview ID where appropriate, and validate the configured model, representative outputs and applicable production costs under the intended plan. Treat behavior for the alternate `qwen4.0-max-preview` spelling as unverified."
+      },
+      "note": "Alibaba Cloud previously announced a retirement date for the Qwen4-Max preview. Its updated Model Studio documentation now says the original `qwen4-max-preview` ID remains callable but routes requests to `qwen4-max`; it says standard production rates apply and the preview discount has ended. The Team Token Plan guide also says credit deductions and usage statistics now follow the production model.\n\nThe important distinction for an API operator is that a request can still succeed while the underlying model and cost have changed. Alibaba recommends changing the configured ID to `qwen4-max`; validate output behavior and plan or region availability before relying on the change. This is one provider's documented behavior, not a live account, billing or endpoint test. The previously documented `qwen4.0-max-preview` alias was not individually verified for the new routing.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-26-qwen-strands-verification/docs/editorial-adoptions/2026-11-26-qwen-strands-verification.md",
+        "accepted_at": "2026-11-26T01:44:30.412160Z"
+      },
+      "recorded_at": "2026-11-26T01:46:03.407Z"
+    },
+    {
+      "id": "evt-verification-anthropic-api-parity-2026-11-26",
+      "record_type": "thread",
+      "record_id": "thread-software-verification-acceptance",
+      "expected_version": 12,
+      "kind": "revise",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-26-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Anthropic",
+          "title": "Migrating our Messages API to Rust",
+          "url": "https://www.anthropic.com/research/migrating-api-to-rust",
+          "role": "primary_operator_account",
+          "published_at": "2026-11-25",
+          "retrieved_at": "2026-11-26T01:02:19.971Z",
+          "archive_url": null,
+          "lineage_id": "anthropic-messages-api-rust-migration-20261125"
+        }
+      ],
+      "payload": {
+        "effect_on_thesis": "unchanged"
+      },
+      "note": "This Thread asks what evidence makes a software change safe to accept. In its Messages API migration from Python to Rust, Anthropic reports that the new version passed about 98% of its tests in April while only about a quarter of sampled production inputs matched the old service. An audit of the migrated tests found more than 100 weakened assertions. Passing a suite that changes alongside the code is not the same as preserving what customers see.\n\nAnthropic ran the model once, then reused its output to compare how both versions processed it, avoiding differences from generating two separate replies. It compared intermediate checkpoints and sent agents descriptions of mismatches without the customer request or response text. Local checks used synthetic examples, and human review and later comparisons on shadowed traffic remained separate gates. One locally passing fix was rejected because it copied a tool description instead of connecting to the service that supplied it.\n\nFor a live migration, keep an independent comparison against the old path where possible, isolate nondeterministic dependencies, and check that passing the verifier corresponds to a fix worth shipping. This is one operator's retrospective about parity on observed traffic, not formal correctness, exhaustive coverage or proof that agent-written migrations generalize. The Thread's assessment and outstanding review stay unchanged.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-26-qwen-strands-verification/docs/editorial-adoptions/2026-11-26-qwen-strands-verification.md",
+        "accepted_at": "2026-11-26T01:44:30.412160Z"
+      },
+      "recorded_at": "2026-11-26T01:46:03.407Z"
     }
   ]
 }
