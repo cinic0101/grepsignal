@@ -9574,6 +9574,166 @@
         "accepted_at": "2026-11-26T01:44:30.412160Z"
       },
       "recorded_at": "2026-11-26T01:46:03.407Z"
+    },
+    {
+      "id": "evt-mellum-instruct-verified-work-2026-11-27",
+      "record_type": "signal",
+      "record_id": "sig-mellum-instruct-verified-work-2026-11-27",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-27-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "JetBrains",
+          "title": "Mellum2.1 Instruct is out, bringing faster answers for coding agents",
+          "url": "https://blog.jetbrains.com/ai/2026/11/mellum2-1-instruct-is-out-bringing-faster-answers-for-coding-agents/",
+          "role": "primary_release_announcement",
+          "published_at": "2026-11-25",
+          "retrieved_at": "2026-11-27T01:03:00.416Z",
+          "archive_url": null,
+          "lineage_id": "mellum-instruct-verified-work-202611"
+        }
+      ],
+      "payload": {
+        "id": "sig-mellum-instruct-verified-work-2026-11-27",
+        "type": "second_order_effect",
+        "status": "emerging",
+        "source_count": 1,
+        "source_organization_count": 1,
+        "registered_at": "2026-11-27",
+        "evidence_since": "2026-11-25",
+        "sources": [
+          {
+            "publisher": "JetBrains",
+            "title": "Mellum2.1 Instruct is out, bringing faster answers for coding agents",
+            "url": "https://blog.jetbrains.com/ai/2026/11/mellum2-1-instruct-is-out-bringing-faster-answers-for-coding-agents/",
+            "role": "primary_release_announcement",
+            "published_at": "2026-11-25",
+            "retrieved_at": "2026-11-27T01:03:00.416Z",
+            "archive_url": null,
+            "lineage_id": "mellum-instruct-verified-work-202611"
+          }
+        ],
+        "title": "Mellum Instruct trades shorter answers for a different verified-fix profile",
+        "summary": "JetBrains released Mellum2.1 Instruct, an Apache-2.0 coding model that gives direct answers without showing its reasoning trace. In JetBrains’ own agentic coding tests, it generated roughly half as many tokens as Mellum2.1 Thinking, but the publisher still favors Thinking for harder algorithmic tasks. Fewer tokens are not a measured wall-clock speedup or a guarantee of lower cost per verified fix. For bounded local coding work, compare time to a passing change and the rate of escalation under the same harness.",
+        "why_it_matters": "Shorter generations can reduce work per attempt; failed attempts or escalations can erase that saving.",
+        "our_read": "Compare the same bounded tasks, reviewer and stopping rules before assigning local PR work.",
+        "second_order_effect": "Shorter generations can reduce work per attempt; failed attempts or escalations can erase that saving.",
+        "watch_next": "A matched independent run measures total time, verified success and escalation alongside output length.",
+        "limitations": [
+          "Publisher-generated evidence; no independent replication, local memory measurement, or inference about a hosted price/capability threshold."
+        ],
+        "falsifiers": [
+          "At matched verified completion and escalation rates, a bounded comparison could show no time or cost savings."
+        ]
+      },
+      "note": "Bounded proposed Signal only. No accepted publication, new Thread or forecast change.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-27-mellum-webmcp/docs/editorial-adoptions/2026-11-27-mellum-webmcp.md",
+        "accepted_at": "2026-11-27T01:24:33.336759Z"
+      },
+      "recorded_at": "2026-11-27T01:25:34.380Z"
+    },
+    {
+      "id": "evt-webmcp-discovery-handles-2026-11-27",
+      "record_type": "signal",
+      "record_id": "sig-webmcp-discovery-handles-2026-11-27",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-27-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Google",
+          "title": "WebMCP extension compatibility patch #105",
+          "url": "https://github.com/GoogleChromeLabs/webmcp-extension/pull/105",
+          "role": "primary_implementation",
+          "published_at": null,
+          "retrieved_at": "2026-11-27T01:03:00.416Z",
+          "archive_url": null,
+          "lineage_id": "webmcp-discovery-handles-202611"
+        },
+        {
+          "publisher": "Google",
+          "title": "WebMCP overview",
+          "url": "https://developer.chrome.com/docs/ai/webmcp",
+          "role": "primary_implementation_documentation",
+          "published_at": null,
+          "retrieved_at": "2026-11-27T01:03:10.301Z",
+          "archive_url": null,
+          "lineage_id": "webmcp-discovery-handles-202611"
+        }
+      ],
+      "payload": {
+        "id": "sig-webmcp-discovery-handles-2026-11-27",
+        "type": "second_order_effect",
+        "status": "emerging",
+        "source_count": 2,
+        "source_organization_count": 1,
+        "registered_at": "2026-11-27",
+        "evidence_since": "2026-11-23",
+        "sources": [
+          {
+            "publisher": "Google",
+            "title": "WebMCP extension compatibility patch #105",
+            "url": "https://github.com/GoogleChromeLabs/webmcp-extension/pull/105",
+            "role": "primary_implementation",
+            "published_at": null,
+            "retrieved_at": "2026-11-27T01:03:00.416Z",
+            "archive_url": null,
+            "lineage_id": "webmcp-discovery-handles-202611"
+          },
+          {
+            "publisher": "Google",
+            "title": "WebMCP overview",
+            "url": "https://developer.chrome.com/docs/ai/webmcp",
+            "role": "primary_implementation_documentation",
+            "published_at": null,
+            "retrieved_at": "2026-11-27T01:03:10.301Z",
+            "archive_url": null,
+            "lineage_id": "webmcp-discovery-handles-202611"
+          }
+        ],
+        "title": "WebMCP discovery changes require a different migration than site registration",
+        "summary": "WebMCP lets a website describe actions a browser-based AI agent can call. Starting in Chrome 160.0.8173.0, the discovery API returns native handles tied to particular tool registrations rather than plain records. GoogleChromeLabs updated its sample extension to read the source explicitly and skip tools whose registering page is no longer active. A site that only registers tools does not consume those discovery handles. Chrome’s WebMCP overview links to an origin trial: the extension patch is evidence of migration work, not default availability on desktop Stable.",
+        "why_it_matters": "This compatibility change affects software that consumes discovered tool handles, not sites that only declare tools.",
+        "our_read": "For an extension that discovers tools, test both metadata round-tripping and behavior after the source document closes.",
+        "second_order_effect": "This compatibility change affects software that consumes discovered tool handles, not sites that only declare tools.",
+        "watch_next": "A second independently maintained discovery integration publishes a comparable migration or a different compatibility outcome.",
+        "limitations": [
+          "No default-on desktop Stable evidence, comparative effort estimate or independent production reproduction."
+        ],
+        "falsifiers": [
+          "A directly comparable discovery implementation consumes the new handles without any metadata or source-lifetime changes; that would narrow the migration claim."
+        ]
+      },
+      "note": "Bounded proposed Signal only. No accepted publication, new Thread or forecast change.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-27-mellum-webmcp/docs/editorial-adoptions/2026-11-27-mellum-webmcp.md",
+        "accepted_at": "2026-11-27T01:24:33.336759Z"
+      },
+      "recorded_at": "2026-11-27T01:25:34.380Z"
     }
   ]
 }
