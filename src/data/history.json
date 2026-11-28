@@ -9734,6 +9734,96 @@
         "accepted_at": "2026-11-27T01:24:33.336759Z"
       },
       "recorded_at": "2026-11-27T01:25:34.380Z"
+    },
+    {
+      "id": "evt-inkling-dspark-matched-decode-2026-11-28",
+      "record_type": "signal",
+      "record_id": "sig-inkling-dspark-matched-decode-2026-11-28",
+      "expected_version": 0,
+      "kind": "register",
+      "proposed_by": "dot editorial operator",
+      "proposal": {
+        "actor_type": "model",
+        "provider": "OpenAI",
+        "model_id": null,
+        "model_version": null,
+        "cycle_id": "cycle-2026-11-28-markdown-001",
+        "run_id": null,
+        "role": "daily_synthesis"
+      },
+      "evidence": [
+        {
+          "publisher": "Niels Rogge",
+          "title": "Hill-climbing Inkling 2 Mini inference on one RTX PRO 6000",
+          "url": "https://huggingface.co/blog/inkling-2-mini-inference-hillclimb",
+          "role": "primary_experiment_report",
+          "published_at": "2026-11-25",
+          "retrieved_at": "2026-11-28T01:02:04.336Z",
+          "archive_url": null,
+          "lineage_id": "rogge-hf-inkling-hillclimb-202611"
+        },
+        {
+          "publisher": "Niels Rogge",
+          "title": "Inkling 2 Mini hill-climb experiment ledger",
+          "url": "https://github.com/NielsRogge/inkling-2-mini-hillclimb/blob/main/PLAN.md",
+          "role": "primary_experiment_ledger",
+          "published_at": null,
+          "retrieved_at": "2026-11-28T01:04:04.881Z",
+          "archive_url": null,
+          "lineage_id": "rogge-hf-inkling-hillclimb-202611"
+        }
+      ],
+      "payload": {
+        "id": "sig-inkling-dspark-matched-decode-2026-11-28",
+        "type": "second_order_effect",
+        "status": "emerging",
+        "source_count": 2,
+        "source_organization_count": 1,
+        "registered_at": "2026-11-28",
+        "evidence_since": "2026-11-25",
+        "sources": [
+          {
+            "publisher": "Niels Rogge",
+            "title": "Hill-climbing Inkling 2 Mini inference on one RTX PRO 6000",
+            "url": "https://huggingface.co/blog/inkling-2-mini-inference-hillclimb",
+            "role": "primary_experiment_report",
+            "published_at": "2026-11-25",
+            "retrieved_at": "2026-11-28T01:02:04.336Z",
+            "archive_url": null,
+            "lineage_id": "rogge-hf-inkling-hillclimb-202611"
+          },
+          {
+            "publisher": "Niels Rogge",
+            "title": "Inkling 2 Mini hill-climb experiment ledger",
+            "url": "https://github.com/NielsRogge/inkling-2-mini-hillclimb/blob/main/PLAN.md",
+            "role": "primary_experiment_ledger",
+            "published_at": null,
+            "retrieved_at": "2026-11-28T01:04:04.881Z",
+            "archive_url": null,
+            "lineage_id": "rogge-hf-inkling-hillclimb-202611"
+          }
+        ],
+        "title": "Inkling 2 Mini generates tokens faster with DSpark in one reported RTX PRO 6000 test",
+        "summary": "On one 96 GB RTX PRO 6000, a Hugging Face experiment compared Inkling 2 Mini running on vLLM nightly with and without DSpark. DSpark is a speculative-decoding method: it drafts several tokens for the main model to verify together. With thinking enabled on six prompts and a 512-output-token limit, the experiment reported single-user decode rising from 157.0 to 190.6 tokens per second. At eight concurrent requests, aggregate decode rose from 638 to 716 tokens per second, while time to first token in the short-prompt test rose from 33 to 40 milliseconds. The larger headline speedup also included a change of inference engine. These are results from the same operator and workload, not independent replications or measured capacity for a team. To decide whether to enable DSpark locally, compare the same engine and model with and without it, at the intended context length and concurrency. Track first-token latency, full response time and peak memory as well as tokens per second.",
+        "why_it_matters": "Faster token generation need not improve first-token latency or full application capacity.",
+        "our_read": "Use a matched local comparison at the intended context length and concurrency before choosing this configuration.",
+        "second_order_effect": "A serving optimization can improve decode throughput while adding first-token delay; both matter when choosing a deployment configuration.",
+        "watch_next": "A matched test on the intended runtime compares first-token latency, end-to-end response time, memory and correct task completion.",
+        "limitations": [
+          "One operator and one RTX PRO 6000 96 GB experiment. The tested vLLM version, memory settings and workload do not establish production or cross-hardware capacity."
+        ],
+        "falsifiers": [
+          "A matched test on the intended workload shows the decode gain does not carry over, or first-token latency or peak memory negates the practical benefit."
+        ]
+      },
+      "note": "One matched, operator-reported decode comparison on a single 96 GB RTX PRO 6000; neither independent replication nor production capacity evidence.",
+      "acceptance": {
+        "actor": "cinic0101",
+        "scope": "publication",
+        "reference": "https://github.com/cinic0101/grepsignal/blob/draft/2026-11-28-inkling-dspark/docs/editorial-adoptions/2026-11-28-inkling-dspark.md",
+        "accepted_at": "2026-11-28T01:11:38.949996Z"
+      },
+      "recorded_at": "2026-11-28T01:12:43.189Z"
     }
   ]
 }
